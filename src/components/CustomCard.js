@@ -2,8 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-
-import LoginButton from './Buttons/LoginButton';
+import LoginForm from './forms/LoginForm';
 
 function CustomCard() {
   return (
@@ -22,14 +21,7 @@ function CustomCard() {
         }}
       >
         <CardContent>
-          <Typography
-            sx={{ fontSize: 24, justifyContent: 'center' }}
-            color="text.secondary"
-            gutterBottom
-          >
-            I am a card
-          </Typography>
-          <LoginButton />
+          <LoginForm />
         </CardContent>
       </Card>
     </div>

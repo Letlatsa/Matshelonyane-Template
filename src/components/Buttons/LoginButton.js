@@ -8,6 +8,7 @@ const LoginButton = () => {
       <Button
         variant="text"
         color="primary"
+        type="submit"
         sx={{
           fontSize: 18,
           backgroundColor: '#FFEB22',
