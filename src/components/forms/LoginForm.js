@@ -20,7 +20,7 @@ const LoginForm = () => {
   };
 
   return (
-    <FormControl>
+    <FormControl sx={{width: '100%'}}>
       <Box>
         <Typography>Welcome to Matshelonyane !</Typography>
       </Box>
