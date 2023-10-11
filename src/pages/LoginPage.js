@@ -1,8 +1,9 @@
 import CustomCard from '../components/CustomCard';
+import '../styles/login.css';
 
 const LoginPage = () => {
   return (
-    <div>
+    <div className='Login-container'>
       <CustomCard />
     </div>
   );

@@ -14,8 +14,9 @@ function CustomCard() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          marginTop: '200px',
-          backgroundColor: '#3498db'
+          backgroundColor: '#e2e8f02a',
+          borderRadius: '50px',
+          backdropFilter: 'blur(40px)'
         }}
       >
         <CardContent>
@@ -26,7 +27,9 @@ function CustomCard() {
           >
             I am a card
           </Typography>
-          <Typography variant="h5" component="div"></Typography>
+          <Typography variant="h5" component="div">
+            hello
+          </Typography>
         </CardContent>
       </Card>
     </div>
