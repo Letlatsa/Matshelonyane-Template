@@ -1,10 +1,9 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import LoginForm from './forms/LoginForm';
 import { Box } from '@mui/material';
 
-function CustomCard() {
+function CustomCard({ children }) {
   return (
     <Box
       sx={{
@@ -35,9 +34,7 @@ function CustomCard() {
           marginBottom: 5
         }}
       >
-        <CardContent>
-          <LoginForm />
-        </CardContent>
+        <CardContent>{children}</CardContent>
       </Card>
     </Box>
   );
