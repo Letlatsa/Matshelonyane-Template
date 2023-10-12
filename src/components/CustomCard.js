@@ -17,7 +17,7 @@ function CustomCard() {
     >
       <Card
         sx={{
-          maxWidth: 720,
+          maxWidth: 620,
           width: '100%',
           height: 450,
           margin: '0 auto',
@@ -27,9 +27,12 @@ function CustomCard() {
           backgroundColor: '#e2e8f02a',
           borderTopLeftRadius: '50px',
           borderTopRightRadius: '50px',
-          backdropFilter: 'blur(40px)',
+          borderBottomLeftRadius: '50px',
+          borderBottomRightRadius: '50px',
+          backdropFilter: 'blur(10px)',
           position: 'absolute',
-          bottom: 0
+          bottom: 75,
+          marginBottom: 5
         }}
       >
         <CardContent>
