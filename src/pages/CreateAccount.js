@@ -6,7 +6,6 @@ import CreateAccountForm from '../components/forms/CreateAccountForm';
 function CreateAccount() {
   return (
     <div className="Login-container">
-      I am create account
       <CustomCard>
         <CreateAccountForm />
       </CustomCard>

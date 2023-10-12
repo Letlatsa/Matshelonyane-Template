@@ -14,7 +14,7 @@ const TextButton = () => {
       sx={{
         color: '#FFEB22',
         marginTop: '25px',
-        left: 250,
+        left: 200,
         textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
       }}
       onClick={handleButtonClick}

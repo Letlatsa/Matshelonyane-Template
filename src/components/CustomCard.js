@@ -16,9 +16,9 @@ function CustomCard({ children }) {
     >
       <Card
         sx={{
-          maxWidth: 620,
+          maxWidth: 500,
           width: '100%',
-          height: 450,
+          height: 550,
           margin: '0 auto',
           display: 'flex',
           flexDirection: 'column',

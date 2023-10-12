@@ -8,12 +8,19 @@ import {
   Typography,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Button
 } from '@mui/material';
 import TextButton from '../Buttons/TextButton';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [accountType, setAccountType] = useState('');
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate('/forgotPassword');
+  };
 
   const handleChange = (event) => {
     setAccountType(event.target.value);
@@ -95,6 +102,18 @@ const LoginForm = () => {
           />
         </Box>
         <Box sx={{ width: '100%', marginTop: '50px' }}>
+          <Button
+            variant="text"
+            sx={{
+              color: '#FFEB22',
+              left: 300,
+              marginTop: '-50px',
+              textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
+            }}
+            onClick={handleButtonClick}
+          >
+            Forgot Password ?
+          </Button>
           <LoginButton />
           <Typography
             sx={{

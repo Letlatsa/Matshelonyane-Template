@@ -4,7 +4,7 @@ import '../styles/login.css';
 
 const LoginPage = () => {
   return (
-    <div>
+    <div className="Login-container">
       <CustomCard>
         <LoginForm />
       </CustomCard>

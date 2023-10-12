@@ -10,11 +10,12 @@ import {
   Button
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-function CreateAccountForm() {
+
+function ForgotPasswordForm() {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/');
+    navigate('/dashboard');
   };
   return (
     <div>
@@ -22,7 +23,7 @@ function CreateAccountForm() {
         <FormControl sx={{ width: '100%', color: 'white' }}>
           <Box sx={{ right: '10px !important' }}>
             <Typography sx={{ textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)' }}>
-              Welcome to Matshelonyane!
+              Recover Account
             </Typography>
           </Box>
           <Box sx={{ width: '100%', marginTop: '20px' }}>
@@ -126,7 +127,7 @@ function CreateAccountForm() {
               }}
               onClick={handleButtonClick}
             >
-              Sign Up
+              Reset Password
             </Button>
             <Typography
               sx={{
@@ -136,21 +137,8 @@ function CreateAccountForm() {
                 textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
               }}
             >
-              Already have an account?
+              We will send an OTP to your number, to confirm the password reset
             </Typography>
-
-            <Button
-              variant="text"
-              sx={{
-                color: '#FFEB22',
-                marginTop: '25px',
-                left: 250,
-                textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
-              }}
-              onClick={handleButtonClick}
-            >
-              Login
-            </Button>
           </Box>
         </FormControl>
       </Box>
@@ -158,4 +146,4 @@ function CreateAccountForm() {
   );
 }
 
-export default CreateAccountForm;
+export default ForgotPasswordForm;
