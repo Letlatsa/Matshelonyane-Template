@@ -1,8 +1,14 @@
 //MUI button
 import React from 'react';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const LoginButton = () => {
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate('/dashboard');
+  };
   return (
     <div>
       <Button
@@ -20,6 +26,7 @@ const LoginButton = () => {
           textTransform: 'none',
           boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
         }}
+        onClick={handleButtonClick}
       >
         Login
       </Button>

@@ -1,13 +1,8 @@
 import React from 'react';
 import '../styles/login.css';
-import CustomCard from '../components/CustomCard';
 
 function CreateAccount() {
-  return (
-    <div className="Login-container">
-      <CustomCard />
-    </div>
-  );
+  return <div className="Login-container">I am create account</div>;
 }
 
 export default CreateAccount;
