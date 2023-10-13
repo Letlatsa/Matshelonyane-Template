@@ -1,4 +1,4 @@
-import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
+import { Box, FormControl, Typography, Button } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
 import { MuiOtpInput } from 'mui-one-time-password-input';
@@ -31,11 +31,7 @@ const OneTimePinFForm = () => {
   const styledOtpInput = {
     width: '100%',
     '& input': {
-      color: 'white',
-      borderBottom: ' 3px solid white'
-    },
-    '& label': {
-      color: 'white'
+      border: 0
     },
     marginBottom: '50px'
   };
@@ -76,7 +72,7 @@ const OneTimePinFForm = () => {
     <Box>
       <FormControl sx={styledFormControl}>
         <Box sx={{ right: '10px !important' }}>
-          <Typography sx={styledTypography}>Welcome to Matshelonyane!</Typography>
+          <Typography sx={styledTypography}>One Time Pin</Typography>
         </Box>
         <Box sx={inputContainerBox}>
           <MuiOtpInput sx={styledOtpInput} length={6} value={otp} onChange={handleChange} />
