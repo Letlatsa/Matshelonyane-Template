@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import { Box } from '@mui/material';
 
 const StyledCard = {
-  maxWidth: { mobile: 630, tablet: 500, laptop: 500, desktop: 500 },
+  maxWidth: { mobile: 630, tablet: 500, laptop: 600, desktop: 600 },
   width: '100%',
   height: 550,
   margin: '0 auto',
@@ -22,7 +22,6 @@ const StyledCard = {
 };
 
 const StyledBox = {
-  backgroundColor: '#e2e8f02a',
   width: '100%',
   display: 'flex',
   justifyContent: 'center',
