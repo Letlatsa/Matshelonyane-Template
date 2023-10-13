@@ -13,9 +13,12 @@ const TextButton = () => {
       variant="text"
       sx={{
         color: '#FFEB22',
-        marginTop: '25px',
-        left: 200,
-        textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
+        textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+        fontWeight: '600',
+        backgroundColor: 'transparent',
+        '&:hover': {
+          backgroundColor: 'transparent'
+        }
       }}
       onClick={handleButtonClick}
     >

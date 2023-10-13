@@ -26,26 +26,81 @@ const LoginForm = () => {
     setAccountType(event.target.value);
   };
 
+  const styledFormControl = {
+    width: '100%',
+    color: 'white'
+  };
+
+  const styledTypography = {
+    fontSize: 24,
+    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+    fontWeight: 'bold',
+    marginBottom: '25px'
+  };
+
+  const styledTextField = {
+    width: '100%',
+    '& input': {
+      color: 'white',
+      borderBottom: ' 3px solid white'
+    },
+    '& label': {
+      color: 'white'
+    },
+    marginBottom: '10px'
+  };
+
+  const styledInputLabel = {
+    marginTop: 8,
+    left: -14,
+    color: 'white',
+    '&:hover': {
+      color: 'white'
+    }
+  };
+
+  const styledSelect = {
+    width: '100%',
+    color: 'white',
+    borderBottom: ' 2px solid white',
+    marginBottom: '10px'
+  };
+
+  const styledBox = {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: '10px'
+  };
+
+  const inputContainerBox = {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: '10px'
+  };
+
+  const forgotPasswordButton = {
+    color: '#FFEB22',
+    alignSelf: 'end',
+    fontWeight: '600',
+    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'transparent',
+    '&:hover': {
+      backgroundColor: 'transparent'
+    }
+  };
+
   return (
-    <Box sx={{}}>
-      <FormControl sx={{ width: '100%', color: 'white' }}>
+    <Box>
+      <FormControl sx={styledFormControl}>
         <Box sx={{ right: '10px !important' }}>
-          <Typography sx={{ textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)' }}>
-            Welcome to Matshelonyane!
-          </Typography>
+          <Typography sx={styledTypography}>Welcome to Matshelonyane!</Typography>
         </Box>
-        <Box sx={{ width: '100%', marginTop: '20px' }}>
-          <InputLabel
-            id="Account-type"
-            sx={{
-              marginTop: 4,
-              left: '-2%',
-              color: 'white',
-              '&:hover': {
-                color: 'white'
-              }
-            }}
-          >
+        <Box sx={inputContainerBox}>
+          <InputLabel id="Account-type" sx={styledInputLabel}>
             Account type
           </InputLabel>
           <Select
@@ -54,10 +109,7 @@ const LoginForm = () => {
             id="cars"
             value={accountType}
             onChange={handleChange}
-            sx={{
-              width: '100%',
-              color: 'white'
-            }}
+            sx={styledSelect}
           >
             <MenuItem value="Client">Client</MenuItem>
             <MenuItem value="Driver">Driver</MenuItem>
@@ -68,19 +120,7 @@ const LoginForm = () => {
             type="phone"
             name="phone"
             placeholder="Enter your phone number"
-            sx={{
-              width: '100%',
-              '& input': {
-                color: 'white',
-                borderBottom: ' 3px solid white'
-              },
-              '& label': {
-                color: 'white'
-              },
-              '& input:hover': {
-                borderBottom: '1px solid white'
-              }
-            }}
+            sx={styledTextField}
           />
           <TextField
             variant="standard"
@@ -88,44 +128,31 @@ const LoginForm = () => {
             type="password"
             name="password"
             placeholder="Enter your password"
-            sx={{
-              width: '100%',
-
-              '& input': {
-                color: 'white',
-                borderBottom: ' 3px solid white'
-              },
-              '& label': {
-                color: 'white'
-              }
-            }}
+            sx={styledTextField}
           />
         </Box>
-        <Box sx={{ width: '100%', marginTop: '50px' }}>
-          <Button
-            variant="text"
-            sx={{
-              color: '#FFEB22',
-              left: 300,
-              marginTop: '-50px',
-              textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
-            }}
-            onClick={handleButtonClick}
-          >
-            Forgot Password ?
-          </Button>
+        <Box>
+          <Box sx={styledBox}>
+            <Button variant="text" sx={forgotPasswordButton} onClick={handleButtonClick}>
+              Forgot Password ?
+            </Button>
+          </Box>
           <LoginButton />
-          <Typography
-            sx={{
-              color: 'white',
-              textAlign: 'center',
-              marginTop: '25px',
-              textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
-            }}
-          >
-            Don't have an account?
-          </Typography>
-          <TextButton />
+          <Box sx={styledBox}>
+            <Typography
+              sx={
+                (styledTypography,
+                {
+                  textAlign: 'center'
+                })
+              }
+            >
+              Don't have an account?
+            </Typography>
+          </Box>
+          <Box sx={styledBox}>
+            <TextButton />
+          </Box>
         </Box>
       </FormControl>
     </Box>
