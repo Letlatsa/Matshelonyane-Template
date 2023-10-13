@@ -83,7 +83,23 @@ function CreateAccountForm() {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: '10px'
+    marginBottom: '30px'
+  };
+
+  const styledSubmitButton = {
+    fontSize: 18,
+    backgroundColor: '#FFEB22',
+    width: '100%',
+    borderRadius: '15px',
+    height: '50px',
+    color: '#000000',
+    fontWeight: '600',
+    textTransform: 'none',
+    marginBottom: '30px',
+    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+    '&:hover': {
+      backgroundColor: '#FFEB00'
+    }
   };
 
   return (
@@ -91,7 +107,7 @@ function CreateAccountForm() {
       <Box sx={{ marginTop: '20px' }}>
         <FormControl sx={styledFormControl}>
           <Box sx={{ right: '10px !important' }}>
-            <Typography sx={styledTypography}>Welcome to Matshelonyane!</Typography>
+            <Typography sx={styledTypography}>Create an Account</Typography>
           </Box>
           <Box sx={inputContainerBox}>
             <InputLabel id="Account-type" sx={styledInputLabel}>
@@ -159,37 +175,27 @@ function CreateAccountForm() {
               sx={styledTextField}
             />
           </Box>
-          <Box sx={{ width: '100%', marginTop: '50px' }}>
+          <Box>
             <Button
               variant="text"
               color="primary"
               type="submit"
-              sx={{
-                fontSize: 18,
-                backgroundColor: '#FFEB22',
-                width: '100%',
-                borderRadius: '15px',
-                height: '50px',
-                color: '#000000',
-                fontWeight: '600',
-                textTransform: 'none',
-                boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
-              }}
+              sx={styledSubmitButton}
               onClick={handleButtonClick}
             >
               Sign Up
             </Button>
             <Box sx={styledBox}>
-              <Typography
-                sx={{
-                  color: 'white',
-                  textAlign: 'center',
-                  marginTop: '25px',
-                  textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
-                }}
-              >
-                Already have an account?
-              </Typography>
+            <Typography
+            sx={
+              (styledTypography,
+              {
+                textAlign: 'center'
+              })
+            }
+          >
+          Already have an account?
+          </Typography>
             </Box>
 
             <Box sx={styledBox}>
