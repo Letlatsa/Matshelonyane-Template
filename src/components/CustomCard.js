@@ -9,6 +9,7 @@ const StyledCard = {
   height: 550,
   margin: '0 auto',
   display: 'flex',
+  alignItems: 'center',
   flexDirection: 'column',
   justifyContent: 'center',
   backgroundColor: '#e2e8f02a',
@@ -19,6 +20,10 @@ const StyledCard = {
   backdropFilter: 'blur(10px)',
   position: 'absolute',
   bottom: { mobile: 0, tablet: 125, laptop: 130, desktop: 130 }
+};
+
+const styledCardContent = {
+  width: { mobile: '90%', tablet: '89%', laptop: '90%', desktop: '90%' }
 };
 
 const StyledBox = {
@@ -32,7 +37,7 @@ function CustomCard({ children }) {
   return (
     <Box sx={StyledBox}>
       <Card sx={StyledCard}>
-        <CardContent>{children}</CardContent>
+        <CardContent sx={styledCardContent}>{children}</CardContent>
       </Card>
     </Box>
   );
