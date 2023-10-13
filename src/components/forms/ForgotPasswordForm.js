@@ -12,6 +12,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
+import AccountIcon from '../../assets/account.svg';
 
 function ForgotPasswordForm() {
   const navigate = useNavigate();
@@ -84,6 +85,11 @@ function ForgotPasswordForm() {
     }
   };
 
+  const accountLabelContainer = {
+    display: 'flex',
+    alignItems: 'center'
+  };
+
   return (
     <div>
       <Box>
@@ -93,7 +99,16 @@ function ForgotPasswordForm() {
           </Box>
           <Box sx={inputContainerBox}>
             <InputLabel id="Account-type" sx={styledInputLabel}>
-              Account type
+              <Box sx={accountLabelContainer}>
+                <img
+                  src={AccountIcon}
+                  alt="Phone"
+                  width="30"
+                  height="20"
+                  sx={{ marginRight: '30px' }}
+                />
+                <box>Account type</box>
+              </Box>
             </InputLabel>
             <Select variant="standard" labelId="Account-type" id="cars" sx={styledSelect}>
               <MenuItem value="Client">Client</MenuItem>

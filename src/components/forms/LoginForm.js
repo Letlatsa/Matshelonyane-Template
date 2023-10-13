@@ -96,7 +96,11 @@ const LoginForm = () => {
       backgroundColor: 'transparent'
     }
   };
-  
+
+  const accountLabelContainer = {
+    display: 'flex',
+    alignItems: 'center'
+  };
 
   return (
     <Box>
@@ -106,7 +110,16 @@ const LoginForm = () => {
         </Box>
         <Box sx={inputContainerBox}>
           <InputLabel id="Account-type" sx={styledInputLabel}>
-            Account type
+            <Box sx={accountLabelContainer}>
+              <img
+                src={AccountIcon}
+                alt="Phone"
+                width="30"
+                height="20"
+                sx={{ marginRight: '30px' }}
+              />
+              <box>Account type</box>
+            </Box>
           </InputLabel>
 
           <Select
@@ -150,7 +163,7 @@ const LoginForm = () => {
                   height="20"
                   sx={{ marginRight: '30px' }}
                 />
-                Password
+                <Box>Password</Box>
               </div>
             }
             type="phone"

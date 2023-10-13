@@ -1,11 +1,13 @@
 import React from 'react';
 import CustomCard from '../components/CustomCard';
 import OneTimePinFForm from '../components/forms/OneTimePinForm';
+import LogoCard from '../components/Logo';
 import '../styles/login.css';
 
 function OneTimePin() {
   return (
     <div className="Login-container">
+    <LogoCard/>
       <CustomCard>
         <OneTimePinFForm />
       </CustomCard>

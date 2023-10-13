@@ -2,10 +2,12 @@ import React from 'react';
 import '../styles/login.css';
 import CustomCard from '../components/CustomCard';
 import CreateAccountForm from '../components/forms/CreateAccountForm';
+import LogoCard from '../components/Logo';
 
 function CreateAccount() {
   return (
     <div className="Login-container">
+      <LogoCard />
       <CustomCard>
         <CreateAccountForm />
       </CustomCard>
