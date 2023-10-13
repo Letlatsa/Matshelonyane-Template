@@ -186,16 +186,16 @@ function CreateAccountForm() {
               Sign Up
             </Button>
             <Box sx={styledBox}>
-            <Typography
-            sx={
-              (styledTypography,
-              {
-                textAlign: 'center'
-              })
-            }
-          >
-          Already have an account?
-          </Typography>
+              <Typography
+                sx={
+                  (styledTypography,
+                  {
+                    textAlign: 'center'
+                  })
+                }
+              >
+                Already have an account?
+              </Typography>
             </Box>
 
             <Box sx={styledBox}>
