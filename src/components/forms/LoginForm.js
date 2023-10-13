@@ -163,7 +163,7 @@ const LoginForm = () => {
                   height="20"
                   sx={{ marginRight: '30px' }}
                 />
-                Password
+                <Box>Password</Box>
               </div>
             }
             type="phone"

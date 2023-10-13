@@ -13,11 +13,11 @@ const StyledCard = {
   flexDirection: 'column',
   justifyContent: 'center',
   backgroundColor: '#e2e8f02a',
-  borderTopLeftRadius: '50px',
-  borderTopRightRadius: '50px',
+  borderTopLeftRadius: '30px',
+  borderTopRightRadius: '30px',
   borderBottomLeftRadius: { mobile: '0px', tablet: '50px', laptop: '50px', desktop: '50px' },
   borderBottomRightRadius: { mobile: '0px', tablet: '50px', laptop: '50px', desktop: '50px' },
-  backdropFilter: 'blur(10px)',
+  backdropFilter: 'blur(30px)',
   position: 'absolute',
   bottom: { mobile: 0, tablet: 125, laptop: 130, desktop: 130 }
 };
