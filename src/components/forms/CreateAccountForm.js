@@ -19,38 +19,85 @@ function CreateAccountForm() {
   const handleButtonClick = () => {
     navigate('/');
   };
+
+  const styledFormControl = {
+    width: '100%',
+    color: 'white'
+  };
+
+  const styledTypography = {
+    fontSize: 24,
+    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+    fontWeight: 'bold',
+    marginBottom: '25px'
+  };
+
+  const styledTextField = {
+    width: '100%',
+    '& input': {
+      color: 'white',
+      borderBottom: ' 3px solid white'
+    },
+    '& label': {
+      color: 'white'
+    },
+    marginBottom: '10px'
+  };
+
+  const styledBox = {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: '10px'
+  };
+
+  const styledTextButton = {
+    color: '#FFEB22',
+    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+    fontWeight: '600',
+    backgroundColor: 'transparent',
+    '&:hover': {
+      backgroundColor: 'transparent'
+    }
+  };
+
+  const styledInputLabel = {
+    marginTop: 8,
+    left: -14,
+    color: 'white',
+    '&:hover': {
+      color: 'white'
+    }
+  };
+
+  const styledSelect = {
+    width: '100%',
+    color: 'white',
+    borderBottom: ' 2px solid white',
+    marginBottom: '10px'
+  };
+
+  const inputContainerBox = {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: '10px'
+  };
+
   return (
     <div>
-      <Box sx={{}}>
-        <FormControl sx={{ width: '100%', color: 'white' }}>
+      <Box sx={{ marginTop: '20px' }}>
+        <FormControl sx={styledFormControl}>
           <Box sx={{ right: '10px !important' }}>
-            <Typography sx={{ textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)' }}>
-              Welcome to Matshelonyane!
-            </Typography>
+            <Typography sx={styledTypography}>Welcome to Matshelonyane!</Typography>
           </Box>
-          <Box sx={{ width: '100%', marginTop: '20px' }}>
-            <InputLabel
-              id="Account-type"
-              sx={{
-                marginTop: 4,
-                left: '-2%',
-                color: 'white',
-                '&:hover': {
-                  color: 'white'
-                }
-              }}
-            >
+          <Box sx={inputContainerBox}>
+            <InputLabel id="Account-type" sx={styledInputLabel}>
               Account type
             </InputLabel>
-            <Select
-              variant="standard"
-              labelId="Account-type"
-              id="cars"
-              sx={{
-                width: '100%',
-                color: 'white'
-              }}
-            >
+            <Select variant="standard" labelId="Account-type" id="cars" sx={styledSelect}>
               <MenuItem value="Client">Client</MenuItem>
               <MenuItem value="Driver">Driver</MenuItem>
             </Select>
@@ -71,19 +118,7 @@ function CreateAccountForm() {
               type="phone"
               name="phone"
               placeholder="Enter your phone number"
-              sx={{
-                width: '100%',
-                '& input': {
-                  color: 'white',
-                  borderBottom: ' 3px solid white'
-                },
-                '& label': {
-                  color: 'white'
-                },
-                '& input:hover': {
-                  borderBottom: '1px solid white'
-                }
-              }}
+              sx={styledTextField}
             />
             <TextField
               variant="standard"
@@ -102,17 +137,7 @@ function CreateAccountForm() {
               type="password"
               name="password"
               placeholder="Enter your password"
-              sx={{
-                width: '100%',
-
-                '& input': {
-                  color: 'white',
-                  borderBottom: ' 3px solid white'
-                },
-                '& label': {
-                  color: 'white'
-                }
-              }}
+              sx={styledTextField}
             />
             <TextField
               variant="standard"
@@ -131,17 +156,7 @@ function CreateAccountForm() {
               type="password"
               name="password"
               placeholder="Enter your password"
-              sx={{
-                width: '100%',
-
-                '& input': {
-                  color: 'white',
-                  borderBottom: ' 3px solid white'
-                },
-                '& label': {
-                  color: 'white'
-                }
-              }}
+              sx={styledTextField}
             />
           </Box>
           <Box sx={{ width: '100%', marginTop: '50px' }}>
@@ -164,29 +179,24 @@ function CreateAccountForm() {
             >
               Sign Up
             </Button>
-            <Typography
-              sx={{
-                color: 'white',
-                textAlign: 'center',
-                marginTop: '25px',
-                textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
-              }}
-            >
-              Already have an account?
-            </Typography>
+            <Box sx={styledBox}>
+              <Typography
+                sx={{
+                  color: 'white',
+                  textAlign: 'center',
+                  marginTop: '25px',
+                  textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
+                }}
+              >
+                Already have an account?
+              </Typography>
+            </Box>
 
-            <Button
-              variant="text"
-              sx={{
-                color: '#FFEB22',
-                marginTop: '25px',
-                left: 250,
-                textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
-              }}
-              onClick={handleButtonClick}
-            >
-              Login
-            </Button>
+            <Box sx={styledBox}>
+              <Button variant="text" sx={styledTextButton} onClick={handleButtonClick}>
+                Login
+              </Button>
+            </Box>
           </Box>
         </FormControl>
       </Box>
