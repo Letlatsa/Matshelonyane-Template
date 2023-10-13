@@ -17,7 +17,7 @@ function ForgotPasswordForm() {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/dashboard');
+    navigate('/onetimepin');
   };
   return (
     <div>

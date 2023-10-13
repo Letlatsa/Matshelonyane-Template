@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/login.css';
 import CustomCard from '../components/CustomCard';
 import ForgotPasswordForm from '../components/forms/ForgotPasswordForm';
+import '../styles/login.css';
 
 function ForgotPassword() {
   return (
