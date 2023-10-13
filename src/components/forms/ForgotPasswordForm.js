@@ -10,6 +10,8 @@ import {
   Button
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import PhoneIcon from '../../assets/phone.svg';
+import PasswordIcon from '../../assets/password.svg';
 
 function ForgotPasswordForm() {
   const navigate = useNavigate();
@@ -54,7 +56,18 @@ function ForgotPasswordForm() {
             </Select>
             <TextField
               variant="standard"
-              label="Number"
+              label={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img
+                    src={PhoneIcon}
+                    alt="Phone"
+                    width="30"
+                    height="20"
+                    sx={{ marginRight: '30px' }}
+                  />
+                  Number
+                </div>
+              }
               type="phone"
               name="phone"
               placeholder="Enter your phone number"
@@ -74,7 +87,18 @@ function ForgotPasswordForm() {
             />
             <TextField
               variant="standard"
-              label="Password"
+              label={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img
+                    src={PasswordIcon}
+                    alt="Password"
+                    width="30"
+                    height="20"
+                    sx={{ marginRight: '30px' }}
+                  />
+                  Password
+                </div>
+              }
               type="password"
               name="password"
               placeholder="Enter your password"
@@ -92,7 +116,18 @@ function ForgotPasswordForm() {
             />
             <TextField
               variant="standard"
-              label="Confirm Password"
+              label={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img
+                    src={PasswordIcon}
+                    alt="Password"
+                    width="30"
+                    height="20"
+                    sx={{ marginRight: '30px' }}
+                  />
+                  Confirm Password
+                </div>
+              }
               type="password"
               name="password"
               placeholder="Enter your password"

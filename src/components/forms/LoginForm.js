@@ -12,6 +12,10 @@ import {
   Button
 } from '@mui/material';
 import TextButton from '../Buttons/TextButton';
+import AccountIcon from '../../assets/account.svg';
+import PhoneIcon from '../../assets/phone.svg';
+import PasswordIcon from '../../assets/password.svg';
+
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
@@ -92,6 +96,12 @@ const LoginForm = () => {
       backgroundColor: 'transparent'
     }
   };
+  const customStartAdornment = {
+    position: 'absolute',
+    top: '50%',
+    left: 0,
+    transform: 'translateY(-50%)'
+  };
 
   return (
     <Box>
@@ -103,6 +113,7 @@ const LoginForm = () => {
           <InputLabel id="Account-type" sx={styledInputLabel}>
             Account type
           </InputLabel>
+
           <Select
             variant="standard"
             labelId="Account-type"
@@ -116,7 +127,18 @@ const LoginForm = () => {
           </Select>
           <TextField
             variant="standard"
-            label="Number"
+            label={
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <img
+                  src={PhoneIcon}
+                  alt="Phone"
+                  width="30"
+                  height="20"
+                  sx={{ marginRight: '30px' }}
+                />
+                Number
+              </div>
+            }
             type="phone"
             name="phone"
             placeholder="Enter your phone number"
@@ -124,10 +146,21 @@ const LoginForm = () => {
           />
           <TextField
             variant="standard"
-            label="Password"
-            type="password"
-            name="password"
-            placeholder="Enter your password"
+            label={
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <img
+                  src={PasswordIcon}
+                  alt="Phone"
+                  width="30"
+                  height="20"
+                  sx={{ marginRight: '30px' }}
+                />
+                Password
+              </div>
+            }
+            type="phone"
+            name="phone"
+            placeholder="Enter your phone number"
             sx={styledTextField}
           />
         </Box>
