@@ -6,6 +6,7 @@ import OneTimePin from './pages/OneTimePin';
 import Dashboard from './pages/Dashboard';
 import AccountCreated from './components/onboardingpages/AccountCreated';
 import TruckerOnboardingProfile from './components/onboardingpages/TruckerOnboardingProfile';
+import TruckOnboardingProfile from './components/onboardingpages/TruckOnboardingProfile';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/onetimepin" element={<OneTimePin />}></Route>
         <Route path="/accountcreated" element={<AccountCreated />}></Route>
         <Route path="/truckeronboardingprofile" element={<TruckerOnboardingProfile />}></Route>
+        <Route path="/truckonboardingprofile" element={<TruckOnboardingProfile />}></Route>
       </Routes>
     </div>
   );

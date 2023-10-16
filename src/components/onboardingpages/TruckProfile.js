@@ -1,10 +1,19 @@
 import React from 'react';
 import { Avatar } from '@mui/material';
-import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
-import AvatarIcon from '../../assets/Avatar.svg';
+import {
+  Box,
+  FormControl,
+  TextField,
+  Typography,
+  Button,
+  InputLabel,
+  Select,
+  MenuItem
+} from '@mui/material';
+import TruckAvatarIcon from '../../assets/TruckAvatar.svg';
 import AccountIcon from '../../assets/account.svg';
-import PhoneIcon from '../../assets/phone.svg';
-import LocationIcon from '../../assets/location.svg';
+import WeightIcon from '../../assets/weight.svg';
+import TruckIcon from '../../assets/truck.svg';
 import { useNavigate } from 'react-router-dom';
 
 const styledFormControl = {
@@ -47,8 +56,27 @@ const styledSubmitButton = {
     backgroundColor: '#FFEB00'
   }
 };
+const styledInputLabel = {
+  marginTop: 8,
+  left: -15,
+  color: 'white',
+  '&:hover': {
+    color: 'white'
+  }
+};
 
-function TruckerProfile() {
+const styledSelect = {
+  width: '100%',
+  color: 'white',
+  borderBottom: ' 2px solid white',
+  marginBottom: '10px'
+};
+const accountLabelContainer = {
+  display: 'flex',
+  alignItems: 'center'
+};
+
+function TruckProfile() {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -61,7 +89,7 @@ function TruckerProfile() {
   };
   return (
     <div>
-      <Box>
+      <Box sx={{ width: '100%', marginRight: '50px', left: '50px' }}>
         <Typography
           sx={{
             fontSize: 24,
@@ -74,10 +102,10 @@ function TruckerProfile() {
             marginTop: '50px'
           }}
         >
-          Let’s us get to know you
+          Fleet setup
         </Typography>
         <Box sx={styledAvatarBox}>
-          <Avatar alt="TruckerAvatar" src={AvatarIcon} sx={{ width: 100, height: 100 }} />
+          <Avatar alt="TruckerAvatar" src={TruckAvatarIcon} sx={{ width: 100, height: 100 }} />
         </Box>
         <Typography
           sx={{
@@ -88,7 +116,7 @@ function TruckerProfile() {
             marginLeft: '15px'
           }}
         >
-          Upload your profile picture
+          Upload a picture of your truck
         </Typography>
         <Box>
           <FormControl sx={styledFormControl}>
@@ -104,7 +132,7 @@ function TruckerProfile() {
                       height="20"
                       sx={{ marginRight: '30px' }}
                     />
-                    First name
+                    PlateNumber
                   </div>
                 }
                 type="phone"
@@ -112,57 +140,37 @@ function TruckerProfile() {
                 placeholder="Enter your phone number"
                 sx={styledTextField}
               />
-              <TextField
-                variant="standard"
-                label={
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={inputContainerBox}>
+                <InputLabel id="Account-type" sx={styledInputLabel}>
+                  <Box sx={accountLabelContainer}>
                     <img
-                      src={AccountIcon}
+                      src={TruckIcon}
                       alt="Phone"
                       width="30"
                       height="20"
                       sx={{ marginRight: '30px' }}
                     />
-                    Last name
-                  </div>
-                }
-                type="phone"
-                name="phone"
-                placeholder="Enter your phone number"
-                sx={styledTextField}
-              />
-              <TextField
-                variant="standard"
-                label={
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                      src={PhoneIcon}
-                      alt="Phone"
-                      width="30"
-                      height="20"
-                      sx={{ marginRight: '30px' }}
-                    />
-                    Phone Number
-                  </div>
-                }
-                type="phone"
-                name="phone"
-                placeholder="Enter your phone number"
-                sx={styledTextField}
-              />
+                    <box>Account type</box>
+                  </Box>
+                </InputLabel>
+                <Select variant="standard" labelId="Account-type" id="cars" sx={styledSelect}>
+                  <MenuItem value="Client">Type 1</MenuItem>
+                  <MenuItem value="Driver">Type 2</MenuItem>
+                </Select>
+              </Box>
 
               <TextField
                 variant="standard"
                 label={
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <img
-                      src={LocationIcon}
+                      src={WeightIcon}
                       alt="Password"
                       width="30"
                       height="20"
                       sx={{ marginRight: '30px' }}
                     />
-                    Location
+                    Weight
                   </div>
                 }
                 type="password"
@@ -189,4 +197,4 @@ function TruckerProfile() {
   );
 }
 
-export default TruckerProfile;
+export default TruckProfile;
