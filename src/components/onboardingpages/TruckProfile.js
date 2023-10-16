@@ -80,7 +80,7 @@ function TruckProfile() {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/truckonboardingprofile');
+    navigate('/truckprofilecomplete');
   };
   const styledAvatarBox = {
     display: 'flex',
