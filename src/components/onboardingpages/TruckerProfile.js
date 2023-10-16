@@ -1,9 +1,9 @@
-import React from 'react';
+import { React, useState } from 'react';
 import { Avatar } from '@mui/material';
 import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
-import AvatarIcon from '../../assets/Avatar.svg';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
+import UploadIcon from '../../assets/upload.svg';
 import LocationIcon from '../../assets/location.svg';
 import { useNavigate } from 'react-router-dom';
 
@@ -49,15 +49,36 @@ const styledSubmitButton = {
 };
 
 function TruckerProfile() {
+  const [avatarImage, setAvatarImage] = useState(null);
   const navigate = useNavigate();
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        setAvatarImage(e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
   const handleButtonClick = () => {
     navigate('/truckonboardingprofile');
   };
   const styledAvatarBox = {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'relative'
+  };
+  const uploadIconStyle = {
+    position: 'absolute',
+    right: '100px',
+    bottom: '0px',
+    cursor: 'pointer'
   };
   return (
     <div>
@@ -76,9 +97,26 @@ function TruckerProfile() {
         >
           Let’s us get to know you
         </Typography>
-        <Box sx={styledAvatarBox}>
-          <Avatar alt="TruckerAvatar" src={AvatarIcon} sx={{ width: 100, height: 100 }} />
-        </Box>
+        <input
+          type="file"
+          accept="image/*"
+          id="avatar-upload"
+          style={{ display: 'none' }}
+          onChange={handleImageChange}
+        />
+        <label htmlFor="avatar-upload">
+          <Box sx={styledAvatarBox}>
+            {avatarImage ? (
+              <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 100, height: 100 }} />
+            ) : (
+              <Avatar alt="User Avatar" sx={{ width: 100, height: 100 }}></Avatar>
+            )}
+            <Box style={uploadIconStyle}>
+              <img src={UploadIcon} alt="Account" width="30" height="20" />
+            </Box>
+          </Box>
+        </label>
+
         <Typography
           sx={{
             fontSize: 14,
