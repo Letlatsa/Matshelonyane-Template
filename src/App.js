@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import { Route, Routes } from 'react-router-dom';
 import OneTimePin from './pages/OneTimePin';
 import Dashboard from './pages/Dashboard';
+import AccountCreated from './components/onboardingpages/AccountCreated';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/createaccount" element={<CreateAccount />}></Route>
         <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
         <Route path="/onetimepin" element={<OneTimePin />}></Route>
+        <Route path="/accountcreated" element={<AccountCreated />}></Route>
       </Routes>
     </div>
   );

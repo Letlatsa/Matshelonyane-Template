@@ -18,7 +18,7 @@ function CreateAccountForm() {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/');
+    navigate('/accountcreated');
   };
 
   const styledFormControl = {
@@ -105,7 +105,7 @@ function CreateAccountForm() {
 
   const accountLabelContainer = {
     display: 'flex',
-    alignItems: 'center'  
+    alignItems: 'center'
   };
 
   return (
