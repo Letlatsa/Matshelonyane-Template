@@ -1,10 +1,13 @@
 import React from 'react';
 import CardComponent from './CardComponent';
+import AccountCreatedContent from './AccountCreatedContent';
 
 function AccountCreated() {
   return (
     <div>
-      <CardComponent />
+      <CardComponent>
+        <AccountCreatedContent />
+      </CardComponent>
     </div>
   );
 }
