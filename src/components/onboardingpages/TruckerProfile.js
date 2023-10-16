@@ -99,7 +99,7 @@ function TruckerProfile() {
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <img
                       src={AccountIcon}
-                      alt="Phone"
+                      alt="Account"
                       width="30"
                       height="20"
                       sx={{ marginRight: '30px' }}
@@ -107,9 +107,9 @@ function TruckerProfile() {
                     First name
                   </div>
                 }
-                type="phone"
-                name="phone"
-                placeholder="Enter your phone number"
+                type="Account"
+                name="Account"
+                placeholder="Enter your First Name"
                 sx={styledTextField}
               />
               <TextField
@@ -118,7 +118,7 @@ function TruckerProfile() {
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <img
                       src={AccountIcon}
-                      alt="Phone"
+                      alt="Lastname"
                       width="30"
                       height="20"
                       sx={{ marginRight: '30px' }}
@@ -126,9 +126,9 @@ function TruckerProfile() {
                     Last name
                   </div>
                 }
-                type="phone"
-                name="phone"
-                placeholder="Enter your phone number"
+                type="Lastname"
+                name="Lastname"
+                placeholder="Enter your Last name"
                 sx={styledTextField}
               />
               <TextField
@@ -157,7 +157,7 @@ function TruckerProfile() {
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <img
                       src={LocationIcon}
-                      alt="Password"
+                      alt="Location"
                       width="30"
                       height="20"
                       sx={{ marginRight: '30px' }}
@@ -165,9 +165,9 @@ function TruckerProfile() {
                     Location
                   </div>
                 }
-                type="password"
-                name="password"
-                placeholder="Enter your password"
+                type="Location"
+                name="Location"
+                placeholder="Enter your Location"
                 sx={styledTextField}
               />
             </Box>

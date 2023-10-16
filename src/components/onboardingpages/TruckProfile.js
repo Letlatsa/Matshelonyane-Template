@@ -127,33 +127,33 @@ function TruckProfile() {
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <img
                       src={AccountIcon}
-                      alt="Phone"
+                      alt="Plate Number"
                       width="30"
                       height="20"
                       sx={{ marginRight: '30px' }}
                     />
-                    PlateNumber
+                    Plate Number
                   </div>
                 }
-                type="phone"
-                name="phone"
-                placeholder="Enter your phone number"
+                type="Plate Number"
+                name="Plate Number"
+                placeholder="Enter your plate number"
                 sx={styledTextField}
               />
               <Box sx={inputContainerBox}>
-                <InputLabel id="Account-type" sx={styledInputLabel}>
+                <InputLabel id="Truck-type" sx={styledInputLabel}>
                   <Box sx={accountLabelContainer}>
                     <img
                       src={TruckIcon}
-                      alt="Phone"
+                      alt="Truck-type"
                       width="30"
                       height="20"
                       sx={{ marginRight: '30px' }}
                     />
-                    <box>Account type</box>
+                    <box>Truck-type</box>
                   </Box>
                 </InputLabel>
-                <Select variant="standard" labelId="Account-type" id="cars" sx={styledSelect}>
+                <Select variant="standard" labelId="Truck-type" id="cars" sx={styledSelect}>
                   <MenuItem value="Client">Type 1</MenuItem>
                   <MenuItem value="Driver">Type 2</MenuItem>
                 </Select>
@@ -165,7 +165,7 @@ function TruckProfile() {
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <img
                       src={WeightIcon}
-                      alt="Password"
+                      alt="Tonnage"
                       width="30"
                       height="20"
                       sx={{ marginRight: '30px' }}
@@ -173,9 +173,9 @@ function TruckProfile() {
                     Weight
                   </div>
                 }
-                type="password"
-                name="password"
-                placeholder="Enter your password"
+                type="Tonnage"
+                name="Tonnage"
+                placeholder="Enter your Truck Tonnage"
                 sx={styledTextField}
               />
             </Box>
