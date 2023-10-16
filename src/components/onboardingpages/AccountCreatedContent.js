@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import AccountCreatedIcon from '../../assets/AccountCreated.svg';
+import { useNavigate } from 'react-router-dom';
 
 const styledBoxContent = {
   width: { mobile: '90%', tablet: '89%', laptop: '90%', desktop: '90%' },
@@ -41,6 +42,11 @@ const styledTypography = {
   marginLeft: '30px'
 };
 function AccountCreatedContent() {
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate('/truckeronboardingprofile');
+  };
   return (
     <div>
       <Box sx={styledBoxContent}>
@@ -62,7 +68,13 @@ function AccountCreatedContent() {
           </Typography>
         </Box>
 
-        <Button variant="text" color="primary" type="submit" sx={styledSubmitButton}>
+        <Button
+          variant="text"
+          color="primary"
+          type="submit"
+          sx={styledSubmitButton}
+          onClick={handleButtonClick}
+        >
           Continue
         </Button>
       </Box>
