@@ -5,6 +5,7 @@ import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import UploadIcon from '../../assets/upload.svg';
 import LocationIcon from '../../assets/location.svg';
+import ProgressBar from './ProgressBar';
 import { useNavigate } from 'react-router-dom';
 
 const styledFormControl = {
@@ -50,6 +51,7 @@ const styledSubmitButton = {
 
 function TruckerProfile() {
   const [avatarImage, setAvatarImage] = useState(null);
+  const [currentStep, setCurrentStep] = useState(1);
   const navigate = useNavigate();
 
   const handleImageChange = (e) => {
@@ -66,7 +68,13 @@ function TruckerProfile() {
     }
   };
   const handleButtonClick = () => {
-    navigate('/truckonboardingprofile');
+    if (currentStep === 1) {
+      setCurrentStep(2);
+    } else if (currentStep === 2) {
+      setCurrentStep(3);
+    } else if (currentStep === 3) {
+      navigate('/onboardinglicense');
+    }
   };
   const styledAvatarBox = {
     display: 'flex',
@@ -83,6 +91,9 @@ function TruckerProfile() {
   return (
     <div>
       <Box>
+        <Box>
+          <ProgressBar currentStep={currentStep} />
+        </Box>
         <Typography
           sx={{
             fontSize: 24,

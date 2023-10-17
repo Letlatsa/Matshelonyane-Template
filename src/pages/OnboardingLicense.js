@@ -1,11 +1,25 @@
-import React from 'react';
+import { React, useState } from 'react';
 import CardComponent from '../components/onboardingpages/CardComponent';
 import { Box, Typography, Button } from '@mui/material';
 import LicenceFrame from '../assets/License Frame1.svg';
-
+import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
+import ProgressBar from '../components/onboardingpages/ProgressBar';
 
 const OnboardingLicense = () => {
+  const [currentStep, setCurrentStep] = useState(1);
+
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    if (currentStep === 1) {
+      setCurrentStep(2);
+    } else if (currentStep === 2) {
+      setCurrentStep(3);
+    } else if (currentStep === 3) {
+      navigate('/truckonboardingprofile');
+    }
+  };
   const styledButton = {
     fontSize: 18,
     backgroundColor: '#FFEB22',
@@ -28,7 +42,7 @@ const OnboardingLicense = () => {
     fontWeight: 'bold',
     color: '#ffffff',
     textAlign: 'center',
-    marginBottom: '30px'
+    marginBottom: '50px'
   };
 
   const styledTypography = {
@@ -55,8 +69,10 @@ const OnboardingLicense = () => {
   return (
     <div className="Login-container">
       <CardComponent>
-        <Box className="progress"></Box>
-        <Box className="LiceneceBox">
+        <Box>
+          <ProgressBar currentStep={currentStep} />
+        </Box>
+        <Box className="LiceneceBox" sx={{ marginTop: '50px' }}>
           <Typography sx={styledHeaingTypography}>Let’s verify your drivers license</Typography>
           <Box sx={styledBox}>
             <img src={LicenceFrame} alt="License" sx={styledImage} />
@@ -68,7 +84,7 @@ const OnboardingLicense = () => {
             <Button variant="text" sx={styledButton}>
               Upload Picture
             </Button>
-            <Button variant="text" sx={styledButton}>
+            <Button variant="text" sx={styledButton} onClick={handleButtonClick}>
               Proceed
             </Button>
           </Box>

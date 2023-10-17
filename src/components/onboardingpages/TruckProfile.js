@@ -14,6 +14,7 @@ import AccountIcon from '../../assets/account.svg';
 import WeightIcon from '../../assets/weight.svg';
 import TruckIcon from '../../assets/truck.svg';
 import UploadIcon from '../../assets/upload.svg';
+import ProgressBar from './ProgressBar';
 import { useNavigate } from 'react-router-dom';
 
 const styledFormControl = {
@@ -83,13 +84,14 @@ const styledAvatarBox = {
 };
 const uploadIconStyle = {
   position: 'absolute',
-  right: '80px',
+  right: '100px',
   bottom: '0px',
   cursor: 'pointer'
 };
 
 function TruckProfile() {
   const [avatarImage, setAvatarImage] = useState(null);
+  const [currentStep, setCurrentStep] = useState(1);
   const navigate = useNavigate();
 
   const handleImageChange = (e) => {
@@ -107,12 +109,21 @@ function TruckProfile() {
   };
 
   const handleButtonClick = () => {
-    navigate('/truckprofilecomplete');
+    if (currentStep === 1) {
+      setCurrentStep(2);
+    } else if (currentStep === 2) {
+      setCurrentStep(3);
+    } else if (currentStep === 3) {
+      navigate('/truckprofilecomplete');
+    }
   };
 
   return (
     <div>
       <Box sx={{ width: '100%', marginRight: '50px', left: '50px' }}>
+        <Box>
+          <ProgressBar currentStep={currentStep} />
+        </Box>
         <Typography
           sx={{
             fontSize: 24,
@@ -139,9 +150,7 @@ function TruckProfile() {
             {avatarImage ? (
               <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 100, height: 100 }} />
             ) : (
-              <Avatar alt="User Avatar" sx={{ width: 100, height: 100 }}>
-                {/* You can add an icon or default text here */}
-              </Avatar>
+              <Avatar alt="User Avatar" sx={{ width: 100, height: 100 }}></Avatar>
             )}
             <Box style={uploadIconStyle}>
               <img src={UploadIcon} alt="Account" width="30" height="20" />
@@ -211,7 +220,7 @@ function TruckProfile() {
                       height="20"
                       sx={{ marginRight: '30px' }}
                     />
-                    Weight
+                    Weight Capacity
                   </div>
                 }
                 type="Tonnage"
