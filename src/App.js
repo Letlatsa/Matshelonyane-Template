@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import OneTimePin from './pages/OneTimePin';
 import Dashboard from './pages/Dashboard';
 import AccountCreated from './components/onboardingpages/AccountCreated';
-import OnboardingLicense from './pages/OnboardingLicense';
+import OnboardingLicense from './components/onboardingpages/OnboardingLicense';
 import TruckerOnboardingProfile from './components/onboardingpages/TruckerOnboardingProfile';
 import TruckOnboardingProfile from './components/onboardingpages/TruckOnboardingProfile';
 import TruckProfileComplete from './components/onboardingpages/TruckProfileComplete';
