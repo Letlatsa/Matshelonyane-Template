@@ -4,6 +4,8 @@ import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import UploadIcon from '../../assets/upload.svg';
+import LocationIcon from '../../assets/location.svg';
+import ProgressBar from './ProgressBar';
 import { useNavigate } from 'react-router-dom';
 
 const styledFormControl = {
@@ -49,6 +51,7 @@ const styledSubmitButton = {
 
 function ClientProfile() {
   const [avatarImage, setAvatarImage] = useState(null);
+  const [currentStep, setCurrentStep] = useState(1);
   const navigate = useNavigate();
 
   const handleImageChange = (e) => {
@@ -65,7 +68,13 @@ function ClientProfile() {
     }
   };
   const handleButtonClick = () => {
-    navigate('');
+    if (currentStep === 1) {
+      setCurrentStep(2);
+    } else if (currentStep === 2) {
+      setCurrentStep(3);
+    } else if (currentStep === 3) {
+      navigate('/clientprofilecomplete');
+    }
   };
   const styledAvatarBox = {
     display: 'flex',
@@ -79,30 +88,23 @@ function ClientProfile() {
     bottom: '0px',
     cursor: 'pointer'
   };
-
-  const styledHeaingTypography = {
-    fontSize: 24,
-    color: 'white',
-    textAlign: 'center',
-    marginBottom: '15px',
-    marginLeft: '15px',
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    fontWeight: 'bold',
-    marginTop: '50px'
-  };
-
-  const styledTypography = {
-    fontSize: 14,
-    color: 'white',
-    textAlign: 'center',
-    marginBottom: '50px',
-    marginLeft: '15px'
-  };
-
   return (
     <div>
       <Box>
-        <Typography sx={styledHeaingTypography}>Let’s us get to know you</Typography>
+        <Typography
+          sx={{
+            fontSize: 24,
+            color: 'white',
+            textAlign: 'center',
+            marginBottom: '15px',
+            marginLeft: '15px',
+            textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+            fontWeight: 'bold',
+            marginTop: '50px'
+          }}
+        >
+          Let’s us get to know you
+        </Typography>
         <input
           type="file"
           accept="image/*"
@@ -123,7 +125,17 @@ function ClientProfile() {
           </Box>
         </label>
 
-        <Typography sx={styledTypography}>Upload your profile picture</Typography>
+        <Typography
+          sx={{
+            fontSize: 14,
+            color: 'white',
+            textAlign: 'center',
+            marginBottom: '50px',
+            marginLeft: '15px'
+          }}
+        >
+          Upload your profile picture
+        </Typography>
         <Box>
           <FormControl sx={styledFormControl}>
             <Box sx={inputContainerBox}>

@@ -1,10 +1,10 @@
 import { React, useState } from 'react';
-import CardComponent from '../components/onboardingpages/CardComponent';
+import CardComponent from '../../components/onboardingpages/CardComponent';
 import { Box, Typography, Button } from '@mui/material';
-import LicenceFrame from '../assets/License Frame1.svg';
+import LicenceFrame from '../../assets/License Frame1.svg';
 import { useNavigate } from 'react-router-dom';
-import '../styles/login.css';
-import ProgressBar from '../components/onboardingpages/ProgressBar';
+import '../../styles/login.css';
+import ProgressBar from './ProgressBar';
 
 const OnboardingLicense = () => {
   const [currentStep, setCurrentStep] = useState(1);
