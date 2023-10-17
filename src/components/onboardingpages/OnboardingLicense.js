@@ -1,5 +1,5 @@
 import React from 'react';
-import CardComponent from '../components/onboardingpages/CardComponent';
+import CardComponent from './CardComponent';
 import { Box, Typography, Button } from '@mui/material';
 import LicenceFrame from '../assets/License Frame1.svg';
 
