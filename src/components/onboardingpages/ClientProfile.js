@@ -66,7 +66,7 @@ function ClientProfile() {
     }
   };
   const handleButtonClick = () => {
-    navigate('/truckonboardingprofile');
+    navigate('');
   };
   const styledAvatarBox = {
     display: 'flex',
