@@ -4,7 +4,6 @@ import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import UploadIcon from '../../assets/upload.svg';
-import LocationIcon from '../../assets/location.svg';
 import { useNavigate } from 'react-router-dom';
 
 const styledFormControl = {
