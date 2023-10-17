@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState } from 'react';
 import {
   Box,
   FormControl,
@@ -17,10 +17,54 @@ import AccountIcon from '../../assets/account.svg';
 function CreateAccountForm() {
   const navigate = useNavigate();
 
-  const handleButtonClick = () => {
-    navigate('/');
+  //initial form state and error state
+  const initialFormState = {
+    accountType: 'Client',
+    phone: '',
+    password: '',
+    confirmPassword: ''
   };
 
+  const initialErrorState = {
+    phoneError: '',
+    passwordError: '',
+    confirmPasswordError: ''
+  };
+
+  const [formData, setFormData] = useState(initialFormState);
+  const [formErrors, setFormErrors] = useState(initialErrorState);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleButtonClick = () => {
+    const { phone, password, confirmPassword } = formData;
+    const errors = {};
+
+    if (!phone) {
+      errors.phoneError = 'Phone number is required';
+    }
+
+    if (!password) {
+      errors.passwordError = 'Password is required';
+    }
+
+    if (password !== confirmPassword) {
+      errors.confirmPasswordError = 'Passwords do not match';
+      console.log(formErrors.confirmPasswordError);
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+    } else {
+      navigate('/');
+    }
+  };
+  const handleButtonClicked = () => {
+    navigate('/');
+  };
   const styledFormControl = {
     width: '100%',
     color: 'white'
@@ -54,7 +98,7 @@ function CreateAccountForm() {
   };
 
   const styledTextButton = {
-    color: '#FFEB22',
+    color: '#FDB299',
     textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     fontWeight: '600',
     backgroundColor: 'transparent',
@@ -89,23 +133,23 @@ function CreateAccountForm() {
 
   const styledSubmitButton = {
     fontSize: 18,
-    backgroundColor: '#FFEB22',
+    backgroundColor: '#EBDBD5',
     width: '100%',
     borderRadius: '15px',
     height: '50px',
-    color: '#000000',
-    fontWeight: '600',
+    color: '#58362A',
+    fontWeight: '100',
     textTransform: 'none',
     marginBottom: '30px',
     boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     '&:hover': {
-      backgroundColor: '#FFEB00'
+      backgroundColor: 'transparent'
     }
   };
 
   const accountLabelContainer = {
     display: 'flex',
-    alignItems: 'center'  
+    alignItems: 'center'
   };
 
   return (
@@ -125,10 +169,17 @@ function CreateAccountForm() {
                   height="20"
                   sx={{ marginRight: '30px' }}
                 />
-                <box>Account type</box>
+                <Box>Account type</Box>
               </Box>
             </InputLabel>
-            <Select variant="standard" labelId="Account-type" id="cars" sx={styledSelect}>
+            <Select
+              variant="standard"
+              labelId="Account-type"
+              id="cars"
+              sx={styledSelect}
+              value={formData.accountType}
+              onChange={handleInputChange}
+            >
               <MenuItem value="Client">Client</MenuItem>
               <MenuItem value="Driver">Driver</MenuItem>
             </Select>
@@ -169,6 +220,10 @@ function CreateAccountForm() {
               name="password"
               placeholder="Enter your password"
               sx={styledTextField}
+              value={formData.password}
+              onChange={handleInputChange}
+              error={!!formErrors.passwordError}
+              helperText={formErrors.passwordError}
             />
             <TextField
               variant="standard"
@@ -185,9 +240,13 @@ function CreateAccountForm() {
                 </div>
               }
               type="password"
-              name="password"
+              name="ConfirmPassword"
               placeholder="Enter your password"
               sx={styledTextField}
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
+              error={!!formErrors.confirmPasswordError}
+              helperText={formErrors.confirmPasswordError}
             />
           </Box>
           <Box>
@@ -214,7 +273,7 @@ function CreateAccountForm() {
             </Box>
 
             <Box sx={styledBox}>
-              <Button variant="text" sx={styledTextButton} onClick={handleButtonClick}>
+              <Button variant="text" sx={styledTextButton} onClick={handleButtonClicked}>
                 Login
               </Button>
             </Box>

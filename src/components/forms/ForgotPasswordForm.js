@@ -1,13 +1,29 @@
-import React from 'react';
+import { React, useState } from 'react';
 import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PhoneIcon from '../../assets/phone.svg';
 
 function ForgotPasswordForm() {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({ phone: '' });
+  const [formErrors, setFormErrors] = useState({ phoneError: '' });
 
   const handleButtonClick = () => {
-    navigate('/onetimepin');
+    const { phone } = formData;
+    const errors = {};
+
+    // form validation
+    if (!phone) {
+      errors.phoneError = 'Phone number is required';
+    } else if (!/^\d{8}$/.test(phone)) {
+      errors.phoneError = 'Phone number must be 8 digits';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+    } else {
+      navigate('/onetimepin');
+    }
   };
 
   const styledFormControl = {
@@ -44,17 +60,17 @@ function ForgotPasswordForm() {
 
   const styledSubmitButton = {
     fontSize: 18,
-    backgroundColor: '#FFEB22',
+    backgroundColor: '#EBDBD5',
     width: '100%',
     borderRadius: '15px',
     height: '50px',
-    color: '#000000',
-    fontWeight: '600',
+    color: '#58362A',
+    fontWeight: '100',
     textTransform: 'none',
     marginBottom: '30px',
     boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     '&:hover': {
-      backgroundColor: '#FFEB00'
+      backgroundColor: 'transparent'
     }
   };
 
@@ -84,6 +100,13 @@ function ForgotPasswordForm() {
               name="phone"
               placeholder="Enter your phone number"
               sx={styledTextField}
+              value={formData.phone}
+              onChange={(e) => {
+                setFormData({ ...formData, phone: e.target.value });
+                setFormErrors({ ...formErrors, phoneError: '' });
+              }}
+              error={!!formErrors.phoneError}
+              helperText={formErrors.phoneError}
             />
           </Box>
           <Box>

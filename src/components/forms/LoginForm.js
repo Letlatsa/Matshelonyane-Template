@@ -19,15 +19,44 @@ import PasswordIcon from '../../assets/password.svg';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const [accountType, setAccountType] = useState('');
+  const [accountType, setAccountType] = useState('Client');
+  const [formData, setFormData] = useState({ phone: '', password: '' });
   const navigate = useNavigate();
 
+  const [formErrors, setFormErrors] = useState({
+    phoneError: '',
+    passwordError: ''
+  });
+
   const handleButtonClick = () => {
-    navigate('/forgotPassword');
+    console.log('Button Clicked');
+    const errors = {};
+
+    if (!formData.phone) {
+      errors.phoneError = 'Phone number is required';
+    }
+
+    if (!formData.password) {
+      errors.passwordError = 'Password is required';
+    }
+
+    console.log('Errors:', errors);
+    console.log('Phone:', formData.phone);
+    console.log('Password:', formData.password);
+    if (Object.keys(errors).length > 0) {
+      console.log('Validation Failed');
+      setFormErrors(errors);
+    } else {
+      console.log('Validation Passed');
+      navigate('/');
+    }
   };
 
   const handleChange = (event) => {
     setAccountType(event.target.value);
+  };
+  const handleButtonClicked = () => {
+    navigate('/forgotpassword');
   };
 
   const styledFormControl = {
@@ -87,9 +116,9 @@ const LoginForm = () => {
   };
 
   const forgotPasswordButton = {
-    color: '#FFEB22',
+    color: '#FDB299',
     alignSelf: 'end',
-    fontWeight: '600',
+    fontWeight: '100',
     textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     backgroundColor: 'transparent',
     '&:hover': {
@@ -101,7 +130,22 @@ const LoginForm = () => {
     display: 'flex',
     alignItems: 'center'
   };
-
+  const styledSubmitButton = {
+    fontSize: 18,
+    backgroundColor: '#EBDBD5',
+    textColor: '#58362A',
+    width: '100%',
+    borderRadius: '15px',
+    height: '50px',
+    color: '#58362A',
+    fontWeight: '100',
+    textTransform: 'none',
+    marginBottom: '30px',
+    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+    '&:hover': {
+      backgroundColor: 'transparent'
+    }
+  };
   return (
     <Box>
       <FormControl sx={styledFormControl}>
@@ -118,7 +162,7 @@ const LoginForm = () => {
                 height="20"
                 sx={{ marginRight: '30px' }}
               />
-              <box>Account type</box>
+              <Box>Account type</Box>
             </Box>
           </InputLabel>
 
@@ -151,6 +195,13 @@ const LoginForm = () => {
             name="phone"
             placeholder="Enter your phone number"
             sx={styledTextField}
+            value={formData.phone}
+            onChange={(e) => {
+              setFormData({ ...formData, phone: e.target.value });
+              setFormErrors({ ...formErrors, phoneError: '' });
+            }}
+            error={!!formErrors.phoneError}
+            helperText={formErrors.phoneError}
           />
           <TextField
             variant="standard"
@@ -166,19 +217,34 @@ const LoginForm = () => {
                 <Box>Password</Box>
               </div>
             }
-            type="phone"
-            name="phone"
-            placeholder="Enter your phone number"
+            type="password"
+            name="password"
+            placeholder="Enter your password"
             sx={styledTextField}
+            value={formData.password}
+            onChange={(e) => {
+              setFormData({ ...formData, password: e.target.value });
+              setFormErrors({ ...formErrors, passwordError: '' });
+            }}
+            error={!!formErrors.passwordError}
+            helperText={formErrors.passwordError}
           />
         </Box>
         <Box>
           <Box sx={styledBox}>
-            <Button variant="text" sx={forgotPasswordButton} onClick={handleButtonClick}>
+            <Button variant="text" sx={forgotPasswordButton} onClick={handleButtonClicked}>
               Forgot Password ?
             </Button>
           </Box>
-          <LoginButton />
+          <Button
+            variant="text"
+            color="primary"
+            type="submit"
+            sx={styledSubmitButton}
+            onClick={handleButtonClick}
+          >
+            Login
+          </Button>
           <Box sx={styledBox}>
             <Typography
               sx={
