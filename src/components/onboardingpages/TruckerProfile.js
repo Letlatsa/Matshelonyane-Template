@@ -200,7 +200,7 @@ function TruckerProfile() {
                       height="20"
                       sx={{ marginRight: '30px' }}
                     />
-                    Location
+                    Delivery Area
                   </div>
                 }
                 type="Location"
