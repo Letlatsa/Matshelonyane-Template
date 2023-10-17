@@ -5,7 +5,6 @@ import { Route, Routes } from 'react-router-dom';
 import OneTimePin from './pages/OneTimePin';
 import Dashboard from './pages/Dashboard';
 import AccountCreated from './components/onboardingpages/AccountCreated';
-import OnboardingLicense from './pages/OnboardingLicense';
 
 function App() {
   return (
@@ -17,7 +16,6 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
         <Route path="/onetimepin" element={<OneTimePin />}></Route>
         <Route path="/accountcreated" element={<AccountCreated />}></Route>
-        <Route path="/verifylicense" element={<OnboardingLicense/>}></Route> 
       </Routes>
     </div>
   );
