@@ -40,14 +40,14 @@ function CreateAccountForm() {
   };
 
   const handleButtonClick = () => {
-    const { password, confirmPassword } = formData;
+    const { password, confirmPassword, phone } = formData;
     const errors = {};
 
-    if (!formData.phone) {
+    if (!phone) {
       errors.phoneError = 'Phone number is required';
-    } else if (!/^[7]\d{7}$/.test(formData.phone)) {
+    } else if (!/^[7]\d{7}$/.test(phone)) {
       errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
-    } else if (!/^\d+$/.test(formData.phone)) {
+    } else if (!/^\d+$/.test(phone)) {
       errors.phoneError = 'Phone number can only contain digits';
     }
 
@@ -207,6 +207,10 @@ function CreateAccountForm() {
               name="phone"
               placeholder="Enter your phone number"
               sx={styledTextField}
+              value={formData.phone}
+              onChange={handleInputChange}
+              error={!!formErrors.phoneError}
+              helperText={formErrors.phoneError}
             />
             <TextField
               variant="standard"
