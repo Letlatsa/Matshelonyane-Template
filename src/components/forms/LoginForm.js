@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import LoginButton from '../Buttons/LoginButton';
 import {
   Box,
   FormControl,
@@ -48,7 +47,7 @@ const LoginForm = () => {
       setFormErrors(errors);
     } else {
       console.log('Validation Passed');
-      navigate('/');
+      navigate('/dashboard');
     }
   };
 
