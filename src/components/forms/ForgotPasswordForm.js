@@ -9,14 +9,18 @@ function ForgotPasswordForm() {
   const [formErrors, setFormErrors] = useState({ phoneError: '' });
 
   const handleButtonClick = () => {
-    const { phone } = formData;
+    //const { phone } = formData;
     const errors = {};
 
     // form validation
-    if (!phone) {
+    if (!formData.phone) {
       errors.phoneError = 'Phone number is required';
-    } else if (!/^\d{8}$/.test(phone)) {
-      errors.phoneError = 'Phone number must be 8 digits';
+    } else if (!/^[7]\d{7}$/.test(formData.phone)) {
+      errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
+    }
+
+    if (!/^\d+$/.test(formData.phone)) {
+      errors.phoneError = 'Phone number can only contain digits';
     }
 
     if (Object.keys(errors).length > 0) {

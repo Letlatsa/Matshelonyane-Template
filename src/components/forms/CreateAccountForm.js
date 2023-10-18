@@ -40,11 +40,15 @@ function CreateAccountForm() {
   };
 
   const handleButtonClick = () => {
-    const { phone, password, confirmPassword } = formData;
+    const { password, confirmPassword } = formData;
     const errors = {};
 
-    if (!phone) {
+    if (!formData.phone) {
       errors.phoneError = 'Phone number is required';
+    } else if (!/^[7]\d{7}$/.test(formData.phone)) {
+      errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
+    } else if (!/^\d+$/.test(formData.phone)) {
+      errors.phoneError = 'Phone number can only contain digits';
     }
 
     if (!password) {
@@ -53,18 +57,20 @@ function CreateAccountForm() {
 
     if (password !== confirmPassword) {
       errors.confirmPasswordError = 'Passwords do not match';
-      console.log(formErrors.confirmPasswordError);
     }
 
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-    } else {
+    setFormErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      console.log('Success');
       navigate('/');
     }
   };
+
   const handleButtonClicked = () => {
     navigate('/');
   };
+
   const styledFormControl = {
     width: '100%',
     color: 'white'
@@ -240,7 +246,7 @@ function CreateAccountForm() {
                 </div>
               }
               type="password"
-              name="ConfirmPassword"
+              name="confirmPassword"
               placeholder="Enter your password"
               sx={styledTextField}
               value={formData.confirmPassword}
