@@ -1,23 +1,20 @@
-import logo from "./logo.svg";
-import "./App.css";
+import CreateAccount from './pages/CreateAccount';
+import ForgotPassword from './pages/ForgotPassword';
+import LoginPage from './pages/LoginPage';
+import { Route, Routes } from 'react-router-dom';
+import OneTimePin from './pages/OneTimePin';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Dev env <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<LoginPage />}></Route>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/createaccount" element={<CreateAccount />}></Route>
+        <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
+        <Route path="/onetimepin" element={<OneTimePin />}></Route>
+      </Routes>
     </div>
   );
 }
