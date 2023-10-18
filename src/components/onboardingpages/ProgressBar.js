@@ -2,7 +2,7 @@ import React from 'react';
 
 function ProgressBar({ currentStep }) {
   const steps = [1, 2, 3];
-  const stepColors = ['#FFEB22', '#808080', '#808080'];
+  const stepColors = ['#C69585', '#808080', '#808080'];
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '-20px' }}>
@@ -13,6 +13,7 @@ function ProgressBar({ currentStep }) {
               width: '30px',
               height: '30px',
               backgroundColor: stepColors[index],
+              color: 'white',
               borderRadius: '50%',
               display: 'flex',
               justifyContent: 'center',

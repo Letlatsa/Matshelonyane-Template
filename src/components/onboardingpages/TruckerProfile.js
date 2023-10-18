@@ -1,6 +1,15 @@
 import { React, useState } from 'react';
 import { Avatar } from '@mui/material';
-import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
+import {
+  Box,
+  FormControl,
+  TextField,
+  Typography,
+  Button,
+  Select,
+  InputLabel,
+  MenuItem
+} from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import UploadIcon from '../../assets/upload.svg';
@@ -35,24 +44,90 @@ const inputContainerBox = {
 
 const styledSubmitButton = {
   fontSize: 18,
-  backgroundColor: '#FFEB22',
+  backgroundColor: '#EBDBD5',
   width: '100%',
   borderRadius: '15px',
   height: '50px',
-  color: '#000000',
-  fontWeight: '600',
+  color: '#58362A',
+  fontWeight: '400',
   textTransform: 'none',
   marginBottom: '30px',
   boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
   '&:hover': {
-    backgroundColor: '#FFEB00'
+    backgroundColor: 'transparent'
   }
 };
-
+const styledInputLabel = {
+  marginTop: 22,
+  color: 'white',
+  '&:hover': {
+    color: 'white'
+  }
+};
+const accountLabelContainer = {
+  display: 'flex',
+  alignItems: 'center'
+};
 function TruckerProfile() {
   const [avatarImage, setAvatarImage] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
+  const [selectedLocation, setSelectedLocation] = useState('');
   const navigate = useNavigate();
+
+  const locationOptions = [
+    'Gaborone',
+    'Francistown',
+    'Molepolole',
+    'Maun',
+    'Serowe',
+    'Kanye',
+    'Mahalapye',
+    'Mochudi',
+    'Lobatse',
+    'Palapye',
+    'Ramotswa',
+    'Mogoditshane',
+    'Letlhakane',
+    'Tonota',
+    'Thamaga',
+    'Bobonong',
+    'Jwaneng',
+    'Orapa',
+    'Tlokweng',
+    'Selibe-Phikwe',
+    'Tshabong',
+    'Mmadinare',
+    'Gabane',
+    'Ghanzi',
+    'Kasane',
+    'Masunga',
+    'Moshupa',
+    'Mmopane',
+    'Lerala',
+    'Shakawe',
+    'Lecheng',
+    'Kang',
+    'Pandamatenga',
+    'Mmathethe',
+    'Rakops',
+    'Tsabong',
+    'Gweta',
+    'Tsetsebjwe',
+    'Pilane',
+    'Kalamare',
+    'Metsimotlhabe',
+    'Mokoboxane',
+    'Morwa',
+    'Sefophe',
+    'Tati Siding',
+    'Tsetsebjwe',
+    'Tshane',
+    'Tshesebe'
+  ];
+
+  const handleLocationChange = (event) => {
+    setSelectedLocation(event.target.value);
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -87,6 +162,12 @@ function TruckerProfile() {
     right: '100px',
     bottom: '0px',
     cursor: 'pointer'
+  };
+  const styledSelect = {
+    width: '100%',
+    color: 'white',
+    borderBottom: ' 2px solid white',
+    marginBottom: '10px'
   };
   return (
     <div>
@@ -199,26 +280,32 @@ function TruckerProfile() {
                 placeholder="Enter your phone number"
                 sx={styledTextField}
               />
-
-              <TextField
+              <InputLabel id="location-label" variant="standard" sx={styledInputLabel}>
+                <Box sx={accountLabelContainer}>
+                  <img
+                    src={LocationIcon}
+                    alt="Location"
+                    width="30"
+                    height="20"
+                    sx={{ marginRight: '30px' }}
+                  />
+                  Delivery Area
+                </Box>
+              </InputLabel>
+              <Select
+                labelId="location-label"
+                id="location"
+                value={selectedLocation}
+                onChange={handleLocationChange}
                 variant="standard"
-                label={
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                      src={LocationIcon}
-                      alt="Location"
-                      width="30"
-                      height="20"
-                      sx={{ marginRight: '30px' }}
-                    />
-                    Delivery Area
-                  </div>
-                }
-                type="Location"
-                name="Location"
-                placeholder="Enter your Location"
-                sx={styledTextField}
-              />
+                sx={styledSelect}
+              >
+                {locationOptions.map((option, index) => (
+                  <MenuItem key={index} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
             </Box>
             <Box>
               <Button

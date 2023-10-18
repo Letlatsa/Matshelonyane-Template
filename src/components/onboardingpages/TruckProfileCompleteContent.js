@@ -18,17 +18,17 @@ const styledBox = {
 
 const styledSubmitButton = {
   fontSize: 18,
-  backgroundColor: '#FFEB22',
+  backgroundColor: '#EBDBD5',
   width: '100%',
   borderRadius: '15px',
   height: '50px',
-  color: '#000000',
-  fontWeight: '600',
+  color: '#58362A',
+  fontWeight: '400',
   textTransform: 'none',
   marginBottom: '200px',
   boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
   '&:hover': {
-    backgroundColor: '#FFEB00'
+    backgroundColor: 'transparent'
   },
   marginLeft: '15px'
 };

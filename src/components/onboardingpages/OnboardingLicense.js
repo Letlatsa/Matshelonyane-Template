@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import CardComponent from '../../components/onboardingpages/CardComponent';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, Avatar } from '@mui/material';
 import LicenceFrame from '../../assets/License Frame1.svg';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/login.css';
@@ -22,17 +22,32 @@ const OnboardingLicense = () => {
   };
   const styledButton = {
     fontSize: 18,
-    backgroundColor: '#FFEB22',
+    backgroundColor: '#FDB299',
     width: '100%',
     borderRadius: '15px',
     height: '50px',
     color: '#000000',
-    fontWeight: '600',
+    fontWeight: '400',
     textTransform: 'none',
     marginBottom: '50px',
     boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     '&:hover': {
-      backgroundColor: '#FFEB00'
+      backgroundColor: 'transparent'
+    }
+  };
+  const styledButtonone = {
+    fontSize: 18,
+    backgroundColor: '#EBDBD5',
+    width: '100%',
+    borderRadius: '15px',
+    height: '50px',
+    color: '#000000',
+    fontWeight: '400',
+    textTransform: 'none',
+    marginBottom: '50px',
+    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+    '&:hover': {
+      backgroundColor: 'transparent'
     }
   };
 
@@ -84,7 +99,7 @@ const OnboardingLicense = () => {
             <Button variant="text" sx={styledButton}>
               Upload Picture
             </Button>
-            <Button variant="text" sx={styledButton} onClick={handleButtonClick}>
+            <Button variant="text" sx={styledButtonone} onClick={handleButtonClick}>
               Proceed
             </Button>
           </Box>
