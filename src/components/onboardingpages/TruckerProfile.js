@@ -69,6 +69,20 @@ const accountLabelContainer = {
   alignItems: 'center'
 };
 function TruckerProfile() {
+  const initialFormState = {
+    firstName: '',
+    lastName: '',
+    phone: '',
+    Location: 'Gaborone'
+  };
+
+  const initialErrorState = {
+    firstNameError: '',
+    lastNameError: '',
+    phoneError: ''
+  };
+  const [formData, setFormData] = useState(initialFormState);
+  const [formErrors, setFormErrors] = useState(initialErrorState);
   const [avatarImage, setAvatarImage] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedLocation, setSelectedLocation] = useState('');
@@ -124,6 +138,35 @@ function TruckerProfile() {
     'Tshane',
     'Tshesebe'
   ];
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  const validateForm = () => {
+    const { firstName, lastName, phone } = formData;
+    const errors = {};
+
+    if (!firstName) {
+      errors.firstNameError = 'Firstname is required';
+    }
+    if (!lastName) {
+      errors.lastNameError = 'Firstname is required';
+    }
+    if (!phone) {
+      errors.phoneError = 'Phone number is required';
+    } else if (!/^[7]\d{7}$/.test(phone)) {
+      errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
+    } else if (!/^\d+$/.test(phone)) {
+      errors.phoneError = 'Phone number can only contain digits';
+    }
+
+    setFormErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      console.log('Success');
+      navigate('/onboardinglicense');
+    }
+  };
 
   const handleLocationChange = (event) => {
     setSelectedLocation(event.target.value);
@@ -142,6 +185,7 @@ function TruckerProfile() {
       reader.readAsDataURL(file);
     }
   };
+  // eslint-disable-next-line no-unused-vars
   const handleButtonClick = () => {
     if (currentStep === 1) {
       setCurrentStep(2);
@@ -237,10 +281,14 @@ function TruckerProfile() {
                     First name
                   </div>
                 }
-                type="Account"
-                name="Account"
+                type="firstName"
+                name="firstName"
                 placeholder="Enter your First Name"
                 sx={styledTextField}
+                value={formData.firstName}
+                onChange={handleInputChange}
+                error={!!formErrors.firstNameError}
+                helperText={formErrors.firstNameError}
               />
               <TextField
                 variant="standard"
@@ -256,10 +304,14 @@ function TruckerProfile() {
                     Last name
                   </div>
                 }
-                type="Lastname"
-                name="Lastname"
+                type="lastName"
+                name="lastName"
                 placeholder="Enter your Last name"
                 sx={styledTextField}
+                value={formData.lastName}
+                onChange={handleInputChange}
+                error={!!formErrors.lastNameError}
+                helperText={formErrors.lastNameError}
               />
               <TextField
                 variant="standard"
@@ -279,6 +331,10 @@ function TruckerProfile() {
                 name="phone"
                 placeholder="Enter your phone number"
                 sx={styledTextField}
+                value={formData.phone}
+                onChange={handleInputChange}
+                error={!!formErrors.phoneError}
+                helperText={formErrors.phoneError}
               />
               <InputLabel id="location-label" variant="standard" sx={styledInputLabel}>
                 <Box sx={accountLabelContainer}>
@@ -313,7 +369,7 @@ function TruckerProfile() {
                 color="primary"
                 type="submit"
                 sx={styledSubmitButton}
-                onClick={handleButtonClick}
+                onClick={validateForm}
               >
                 Proceed
               </Button>

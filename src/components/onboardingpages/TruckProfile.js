@@ -90,9 +90,49 @@ const uploadIconStyle = {
 };
 
 function TruckProfile() {
+  const initialFormState = {
+    plateNumber: '',
+    truckType: 'Type 1',
+    weightCapacity: ''
+  };
+  const initialErrorState = {
+    plateNumberError: '',
+    truckTypeError: '',
+    weightCapacityError: ''
+  };
+  const [formData, setFormData] = useState(initialFormState);
+  const [formErrors, setFormErrors] = useState(initialErrorState);
   const [avatarImage, setAvatarImage] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
+  const [truckType, setTruckType] = useState();
   const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  const validateForm = () => {
+    const { plateNumber, weightCapacity } = formData;
+    const errors = {};
+
+    if (!plateNumber) {
+      errors.plateNumberError = 'PlateNumber  is required';
+    }
+    if (!weightCapacity) {
+      errors.weightCapacityError = 'Weight Capacity is required';
+    }
+
+    setFormErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      console.log('Success');
+      navigate('/truckprofilecomplete');
+    }
+  };
+
+  const handleTrucktypeChange = (event) => {
+    setTruckType(event.target.value);
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -108,6 +148,7 @@ function TruckProfile() {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleButtonClick = () => {
     if (currentStep === 1) {
       setCurrentStep(2);
@@ -185,10 +226,14 @@ function TruckProfile() {
                     Plate Number
                   </div>
                 }
-                type="Plate Number"
-                name="Plate Number"
+                type="plateNumber"
+                name="plateNumber"
                 placeholder="Enter your plate number"
                 sx={styledTextField}
+                value={formData.plateNumber}
+                onChange={handleInputChange}
+                error={!!formErrors.plateNumberError}
+                helperText={formErrors.plateNumberError}
               />
               <Box sx={inputContainerBox}>
                 <InputLabel id="Truck-type" sx={styledInputLabel}>
@@ -203,7 +248,14 @@ function TruckProfile() {
                     <box>Truck-type</box>
                   </Box>
                 </InputLabel>
-                <Select variant="standard" labelId="Truck-type" id="cars" sx={styledSelect}>
+                <Select
+                  variant="standard"
+                  labelId="Truck-type"
+                  id="cars"
+                  sx={styledSelect}
+                  value={truckType}
+                  onChange={handleTrucktypeChange}
+                >
                   <MenuItem value="Client">Type 1</MenuItem>
                   <MenuItem value="Driver">Type 2</MenuItem>
                 </Select>
@@ -223,10 +275,14 @@ function TruckProfile() {
                     Weight Capacity
                   </div>
                 }
-                type="Tonnage"
-                name="Tonnage"
-                placeholder="Enter your Truck Tonnage"
+                type="weightCapacity"
+                name="weightCapacity"
+                placeholder="Enter your Truck weight capacity"
                 sx={styledTextField}
+                value={formData.weightCapacity}
+                onChange={handleInputChange}
+                error={!!formErrors.weightCapacityError}
+                helperText={formErrors.weightCapacityError}
               />
             </Box>
             <Box>
@@ -235,7 +291,7 @@ function TruckProfile() {
                 color="primary"
                 type="submit"
                 sx={styledSubmitButton}
-                onClick={handleButtonClick}
+                onClick={validateForm}
               >
                 Proceed
               </Button>
