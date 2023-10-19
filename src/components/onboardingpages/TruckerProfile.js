@@ -64,6 +64,11 @@ const styledInputLabel = {
     color: 'white'
   }
 };
+// eslint-disable-next-line no-unused-vars
+const styledHelperText = {
+  color: 'red',
+  marginRight: '200px'
+};
 const accountLabelContainer = {
   display: 'flex',
   alignItems: 'center'
@@ -73,13 +78,14 @@ function TruckerProfile() {
     firstName: '',
     lastName: '',
     phone: '',
-    Location: 'Gaborone'
+    location: ''
   };
 
   const initialErrorState = {
     firstNameError: '',
     lastNameError: '',
-    phoneError: ''
+    phoneError: '',
+    locationError: ''
   };
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState(initialErrorState);
@@ -150,7 +156,7 @@ function TruckerProfile() {
       errors.firstNameError = 'Firstname is required';
     }
     if (!lastName) {
-      errors.lastNameError = 'Firstname is required';
+      errors.lastNameError = 'Lastname is required';
     }
     if (!phone) {
       errors.phoneError = 'Phone number is required';
@@ -159,8 +165,12 @@ function TruckerProfile() {
     } else if (!/^\d+$/.test(phone)) {
       errors.phoneError = 'Phone number can only contain digits';
     }
-
+    if (!selectedLocation) {
+      console.log(selectedLocation);
+      errors.locationError = 'Location is required';
+    }
     setFormErrors(errors);
+    console.log(formErrors);
 
     if (Object.keys(errors).length === 0) {
       console.log('Success');
@@ -351,10 +361,12 @@ function TruckerProfile() {
               <Select
                 labelId="location-label"
                 id="location"
+                name="location"
                 value={selectedLocation}
                 onChange={handleLocationChange}
                 variant="standard"
                 sx={styledSelect}
+                error={!!formErrors.locationError}
               >
                 {locationOptions.map((option, index) => (
                   <MenuItem key={index} value={option}>
@@ -362,6 +374,7 @@ function TruckerProfile() {
                   </MenuItem>
                 ))}
               </Select>
+              {/* <FormHelperText sx={styledHelperText}>{formErrors.locationError}</FormHelperText> */}
             </Box>
             <Box>
               <Button

@@ -8,7 +8,8 @@ import {
   Button,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  FormHelperText
 } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 import WeightIcon from '../../assets/weight.svg';
@@ -88,11 +89,16 @@ const uploadIconStyle = {
   bottom: '0px',
   cursor: 'pointer'
 };
+// eslint-disable-next-line no-unused-vars
+const styledHelperText = {
+  color: 'red',
+  marginRight: '150px'
+};
 
 function TruckProfile() {
   const initialFormState = {
     plateNumber: '',
-    truckType: 'Type 1',
+    truckType: '',
     weightCapacity: ''
   };
   const initialErrorState = {
@@ -117,6 +123,10 @@ function TruckProfile() {
 
     if (!plateNumber) {
       errors.plateNumberError = 'PlateNumber  is required';
+    }
+
+    if (!truckType) {
+      errors.truckTypeError = 'TruckType is required';
     }
     if (!weightCapacity) {
       errors.weightCapacityError = 'Weight Capacity is required';
@@ -251,14 +261,16 @@ function TruckProfile() {
                 <Select
                   variant="standard"
                   labelId="Truck-type"
-                  id="cars"
+                  id="truckType"
                   sx={styledSelect}
                   value={truckType}
                   onChange={handleTrucktypeChange}
+                  error={!!formErrors.truckTypeError}
                 >
                   <MenuItem value="Client">Type 1</MenuItem>
                   <MenuItem value="Driver">Type 2</MenuItem>
                 </Select>
+                {/* <FormHelperText sx={styledHelperText}>{formErrors.truckTypeError}</FormHelperText> */}
               </Box>
 
               <TextField

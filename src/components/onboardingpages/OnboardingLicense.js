@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { React, useState } from 'react';
 import CardComponent from '../../components/onboardingpages/CardComponent';
 import { Box, Typography, Button } from '@mui/material';
 import LicenceFrame from '../../assets/License Frame1.svg';
@@ -9,6 +9,7 @@ import ProgressBar from './ProgressBar';
 const OnboardingLicense = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [imageSrc, setImageSrc] = useState(LicenceFrame);
+
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -19,12 +20,6 @@ const OnboardingLicense = () => {
     } else if (currentStep === 3) {
       navigate('/truckonboardingprofile');
     }
-  };
-
-  const handleImageUpload = (event) => {
-    const uploadedImage = event.target.files[0];
-    const imageUrl = URL.createObjectURL(uploadedImage);
-    setImageSrc(imageUrl);
   };
 
   const styledButton = {
@@ -42,7 +37,6 @@ const OnboardingLicense = () => {
       backgroundColor: 'transparent'
     }
   };
-
   const styledButtonone = {
     fontSize: 18,
     backgroundColor: '#EBDBD5',
@@ -86,10 +80,7 @@ const OnboardingLicense = () => {
   };
 
   const styledImage = {
-    marginBottom: '30px',
-    width: '100%',
-    maxHeight: '100px',
-    maxWidth: '100%'
+    marginBottom: '30px'
   };
 
   return (
@@ -99,26 +90,18 @@ const OnboardingLicense = () => {
           <ProgressBar currentStep={currentStep} />
         </Box>
         <Box className="LiceneceBox" sx={{ marginTop: '50px' }}>
-          <Typography sx={styledHeaingTypography}>Let’s verify your driver's license</Typography>
+          <Typography sx={styledHeaingTypography}>Let’s verify your drivers license</Typography>
+
           <Box sx={styledBox}>
             <img src={imageSrc} alt="License" sx={styledImage} />
             <Typography sx={styledTypography}>
-              Upload a legible picture of your driver's license to verify your info
+              Upload a legible picture of your drivers license to verify your info
             </Typography>
           </Box>
           <Box sx={styledBox}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              style={{ display: 'none' }}
-              id="image-upload"
-            />
-            <label htmlFor="image-upload">
-              <Button variant="text" component="span" sx={styledButton}>
-                Upload Picture
-              </Button>
-            </label>
+            <Button variant="text" sx={styledButton}>
+              Upload Picture
+            </Button>
             <Button variant="text" sx={styledButtonone} onClick={handleButtonClick}>
               Proceed
             </Button>
