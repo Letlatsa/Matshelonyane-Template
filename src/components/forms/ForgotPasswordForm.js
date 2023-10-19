@@ -1,24 +1,33 @@
-import React from 'react';
-import {
-  Box,
-  FormControl,
-  TextField,
-  Typography,
-  InputLabel,
-  Select,
-  MenuItem,
-  Button
-} from '@mui/material';
+import { React, useState } from 'react';
+import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PhoneIcon from '../../assets/phone.svg';
-import PasswordIcon from '../../assets/password.svg';
-import AccountIcon from '../../assets/account.svg';
 
 function ForgotPasswordForm() {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({ phone: '' });
+  const [formErrors, setFormErrors] = useState({ phoneError: '' });
 
   const handleButtonClick = () => {
-    navigate('/onetimepin');
+    //const { phone } = formData;
+    const errors = {};
+
+    // form validation
+    if (!formData.phone) {
+      errors.phoneError = 'Phone number is required';
+    } else if (!/^[7]\d{7}$/.test(formData.phone)) {
+      errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
+    }
+
+    if (!/^\d+$/.test(formData.phone)) {
+      errors.phoneError = 'Phone number can only contain digits';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+    } else {
+      navigate('/onetimepin');
+    }
   };
 
   const styledFormControl = {
@@ -30,7 +39,7 @@ function ForgotPasswordForm() {
     fontSize: 24,
     textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     fontWeight: 'bold',
-    marginBottom: '25px'
+    marginBottom: '50px'
   };
 
   const styledTextField = {
@@ -45,22 +54,6 @@ function ForgotPasswordForm() {
     marginBottom: '10px'
   };
 
-  const styledInputLabel = {
-    marginTop: 8,
-    left: -14,
-    color: 'white',
-    '&:hover': {
-      color: 'white'
-    }
-  };
-
-  const styledSelect = {
-    width: '100%',
-    color: 'white',
-    borderBottom: ' 2px solid white',
-    marginBottom: '10px'
-  };
-
   const inputContainerBox = {
     width: '100%',
     display: 'flex',
@@ -71,23 +64,18 @@ function ForgotPasswordForm() {
 
   const styledSubmitButton = {
     fontSize: 18,
-    backgroundColor: '#FFEB22',
+    backgroundColor: '#EBDBD5',
     width: '100%',
     borderRadius: '15px',
     height: '50px',
-    color: '#000000',
-    fontWeight: '600',
+    color: '#58362A',
+    fontWeight: '100',
     textTransform: 'none',
     marginBottom: '30px',
     boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     '&:hover': {
-      backgroundColor: '#FFEB00'
+      backgroundColor: 'transparent'
     }
-  };
-
-  const accountLabelContainer = {
-    display: 'flex',
-    alignItems: 'center'
   };
 
   return (
@@ -98,22 +86,6 @@ function ForgotPasswordForm() {
             <Typography sx={styledTypography}>Recover Account</Typography>
           </Box>
           <Box sx={inputContainerBox}>
-            <InputLabel id="Account-type" sx={styledInputLabel}>
-              <Box sx={accountLabelContainer}>
-                <img
-                  src={AccountIcon}
-                  alt="Phone"
-                  width="30"
-                  height="20"
-                  sx={{ marginRight: '30px' }}
-                />
-                <box>Account type</box>
-              </Box>
-            </InputLabel>
-            <Select variant="standard" labelId="Account-type" id="cars" sx={styledSelect}>
-              <MenuItem value="Client">Client</MenuItem>
-              <MenuItem value="Driver">Driver</MenuItem>
-            </Select>
             <TextField
               variant="standard"
               label={
@@ -132,44 +104,13 @@ function ForgotPasswordForm() {
               name="phone"
               placeholder="Enter your phone number"
               sx={styledTextField}
-            />
-            <TextField
-              variant="standard"
-              label={
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <img
-                    src={PasswordIcon}
-                    alt="Password"
-                    width="30"
-                    height="20"
-                    sx={{ marginRight: '30px' }}
-                  />
-                  Password
-                </div>
-              }
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              sx={styledTextField}
-            />
-            <TextField
-              variant="standard"
-              label={
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <img
-                    src={PasswordIcon}
-                    alt="Password"
-                    width="30"
-                    height="20"
-                    sx={{ marginRight: '30px' }}
-                  />
-                  Confirm Password
-                </div>
-              }
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              sx={styledTextField}
+              value={formData.phone}
+              onChange={(e) => {
+                setFormData({ ...formData, phone: e.target.value });
+                setFormErrors({ ...formErrors, phoneError: '' });
+              }}
+              error={!!formErrors.phoneError}
+              helperText={formErrors.phoneError}
             />
           </Box>
           <Box>
