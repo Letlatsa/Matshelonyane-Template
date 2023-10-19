@@ -238,7 +238,14 @@ const ClientHome = () => {
                       <Rating name="size-small" size="small" />
                     </Box>
                     <Box sx={{ textAlign: 'right' }}>
-                      <Typography sx={{ fontSize: '16px', filter: 'blur(10deg)' }}>
+                      <Typography sx={{ fontSize: '16px', filter: 'blur(10deg)', display: 'flex', alignItems: 'center'}}>
+                        <img
+                          src={PhoneIcon}
+                          alt="Phone"
+                          width="30"
+                          height="20"
+                          sx={{ marginRight: '30px' }}
+                        />
                         78322342
                       </Typography>
                       <Typography sx={{ fontSize: '13px', fontWeight: 300 }}>
