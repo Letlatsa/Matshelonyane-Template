@@ -16,11 +16,15 @@ import {
   Card,
   Rating,
   BottomNavigation,
-  BottomNavigationAction
+  BottomNavigationAction,
+  Stack
 } from '@mui/material';
-
 import BoltIcon from '@mui/icons-material/Bolt';
-import { Home, BubbleChart, Article, MoreVert } from '@mui/icons-material';
+import { Home, BubbleChart, Article, MoreVert, Circle } from '@mui/icons-material';
+
+import EllipsisV from '../../assets/ellipsisVIcon.svg';
+import PhoneIcon from '../../assets/phone.svg';
+import SearchIcon from '../../assets/searchIcon.svg';
 
 const ClientHome = () => {
   const [rating, setRating] = useState('');
@@ -57,12 +61,9 @@ const ClientHome = () => {
     padding: 0,
     borderradius: '50px',
     marginLeft: 1,
-    height: '40px',
-    width: '40px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    '&:hover': {
-      backgroundColor: 'transparent'
-    }
+    height: '50px',
+    width: '50px',
+    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
   };
 
   return (
@@ -71,7 +72,13 @@ const ClientHome = () => {
         <AppBar position="fixed" sx={styledAppBar}>
           <Toolbar sx={{ height: '70px' }}>
             <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-              <MoreVert />
+              <img
+                src={EllipsisV}
+                alt="MenuIcon"
+                width="30"
+                height="25"
+                sx={{ marginRight: '30px' }}
+              />
             </IconButton>
             <Typography
               variant="h6"
@@ -81,8 +88,7 @@ const ClientHome = () => {
                 height: '50px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
-                fontFamily: 'Lexend Deca'
+                justifyContent: 'center'
               }}
             >
               Hi, Doe
@@ -91,7 +97,7 @@ const ClientHome = () => {
               <img
                 src="https://picsum.photos/200/300"
                 alt=""
-                style={{ width: '35px', height: '35px', borderRadius: 50 }}
+                style={{ width: '44px', height: '44px', borderRadius: 50 }}
               />
             </Box>
           </Toolbar>
@@ -123,85 +129,167 @@ const ClientHome = () => {
                 height: '100%',
                 display: 'flex',
                 justifyContent: 'space-between',
-                boxShadow: '1px 6px 6px rgba(0, 0, 0, 0.3)',
+                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)',
                 borderRadius: '5px',
-                paddingLeft: "15px",
-                paddingRight: "15px"
+                padding: 0,
+                alignItems: 'center'
               }}
             >
-              <TextField label="Search..." variant="standard" color="" sx={{width: "300px"}}/>
-              <IconButton sx={{ width: '30px'}}>
-                <BoltIcon />
+              <TextField
+                label="Search..."
+                color=""
+                autoWidth
+                sx={{ width: '100%', paddingLeft: '5px' }}
+                size="small"
+              />
+              <IconButton sx={{ width: '40px' }}>
+                <img
+                  src={SearchIcon}
+                  alt="Search"
+                  width="30"
+                  height="20"
+                  sx={{ marginRight: '30px' }}
+                />
               </IconButton>
             </Container>
           </FormControl>
         </Container>
         <Container>
-          <Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box>
-              <Typography>Truckers</Typography>
+              <Typography sx={{ fontSize: '20px' }}>Truckers</Typography>
             </Box>
-            <Box></Box>
+            <Box sx={{ backgroundColor: 'black', height: '1px', width: '296px' }}></Box>
           </Box>
-          <Box>
-            <Box>Sort by:</Box>
-            <Box>
-              <FormControl fullWidth>
-                <InputLabel id="rating-simple-select-label">Rating</InputLabel>
-                <Select
-                  labelId="rating-simple-select-label"
-                  id="demo-simple-select"
-                  value={rating}
-                  label="Rating"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={10}>3</MenuItem>
-                  <MenuItem value={20}>4</MenuItem>
-                  <MenuItem value={30}>5</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl fullWidth>
-                <InputLabel id="rating-simple-select-label">Location</InputLabel>
-                <Select
-                  labelId="rating-simple-select-label"
-                  id="demo-simple-select"
-                  value={rating}
-                  label="Rating"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={10}>Gaborone</MenuItem>
-                  <MenuItem value={20}>Francistown</MenuItem>
-                  <MenuItem value={30}>Maun</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
+          <Box
+            sx={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '30px'
+            }}
+          >
+            <Typography sx={{ fontSize: '16px', marginLeft: '10px' }}>Sort by:</Typography>
+            <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
+              <InputLabel sx={{ fontSize: '14px' }} id="rating-simple-select-label">
+                Location
+              </InputLabel>
+              <Select
+                small
+                labelId="rating-simple-select-label"
+                id="demo-simple-select"
+                value={rating}
+                label="Rating"
+                onChange={handleChange}
+                sx={{
+                  fontSize: '14px',
+                  width: '100%',
+                  boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
+                }}
+              >
+                <MenuItem sx={{ fontSize: '14px' }} value={10}>
+                  Gaborone
+                </MenuItem>
+                <MenuItem sx={{ fontSize: '14px' }} value={20}>
+                  Francistown
+                </MenuItem>
+                <MenuItem sx={{ fontSize: '14px' }} value={30}>
+                  Maun
+                </MenuItem>
+              </Select>
+            </FormControl>
           </Box>
-          <Box>
-            <Card>
-              <Box>
-                <Box>
-                  <img src="https://picsum.photos/200/300" alt="Trucker" />
+          <Stack spacing={2}>
+            <Card
+              sx={{
+                width: '100%',
+                backgroundColor: '#C69585',
+                paddingTop: '15px',
+                paddingBottom: '15px'
+              }}
+            >
+              <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
+                  <Box sx={styledProfileBox}>
+                    <img
+                      src="https://picsum.photos/200/300"
+                      alt=""
+                      style={{ width: '44px', height: '44px', borderRadius: 50 }}
+                    />
+                  </Box>
                 </Box>
-                <Box>
-                  <box>
-                    <Typography>John Doe</Typography>
-                    <Typography>78322342</Typography>
-                  </box>
-                  <box>
-                    <Rating></Rating>
-                    <Typography>Trucks Owned: 2</Typography>
-                  </box>
-                </Box>
-              </Box>
-              <Box>
-                <Button>Request Pickup</Button>
+                <Stack spacing={2} sx={{ paddingRight: '15px' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      width: '280px',
+                      justifyContent: 'space-between',
+                      color: 'white'
+                    }}
+                  >
+                    <Box>
+                      <Typography sx={{ fontSize: '15px' }}>John Doe</Typography>
+                      <Rating name="size-small" size="small" />
+                    </Box>
+                    <Box sx={{ textAlign: 'right' }}>
+                      <Typography sx={{ fontSize: '16px', filter: 'blur(10deg)' }}>
+                        78322342
+                      </Typography>
+                      <Typography sx={{ fontSize: '13px', fontWeight: 300 }}>
+                        Trucks Owned: 2
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                    <Button
+                      variant="text"
+                      sx={{
+                        backgroundColor: '#EBDBD5',
+                        textColor: '#58362A',
+                        width: '280px',
+                        borderRadius: '5px',
+                        height: '25px',
+                        color: '#58362A',
+                        fontWeight: '300',
+                        fontSize: '14px',
+                        textTransform: 'none',
+                        boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+                        '&:hover': {
+                          backgroundColor: '#58362A',
+                          color: 'white',
+                          transition: 'ease-in .3s'
+                        }
+                      }}
+                    >
+                      Request Pickup
+                    </Button>
+                  </Box>
+                </Stack>
               </Box>
             </Card>
-          </Box>
+          </Stack>
         </Container>
       </Box>
       <BottomNavigation showLabels onChange={handleNavigation} value={value} sx={styledBottomNav}>
-        <BottomNavigationAction value="Home" icon={<Home />} />
+        <BottomNavigationAction
+          value="Home"
+          icon={
+            <Box
+              sx={{
+                backgroundColor: '#C69585',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <Home/>
+            </Box>
+          }
+        />
         <BottomNavigationAction value="Chat" icon={<BubbleChart />} />
         <BottomNavigationAction value="List" icon={<Article />} />
       </BottomNavigation>
