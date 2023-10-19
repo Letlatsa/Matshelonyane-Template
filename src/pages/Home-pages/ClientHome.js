@@ -19,8 +19,6 @@ import {
   BottomNavigationAction,
   Stack
 } from '@mui/material';
-import { Home, BubbleChart, Article } from '@mui/icons-material';
-
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import SearchIcon from '../../assets/searchIcon.svg';
