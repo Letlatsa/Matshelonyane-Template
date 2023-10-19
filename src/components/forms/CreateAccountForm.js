@@ -40,6 +40,9 @@ function CreateAccountForm() {
   };
 
   const handleButtonClick = () => {
+
+    navigate('/accountcreated');
+
     const { password, confirmPassword, phone } = formData;
     const errors = {};
 
@@ -69,6 +72,7 @@ function CreateAccountForm() {
 
   const handleButtonClicked = () => {
     navigate('/');
+
   };
 
   const styledFormControl = {
