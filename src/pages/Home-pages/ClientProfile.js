@@ -1,4 +1,13 @@
-import { AppBar, Box, Button, Card, Container, IconButton, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Button,
+  Card,
+  Container,
+  IconButton,
+  Toolbar,
+  Typography
+} from '@mui/material';
 
 import BackArrow from '../../assets/backVector.svg';
 
@@ -60,7 +69,15 @@ const ClientProfile = () => {
         </AppBar>
       </Box>
       <Container sx={{ marginTop: '90px' }}>
-        <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '50px' }}>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginBottom: '50px'
+          }}
+        >
           <Box sx={styledProfileBox}>
             <img
               src="https://picsum.photos/200/300"
@@ -118,7 +135,14 @@ const ClientProfile = () => {
             Request Pickup
           </Button>
         </Box>
-        <Card>
+        <Card
+          sx={{
+            width: '1005',
+            backgroundColor: '#C69585',
+            borderRadius: '10px',
+            marginBottom: '50px'
+          }}
+        >
         </Card>
       </Container>
     </div>
