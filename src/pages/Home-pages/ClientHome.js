@@ -19,12 +19,15 @@ import {
   BottomNavigationAction,
   Stack
 } from '@mui/material';
-import BoltIcon from '@mui/icons-material/Bolt';
-import { Home, BubbleChart, Article, MoreVert, Circle } from '@mui/icons-material';
+import { Home, BubbleChart, Article } from '@mui/icons-material';
 
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import SearchIcon from '../../assets/searchIcon.svg';
+import homeIcon from '../../assets/homeVector.svg';
+import messageIcon from '../../assets/evaMessage.svg';
+import clipBoardIcon from '../../assets/Group1.svg';
+import requestIcon from '../../assets/requestIcon.svg';
 
 const ClientHome = () => {
   const [rating, setRating] = useState('');
@@ -49,7 +52,8 @@ const ClientHome = () => {
   const styledBottomNav = {
     position: 'fixed',
     bottom: 0,
-    width: '100%'
+    width: '100%',
+    height: '80px'
   };
 
   const styledProfileBox = {
@@ -75,8 +79,8 @@ const ClientHome = () => {
               <img
                 src={EllipsisV}
                 alt="MenuIcon"
-                width="30"
-                height="25"
+                width="10"
+                height="30"
                 sx={{ marginRight: '30px' }}
               />
             </IconButton>
@@ -88,7 +92,10 @@ const ClientHome = () => {
                 height: '50px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                marginRight: '10px',
+                paddingTop: '7px',
+                color: '#58362A'
               }}
             >
               Hi, Doe
@@ -286,12 +293,82 @@ const ClientHome = () => {
                 justifyContent: 'center'
               }}
             >
-              <Home/>
+              <img src={homeIcon} alt="Phone" width="30" height="20" sx={{ marginRight: '30px' }} />
             </Box>
           }
         />
-        <BottomNavigationAction value="Chat" icon={<BubbleChart />} />
-        <BottomNavigationAction value="List" icon={<Article />} />
+        <BottomNavigationAction
+          value="Chat"
+          icon={
+            <Box
+              sx={{
+                backgroundColor: '#C69585',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <img
+                src={messageIcon}
+                alt="Phone"
+                width="30"
+                height="20"
+                sx={{ marginRight: '30px' }}
+              />
+            </Box>
+          }
+        />
+        <BottomNavigationAction
+          value="Group"
+          icon={
+            <Box
+              sx={{
+                backgroundColor: '#C69585',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <img
+                src={clipBoardIcon}
+                alt="Phone"
+                width="30"
+                height="20"
+                sx={{ marginRight: '30px' }}
+              />
+            </Box>
+          }
+        />
+        <BottomNavigationAction
+          value="Request"
+          icon={
+            <Box
+              sx={{
+                backgroundColor: '#C69585',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <img
+                src={requestIcon}
+                alt="Phone"
+                width="30"
+                height="20"
+                sx={{ marginRight: '30px' }}
+              />
+            </Box>
+          }
+        />
       </BottomNavigation>
     </div>
   );
