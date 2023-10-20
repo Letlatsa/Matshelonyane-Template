@@ -13,6 +13,13 @@ import ClientOnboardingProfile from './components/onboardingpages/ClientOnboardi
 import ClientProfileComplete from './components/onboardingpages/ClientProfileComplete';
 import ClientAccountCreated from './components/onboardingpages/ClientAccountCreated';
 
+/*New imports */
+import ClientHome from './pages/Home-pages/ClientHome';
+import ClientProfile from './pages/Home-pages/ClientProfile';
+import ClientTruckerProfile from './pages/Home-pages/ClientTruckerProfile';
+import Truckerhome from './pages/Home-pages/TruckerHome';
+import TruckerProfileView from './pages/Home-pages/TruckerProfileView';
+
 function App() {
   return (
     <div className="App">
@@ -30,6 +37,12 @@ function App() {
         <Route path="/truckprofilecomplete" element={<TruckProfileComplete />}></Route>
         <Route path="/clientonboardingprofile" element={<ClientOnboardingProfile />}></Route>
         <Route path="/clientprofilecomplete" element={<ClientProfileComplete />}></Route>
+         {/*New routes*/}
+        <Route path="/clienthome" element={<ClientHome />}></Route>
+        <Route path="/clientprofile" element={<ClientProfile />}></Route>
+        <Route path="/clienttruckerprofile" element={<ClientTruckerProfile />}></Route>
+        <Route path="/truckerhome" element={<Truckerhome />}></Route>
+        <Route path="/truckerprofileview" element={<TruckerProfileView />}></Route>
       </Routes>
     </div>
   );
