@@ -72,6 +72,18 @@ const ClientProfile = () => {
     height: '15px'
   };
 
+  const styledStack = {
+    width: '100%',
+    paddingLeft: '15px',
+    paddingRight: '15px'
+  };
+
+  const styledStackTypography = {
+    color: 'F8F8F8',
+    fontSize: '16px',
+    fontWeight: 500
+  };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -199,7 +211,7 @@ const ClientProfile = () => {
           <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
         </Box>
         <Card sx={styledCard}>
-          <Stack spacing={2} sx={{ width: '100%', paddingLeft: '15px', paddingRight: '15px' }}>
+          <Stack spacing={2} sx={styledStack}>
             <Box
               sx={{
                 display: 'flex',
@@ -207,8 +219,8 @@ const ClientProfile = () => {
                 justifyContent: 'space-between'
               }}
             >
-              <Typography>Phone number:</Typography>
-              <Typography>71234356</Typography>
+              <Typography sx={styledStackTypography}>Phone number:</Typography>
+              <Typography sx={styledStackTypography}> 71234356</Typography>
             </Box>
             <Box
               sx={{
@@ -217,8 +229,8 @@ const ClientProfile = () => {
                 justifyContent: 'space-between'
               }}
             >
-              <Typography>Operation location:</Typography>
-              <Typography>Gaborone, Mogoditshane</Typography>
+              <Typography sx={styledStackTypography}>Operation location:</Typography>
+              <Typography sx={styledStackTypography}>Gaborone, Mogoditshane</Typography>
             </Box>
           </Stack>
         </Card>
@@ -229,7 +241,38 @@ const ClientProfile = () => {
           <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
         </Box>
         <Card sx={styledCard}>
-          <Stack></Stack>
+          <Stack spacing={2} sx={styledStack}>
+            <Box
+              sx={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Typography sx={styledStackTypography}>Plate number:</Typography>
+              <Typography sx={styledStackTypography}> B 123 ABC</Typography>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Typography sx={styledStackTypography}>Truck type:</Typography>
+              <Typography sx={styledStackTypography}> Refrigerated cargo</Typography>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Typography sx={styledStackTypography}>Weight capacity:</Typography>
+              <Typography sx={styledStackTypography}> 3.5 ton</Typography>
+            </Box>
+          </Stack>
         </Card>
       </Container>
     </div>
