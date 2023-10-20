@@ -12,8 +12,10 @@ import {
 
 import BackArrow from '../../assets/backVector.svg';
 import EditIcon from '../../assets/EditVector.svg';
+import { useNavigate } from 'react-router-dom';
 
 const ClientProfile = () => {
+  const navigate = useNavigate();
   const styledProfileBox = {
     borderRadius: '100px',
     display: 'flex',
@@ -85,14 +87,28 @@ const ClientProfile = () => {
     fontWeight: 500
   };
 
+  const handleButtonClicked = () => {
+    navigate('/clienthome');
+    console.log('Button clicked');
+  };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
           <Toolbar sx={{ height: '70px' }}>
-            <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-              <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
-            </IconButton>
+            <Button onClick={handleButtonClicked}>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+              >
+                <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
+              </IconButton>
+            </Button>
+
             <Typography
               variant="h6"
               sx={{

@@ -13,13 +13,7 @@ const OnboardingLicense = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    if (currentStep === 1) {
-      setCurrentStep(2);
-    } else if (currentStep === 2) {
-      setCurrentStep(3);
-    } else if (currentStep === 3) {
-      navigate('/truckonboardingprofile');
-    }
+    navigate('/truckonboardingprofile');
   };
 
   const styledButton = {
