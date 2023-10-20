@@ -9,7 +9,11 @@ import {
   Typography
 } from '@mui/material';
 
-import BackArrow from '../../assets/backVector.svg';
+import BackArrow from '../../assets/backVectorWhite.svg';
+import AccountIcon from '../../assets/account.svg';
+import NotificationBell from '../../assets/bellVector.svg';
+import RightArrow from '../../assets/rightVectorArrow.svg';
+import LocationPin from '../../assets/circum_location-on1.svg';
 
 const MenuOverlay = () => {
   const styledAppBar = {
@@ -76,9 +80,9 @@ const MenuOverlay = () => {
             }}
           >
             <img
-              src={BackArrow}
-              alt="MenuIcon"
-              width="13"
+              src={AccountIcon}
+              alt="Account Icon"
+              width="20"
               height="20"
               style={{
                 marginRight: '20px'
@@ -89,15 +93,15 @@ const MenuOverlay = () => {
           <Stack spacing={2}>
             <Box sx={styleListItemBox}>
               <Typography sx={styledStackTypography}>Edit profile</Typography>
-              <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
+              <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
             </Box>
             <Box sx={styleListItemBox}>
               <Typography sx={styledStackTypography}>Change password</Typography>
-              <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
+              <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
             </Box>
             <Box sx={styleListItemBox}>
               <Typography sx={styledStackTypography}>Switch account</Typography>
-              <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
+              <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
             </Box>
           </Stack>
         </Box>
@@ -113,9 +117,9 @@ const MenuOverlay = () => {
             }}
           >
             <img
-              src={BackArrow}
-              alt="MenuIcon"
-              width="13"
+              src={NotificationBell}
+              alt="Notification Icon"
+              width="20"
               height="20"
               style={{
                 marginRight: '20px'
@@ -126,11 +130,11 @@ const MenuOverlay = () => {
           <Stack spacing={2}>
             <Box sx={styleListItemBox}>
               <Typography sx={styledStackTypography}>Messages</Typography>
-              <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
+              <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
             </Box>
             <Box sx={styleListItemBox}>
               <Typography sx={styledStackTypography}>Requests</Typography>
-              <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
+              <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
             </Box>
           </Stack>
         </Box>
@@ -146,9 +150,9 @@ const MenuOverlay = () => {
             }}
           >
             <img
-              src={BackArrow}
-              alt="MenuIcon"
-              width="13"
+              src={LocationPin}
+              alt="Location Icon"
+              width="20"
               height="20"
               style={{
                 marginRight: '20px'
@@ -163,7 +167,7 @@ const MenuOverlay = () => {
             </Box>
           </Stack>
         </Box>
-        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
           <Button
             variant="text"
             sx={{
