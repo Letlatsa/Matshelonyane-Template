@@ -31,6 +31,26 @@ const ClientProfile = () => {
     boxShadow: 'none'
   };
 
+  const styleBriefInfo = {
+    width: '100px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  };
+
+  const styledBriefBigText = {
+    color: '#F8F8F8',
+    fontSize: '24px'
+  };
+
+  const styledBriefSmallText = {
+    color: '#F8F8F8',
+    fontSize: '16px',
+    fontWeight: 300,
+    letterSpacing: '-0.17px'
+  };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -137,12 +157,31 @@ const ClientProfile = () => {
         </Box>
         <Card
           sx={{
-            width: '1005',
+            width: '100%',
             backgroundColor: '#C69585',
             borderRadius: '10px',
-            marginBottom: '50px'
+            marginBottom: '50px',
+            display: 'flex',
+            justifyContent: 'center',
+            paddingTop: '16px',
+            paddingBottom: '16px',
+            color: 'white'
           }}
         >
+          <Box sx={styleBriefInfo}>
+            <Typography sx={styledBriefBigText}>12</Typography>
+            <Typography sx={styledBriefSmallText}>Jobs Taken</Typography>
+          </Box>
+          <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
+          <Box sx={styleBriefInfo}>
+            <Typography sx={styledBriefBigText}>4.0</Typography>
+            <Typography sx={styledBriefSmallText}>Rating</Typography>
+          </Box>
+          <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
+          <Box sx={styleBriefInfo}>
+            <Typography sx={styledBriefBigText}>2</Typography>
+            <Typography sx={styledBriefSmallText}>Fleet</Typography>
+          </Box>
         </Card>
       </Container>
     </div>
