@@ -149,7 +149,7 @@ const ClientProfile = () => {
               letterSpacing: '-0.17px'
             }}
           >
-            John Doe
+            Client Doe
           </Typography>
           <Typography
             sx={{
