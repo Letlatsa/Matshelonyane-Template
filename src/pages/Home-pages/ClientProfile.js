@@ -5,6 +5,7 @@ import {
   Card,
   Container,
   IconButton,
+  Stack,
   Toolbar,
   Typography
 } from '@mui/material';
@@ -49,6 +50,26 @@ const ClientProfile = () => {
     fontSize: '16px',
     fontWeight: 300,
     letterSpacing: '-0.17px'
+  };
+
+  const styledCard = {
+    width: '100%',
+    backgroundColor: '#C69585',
+    borderRadius: '10px',
+    marginBottom: '50px',
+    display: 'flex',
+    justifyContent: 'center',
+    paddingTop: '16px',
+    paddingBottom: '16px',
+    color: 'white'
+  };
+
+  const styledDeviderBox = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '30px',
+    height: '15px'
   };
 
   return (
@@ -155,19 +176,7 @@ const ClientProfile = () => {
             Request Pickup
           </Button>
         </Box>
-        <Card
-          sx={{
-            width: '100%',
-            backgroundColor: '#C69585',
-            borderRadius: '10px',
-            marginBottom: '50px',
-            display: 'flex',
-            justifyContent: 'center',
-            paddingTop: '16px',
-            paddingBottom: '16px',
-            color: 'white'
-          }}
-        >
+        <Card sx={styledCard}>
           <Box sx={styleBriefInfo}>
             <Typography sx={styledBriefBigText}>12</Typography>
             <Typography sx={styledBriefSmallText}>Jobs Taken</Typography>
@@ -182,6 +191,45 @@ const ClientProfile = () => {
             <Typography sx={styledBriefBigText}>2</Typography>
             <Typography sx={styledBriefSmallText}>Fleet</Typography>
           </Box>
+        </Card>
+        <Box sx={styledDeviderBox}>
+          <Box>
+            <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
+          </Box>
+          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
+        </Box>
+        <Card sx={styledCard}>
+          <Stack spacing={2} sx={{ width: '100%', paddingLeft: '15px', paddingRight: '15px' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Typography>Phone number:</Typography>
+              <Typography>71234356</Typography>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Typography>Operation location:</Typography>
+              <Typography>Gaborone, Mogoditshane</Typography>
+            </Box>
+          </Stack>
+        </Card>
+        <Box sx={styledDeviderBox}>
+          <Box>
+            <Typography sx={{ fontSize: '20px' }}>Fleet</Typography>
+          </Box>
+          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
+        </Box>
+        <Card sx={styledCard}>
+          <Stack></Stack>
         </Card>
       </Container>
     </div>
