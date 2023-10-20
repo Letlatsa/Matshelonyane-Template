@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import LoginButton from '../Buttons/LoginButton';
 import {
   Box,
   FormControl,
@@ -34,6 +33,12 @@ const LoginForm = () => {
 
     if (!formData.phone) {
       errors.phoneError = 'Phone number is required';
+    } else if (!/^[7]\d{7}$/.test(formData.phone)) {
+      errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
+    }
+
+    if (!/^\d+$/.test(formData.phone)) {
+      errors.phoneError = 'Phone number can only contain digits';
     }
 
     if (!formData.password) {
@@ -43,12 +48,18 @@ const LoginForm = () => {
     console.log('Errors:', errors);
     console.log('Phone:', formData.phone);
     console.log('Password:', formData.password);
+
     if (Object.keys(errors).length > 0) {
       console.log('Validation Failed');
       setFormErrors(errors);
     } else {
       console.log('Validation Passed');
-      navigate('/');
+      // Navigate based on the selected account type
+      if (accountType === 'Driver') {
+        navigate('/accountcreated');
+      } else if (accountType === 'Client') {
+        navigate('/clientaccountcreated');
+      }
     }
   };
 
@@ -169,7 +180,7 @@ const LoginForm = () => {
           <Select
             variant="standard"
             labelId="Account-type"
-            id="cars"
+            id="account-type"
             value={accountType}
             onChange={handleChange}
             sx={styledSelect}
