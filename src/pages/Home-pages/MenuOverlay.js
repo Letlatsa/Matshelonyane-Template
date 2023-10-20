@@ -10,7 +10,8 @@ import {
   FormControl,
   Select,
   InputLabel,
-  MenuItem
+  MenuItem,
+  Switch
 } from '@mui/material';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
@@ -42,7 +43,8 @@ const MenuOverlay = () => {
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'space-between',
-    color: '#FFF'
+    color: '#FFF',
+    alignItems: 'center'
   };
 
   const settingSectionText = {
@@ -128,11 +130,11 @@ const MenuOverlay = () => {
           <Stack spacing={2}>
             <Box sx={styleListItemBox}>
               <Typography sx={styledStackTypography}>Messages</Typography>
-              <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
+              <Switch></Switch>
             </Box>
             <Box sx={styleListItemBox}>
               <Typography sx={styledStackTypography}>Requests</Typography>
-              <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
+              <Switch></Switch>
             </Box>
           </Stack>
         </Box>
@@ -173,7 +175,7 @@ const MenuOverlay = () => {
                     fontSize: '14px',
                     width: '100%',
                     '&:border': {
-                      color: "white"
+                      color: 'white'
                     }
                   }}
                 >
