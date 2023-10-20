@@ -33,7 +33,7 @@ const ClientProfile = () => {
   };
 
   const styleBriefInfo = {
-    width: '100px',
+    width: '120px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -185,23 +185,13 @@ const ClientProfile = () => {
               }
             }}
           >
-            Request Pickup
+            Edit
           </Button>
         </Box>
         <Card sx={styledCard}>
           <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>12</Typography>
-            <Typography sx={styledBriefSmallText}>Jobs Taken</Typography>
-          </Box>
-          <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>4.0</Typography>
-            <Typography sx={styledBriefSmallText}>Rating</Typography>
-          </Box>
-          <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>2</Typography>
-            <Typography sx={styledBriefSmallText}>Fleet</Typography>
+            <Typography sx={styledBriefBigText}>123</Typography>
+            <Typography sx={styledBriefSmallText}>Requests made</Typography>
           </Box>
         </Card>
         <Box sx={styledDeviderBox}>
@@ -229,48 +219,8 @@ const ClientProfile = () => {
                 justifyContent: 'space-between'
               }}
             >
-              <Typography sx={styledStackTypography}>Operation location:</Typography>
-              <Typography sx={styledStackTypography}>Gaborone, Mogoditshane</Typography>
-            </Box>
-          </Stack>
-        </Card>
-        <Box sx={styledDeviderBox}>
-          <Box>
-            <Typography sx={{ fontSize: '20px' }}>Fleet</Typography>
-          </Box>
-          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
-        </Box>
-        <Card sx={styledCard}>
-          <Stack spacing={2} sx={styledStack}>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Plate number:</Typography>
-              <Typography sx={styledStackTypography}> B 123 ABC</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Truck type:</Typography>
-              <Typography sx={styledStackTypography}> Refrigerated cargo</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Weight capacity:</Typography>
-              <Typography sx={styledStackTypography}> 3.5 ton</Typography>
+              <Typography sx={styledStackTypography}>Location:</Typography>
+              <Typography sx={styledStackTypography}>Gaborone</Typography>
             </Box>
           </Stack>
         </Card>
