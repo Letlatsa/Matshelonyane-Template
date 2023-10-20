@@ -6,7 +6,11 @@ import {
   IconButton,
   Stack,
   Toolbar,
-  Typography
+  Typography,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem
 } from '@mui/material';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
@@ -156,8 +160,34 @@ const MenuOverlay = () => {
           </Box>
           <Stack spacing={2}>
             <Box sx={styleListItemBox}>
-              <Typography sx={styledStackTypography}>Messages</Typography>
-              <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
+              <FormControl sx={{ m: 0, minWidth: 120, width: '100%' }} size="small">
+                <InputLabel sx={{ fontSize: '14px' }} id="rating-simple-select-label">
+                  Location
+                </InputLabel>
+                <Select
+                  small
+                  labelId="rating-simple-select-label"
+                  id="demo-simple-select"
+                  label="Rating"
+                  sx={{
+                    fontSize: '14px',
+                    width: '100%',
+                    '&:border': {
+                      color: "white"
+                    }
+                  }}
+                >
+                  <MenuItem sx={{ fontSize: '14px' }} value={10}>
+                    Gaborone
+                  </MenuItem>
+                  <MenuItem sx={{ fontSize: '14px' }} value={20}>
+                    Francistown
+                  </MenuItem>
+                  <MenuItem sx={{ fontSize: '14px' }} value={30}>
+                    Maun
+                  </MenuItem>
+                </Select>
+              </FormControl>
             </Box>
           </Stack>
         </Box>
