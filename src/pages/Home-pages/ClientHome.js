@@ -26,8 +26,10 @@ import homeIcon from '../../assets/homeVector.svg';
 import messageIcon from '../../assets/evaMessage.svg';
 import clipBoardIcon from '../../assets/Group1.svg';
 import requestIcon from '../../assets/requestIcon.svg';
+import { useNavigate } from 'react-router-dom';
 
 const ClientHome = () => {
+  const navigate = useNavigate();
   const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
 
@@ -68,6 +70,10 @@ const ClientHome = () => {
     boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
   };
 
+  const handleButtonClicked = () => {
+    navigate('/clientprofile');
+  };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -98,13 +104,15 @@ const ClientHome = () => {
             >
               Hi, Doe
             </Typography>
-            <Box sx={styledProfileBox}>
-              <img
-                src="https://picsum.photos/200/300"
-                alt=""
-                style={{ width: '44px', height: '44px', borderRadius: 50 }}
-              />
-            </Box>
+            <Button onClick={handleButtonClicked}>
+              <Box sx={styledProfileBox}>
+                <img
+                  src="https://picsum.photos/200/300"
+                  alt=""
+                  style={{ width: '44px', height: '44px', borderRadius: 50 }}
+                />
+              </Box>
+            </Button>
           </Toolbar>
         </AppBar>
       </Box>
@@ -238,7 +246,14 @@ const ClientHome = () => {
                       <Rating name="size-small" size="small" />
                     </Box>
                     <Box sx={{ textAlign: 'right' }}>
-                      <Typography sx={{ fontSize: '16px', filter: 'blur(10deg)', display: 'flex', alignItems: 'center'}}>
+                      <Typography
+                        sx={{
+                          fontSize: '16px',
+                          filter: 'blur(10deg)',
+                          display: 'flex',
+                          alignItems: 'center'
+                        }}
+                      >
                         <img
                           src={PhoneIcon}
                           alt="Phone"

@@ -45,7 +45,7 @@ function TruckProfileCompleteContent() {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/');
+    navigate('/truckerhome');
   };
   return (
     <div>
