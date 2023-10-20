@@ -34,19 +34,18 @@ const styledSubmitButton = {
 };
 
 const styledTypography = {
-  fontSize: 18,
+  fontSize: 24,
   textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
   fontWeight: 'bold',
   marginBottom: '25px',
   color: 'white',
   marginLeft: '30px'
 };
-
-function ClientProfileCompleteContent() {
+function ClientAccountCreatedContent() {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/');
+    navigate('/clientonboardingprofile');
   };
   return (
     <div>
@@ -55,9 +54,7 @@ function ClientProfileCompleteContent() {
           <img src={AccountCreatedIcon} alt="Account Created" width="100" height="150"></img>
         </Box>
         <Box>
-          <Typography sx={{ ...styledTypography, textAlign: 'center' }}>
-            We are at your service{' '}
-          </Typography>
+          <Typography sx={{ ...styledTypography, textAlign: 'center' }}>Account Created</Typography>
           <Typography
             sx={{
               fontSize: 14,
@@ -67,7 +64,7 @@ function ClientProfileCompleteContent() {
               marginLeft: '15px'
             }}
           >
-            Your account is now activated. Let’s book your first load.{' '}
+            Your account has been created successfully.Now, let’s set up your profile.
           </Typography>
         </Box>
 
@@ -85,4 +82,4 @@ function ClientProfileCompleteContent() {
   );
 }
 
-export default ClientProfileCompleteContent;
+export default ClientAccountCreatedContent;

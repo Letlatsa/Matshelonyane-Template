@@ -255,7 +255,7 @@ function TruckProfile() {
                       height="20"
                       sx={{ marginRight: '30px' }}
                     />
-                    <box>Truck-type</box>
+                    <Box>Truck-type</Box>
                   </Box>
                 </InputLabel>
                 <Select

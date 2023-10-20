@@ -48,12 +48,18 @@ const LoginForm = () => {
     console.log('Errors:', errors);
     console.log('Phone:', formData.phone);
     console.log('Password:', formData.password);
+
     if (Object.keys(errors).length > 0) {
       console.log('Validation Failed');
       setFormErrors(errors);
     } else {
       console.log('Validation Passed');
-      navigate('/dashboard');
+      // Navigate based on the selected account type
+      if (accountType === 'Driver') {
+        navigate('/accountcreated');
+      } else if (accountType === 'Client') {
+        navigate('/clientaccountcreated');
+      }
     }
   };
 
@@ -174,7 +180,7 @@ const LoginForm = () => {
           <Select
             variant="standard"
             labelId="Account-type"
-            id="cars"
+            id="account-type"
             value={accountType}
             onChange={handleChange}
             sx={styledSelect}

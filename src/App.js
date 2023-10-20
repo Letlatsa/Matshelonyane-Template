@@ -11,6 +11,7 @@ import TruckOnboardingProfile from './components/onboardingpages/TruckOnboarding
 import TruckProfileComplete from './components/onboardingpages/TruckProfileComplete';
 import ClientOnboardingProfile from './components/onboardingpages/ClientOnboardingProfile';
 import ClientProfileComplete from './components/onboardingpages/ClientProfileComplete';
+import ClientAccountCreated from './components/onboardingpages/ClientAccountCreated';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
         <Route path="/onetimepin" element={<OneTimePin />}></Route>
         <Route path="/accountcreated" element={<AccountCreated />}></Route>
+        <Route path="/clientaccountcreated" element={<ClientAccountCreated />}></Route>
         <Route path="/truckeronboardingprofile" element={<TruckerOnboardingProfile />}></Route>
         <Route path="/truckonboardingprofile" element={<TruckOnboardingProfile />}></Route>
         <Route path="/onboardinglicense" element={<OnboardingLicense />}></Route>

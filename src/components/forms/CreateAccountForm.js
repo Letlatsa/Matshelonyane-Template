@@ -33,16 +33,18 @@ function CreateAccountForm() {
 
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState(initialErrorState);
+  const [accountType, setAccountType] = useState('Client');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleChange = (event) => {
+    setAccountType(event.target.value);
+  };
+
   const handleButtonClick = () => {
-
-    navigate('/accountcreated');
-
     const { password, confirmPassword, phone } = formData;
     const errors = {};
 
@@ -72,7 +74,6 @@ function CreateAccountForm() {
 
   const handleButtonClicked = () => {
     navigate('/');
-
   };
 
   const styledFormControl = {
@@ -185,10 +186,10 @@ function CreateAccountForm() {
             <Select
               variant="standard"
               labelId="Account-type"
-              id="cars"
+              id="account-type"
               sx={styledSelect}
-              value={formData.accountType}
-              onChange={handleInputChange}
+              value={accountType}
+              onChange={handleChange}
             >
               <MenuItem value="Client">Client</MenuItem>
               <MenuItem value="Driver">Driver</MenuItem>

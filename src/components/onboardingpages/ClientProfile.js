@@ -4,8 +4,6 @@ import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import UploadIcon from '../../assets/upload.svg';
-import LocationIcon from '../../assets/location.svg';
-import ProgressBar from './ProgressBar';
 import { useNavigate } from 'react-router-dom';
 
 const styledFormControl = {
@@ -35,24 +33,66 @@ const inputContainerBox = {
 
 const styledSubmitButton = {
   fontSize: 18,
-  backgroundColor: '#FFEB22',
+  backgroundColor: '#EBDBD5',
   width: '100%',
   borderRadius: '15px',
   height: '50px',
-  color: '#000000',
-  fontWeight: '600',
+  color: '#58362A',
+  fontWeight: '400',
   textTransform: 'none',
   marginBottom: '30px',
   boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
   '&:hover': {
-    backgroundColor: '#FFEB00'
+    backgroundColor: 'transparent'
   }
 };
 
 function ClientProfile() {
+  const initialFormState = {
+    firstName: '',
+    lastName: '',
+    phone: ''
+  };
+
+  const initialErrorState = {
+    firstNameError: '',
+    lastNameError: '',
+    phoneError: ''
+  };
+  const [formData, setFormData] = useState(initialFormState);
+  const [formErrors, setFormErrors] = useState(initialErrorState);
   const [avatarImage, setAvatarImage] = useState(null);
-  const [currentStep, setCurrentStep] = useState(1);
   const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  const validateForm = () => {
+    const { firstName, lastName, phone } = formData;
+    const errors = {};
+
+    if (!firstName) {
+      errors.firstNameError = 'Firstname is required';
+    }
+    if (!lastName) {
+      errors.lastNameError = 'Lastname is required';
+    }
+    if (!phone) {
+      errors.phoneError = 'Phone number is required';
+    } else if (!/^[7]\d{7}$/.test(phone)) {
+      errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
+    } else if (!/^\d+$/.test(phone)) {
+      errors.phoneError = 'Phone number can only contain digits';
+    }
+    setFormErrors(errors);
+    console.log(formErrors);
+
+    if (Object.keys(errors).length === 0) {
+      console.log('Success');
+      navigate('/clientprofilecomplete');
+    }
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -67,15 +107,7 @@ function ClientProfile() {
       reader.readAsDataURL(file);
     }
   };
-  const handleButtonClick = () => {
-    if (currentStep === 1) {
-      setCurrentStep(2);
-    } else if (currentStep === 2) {
-      setCurrentStep(3);
-    } else if (currentStep === 3) {
-      navigate('/clientprofilecomplete');
-    }
-  };
+
   const styledAvatarBox = {
     display: 'flex',
     justifyContent: 'center',
@@ -153,10 +185,14 @@ function ClientProfile() {
                     First name
                   </div>
                 }
-                type="Account"
-                name="Account"
+                type="firstName"
+                name="firstName"
                 placeholder="Enter your First Name"
                 sx={styledTextField}
+                value={formData.firstName}
+                onChange={handleInputChange}
+                error={!!formErrors.firstNameError}
+                helperText={formErrors.firstNameError}
               />
               <TextField
                 variant="standard"
@@ -172,10 +208,14 @@ function ClientProfile() {
                     Last name
                   </div>
                 }
-                type="Lastname"
-                name="Lastname"
+                type="lastName"
+                name="lastName"
                 placeholder="Enter your Last name"
                 sx={styledTextField}
+                value={formData.lastName}
+                onChange={handleInputChange}
+                error={!!formErrors.lastNameError}
+                helperText={formErrors.lastNameError}
               />
               <TextField
                 variant="standard"
@@ -195,6 +235,10 @@ function ClientProfile() {
                 name="phone"
                 placeholder="Enter your phone number"
                 sx={styledTextField}
+                value={formData.phone}
+                onChange={handleInputChange}
+                error={!!formErrors.phoneError}
+                helperText={formErrors.phoneError}
               />
             </Box>
             <Box>
@@ -203,7 +247,7 @@ function ClientProfile() {
                 color="primary"
                 type="submit"
                 sx={styledSubmitButton}
-                onClick={handleButtonClick}
+                onClick={validateForm}
               >
                 Proceed
               </Button>
