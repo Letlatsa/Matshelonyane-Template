@@ -73,6 +73,9 @@ const ClientHome = () => {
   const handleButtonClicked = () => {
     navigate('/clientprofile');
   };
+  const handleButtonTruckerProfileClicked = () => {
+    navigate('/clienttruckerprofile');
+  };
 
   return (
     <div>
@@ -224,7 +227,7 @@ const ClientHome = () => {
             >
               <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                 <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
-                  <Box sx={styledProfileBox}>
+                  <Box sx={styledProfileBox} onClick={handleButtonTruckerProfileClicked}>
                     <img
                       src="https://picsum.photos/200/300"
                       alt=""

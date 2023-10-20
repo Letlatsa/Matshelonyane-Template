@@ -97,17 +97,16 @@ const ClientProfile = () => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
           <Toolbar sx={{ height: '70px' }}>
-            <Button onClick={handleButtonClicked}>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-              >
-                <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
-              </IconButton>
-            </Button>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleButtonClicked}
+            >
+              <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
+            </IconButton>
 
             <Typography
               variant="h6"

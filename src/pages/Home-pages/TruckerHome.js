@@ -71,7 +71,7 @@ const TruckerHome = () => {
   };
 
   const handleButtonClicked = () => {
-    navigate('/clienttruckerprofile');
+    navigate('/truckerprofileview');
   };
 
   return (
