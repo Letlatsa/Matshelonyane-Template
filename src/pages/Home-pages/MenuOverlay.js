@@ -21,12 +21,6 @@ const MenuOverlay = () => {
     boxShadow: 'none'
   };
 
-  const styledStack = {
-    width: '100%',
-    paddingLeft: '15px',
-    paddingRight: '15px'
-  };
-
   const styledStackTypography = {
     color: '#fff',
     fontSize: '16px',
