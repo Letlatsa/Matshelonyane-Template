@@ -1,5 +1,4 @@
 import { Box, FormControl, Typography, Button } from '@mui/material';
-
 import { useNavigate } from 'react-router-dom';
 import { MuiOtpInput } from 'mui-one-time-password-input';
 import { useState } from 'react';
@@ -7,13 +6,26 @@ import { useState } from 'react';
 const OneTimePinFForm = () => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState('');
+  const [error, setError] = useState(''); // State to store validation error
 
   const handleButtonClick = () => {
-    navigate('/');
+    if (validateOtp(otp)) {
+      // If OTP is valid, navigate to the next page
+      navigate('/');
+    } else {
+      setError('Invalid OTP. Please enter a 6-digit numeric code.');
+    }
   };
 
   const handleChange = (newValue) => {
     setOtp(newValue);
+    setError(''); // Clear any previous error when the input changes
+  };
+
+  const validateOtp = (otp) => {
+    // Ensure OTP is exactly 6 digits and contains only numeric characters
+    const pattern = /^\d{6}$/;
+    return pattern.test(otp);
   };
 
   const styledFormControl = {
@@ -76,12 +88,13 @@ const OneTimePinFForm = () => {
         </Box>
         <Box sx={inputContainerBox}>
           <MuiOtpInput sx={styledOtpInput} length={6} value={otp} onChange={handleChange} />
+          {error && <div style={{ color: 'red' }}>{error}</div>}
         </Box>
         <Box>
           <Button
             variant="text"
             color="primary"
-            type="submit"
+            type="button"
             sx={styledSubmitButton}
             onClick={handleButtonClick}
           >
@@ -89,12 +102,9 @@ const OneTimePinFForm = () => {
           </Button>
           <Box sx={styledBox}>
             <Typography
-              sx={
-                (styledTypography,
-                {
-                  textAlign: 'center'
-                })
-              }
+              sx={{
+                textAlign: 'center'
+              }}
             >
               Enter the OTP sent to your number in order to reset password
             </Typography>
