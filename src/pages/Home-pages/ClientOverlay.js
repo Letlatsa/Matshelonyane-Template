@@ -21,14 +21,13 @@ import RightArrow from '../../assets/rightVectorArrow.svg';
 import LocationPin from '../../assets/circum_location-on1.svg';
 import { useNavigate } from 'react-router-dom';
 
-const MenuOverlay = () => {
+const ClientOverlay = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     navigate('/');
   };
-
   const handleButtonBackArrowClicked = () => {
-    navigate('/truckerhome');
+    navigate('/clienthome');
   };
   const styledAppBar = {
     background: 'transparent',
@@ -239,4 +238,4 @@ const MenuOverlay = () => {
   );
 };
 
-export default MenuOverlay;
+export default ClientOverlay;

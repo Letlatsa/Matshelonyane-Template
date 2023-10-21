@@ -76,13 +76,23 @@ const ClientHome = () => {
   const handleButtonTruckerProfileClicked = () => {
     navigate('/clienttruckerprofile');
   };
+  const handleButtonOverlayClicked = () => {
+    navigate('/clientoverlay');
+  };
 
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
           <Toolbar sx={{ height: '70px' }}>
-            <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleButtonOverlayClicked}
+            >
               <img
                 src={EllipsisV}
                 alt="MenuIcon"

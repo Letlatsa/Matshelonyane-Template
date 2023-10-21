@@ -73,13 +73,26 @@ const TruckerHome = () => {
   const handleButtonClicked = () => {
     navigate('/truckerprofileview');
   };
+  const handleButtonClickedProposalPage = () => {
+    navigate('/truckerproposalpage');
+  };
+  const handleButtonOverlayClicked = () => {
+    navigate('/overlay');
+  };
 
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
           <Toolbar sx={{ height: '70px' }}>
-            <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleButtonOverlayClicked}
+            >
               <img
                 src={EllipsisV}
                 alt="MenuIcon"
@@ -252,7 +265,7 @@ const TruckerHome = () => {
             >
               <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                 <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
-                  <Box sx={styledProfileBox}>
+                  <Box sx={styledProfileBox} onClick={handleButtonClickedProposalPage}>
                     <img
                       src="https://picsum.photos/200/300"
                       alt=""
