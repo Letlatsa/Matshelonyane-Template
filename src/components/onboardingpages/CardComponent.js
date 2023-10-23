@@ -34,7 +34,7 @@ function CardComponent({ children }) {
     <div className="Login-container">
       <Box sx={StyledBox}>
         <Card sx={StyledCard}>
-          <CardContent>{children}</CardContent>
+          <CardContent sx={{ overflowX: 'scroll', paddingTop: '30px' }}>{children}</CardContent>
         </Card>
       </Box>
     </div>

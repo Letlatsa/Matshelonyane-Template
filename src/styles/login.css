@@ -2,4 +2,5 @@
   background-image: url('../assets/image1.avif');
   background-size: cover;
   height: 100vh;
+  overflow-x: scroll;
 }
