@@ -8,9 +8,27 @@ import ProgressBar from './ProgressBar';
 
 const OnboardingLicense = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [imageSrc, setImageSrc] = useState(LicenceFrame);
+  const [imageSrc, setImageSrc] = useState(null);
 
   const navigate = useNavigate();
+
+  const handleImageChange = (e) => {
+    if (e.target && e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+  
+      const reader = new FileReader();
+  
+      reader.onload = (e) => {
+        setImageSrc(e.target.result);
+      };
+  
+      reader.readAsDataURL(file);
+    } else {
+      // Handle the case where no files are selected, e.target is undefined, or files array is empty.
+      // You can provide appropriate feedback to the user or take other actions as needed.
+    }
+  };
+  
 
   const handleButtonClick = () => {
     navigate('/truckonboardingprofile');
@@ -74,7 +92,8 @@ const OnboardingLicense = () => {
   };
 
   const styledImage = {
-    marginBottom: '30px'
+    marginBottom: '30px',
+    width: '100%'
   };
 
   return (
@@ -87,12 +106,26 @@ const OnboardingLicense = () => {
           <Typography sx={styledHeaingTypography}>Let’s verify your drivers license</Typography>
 
           <Box sx={styledBox}>
-            <img src={imageSrc} alt="License" sx={styledImage} />
+            <label htmlFor="license-upload" style={{ maxWidth: '320px', objectFit: 'cover' }}>
+              {imageSrc ? (
+                <img src={imageSrc} alt="License" style={styledImage} />
+              ) : (
+                <img src={LicenceFrame} alt="License" style={styledImage} />
+              )}
+            </label>
             <Typography sx={styledTypography}>
               Upload a legible picture of your drivers license to verify your info
             </Typography>
           </Box>
+
           <Box sx={styledBox}>
+            <input
+              type="file"
+              accept="image/*"
+              id="license-upload"
+              style={{ display: 'none' }}
+              onChange={handleImageChange}
+            />
             <Button variant="text" sx={styledButton}>
               Upload Picture
             </Button>
