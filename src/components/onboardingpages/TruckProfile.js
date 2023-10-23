@@ -9,7 +9,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  FormHelperText
 } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 import WeightIcon from '../../assets/weight.svg';
