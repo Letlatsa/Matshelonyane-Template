@@ -34,7 +34,17 @@ function CardComponent({ children }) {
     <div className="Login-container">
       <Box sx={StyledBox}>
         <Card sx={StyledCard}>
-          <CardContent>{children}</CardContent>
+          <CardContent
+            ntent
+            sx={{
+              overflowY: 'scroll',
+              paddingTop: '30px',
+              '&::-webkit-scrollbar': { width: '0.4em' },
+              '&::-webkit-scrollbar-thumb': { backgroundColor: 'transparent' }
+            }}
+          >
+            {children}
+          </CardContent>
         </Card>
       </Box>
     </div>

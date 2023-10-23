@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Avatar } from '@mui/material';
+import { Avatar, Stack } from '@mui/material';
 import {
   Box,
   FormControl,
@@ -19,7 +19,8 @@ import { useNavigate } from 'react-router-dom';
 
 const styledFormControl = {
   width: '100%',
-  color: 'white'
+  color: 'white',
+  padding: '0px'
 };
 
 const styledTextField = {
@@ -30,16 +31,14 @@ const styledTextField = {
   },
   '& label': {
     color: 'white'
-  },
-  marginBottom: '10px'
+  }
 };
 
 const inputContainerBox = {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
-  marginBottom: '30px'
+  alignItems: 'center'
 };
 
 const styledSubmitButton = {
@@ -51,6 +50,7 @@ const styledSubmitButton = {
   color: '#58362A',
   fontWeight: '400',
   textTransform: 'none',
+  marginTop: '20px',
   marginBottom: '30px',
   boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
   '&:hover': {
@@ -58,7 +58,6 @@ const styledSubmitButton = {
   }
 };
 const styledInputLabel = {
-  marginTop: 22,
   color: 'white',
   '&:hover': {
     color: 'white'
@@ -144,10 +143,12 @@ function TruckerProfile() {
     'Tshane',
     'Tshesebe'
   ];
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const validateForm = () => {
     const { firstName, lastName, phone } = formData;
     const errors = {};
@@ -274,9 +275,9 @@ function TruckerProfile() {
         >
           Upload your profile picture
         </Typography>
-        <Box>
+        <Stack spacing={1}>
           <FormControl sx={styledFormControl}>
-            <Box sx={inputContainerBox}>
+            <Stack sx={inputContainerBox} spacing={1}>
               <TextField
                 variant="standard"
                 label={
@@ -346,49 +347,52 @@ function TruckerProfile() {
                 error={!!formErrors.phoneError}
                 helperText={formErrors.phoneError}
               />
-              <InputLabel id="location-label" variant="standard" sx={styledInputLabel}>
-                <Box sx={accountLabelContainer}>
-                  <img
-                    src={LocationIcon}
-                    alt="Location"
-                    width="30"
-                    height="20"
-                    sx={{ marginRight: '30px' }}
-                  />
-                  Delivery Area
-                </Box>
-              </InputLabel>
-              <Select
-                labelId="location-label"
-                id="location"
-                name="location"
-                value={selectedLocation}
-                onChange={handleLocationChange}
-                variant="standard"
-                sx={styledSelect}
-                error={!!formErrors.locationError}
-              >
-                {locationOptions.map((option, index) => (
-                  <MenuItem key={index} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </Select>
+
               {/* <FormHelperText sx={styledHelperText}>{formErrors.locationError}</FormHelperText> */}
-            </Box>
-            <Box>
-              <Button
-                variant="text"
-                color="primary"
-                type="submit"
-                sx={styledSubmitButton}
-                onClick={validateForm}
-              >
-                Proceed
-              </Button>
-            </Box>
+            </Stack>
           </FormControl>
-        </Box>
+          <FormControl sx={{ width: '100%' }}>
+            <InputLabel id="location-label" variant="standard" sx={styledInputLabel}>
+              <Box sx={accountLabelContainer}>
+                <img
+                  src={LocationIcon}
+                  alt="Location"
+                  width="30"
+                  height="20"
+                  sx={{ marginRight: '30px' }}
+                />
+                Delivery Area
+              </Box>
+            </InputLabel>
+            <Select
+              labelId="location-label"
+              id="location"
+              name="location"
+              value={selectedLocation}
+              onChange={handleLocationChange}
+              variant="standard"
+              sx={styledSelect}
+              error={!!formErrors.locationError}
+            >
+              {locationOptions.map((option, index) => (
+                <MenuItem key={index} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Box>
+            <Button
+              variant="text"
+              color="primary"
+              type="submit"
+              sx={styledSubmitButton}
+              onClick={validateForm}
+            >
+              Proceed
+            </Button>
+          </Box>
+        </Stack>
       </Box>
     </div>
   );
