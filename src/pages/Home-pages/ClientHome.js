@@ -6,6 +6,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import MenuOverlay from './MenuOverlay';
+
 import {
   Container,
   FormControl,
@@ -32,6 +34,7 @@ const ClientHome = () => {
   const navigate = useNavigate();
   const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
+  const [isOverlay, setIsOverlay] = useState(false);
 
   const handleChange = (event) => {
     setRating(event.target.value);
@@ -77,13 +80,18 @@ const ClientHome = () => {
     navigate('/clienttruckerprofile');
   };
   const handleButtonOverlayClicked = () => {
-    navigate('/clientoverlay');
+    if (isOverlay === false) {
+      setIsOverlay(true);
+    } else {
+      setIsOverlay(false);
+    }
   };
 
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
+          <MenuOverlay isOverlay={isOverlay} setIsOverlay={setIsOverlay}/>
           <Toolbar sx={{ height: '70px' }}>
             <IconButton
               size="large"
@@ -323,7 +331,8 @@ const ClientHome = () => {
                 borderRadius: '50px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
               }}
             >
               <img src={homeIcon} alt="Phone" width="30" height="20" sx={{ marginRight: '30px' }} />
@@ -341,7 +350,8 @@ const ClientHome = () => {
                 borderRadius: '50px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
               }}
             >
               <img
@@ -365,7 +375,8 @@ const ClientHome = () => {
                 borderRadius: '50px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
               }}
             >
               <img
@@ -389,7 +400,8 @@ const ClientHome = () => {
                 borderRadius: '50px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
               }}
             >
               <img
