@@ -13,6 +13,28 @@ const ClientBottomNav = () => {
     setValue(newValue);
   };
 
+  const styledNavAction = {
+    backgroundColor: '#C69585',
+    width: '40px',
+    height: '40px',
+    borderRadius: '50px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
+  };
+
+  const styledNavActiveAction = {
+    backgroundColor: '#58362A',
+    width: '40px',
+    height: '40px',
+    borderRadius: '50px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
+  };
+
   const styledBottomNav = {
     position: 'fixed',
     bottom: 0,
@@ -25,17 +47,7 @@ const ClientBottomNav = () => {
       <BottomNavigationAction
         value="Home"
         icon={
-          <Box
-            sx={{
-              backgroundColor: '#C69585',
-              width: '40px',
-              height: '40px',
-              borderRadius: '50px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
+          <Box sx={value === 'Home' ? styledNavActiveAction : styledNavAction}>
             <img src={homeIcon} alt="Phone" width="30" height="20" sx={{ marginRight: '30px' }} />
           </Box>
         }
@@ -43,17 +55,7 @@ const ClientBottomNav = () => {
       <BottomNavigationAction
         value="Chat"
         icon={
-          <Box
-            sx={{
-              backgroundColor: '#C69585',
-              width: '40px',
-              height: '40px',
-              borderRadius: '50px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
+          <Box sx={value === 'Chat' ? styledNavActiveAction : styledNavAction}>
             <img
               src={messageIcon}
               alt="Phone"
@@ -65,19 +67,9 @@ const ClientBottomNav = () => {
         }
       />
       <BottomNavigationAction
-        value="Group"
+        value="Requests"
         icon={
-          <Box
-            sx={{
-              backgroundColor: '#C69585',
-              width: '40px',
-              height: '40px',
-              borderRadius: '50px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
+          <Box sx={value === 'Requests' ? styledNavActiveAction : styledNavAction}>
             <img
               src={clipBoardIcon}
               alt="Phone"
@@ -89,19 +81,9 @@ const ClientBottomNav = () => {
         }
       />
       <BottomNavigationAction
-        value="Request"
+        value="Post"
         icon={
-          <Box
-            sx={{
-              backgroundColor: '#C69585',
-              width: '40px',
-              height: '40px',
-              borderRadius: '50px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
+          <Box sx={value === 'Post' ? styledNavActiveAction : styledNavAction}>
             <img
               src={requestIcon}
               alt="Phone"
