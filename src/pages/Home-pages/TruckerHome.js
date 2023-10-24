@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import MenuOverlay from './MenuOverlay';
 import {
   Container,
   FormControl,
@@ -32,6 +33,7 @@ const TruckerHome = () => {
   const navigate = useNavigate();
   const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
+  const [isOverlay, setIsOverlay] = useState(false);
 
   const handleChange = (event) => {
     setRating(event.target.value);
@@ -77,13 +79,18 @@ const TruckerHome = () => {
     navigate('/truckerproposalpage');
   };
   const handleButtonOverlayClicked = () => {
-    navigate('/overlay');
+    if (isOverlay === false) {
+      setIsOverlay(true);
+    } else {
+      setIsOverlay(false);
+    }
   };
 
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
+          <MenuOverlay isOverlay={isOverlay} setIsOverlay={setIsOverlay} />
           <Toolbar sx={{ height: '70px' }}>
             <IconButton
               size="large"
