@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
 import BottomNavigationComponent from '../../components/HomeComponents/Trucker/BottomNavigationComponent';
+import HomeAppBar from '../../components/HomeComponents/HomeAppBar';
+
 import {
   Container,
   FormControl,
@@ -18,7 +17,6 @@ import {
   Card,
   Stack
 } from '@mui/material';
-import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import SearchIcon from '../../assets/searchIcon.svg';
 import { useNavigate } from 'react-router-dom';
@@ -26,19 +24,13 @@ import { useNavigate } from 'react-router-dom';
 const TruckerHome = () => {
   const navigate = useNavigate();
   const [rating, setRating] = useState('');
-  const [isOverlay, setIsOverlay] = useState(false);
-
   const handleChange = (event) => {
     setRating(event.target.value);
   };
 
   // Styles
 
-  const styledAppBar = {
-    backgroundColor: '#ffffff',
-    color: '#000000',
-    boxShadow: 'none'
-  };
+  
 
   const styledProfileBox = {
     borderRadius: '30px',
@@ -54,69 +46,16 @@ const TruckerHome = () => {
     boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
   };
 
-  const handleButtonClicked = () => {
-    navigate('/truckerprofileview');
-  };
+  
   const handleButtonClickedProposalPage = () => {
     navigate('/truckerproposalpage');
   };
-  const handleButtonOverlayClicked = () => {
-    if (isOverlay === false) {
-      setIsOverlay(true);
-    } else {
-      setIsOverlay(false);
-    }
-  };
+  
 
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed" sx={styledAppBar}>
-          <MenuOverlay isOverlay={isOverlay} setIsOverlay={setIsOverlay} />
-          <Toolbar sx={{ height: '70px' }}>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={handleButtonOverlayClicked}
-            >
-              <img
-                src={EllipsisV}
-                alt="MenuIcon"
-                width="10"
-                height="30"
-                sx={{ marginRight: '30px' }}
-              />
-            </IconButton>
-            <Typography
-              variant="h6"
-              sx={{
-                flexGrow: 1,
-                textAlign: 'end',
-                height: '50px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                marginRight: '10px',
-                paddingTop: '7px',
-                color: '#58362A'
-              }}
-            >
-              Hi, Doe
-            </Typography>
-            <Button onClick={handleButtonClicked}>
-              <Box sx={styledProfileBox}>
-                <img
-                  src="https://picsum.photos/200/300"
-                  alt=""
-                  style={{ width: '44px', height: '44px', borderRadius: 50 }}
-                />
-              </Box>
-            </Button>
-          </Toolbar>
-        </AppBar>
+        <HomeAppBar/>
       </Box>
       <Box>
         <Container sx={{ marginTop: '90px' }}>
