@@ -6,7 +6,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuOverlay from './MenuOverlay';
+import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
+import BottomNavigationComponent from '../../components/HomeComponents/Trucker/BottomNavigationComponent';
 import {
   Container,
   FormControl,
@@ -15,32 +16,20 @@ import {
   Select,
   MenuItem,
   Card,
-  Rating,
-  BottomNavigation,
-  BottomNavigationAction,
   Stack
 } from '@mui/material';
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import SearchIcon from '../../assets/searchIcon.svg';
-import homeIcon from '../../assets/homeVector.svg';
-import messageIcon from '../../assets/evaMessage.svg';
-import clipBoardIcon from '../../assets/Group1.svg';
-import requestIcon from '../../assets/requestIcon.svg';
 import { useNavigate } from 'react-router-dom';
 
 const TruckerHome = () => {
   const navigate = useNavigate();
   const [rating, setRating] = useState('');
-  const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
 
   const handleChange = (event) => {
     setRating(event.target.value);
-  };
-
-  const handleNavigation = (event, newValue) => {
-    setValue(newValue);
   };
 
   // Styles
@@ -49,13 +38,6 @@ const TruckerHome = () => {
     backgroundColor: '#ffffff',
     color: '#000000',
     boxShadow: 'none'
-  };
-
-  const styledBottomNav = {
-    position: 'fixed',
-    bottom: 0,
-    width: '100%',
-    height: '80px'
   };
 
   const styledProfileBox = {
@@ -345,98 +327,7 @@ const TruckerHome = () => {
           </Stack>
         </Container>
       </Box>
-      <BottomNavigation showLabels onChange={handleNavigation} value={value} sx={styledBottomNav}>
-        <BottomNavigationAction
-          value="Home"
-          icon={
-            <Box
-              sx={{
-                backgroundColor: '#C69585',
-                width: '40px',
-                height: '40px',
-                borderRadius: '50px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <img src={homeIcon} alt="Phone" width="30" height="20" sx={{ marginRight: '30px' }} />
-            </Box>
-          }
-        />
-        <BottomNavigationAction
-          value="Chat"
-          icon={
-            <Box
-              sx={{
-                backgroundColor: '#C69585',
-                width: '40px',
-                height: '40px',
-                borderRadius: '50px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <img
-                src={messageIcon}
-                alt="Phone"
-                width="30"
-                height="20"
-                sx={{ marginRight: '30px' }}
-              />
-            </Box>
-          }
-        />
-        <BottomNavigationAction
-          value="Group"
-          icon={
-            <Box
-              sx={{
-                backgroundColor: '#C69585',
-                width: '40px',
-                height: '40px',
-                borderRadius: '50px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <img
-                src={clipBoardIcon}
-                alt="Phone"
-                width="30"
-                height="20"
-                sx={{ marginRight: '30px' }}
-              />
-            </Box>
-          }
-        />
-        <BottomNavigationAction
-          value="Request"
-          icon={
-            <Box
-              sx={{
-                backgroundColor: '#C69585',
-                width: '40px',
-                height: '40px',
-                borderRadius: '50px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <img
-                src={requestIcon}
-                alt="Phone"
-                width="30"
-                height="20"
-                sx={{ marginRight: '30px' }}
-              />
-            </Box>
-          }
-        />
-      </BottomNavigation>
+      <BottomNavigationComponent />
     </div>
   );
 };

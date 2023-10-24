@@ -20,7 +20,7 @@ import ClientTruckerProfile from './pages/Home-pages/ClientTruckerProfile';
 import Truckerhome from './pages/Home-pages/TruckerHome';
 import TruckerProfileView from './pages/Home-pages/TruckerProfileView';
 import TruckerProposalPage from './pages/Home-pages/TruckerProposalPage';
-import MenuOverlay from './pages/Home-pages/MenuOverlay';
+import MenuOverlay from './components/HomeComponents/MenuOverlay';
 import ClientOverlay from './pages/Home-pages/ClientOverlay';
 
 function App() {
