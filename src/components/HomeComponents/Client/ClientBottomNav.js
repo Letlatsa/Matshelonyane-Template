@@ -4,8 +4,9 @@ import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
 import homeIcon from '../../../assets/homeVector.svg';
 import messageIcon from '../../../assets/evaMessage.svg';
 import clipBoardIcon from '../../../assets/Group1.svg';
+import requestIcon from '../../../assets/requestIcon.svg';
 
-const BottomNavigationComponent = () => {
+const ClientBottomNav = () => {
   const [value, setValue] = useState('Home');
 
   const handleNavigation = (event, newValue) => {
@@ -87,8 +88,32 @@ const BottomNavigationComponent = () => {
           </Box>
         }
       />
+      <BottomNavigationAction
+        value="Request"
+        icon={
+          <Box
+            sx={{
+              backgroundColor: '#C69585',
+              width: '40px',
+              height: '40px',
+              borderRadius: '50px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <img
+              src={requestIcon}
+              alt="Phone"
+              width="30"
+              height="20"
+              sx={{ marginRight: '30px' }}
+            />
+          </Box>
+        }
+      />
     </BottomNavigation>
   );
 };
 
-export default BottomNavigationComponent;
+export default ClientBottomNav;
