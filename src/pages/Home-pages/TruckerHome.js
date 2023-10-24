@@ -2,22 +2,12 @@ import * as React from 'react';
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import BottomNavigationComponent from '../../components/HomeComponents/Trucker/BottomNavigationComponent';
 import HomeAppBar from '../../components/HomeComponents/HomeAppBar';
 import TruckerCard from '../../components/HomeComponents/Trucker/TruckerCard';
+import SearchComponent from '../../components/HomeComponents/Trucker/SearchComponent';
 
-import {
-  Container,
-  FormControl,
-  TextField,
-  InputLabel,
-  Select,
-  MenuItem,
-  Stack
-} from '@mui/material';
-import SearchIcon from '../../assets/searchIcon.svg';
-
+import { Container, FormControl, InputLabel, Select, MenuItem, Stack } from '@mui/material';
 const TruckerHome = () => {
   const [rating, setRating] = useState('');
   const handleChange = (event) => {
@@ -30,56 +20,7 @@ const TruckerHome = () => {
         <HomeAppBar />
       </Box>
       <Box>
-        <Container sx={{ marginTop: '90px' }}>
-          <Typography
-            sx={{
-              fontFamily: 'lato',
-              fontSize: '24px',
-              color: '#58362A',
-              fontWeight: 400,
-              marginBottom: '30px'
-            }}
-          >
-            Lets find your next haul
-          </Typography>
-          <FormControl
-            sx={{
-              width: '100%',
-              height: '50px',
-              marginBottom: '50px'
-            }}
-          >
-            <Container
-              sx={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'space-between',
-                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)',
-                borderRadius: '5px',
-                padding: 0,
-                alignItems: 'center'
-              }}
-            >
-              <TextField
-                label="Search..."
-                color=""
-                autoWidth
-                sx={{ width: '100%', paddingLeft: '5px' }}
-                size="small"
-              />
-              <IconButton sx={{ width: '40px' }}>
-                <img
-                  src={SearchIcon}
-                  alt="Search"
-                  width="30"
-                  height="20"
-                  sx={{ marginRight: '30px' }}
-                />
-              </IconButton>
-            </Container>
-          </FormControl>
-        </Container>
+        <SearchComponent />
         <Container>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box>
