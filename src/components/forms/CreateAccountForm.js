@@ -9,6 +9,7 @@ import {
   MenuItem,
   Button
 } from '@mui/material';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
@@ -44,7 +45,7 @@ function CreateAccountForm() {
     setAccountType(event.target.value);
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     const { password, confirmPassword, phone } = formData;
     const errors = {};
 
@@ -67,8 +68,14 @@ function CreateAccountForm() {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
+      try {
+        const response = await axios.post('https://13.244.157.212/api/iam/v1/register', formData);
+        console.log('Success', response.data);
+        navigate('/');
+      } catch (error) {
+        console.error('Error:', error);
+      }
       console.log('Success');
-      navigate('/');
     }
   };
 
