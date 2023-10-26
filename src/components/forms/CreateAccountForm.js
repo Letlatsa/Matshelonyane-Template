@@ -20,7 +20,7 @@ function CreateAccountForm() {
 
   //initial form state and error state
   const initialFormState = {
-    accountType: 'Client',
+    accountType: '',
     phone: '',
     password: '',
     confirmPassword: ''
@@ -34,7 +34,7 @@ function CreateAccountForm() {
 
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState(initialErrorState);
-  const [accountType, setAccountType] = useState('Client');
+  const [accountType, setAccountType] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -46,13 +46,13 @@ function CreateAccountForm() {
   };
 
   const handleButtonClick = async () => {
-    const { password, confirmPassword, phone } = formData;
+    const { password, confirmPassword, phone, accountType } = formData;
     const errors = {};
 
     if (!phone) {
       errors.phoneError = 'Phone number is required';
-    } else if (!/^[7]\d{7}$/.test(phone)) {
-      errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
+    } else if (!/^[2]\d{10}$/.test(phone)) {
+      errors.phoneError = 'Phone number must start with 2 and be 11 digits long'; // Updated regex
     } else if (!/^\d+$/.test(phone)) {
       errors.phoneError = 'Phone number can only contain digits';
     }
@@ -69,13 +69,24 @@ function CreateAccountForm() {
 
     if (Object.keys(errors).length === 0) {
       try {
-        const response = await axios.post('https://13.244.157.212/api/iam/v1/register', formData);
+        // Ensure that formData matches the expected payload format
+        const dataToSend = {
+          number: phone,
+          password: password,
+          accountType: accountType
+        };
+
+        const response = await axios.post('http://13.244.157.212/api/iam/v1/register', dataToSend, {
+          headers: { 'Content-Type': 'application/json' }
+        });
+        console.log('', dataToSend);
+        console.log('Response:', response);
         console.log('Success', response.data);
         navigate('/');
       } catch (error) {
         console.error('Error:', error);
+        console.error('Error:', error.response);
       }
-      console.log('Success');
     }
   };
 
@@ -198,9 +209,10 @@ function CreateAccountForm() {
               value={accountType}
               onChange={handleChange}
             >
-              <MenuItem value="Client">Client</MenuItem>
-              <MenuItem value="Driver">Driver</MenuItem>
+              <MenuItem value="client">Client</MenuItem>
+              <MenuItem value="driver">Driver</MenuItem>
             </Select>
+
             <TextField
               variant="standard"
               label={
