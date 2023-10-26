@@ -19,8 +19,8 @@ import { LoginEndPoint } from '../../services/EndPoints';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const [accountType, setAccountType] = useState('client');
-  const [formData, setFormData] = useState({ phone: '', password: '', accountType: 'client' });
+  const [accountType, setAccountType] = useState('customer');
+  const [formData, setFormData] = useState({ phone: '', password: '', accountType: 'customer' });
   const navigate = useNavigate();
 
   const [formErrors, setFormErrors] = useState({
@@ -46,7 +46,7 @@ const LoginForm = () => {
 
     if (!accountType) {
       errors.accountTypeError = 'Account type is required';
-    } else if (!['driver', 'client'].includes(accountType.toLowerCase())) {
+    } else if (!['driver', 'customer'].includes(accountType.toLowerCase())) {
       errors.accountTypeError = 'Invalid account type';
     }
 
@@ -62,7 +62,13 @@ const LoginForm = () => {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          navigate('/home');
+          if (accountType === 'customer') {
+            navigate('/clientonboardingprofile');
+          }
+
+          if (accountType === 'driver') {
+            navigate('/truckerOnboardingProfile');
+          }
         }
       })
       .catch((error) => {
@@ -72,6 +78,7 @@ const LoginForm = () => {
 
   const handleChange = (event) => {
     setAccountType(event.target.value);
+    alert(event.target.value);
   };
   const handleButtonClicked = () => {
     navigate('/forgotpassword');
@@ -192,7 +199,7 @@ const LoginForm = () => {
             onChange={handleChange}
             sx={styledSelect}
           >
-            <MenuItem value="client">Client</MenuItem>
+            <MenuItem value="customer">Client</MenuItem>
             <MenuItem value="driver">Driver</MenuItem>
           </Select>
           <TextField
