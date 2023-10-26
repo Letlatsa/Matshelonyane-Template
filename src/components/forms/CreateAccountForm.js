@@ -17,10 +17,10 @@ import { RegisterEndPoint } from '../../services/EndPoints';
 
 function CreateAccountForm() {
   const navigate = useNavigate();
+  const [accountType, setAccountType] = useState('customer');
 
   //initial form state and error state
   const initialFormState = {
-    accountType: '',
     phone: '',
     password: '',
     confirmPassword: ''
@@ -34,7 +34,6 @@ function CreateAccountForm() {
 
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState(initialErrorState);
-  const [accountType, setAccountType] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,6 +46,7 @@ function CreateAccountForm() {
 
   const handleButtonClick = async () => {
     const { password, confirmPassword, phone, accountType } = formData;
+
     const errors = {};
 
     if (!phone) {
@@ -63,6 +63,10 @@ function CreateAccountForm() {
 
     if (password !== confirmPassword) {
       errors.confirmPasswordError = 'Passwords do not match';
+    }
+
+    if (!accountType) {
+      alert('Account type is required');
     }
 
     setFormErrors(errors);
@@ -211,7 +215,7 @@ function CreateAccountForm() {
               value={accountType}
               onChange={handleChange}
             >
-              <MenuItem value="client">Client</MenuItem>
+              <MenuItem value="customer">Client</MenuItem>
               <MenuItem value="driver">Driver</MenuItem>
             </Select>
 
