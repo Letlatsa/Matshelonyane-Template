@@ -33,6 +33,8 @@ const LoginForm = () => {
     const { phone, password, accountType } = formData;
     const errors = {};
 
+    console.log(formData);
+
     if (!phone) {
       errors.phoneError = 'Phone number is required';
     } else if (!/^[2]\d{10}$/.test(phone)) {
@@ -53,7 +55,13 @@ const LoginForm = () => {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      ApiRequest(formData);
+      const dataToSend = {
+        number: phone,
+        password: password,
+        accountType: accountType
+      };
+
+      ApiRequest(dataToSend);
     }
   };
 
