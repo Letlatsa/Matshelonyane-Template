@@ -11,10 +11,9 @@ import {
 } from '@mui/material';
 
 import BackArrow from '../../assets/backVector.svg';
-import EditIcon from '../../assets/EditVector.svg';
 import { useNavigate } from 'react-router-dom';
 
-const ClientProfile = () => {
+const TruckerProposalPage = () => {
   const navigate = useNavigate();
   const styledProfileBox = {
     borderRadius: '100px',
@@ -36,7 +35,7 @@ const ClientProfile = () => {
   };
 
   const styleBriefInfo = {
-    width: '120px',
+    width: '250px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -71,27 +70,14 @@ const ClientProfile = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 0,
+    marginBottom: '30px',
     height: '15px'
   };
 
-  const styledStack = {
-    width: '100%',
-    paddingLeft: '15px',
-    paddingRight: '15px'
-  };
-
-  const styledStackTypography = {
-    color: 'F8F8F8',
-    fontSize: '16px',
-    fontWeight: 500
-  };
-
   const handleButtonClicked = () => {
-    navigate('/clienthome');
+    navigate('/truckerhome');
     console.log('Button clicked');
   };
-
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -107,7 +93,6 @@ const ClientProfile = () => {
             >
               <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
             </IconButton>
-
             <Typography
               variant="h6"
               sx={{
@@ -123,7 +108,7 @@ const ClientProfile = () => {
                 paddingTop: '5px'
               }}
             >
-              Profile
+              Proposal
             </Typography>
             <Box
               size="large"
@@ -167,110 +152,31 @@ const ClientProfile = () => {
           >
             Client Doe
           </Typography>
-          <Typography
-            sx={{
-              color: '#C69585',
-              fontFamily: 'Lato',
-              fontSize: '16px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: 'normal',
-              letterSpacing: '-0.17px',
-              marginBottom: '15px'
-            }}
-          >
-            Gaborone
-          </Typography>
-          <Button
-            variant="text"
-            sx={{
-              backgroundColor: '#EBDBD5',
-              textColor: '#58362A',
-              width: '196px',
-              borderRadius: '15px',
-              height: '50px',
-              color: '#58362A',
-              fontWeight: '300',
-              fontSize: '14px',
-              textTransform: 'none',
-              boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-              '&:hover': {
-                backgroundColor: '#58362A',
-                color: 'white',
-                transition: 'ease-in .3s'
-              }
-            }}
-          >
-            Edit
-          </Button>
         </Box>
         <Card sx={styledCard}>
           <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>123</Typography>
-            <Typography sx={styledBriefSmallText}>Requests made</Typography>
+            <Typography sx={styledBriefBigText}>1 hour ago</Typography>
+            <Typography sx={styledBriefSmallText}>Posted</Typography>
+          </Box>
+          <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
+          <Box sx={styleBriefInfo}>
+            <Typography sx={styledBriefBigText}>P 500</Typography>
+            <Typography sx={styledBriefSmallText}>Price per load</Typography>
           </Box>
         </Card>
         <Box sx={styledDeviderBox}>
           <Box>
-            <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
+            <Typography sx={{ fontSize: '20px' }}>Details</Typography>
           </Box>
           <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
         </Box>
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '34px' }}>
-          <Button
-            variant="text"
-            sx={{
-              backgroundColor: '#FFFFFF',
-              textColor: '#58362A',
-              width: '66px',
-              borderRadius: '5px',
-              height: '25px',
-              color: '#58362A',
-              fontWeight: '300',
-              fontSize: '14px',
-              textTransform: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-              '&:hover': {
-                backgroundColor: '#58362A',
-                color: 'white',
-                transition: 'ease-in .3s'
-              }
-            }}
-          >
-            <Typography sx={{ height: '20px', display: 'flex' }}>Edit</Typography>
-            <img src={EditIcon} alt="MenuIcon" width="14" height="14" />
-          </Button>
-        </Box>
+
         <Card sx={styledCard}>
-          <Stack spacing={2} sx={styledStack}>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Phone number:</Typography>
-              <Typography sx={styledStackTypography}> 71234356</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Location:</Typography>
-              <Typography sx={styledStackTypography}>Gaborone</Typography>
-            </Box>
-          </Stack>
+          <Typography>Job details</Typography>
         </Card>
       </Container>
     </div>
   );
 };
 
-export default ClientProfile;
+export default TruckerProposalPage;

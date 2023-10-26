@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Avatar } from '@mui/material';
+import { Avatar, Stack } from '@mui/material';
 import {
   Box,
   FormControl,
@@ -9,7 +9,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  FormHelperText
 } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 import WeightIcon from '../../assets/weight.svg';
@@ -31,16 +30,14 @@ const styledTextField = {
   },
   '& label': {
     color: 'white'
-  },
-  marginBottom: '10px'
+  }
 };
 
 const inputContainerBox = {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
-  marginBottom: '30px'
+  alignItems: 'center'
 };
 
 const styledSubmitButton = {
@@ -52,14 +49,13 @@ const styledSubmitButton = {
   color: '#58362A',
   fontWeight: '400',
   textTransform: 'none',
-  marginBottom: '30px',
+  marginTop: '30px',
   boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
   '&:hover': {
     backgroundColor: 'transparent'
   }
 };
 const styledInputLabel = {
-  marginTop: 8,
   left: -15,
   color: 'white',
   '&:hover': {
@@ -70,8 +66,7 @@ const styledInputLabel = {
 const styledSelect = {
   width: '100%',
   color: 'white',
-  borderBottom: ' 2px solid white',
-  marginBottom: '10px'
+  borderBottom: ' 2px solid white'
 };
 const accountLabelContainer = {
   display: 'flex',
@@ -171,7 +166,7 @@ function TruckProfile() {
 
   return (
     <div>
-      <Box sx={{ width: '100%', marginRight: '50px', left: '50px' }}>
+      <Box sx={{ width: '100%', marginRight: '50px' }}>
         <Box>
           <ProgressBar currentStep={currentStep} />
         </Box>
@@ -219,7 +214,7 @@ function TruckProfile() {
         >
           Upload a picture of your truck
         </Typography>
-        <Box>
+        <Stack spacing={2}>
           <FormControl sx={styledFormControl}>
             <Box sx={inputContainerBox}>
               <TextField
@@ -245,71 +240,79 @@ function TruckProfile() {
                 error={!!formErrors.plateNumberError}
                 helperText={formErrors.plateNumberError}
               />
-              <Box sx={inputContainerBox}>
-                <InputLabel id="Truck-type" sx={styledInputLabel}>
-                  <Box sx={accountLabelContainer}>
-                    <img
-                      src={TruckIcon}
-                      alt="Truck-type"
-                      width="30"
-                      height="20"
-                      sx={{ marginRight: '30px' }}
-                    />
-                    <Box>Truck-type</Box>
-                  </Box>
-                </InputLabel>
-                <Select
-                  variant="standard"
-                  labelId="Truck-type"
-                  id="truckType"
-                  sx={styledSelect}
-                  value={truckType}
-                  onChange={handleTrucktypeChange}
-                  error={!!formErrors.truckTypeError}
-                >
-                  <MenuItem value="Client">Type 1</MenuItem>
-                  <MenuItem value="Driver">Type 2</MenuItem>
-                </Select>
-                {/* <FormHelperText sx={styledHelperText}>{formErrors.truckTypeError}</FormHelperText> */}
-              </Box>
-
-              <TextField
-                variant="standard"
-                label={
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                      src={WeightIcon}
-                      alt="Tonnage"
-                      width="30"
-                      height="20"
-                      sx={{ marginRight: '30px' }}
-                    />
-                    Weight Capacity
-                  </div>
-                }
-                type="weightCapacity"
-                name="weightCapacity"
-                placeholder="Enter your Truck weight capacity"
-                sx={styledTextField}
-                value={formData.weightCapacity}
-                onChange={handleInputChange}
-                error={!!formErrors.weightCapacityError}
-                helperText={formErrors.weightCapacityError}
-              />
-            </Box>
-            <Box>
-              <Button
-                variant="text"
-                color="primary"
-                type="submit"
-                sx={styledSubmitButton}
-                onClick={validateForm}
-              >
-                Proceed
-              </Button>
             </Box>
           </FormControl>
-        </Box>
+          <FormControl sx={styledFormControl}>
+            <Box sx={inputContainerBox}>
+              <InputLabel id="Truck-type" sx={styledInputLabel}>
+                <Box sx={accountLabelContainer}>
+                  <img src={TruckIcon} alt="Truck-type" width="30" height="20" />
+                  <Box>Truck-type</Box>
+                </Box>
+              </InputLabel>
+              <Select
+                variant="standard"
+                labelId="Truck-type"
+                id="truckType"
+                sx={styledSelect}
+                value={truckType}
+                onChange={handleTrucktypeChange}
+                error={!!formErrors.truckTypeError}
+              >
+                <MenuItem value="Client">Type 1</MenuItem>
+                <MenuItem value="Driver">Type 2</MenuItem>
+              </Select>
+              {/* <FormHelperText sx={styledHelperText}>{formErrors.truckTypeError}</FormHelperText> */}
+            </Box>
+          </FormControl>
+          <FormControl sx={styledFormControl}>
+            <TextField
+              variant="standard"
+              label={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img
+                    src={WeightIcon}
+                    alt="Tonnage"
+                    width="30"
+                    height="20"
+                    sx={{ marginRight: '30px' }}
+                  />
+                  Weight Capacity
+                </div>
+              }
+              type="weightCapacity"
+              name="weightCapacity"
+              placeholder="Enter your Truck weight capacity"
+              sx={styledTextField}
+              value={formData.weightCapacity}
+              onChange={handleInputChange}
+              error={!!formErrors.weightCapacityError}
+              helperText={formErrors.weightCapacityError}
+            />
+          </FormControl>
+          <Box>
+            <Button
+              variant="text"
+              color="primary"
+              type="submit"
+              sx={styledSubmitButton}
+              onClick={validateForm}
+            >
+              Proceed
+            </Button>
+          </Box>
+          <Typography
+            sx={{
+              fontSize: 16,
+              color: 'white',
+              textAlign: 'center',
+              marginBottom: '50px',
+              marginLeft: '15px'
+            }}
+          >
+            You can add more trucks to your fleet later in the settings page
+          </Typography>
+        </Stack>
       </Box>
     </div>
   );

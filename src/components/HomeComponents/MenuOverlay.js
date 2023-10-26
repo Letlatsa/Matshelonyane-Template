@@ -19,8 +19,18 @@ import AccountIcon from '../../assets/account.svg';
 import NotificationBell from '../../assets/bellVector.svg';
 import RightArrow from '../../assets/rightVectorArrow.svg';
 import LocationPin from '../../assets/circum_location-on1.svg';
+import { useNavigate } from 'react-router-dom';
 
-const MenuOverlay = () => {
+const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    navigate('/');
+  };
+
+  const handleButtonBackArrowClicked = () => {
+    setIsOverlay(false);
+  };
+
   const styledAppBar = {
     background: 'transparent',
     boxShadow: 'none'
@@ -34,8 +44,23 @@ const MenuOverlay = () => {
 
   const overlayStyles = {
     background: 'rgba(198, 149, 133, 0.70)',
+    backdropFilter: 'blur(10px)',
+    height: '100vh',
+    position: 'absolute',
+    width: '100%',
+    transition: 'ease .5s',
+    transform: 'translateX(-200%)'
+  };
+
+  const openOverlayStyles = {
+    background: 'rgba(198, 149, 133, 0.70)',
     backdropFilter: "blur('20px')",
-    height: '100vh'
+    height: '100vh',
+    position: 'absolute',
+    width: '100%',
+    transition: 'ease .5s',
+    transform: 'translateX(0)',
+    zIndex: 1000
   };
 
   const styleListItemBox = {
@@ -54,11 +79,18 @@ const MenuOverlay = () => {
   };
 
   return (
-    <div style={overlayStyles}>
+    <div style={isOverlay ? openOverlayStyles : overlayStyles}>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
           <Toolbar sx={{ height: '70px' }}>
-            <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleButtonBackArrowClicked}
+            >
               <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
             </IconButton>
           </Toolbar>
@@ -196,6 +228,7 @@ const MenuOverlay = () => {
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
           <Button
             variant="text"
+            onClick={handleLogout}
             sx={{
               backgroundColor: '#EBDBD5',
               textColor: '#58362A',

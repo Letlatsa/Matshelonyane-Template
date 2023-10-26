@@ -10,6 +10,7 @@ import {
   MenuItem,
   Button
 } from '@mui/material';
+import axios from 'axios';
 import TextButton from '../Buttons/TextButton';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
@@ -18,8 +19,8 @@ import PasswordIcon from '../../assets/password.svg';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const [accountType, setAccountType] = useState('Client');
-  const [formData, setFormData] = useState({ phone: '', password: '' });
+  const [accountType, setAccountType] = useState('client');
+  const [formData, setFormData] = useState({ phone: '', password: '', accountType: 'client' });
   const navigate = useNavigate();
 
   const [formErrors, setFormErrors] = useState({
@@ -27,38 +28,48 @@ const LoginForm = () => {
     passwordError: ''
   });
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     console.log('Button Clicked');
+    const { phone, password, accountType } = formData;
     const errors = {};
 
-    if (!formData.phone) {
+    if (!phone) {
       errors.phoneError = 'Phone number is required';
-    } else if (!/^[7]\d{7}$/.test(formData.phone)) {
-      errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
-    }
-
-    if (!/^\d+$/.test(formData.phone)) {
+    } else if (!/^[2]\d{10}$/.test(phone)) {
+      errors.phoneError = 'Phone number must start with 2 and be 11 digits long'; // Updated regex
+    } else if (!/^\d+$/.test(phone)) {
       errors.phoneError = 'Phone number can only contain digits';
     }
-
-    if (!formData.password) {
+    if (!password) {
       errors.passwordError = 'Password is required';
     }
 
-    console.log('Errors:', errors);
-    console.log('Phone:', formData.phone);
-    console.log('Password:', formData.password);
+    if (!accountType) {
+      errors.accountTypeError = 'Account type is required';
+    } else if (!['driver', 'client'].includes(accountType.toLowerCase())) {
+      errors.accountTypeError = 'Invalid account type';
+    }
 
-    if (Object.keys(errors).length > 0) {
-      console.log('Validation Failed');
-      setFormErrors(errors);
-    } else {
-      console.log('Validation Passed');
-      // Navigate based on the selected account type
-      if (accountType === 'Driver') {
-        navigate('/accountcreated');
-      } else if (accountType === 'Client') {
-        navigate('/clientaccountcreated');
+    setFormErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      try {
+        const response = await axios.post('http://13.244.157.212/api/iam/v1/login', formData, {
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        console.log('Login Success', response.data);
+        console.log('Response:', response);
+
+        // Navigate based on the selected account type
+        if (accountType === 'driver') {
+          navigate('/accountcreated');
+        } else if (accountType === 'client') {
+          navigate('/clientaccountcreated');
+        }
+      } catch (error) {
+        console.error('Login Error:', error);
+        console.error('Error:', error.response);
       }
     }
   };
@@ -185,8 +196,8 @@ const LoginForm = () => {
             onChange={handleChange}
             sx={styledSelect}
           >
-            <MenuItem value="Client">Client</MenuItem>
-            <MenuItem value="Driver">Driver</MenuItem>
+            <MenuItem value="client">Client</MenuItem>
+            <MenuItem value="driver">Driver</MenuItem>
           </Select>
           <TextField
             variant="standard"

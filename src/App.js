@@ -19,7 +19,9 @@ import ClientProfile from './pages/Home-pages/ClientProfile';
 import ClientTruckerProfile from './pages/Home-pages/ClientTruckerProfile';
 import Truckerhome from './pages/Home-pages/TruckerHome';
 import TruckerProfileView from './pages/Home-pages/TruckerProfileView';
-import MenuOverlay from './pages/Home-pages/MenuOverlay'
+import TruckerProposalPage from './pages/Home-pages/TruckerProposalPage';
+import MenuOverlay from './components/HomeComponents/MenuOverlay';
+import ClientOverlay from './pages/Home-pages/ClientOverlay';
 
 function App() {
   return (
@@ -38,13 +40,15 @@ function App() {
         <Route path="/truckprofilecomplete" element={<TruckProfileComplete />}></Route>
         <Route path="/clientonboardingprofile" element={<ClientOnboardingProfile />}></Route>
         <Route path="/clientprofilecomplete" element={<ClientProfileComplete />}></Route>
-         {/*New routes*/}
+        {/*New routes*/}
         <Route path="/clienthome" element={<ClientHome />}></Route>
         <Route path="/clientprofile" element={<ClientProfile />}></Route>
         <Route path="/clienttruckerprofile" element={<ClientTruckerProfile />}></Route>
         <Route path="/truckerhome" element={<Truckerhome />}></Route>
         <Route path="/truckerprofileview" element={<TruckerProfileView />}></Route>
         <Route path="/overlay" element={<MenuOverlay />}></Route>
+        <Route path="/clientoverlay" element={<ClientOverlay />}></Route>
+        <Route path="/truckerproposalpage" element={<TruckerProposalPage />}></Route>
       </Routes>
     </div>
   );

@@ -11,8 +11,10 @@ import {
 } from '@mui/material';
 
 import BackArrow from '../../assets/backVector.svg';
+import { useNavigate } from 'react-router-dom';
 
 const ClientTruckerProfie = () => {
+  const navigate = useNavigate();
   const styledProfileBox = {
     borderRadius: '100px',
     display: 'flex',
@@ -83,13 +85,23 @@ const ClientTruckerProfie = () => {
     fontSize: '16px',
     fontWeight: 500
   };
-
+  const handleButtonClicked = () => {
+    navigate('/clienthome');
+    console.log('Button clicked');
+  };
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
           <Toolbar sx={{ height: '70px' }}>
-            <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleButtonClicked}
+            >
               <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
             </IconButton>
             <Typography

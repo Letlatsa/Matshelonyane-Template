@@ -6,6 +6,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
+
 import {
   Container,
   FormControl,
@@ -32,6 +34,7 @@ const ClientHome = () => {
   const navigate = useNavigate();
   const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
+  const [isOverlay, setIsOverlay] = useState(false);
 
   const handleChange = (event) => {
     setRating(event.target.value);
@@ -73,13 +76,31 @@ const ClientHome = () => {
   const handleButtonClicked = () => {
     navigate('/clientprofile');
   };
+  const handleButtonTruckerProfileClicked = () => {
+    navigate('/clienttruckerprofile');
+  };
+  const handleButtonOverlayClicked = () => {
+    if (isOverlay === false) {
+      setIsOverlay(true);
+    } else {
+      setIsOverlay(false);
+    }
+  };
 
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
+          <MenuOverlay isOverlay={isOverlay} setIsOverlay={setIsOverlay} />
           <Toolbar sx={{ height: '70px' }}>
-            <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleButtonOverlayClicked}
+            >
               <img
                 src={EllipsisV}
                 alt="MenuIcon"
@@ -224,7 +245,7 @@ const ClientHome = () => {
             >
               <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                 <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
-                  <Box sx={styledProfileBox}>
+                  <Box sx={styledProfileBox} onClick={handleButtonTruckerProfileClicked}>
                     <img
                       src="https://picsum.photos/200/300"
                       alt=""
@@ -310,7 +331,8 @@ const ClientHome = () => {
                 borderRadius: '50px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
               }}
             >
               <img src={homeIcon} alt="Phone" width="30" height="20" sx={{ marginRight: '30px' }} />
@@ -328,7 +350,8 @@ const ClientHome = () => {
                 borderRadius: '50px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
               }}
             >
               <img
@@ -352,7 +375,8 @@ const ClientHome = () => {
                 borderRadius: '50px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
               }}
             >
               <img
@@ -376,7 +400,8 @@ const ClientHome = () => {
                 borderRadius: '50px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
               }}
             >
               <img
