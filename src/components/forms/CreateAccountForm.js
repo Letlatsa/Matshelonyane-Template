@@ -65,9 +65,7 @@ function CreateAccountForm() {
       errors.confirmPasswordError = 'Passwords do not match';
     }
 
-    if (!accountType) {
-      alert('Account type is required');
-    }
+    
 
     setFormErrors(errors);
 
