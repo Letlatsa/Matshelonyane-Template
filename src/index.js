@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { TokenProvider } from './TokenContext';
 
 const theme = createTheme({
   breakpoints: {
@@ -22,7 +23,9 @@ root.render(
   <React.StrictMode>
     <Router>
       <ThemeProvider theme={theme}>
-        <App />
+        <TokenProvider>
+          <App />
+        </TokenProvider>
       </ThemeProvider>
     </Router>
   </React.StrictMode>

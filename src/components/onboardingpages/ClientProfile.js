@@ -2,10 +2,10 @@ import { React, useState } from 'react';
 import { Avatar } from '@mui/material';
 import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
-import PhoneIcon from '../../assets/phone.svg';
 import UploadIcon from '../../assets/upload.svg';
 import { useNavigate } from 'react-router-dom';
 import { ClientProfileEndpoint } from '../../services/EndPoints';
+import { useToken } from '../../TokenContext';
 
 const styledFormControl = {
   width: '100%',
@@ -49,20 +49,20 @@ const styledSubmitButton = {
 };
 
 function ClientProfile() {
+  const { tokens } = useToken();
   const initialFormState = {
     firstName: '',
-    lastName: '',
-    phone: ''
+    lastName: ''
   };
 
   const initialErrorState = {
     firstNameError: '',
-    lastNameError: '',
-    phoneError: ''
+    lastNameError: ''
   };
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState(initialErrorState);
   const [avatarImage, setAvatarImage] = useState(null);
+  const [file, setFile] = useState(null);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -70,7 +70,8 @@ function ClientProfile() {
     setFormData({ ...formData, [name]: value });
   };
   const validateForm = () => {
-    const { firstName, lastName, phone } = formData;
+    const { firstName, lastName } = formData;
+    const accessToken = tokens.accessToken;
     const errors = {};
 
     if (!firstName) {
@@ -79,28 +80,21 @@ function ClientProfile() {
     if (!lastName) {
       errors.lastNameError = 'Lastname is required';
     }
-    if (!phone) {
-      errors.phoneError = 'Phone number is required';
-    } else if (!/^[7]\d{7}$/.test(phone)) {
-      errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
-    } else if (!/^\d+$/.test(phone)) {
-      errors.phoneError = 'Phone number can only contain digits';
-    }
+
     setFormErrors(errors);
     console.log(formErrors);
 
     if (Object.keys(errors).length === 0) {
-      const dataToSend = {
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone
-      };
+      const formData = new FormData();
       // Check if an image has been selected
       if (avatarImage) {
-        dataToSend.propic = avatarImage;
-      }
+        formData.append('firstname', firstName);
+        formData.append('lastname', lastName);
+        formData.append('account', accessToken);
+        formData.append('file', file);
 
-      ApiRequest(dataToSend);
+        ApiRequest(formData);
+      }
     }
   };
   const ApiRequest = (formData) => {
@@ -120,6 +114,8 @@ function ClientProfile() {
 
     if (file) {
       const reader = new FileReader();
+
+      setFile(file);
 
       reader.onload = (e) => {
         setAvatarImage(e.target.result);
@@ -238,29 +234,6 @@ function ClientProfile() {
                 onChange={handleInputChange}
                 error={!!formErrors.lastNameError}
                 helperText={formErrors.lastNameError}
-              />
-              <TextField
-                variant="standard"
-                label={
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                      src={PhoneIcon}
-                      alt="Phone"
-                      width="30"
-                      height="20"
-                      sx={{ marginRight: '30px' }}
-                    />
-                    Phone Number
-                  </div>
-                }
-                type="phone"
-                name="phone"
-                placeholder="Enter your phone number"
-                sx={styledTextField}
-                value={formData.phone}
-                onChange={handleInputChange}
-                error={!!formErrors.phoneError}
-                helperText={formErrors.phoneError}
               />
             </Box>
             <Box>

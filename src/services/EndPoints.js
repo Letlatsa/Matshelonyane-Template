@@ -16,7 +16,7 @@ const RegisterEndPoint = async (formData) => {
 
 const ClientProfileEndpoint = async (formData) => {
   const response = await ApiClient.post('/profile/customer', formData, {
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'multipart/form-data' }
   });
   return response;
 };
