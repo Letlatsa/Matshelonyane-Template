@@ -14,4 +14,30 @@ const RegisterEndPoint = async (formData) => {
   return response;
 };
 
-export { LoginEndPoint, RegisterEndPoint };
+const ClientProfileEndpoint = async (formData) => {
+  const response = await ApiClient.post('/profile/customer', formData, {
+    headers: { 'Content-Type': 'application/json' }
+  });
+  return response;
+};
+const TruckerProfileEndpoint = async (formData) => {
+  const response = await ApiClient.post('/profile/driver', formData, {
+    headers: { 'Content-Type': 'application/json' }
+  });
+  return response;
+};
+
+const ForgotPasswordEndPoint = async (formData) => {
+  const response = await ApiClient.post('/pass_reset', formData, {
+    headers: { 'Content-Type': 'application/json' }
+  });
+  return response;
+};
+
+export {
+  LoginEndPoint,
+  RegisterEndPoint,
+  ClientProfileEndpoint,
+  TruckerProfileEndpoint,
+  ForgotPasswordEndPoint
+};

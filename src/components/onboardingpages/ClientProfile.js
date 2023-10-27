@@ -5,6 +5,7 @@ import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import UploadIcon from '../../assets/upload.svg';
 import { useNavigate } from 'react-router-dom';
+import { ClientProfileEndpoint } from '../../services/EndPoints';
 
 const styledFormControl = {
   width: '100%',
@@ -89,11 +90,31 @@ function ClientProfile() {
     console.log(formErrors);
 
     if (Object.keys(errors).length === 0) {
-      console.log('Success');
-      navigate('/clientprofilecomplete');
+      const dataToSend = {
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone
+      };
+      // Check if an image has been selected
+      if (avatarImage) {
+        dataToSend.propic = avatarImage;
+      }
+
+      ApiRequest(dataToSend);
     }
   };
-
+  const ApiRequest = (formData) => {
+    ClientProfileEndpoint(formData)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          navigate('/clientprofilecomplete');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -140,11 +161,12 @@ function ClientProfile() {
         <input
           type="file"
           accept="image/*"
-          id="avatar-upload"
+          id="propic"
+          name="propic"
           style={{ display: 'none' }}
           onChange={handleImageChange}
         />
-        <label htmlFor="avatar-upload">
+        <label htmlFor="propic">
           <Box sx={styledAvatarBox}>
             {avatarImage ? (
               <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 100, height: 100 }} />
