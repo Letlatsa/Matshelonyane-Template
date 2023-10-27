@@ -9,18 +9,18 @@ import {
   MenuItem,
   Button
 } from '@mui/material';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
 import AccountIcon from '../../assets/account.svg';
+import { RegisterEndPoint } from '../../services/EndPoints';
 
 function CreateAccountForm() {
   const navigate = useNavigate();
+  const [accountType, setAccountType] = useState('customer');
 
   //initial form state and error state
   const initialFormState = {
-    accountType: '',
     phone: '',
     password: '',
     confirmPassword: ''
@@ -34,7 +34,6 @@ function CreateAccountForm() {
 
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState(initialErrorState);
-  const [accountType, setAccountType] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,6 +46,7 @@ function CreateAccountForm() {
 
   const handleButtonClick = async () => {
     const { password, confirmPassword, phone, accountType } = formData;
+
     const errors = {};
 
     if (!phone) {
@@ -65,29 +65,33 @@ function CreateAccountForm() {
       errors.confirmPasswordError = 'Passwords do not match';
     }
 
+    
+
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      try {
-        // Ensure that formData matches the expected payload format
-        const dataToSend = {
-          number: phone,
-          password: password,
-          accountType: accountType
-        };
+      // Ensure that formData matches the expected payload format
+      const dataToSend = {
+        number: phone,
+        password: password,
+        accountType: 'customer'
+      };
 
-        const response = await axios.post('http://13.244.157.212/api/iam/v1/register', dataToSend, {
-          headers: { 'Content-Type': 'application/json' }
-        });
-        console.log('', dataToSend);
-        console.log('Response:', response);
-        console.log('Success', response.data);
-        navigate('/');
-      } catch (error) {
-        console.error('Error:', error);
-        console.error('Error:', error.response);
-      }
+      ApiRequest(dataToSend);
     }
+  };
+
+  const ApiRequest = (formData) => {
+    RegisterEndPoint(formData)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          navigate('/');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleButtonClicked = () => {
@@ -209,7 +213,7 @@ function CreateAccountForm() {
               value={accountType}
               onChange={handleChange}
             >
-              <MenuItem value="client">Client</MenuItem>
+              <MenuItem value="customer">Client</MenuItem>
               <MenuItem value="driver">Driver</MenuItem>
             </Select>
 

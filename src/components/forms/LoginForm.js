@@ -10,17 +10,17 @@ import {
   MenuItem,
   Button
 } from '@mui/material';
-import axios from 'axios';
 import TextButton from '../Buttons/TextButton';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
+import { LoginEndPoint } from '../../services/EndPoints';
 
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const [accountType, setAccountType] = useState('client');
-  const [formData, setFormData] = useState({ phone: '', password: '', accountType: 'client' });
+  const [accountType, setAccountType] = useState('customer');
+  const [formData, setFormData] = useState({ phone: '', password: '', accountType: 'customer' });
   const navigate = useNavigate();
 
   const [formErrors, setFormErrors] = useState({
@@ -32,6 +32,8 @@ const LoginForm = () => {
     console.log('Button Clicked');
     const { phone, password, accountType } = formData;
     const errors = {};
+
+    console.log(formData);
 
     if (!phone) {
       errors.phoneError = 'Phone number is required';
@@ -46,36 +48,45 @@ const LoginForm = () => {
 
     if (!accountType) {
       errors.accountTypeError = 'Account type is required';
-    } else if (!['driver', 'client'].includes(accountType.toLowerCase())) {
+    } else if (!['driver', 'customer'].includes(accountType.toLowerCase())) {
       errors.accountTypeError = 'Invalid account type';
     }
 
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      try {
-        const response = await axios.post('http://13.244.157.212/api/iam/v1/login', formData, {
-          headers: { 'Content-Type': 'application/json' }
-        });
+      const dataToSend = {
+        number: phone,
+        password: password,
+        accountType: accountType
+      };
 
-        console.log('Login Success', response.data);
-        console.log('Response:', response);
-
-        // Navigate based on the selected account type
-        if (accountType === 'driver') {
-          navigate('/accountcreated');
-        } else if (accountType === 'client') {
-          navigate('/clientaccountcreated');
-        }
-      } catch (error) {
-        console.error('Login Error:', error);
-        console.error('Error:', error.response);
-      }
+      ApiRequest(dataToSend);
     }
+  };
+
+  const ApiRequest = (formData) => {
+    LoginEndPoint(formData)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          if (accountType === 'customer') {
+            navigate('/clientonboardingprofile');
+          }
+
+          if (accountType === 'driver') {
+            navigate('/truckerOnboardingProfile');
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleChange = (event) => {
     setAccountType(event.target.value);
+    alert(event.target.value);
   };
   const handleButtonClicked = () => {
     navigate('/forgotpassword');
@@ -196,7 +207,7 @@ const LoginForm = () => {
             onChange={handleChange}
             sx={styledSelect}
           >
-            <MenuItem value="client">Client</MenuItem>
+            <MenuItem value="customer">Client</MenuItem>
             <MenuItem value="driver">Driver</MenuItem>
           </Select>
           <TextField
