@@ -5,7 +5,7 @@ import AccountIcon from '../../assets/account.svg';
 import UploadIcon from '../../assets/upload.svg';
 import { useNavigate } from 'react-router-dom';
 import { ClientProfileEndpoint } from '../../services/EndPoints';
-import { useToken } from '../../TokenContext';
+import { useToken } from '../../Hooks/TokenContext';
 
 const styledFormControl = {
   width: '100%',
