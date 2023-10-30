@@ -86,19 +86,18 @@ function ClientProfile() {
 
     if (Object.keys(errors).length === 0) {
       const formData = new FormData();
-      // Check if an image has been selected
+
       if (avatarImage) {
-        formData.append('firstname', firstName);
-        formData.append('lastname', lastName);
-        formData.append('account', accessToken);
+        formData.append('firstName', firstName);
+        formData.append('lastName', lastName);
         formData.append('file', file);
 
-        ApiRequest(formData);
+        ApiRequest(formData, accessToken);
       }
     }
   };
-  const ApiRequest = (formData) => {
-    ClientProfileEndpoint(formData)
+  const ApiRequest = (formData, accessToken) => {
+    ClientProfileEndpoint(formData, accessToken)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {

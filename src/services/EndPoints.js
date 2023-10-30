@@ -14,12 +14,13 @@ const RegisterEndPoint = async (formData) => {
   return response;
 };
 
-const ClientProfileEndpoint = async (formData) => {
+const ClientProfileEndpoint = async (formData, Token) => {
   const response = await ApiClient.post('/profile/customer', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
+    headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${Token}` }
   });
   return response;
 };
+
 const TruckerProfileEndpoint = async (formData) => {
   const response = await ApiClient.post('/profile/driver', formData, {
     headers: { 'Content-Type': 'application/json' }
