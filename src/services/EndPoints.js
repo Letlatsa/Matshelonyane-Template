@@ -35,6 +35,13 @@ const ForgotPasswordEndPoint = async (formData) => {
   return response;
 };
 
+const UpdateDriverLicenseEndPoint = async (formData, Token) => {
+  const response = await ApiClient.put('/driverlicense', formData, {
+    headers: { 'Content-Typen': 'multipart/form-data', Authorization: `Bearer ${Token}` }
+  });
+  return response;
+};
+
 export {
   LoginEndPoint,
   RegisterEndPoint,
