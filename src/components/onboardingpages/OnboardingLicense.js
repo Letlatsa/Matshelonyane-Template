@@ -38,7 +38,8 @@ const OnboardingLicense = () => {
   const handleButtonClick = () => {
     const formData = new FormData();
     const accessToken = tokens.accessToken;
-    let profileId;
+    const user = sessionStorage.getItem('user');
+    const profileId = JSON.parse(user)._id;
 
     if (imageSrc) {
       formData.append('profileId', profileId);
