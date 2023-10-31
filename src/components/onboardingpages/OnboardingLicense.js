@@ -38,8 +38,10 @@ const OnboardingLicense = () => {
   const handleButtonClick = () => {
     const formData = new FormData();
     const accessToken = tokens.accessToken;
+    let profileId;
 
     if (imageSrc) {
+      formData.append('profileId', profileId);
       formData.append('file', file);
 
       ApiRequest(formData, accessToken);
