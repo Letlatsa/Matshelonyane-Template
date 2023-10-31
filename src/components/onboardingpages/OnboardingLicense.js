@@ -5,33 +5,58 @@ import LicenceFrame from '../../assets/License Frame1.svg';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/login.css';
 import ProgressBar from './ProgressBar';
+import { useToken } from '../../Hooks/TokenContext';
+import { UpdateDriverLicenseEndPoint } from '../../services/EndPoints';
 
 const OnboardingLicense = () => {
+  const { tokens } = useToken();
   const [currentStep, setCurrentStep] = useState(1);
   const [imageSrc, setImageSrc] = useState(null);
+  const [file, setFile] = useState(null);
 
   const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     if (e.target && e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-  
+
       const reader = new FileReader();
-  
+
+      setFile(file);
+
       reader.onload = (e) => {
         setImageSrc(e.target.result);
       };
-  
+
       reader.readAsDataURL(file);
     } else {
       // Handle the case where no files are selected, e.target is undefined, or files array is empty.
       // You can provide appropriate feedback to the user or take other actions as needed.
     }
   };
-  
 
   const handleButtonClick = () => {
-    navigate('/truckonboardingprofile');
+    const formData = new FormData();
+    const accessToken = tokens.accessToken;
+
+    if (imageSrc) {
+      formData.append('file', file);
+
+      ApiRequest(formData, accessToken);
+    }
+  };
+
+  const ApiRequest = (formData, accessToken) => {
+    UpdateDriverLicenseEndPoint(formData, accessToken)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          navigate('/truckonboardingprofile');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const styledButton = {
