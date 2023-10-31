@@ -77,6 +77,9 @@ const accountLabelContainer = {
 };
 function TruckerProfile() {
   const { tokens } = useToken();
+
+  console.log(tokens);
+
   const initialFormState = {
     firstName: '',
     lastName: '',
@@ -223,6 +226,7 @@ function TruckerProfile() {
       };
 
       reader.readAsDataURL(file);
+      console.log(file);
     }
   };
   // eslint-disable-next-line no-unused-vars
