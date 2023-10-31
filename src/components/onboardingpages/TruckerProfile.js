@@ -20,7 +20,6 @@ import { useNavigate } from 'react-router-dom';
 import { TruckerProfileEndpoint } from '../../services/EndPoints';
 import { useToken } from '../../Hooks/TokenContext';
 
-
 const styledFormControl = {
   width: '100%',
   color: 'white',
@@ -183,11 +182,11 @@ function TruckerProfile() {
     if (Object.keys(errors).length === 0) {
       const formData = new FormData();
 
-      if (Avatar) {
+      if (avatarImage) {
         formData.append('firstName', firstName);
         formData.append('lastName', lastName);
         formData.append('deliveryArea', selectedLocation);
-        formData.appendd('file', file);
+        formData.append('file', file);
 
         ApiRequest(formData, accessToken);
       }
