@@ -12,7 +12,6 @@ import {
 } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
-import UploadIcon from '../../assets/upload.svg';
 import LocationIcon from '../../assets/location.svg';
 import ProgressBar from './ProgressBar';
 import { useNavigate } from 'react-router-dom';
@@ -211,12 +210,6 @@ function TruckerProfile() {
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative'
-  };
-  const uploadIconStyle = {
-    position: 'absolute',
-    right: '100px',
-    bottom: '0px',
-    cursor: 'pointer'
   };
   const styledSelect = {
     width: '100%',

@@ -13,7 +13,6 @@ import {
 import AccountIcon from '../../assets/account.svg';
 import WeightIcon from '../../assets/weight.svg';
 import TruckIcon from '../../assets/truck.svg';
-import UploadIcon from '../../assets/upload.svg';
 import ProgressBar from './ProgressBar';
 import { useNavigate } from 'react-router-dom';
 
@@ -77,12 +76,6 @@ const styledAvatarBox = {
   justifyContent: 'center',
   alignItems: 'center',
   position: 'relative'
-};
-const uploadIconStyle = {
-  position: 'absolute',
-  right: '100px',
-  bottom: '0px',
-  cursor: 'pointer'
 };
 // eslint-disable-next-line no-unused-vars
 const styledHelperText = {

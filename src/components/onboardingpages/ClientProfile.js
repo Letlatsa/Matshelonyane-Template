@@ -3,7 +3,6 @@ import { Avatar } from '@mui/material';
 import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
-import UploadIcon from '../../assets/upload.svg';
 import { useNavigate } from 'react-router-dom';
 import { ClientProfileEndpoint } from '../../services/EndPoints';
 
@@ -134,12 +133,6 @@ function ClientProfile() {
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative'
-  };
-  const uploadIconStyle = {
-    position: 'absolute',
-    right: '100px',
-    bottom: '0px',
-    cursor: 'pointer'
   };
   return (
     <div>
