@@ -14,9 +14,9 @@ const StyledCard = {
   alignItems: 'center',
   flexDirection: 'column',
   justifyContent: 'center',
-  backgroundColor: '#e2e8f02a',
+  backgroundColor: 'rgba(198, 149, 133, .3)',
   borderRadius: '0',
-  backdropFilter: 'blur(30px)',
+  backdropFilter: 'blur(40px)',
   position: 'fixed',
   top: '0',
   left: '0'
