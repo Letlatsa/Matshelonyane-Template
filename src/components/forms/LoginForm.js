@@ -84,6 +84,8 @@ const LoginForm = () => {
           }
 
           if (accountType === 'driver') {
+            const { accessToken, refreshToken } = response.data;
+            setTokenData(accessToken, refreshToken);
             navigate('/truckerOnboardingProfile');
           }
         }
