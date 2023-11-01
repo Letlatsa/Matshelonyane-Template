@@ -152,7 +152,7 @@ function ClientProfile() {
             marginBottom: '30px',
             marginLeft: '15px',
             textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-            fontWeight: 'bold',
+            fontWeight: 'bold'
           }}
         >
           Let’s us get to know you
@@ -172,9 +172,6 @@ function ClientProfile() {
             ) : (
               <Avatar alt="User Avatar" sx={{ width: 130, height: 130 }}></Avatar>
             )}
-            <Box style={uploadIconStyle}>
-              <img src={UploadIcon} alt="Account" width="30" height="20" />
-            </Box>
           </Box>
         </label>
 

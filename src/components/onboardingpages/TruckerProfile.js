@@ -257,9 +257,6 @@ function TruckerProfile() {
             ) : (
               <Avatar alt="User Avatar" sx={{ width: 130, height: 130 }}></Avatar>
             )}
-            <Box style={uploadIconStyle}>
-              <img src={UploadIcon} alt="Account" width="30" height="20" />
-            </Box>
           </Box>
         </label>
 
