@@ -28,20 +28,19 @@ const TruckerProfileEndpoint = async (formData, Token) => {
   return response;
 };
 
-const ForgotPasswordEndPoint = async (formData) => {
+const ForgotPasswordEndPoint = async (formData, Token) => {
   const response = await ApiClient.post('/pass_reset', formData, {
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${Token}` }
   });
   return response;
 };
-
 
 const UpdateDriverLicenseEndPoint = async (formData, Token) => {
   const response = await ApiClient.put('/driverlicense', formData, {
     headers: { 'Content-Typen': 'multipart/form-data', Authorization: `Bearer ${Token}` }
   });
   return response;
-}
+};
 
 const RetrieveSurnameEndpoint = async (Token) => {
   try {
@@ -62,6 +61,6 @@ export {
   ClientProfileEndpoint,
   TruckerProfileEndpoint,
   ForgotPasswordEndPoint,
-  UpdateDriverLicenseEndPoint
+  UpdateDriverLicenseEndPoint,
   RetrieveSurnameEndpoint
 };
