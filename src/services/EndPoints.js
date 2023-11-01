@@ -35,6 +35,14 @@ const ForgotPasswordEndPoint = async (formData) => {
   return response;
 };
 
+
+const UpdateDriverLicenseEndPoint = async (formData, Token) => {
+  const response = await ApiClient.put('/driverlicense', formData, {
+    headers: { 'Content-Typen': 'multipart/form-data', Authorization: `Bearer ${Token}` }
+  });
+  return response;
+}
+
 const RetrieveSurnameEndpoint = async (Token) => {
   try {
     const response = await ApiClient.get('/me', {
@@ -54,5 +62,6 @@ export {
   ClientProfileEndpoint,
   TruckerProfileEndpoint,
   ForgotPasswordEndPoint,
+  UpdateDriverLicenseEndPoint
   RetrieveSurnameEndpoint
 };
