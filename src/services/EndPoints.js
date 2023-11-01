@@ -35,11 +35,25 @@ const ForgotPasswordEndPoint = async (formData) => {
   return response;
 };
 
+
 const UpdateDriverLicenseEndPoint = async (formData, Token) => {
   const response = await ApiClient.put('/driverlicense', formData, {
     headers: { 'Content-Typen': 'multipart/form-data', Authorization: `Bearer ${Token}` }
   });
   return response;
+}
+
+const RetrieveSurnameEndpoint = async (Token) => {
+  try {
+    const response = await ApiClient.get('/me', {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error('Error occurred while making the request:', error);
+    throw error; // Rethrow the error to the caller for further handling
+  }
 };
 
 export {
@@ -49,4 +63,5 @@ export {
   TruckerProfileEndpoint,
   ForgotPasswordEndPoint,
   UpdateDriverLicenseEndPoint
+  RetrieveSurnameEndpoint
 };
