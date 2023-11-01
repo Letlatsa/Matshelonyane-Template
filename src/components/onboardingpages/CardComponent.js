@@ -16,7 +16,10 @@ const StyledCard = {
   backdropFilter: 'blur(40px)',
   position: 'fixed',
   top: '0',
-  left: '0'
+  left: '0',
+  overflowY: 'scroll',
+  '&::-webkit-scrollbar': { width: '0.4em' },
+  '&::-webkit-scrollbar-thumb': { backgroundColor: 'transparent' }
 };
 
 const StyledBox = {
@@ -35,9 +38,7 @@ function CardComponent({ children }) {
             ntent
             sx={{
               overflowY: 'scroll',
-              paddingTop: '30px',
-              '&::-webkit-scrollbar': { width: '0.4em' },
-              '&::-webkit-scrollbar-thumb': { backgroundColor: 'transparent' }
+              paddingTop: '30px'
             }}
           >
             {children}
