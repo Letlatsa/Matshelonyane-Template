@@ -47,8 +47,7 @@ const ClientHome = () => {
   // Styles
 
   const styledAppBar = {
-    backgroundColor: '#ffffff',
-    color: '#000000',
+    backgroundColor: 'transparent',
     boxShadow: 'none'
   };
 
@@ -70,7 +69,7 @@ const ClientHome = () => {
     marginLeft: 1,
     height: '50px',
     width: '50px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   };
 
   const handleButtonClicked = () => {
@@ -88,7 +87,7 @@ const ClientHome = () => {
   };
 
   return (
-    <div>
+    <div className="homeContainer">
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
           <MenuOverlay isOverlay={isOverlay} setIsOverlay={setIsOverlay} />
@@ -163,7 +162,7 @@ const ClientHome = () => {
                 height: '100%',
                 display: 'flex',
                 justifyContent: 'space-between',
-                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)',
+                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
                 borderRadius: '5px',
                 padding: 0,
                 alignItems: 'center'
@@ -219,7 +218,7 @@ const ClientHome = () => {
                 sx={{
                   fontSize: '14px',
                   width: '100%',
-                  boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
+                  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
                 }}
               >
                 <MenuItem sx={{ fontSize: '14px' }} value={10}>
