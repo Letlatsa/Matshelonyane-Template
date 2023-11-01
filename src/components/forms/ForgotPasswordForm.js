@@ -28,13 +28,14 @@ function ForgotPasswordForm() {
       setFormErrors(errors);
     } else {
       const user = sessionStorage.getItem('user');
+
       const dataToSend = {
         number: formData.phone,
         accountType: JSON.parse(user).profileType
       };
 
       console.log(dataToSend);
-      //ApiRequest(formData);
+      ApiRequest(formData);
     }
   };
 
