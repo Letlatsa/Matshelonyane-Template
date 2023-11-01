@@ -60,7 +60,10 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
     width: '100%',
     transition: 'ease .5s',
     transform: 'translateX(0)',
-    zIndex: 1000
+    zIndex: 1000,
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar': { width: '0.4em' },
+    '&::-webkit-scrollbar-thumb': { backgroundColor: 'transparent' }
   };
 
   const styleListItemBox = {
@@ -247,6 +250,7 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
               fontSize: '14px',
               textTransform: 'none',
               boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+              marginBottom: '30px',
               '&:hover': {
                 backgroundColor: '#58362A',
                 color: 'white',
