@@ -28,9 +28,9 @@ const TruckerProfileEndpoint = async (formData, Token) => {
   return response;
 };
 
-const ForgotPasswordEndPoint = async (formData, Token) => {
+const ForgotPasswordEndPoint = async (formData) => {
   const response = await ApiClient.post('/pass_reset', formData, {
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${Token}` }
+    headers: { 'Content-Type': 'application/json' }
   });
   return response;
 };
