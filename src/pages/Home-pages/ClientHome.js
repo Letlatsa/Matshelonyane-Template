@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
 import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
+import { useToken } from '../../Hooks/TokenContext';
 
 import {
   Container,
@@ -32,15 +33,20 @@ import requestIcon from '../../assets/requestIcon.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ClientHome = () => {
+  const { tokens } = useToken();
   const navigate = useNavigate();
   const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
   const [lastName, setLastName] = useState('');
 
+  const accessToken = tokens.accessToken;
+
+  console.log('this is the token', accessToken);
+
   useEffect(() => {
-    RetrieveSurnameEndpoint().then((userData) => {
-      const { lastName } = userData;
+    RetrieveSurnameEndpoint(accessToken).then((userData) => {
+      const { lastName } = userData.data;
       setLastName(lastName);
       console.log('this is the lastname', lastName);
     });
