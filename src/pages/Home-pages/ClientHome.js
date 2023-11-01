@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
+import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
 
 import {
   Container,
@@ -35,6 +36,15 @@ const ClientHome = () => {
   const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
+  const [lastName, setLastName] = useState('');
+
+  useEffect(() => {
+    RetrieveSurnameEndpoint().then((userData) => {
+      const { lastName } = userData;
+      setLastName(lastName);
+      console.log('this is the lastname', lastName);
+    });
+  }, []);
 
   const handleChange = (event) => {
     setRating(event.target.value);
@@ -123,7 +133,7 @@ const ClientHome = () => {
                 color: '#58362A'
               }}
             >
-              Hi, Doe
+              Hi, {lastName}
             </Typography>
             <Button onClick={handleButtonClicked}>
               <Box sx={styledProfileBox}>
