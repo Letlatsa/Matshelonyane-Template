@@ -74,7 +74,7 @@ function CreateAccountForm() {
       const dataToSend = {
         number: phone,
         password: password,
-        accountType: 'customer'
+        accountType: 'driver'
       };
 
       ApiRequest(dataToSend);

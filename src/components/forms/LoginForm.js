@@ -21,8 +21,8 @@ import { useToken } from '../../Hooks/TokenContext';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const [accountType, setAccountType] = useState('customer');
-  const [formData, setFormData] = useState({ phone: '', password: '', accountType: 'customer' });
+  const [accountType, setAccountType] = useState('');
+  const [formData, setFormData] = useState({ phone: '', password: '' });
   const { setTokenData } = useToken();
   const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const LoginForm = () => {
 
   const handleButtonClick = async () => {
     console.log('Button Clicked');
-    const { phone, password, accountType } = formData;
+    const { phone, password } = formData;
     const errors = {};
 
     console.log(formData);
@@ -63,6 +63,8 @@ const LoginForm = () => {
         password: password,
         accountType: accountType
       };
+
+      console.log(dataToSend)
 
       ApiRequest(dataToSend);
     }
@@ -97,7 +99,7 @@ const LoginForm = () => {
         }
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       });
   };
 
@@ -117,8 +119,8 @@ const LoginForm = () => {
 
   const handleChange = (event) => {
     setAccountType(event.target.value);
-    alert(event.target.value);
   };
+
   const handleButtonClicked = () => {
     navigate('/forgotpassword');
   };
