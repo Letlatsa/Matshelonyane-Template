@@ -62,6 +62,6 @@ export {
   ClientProfileEndpoint,
   TruckerProfileEndpoint,
   ForgotPasswordEndPoint,
-  UpdateDriverLicenseEndPoint
+  UpdateDriverLicenseEndPoint,
   RetrieveSurnameEndpoint
 };
