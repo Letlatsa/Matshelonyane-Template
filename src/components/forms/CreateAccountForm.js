@@ -27,6 +27,7 @@ function CreateAccountForm() {
   };
 
   const initialErrorState = {
+    accountError: '',
     phoneError: '',
     passwordError: '',
     confirmPasswordError: ''
@@ -65,7 +66,9 @@ function CreateAccountForm() {
       errors.confirmPasswordError = 'Passwords do not match';
     }
 
-    
+    if (!accountType){
+      errors.accountError = 'Enter ccount types'
+    }
 
     setFormErrors(errors);
 
@@ -77,8 +80,7 @@ function CreateAccountForm() {
         accountType: accountType
       };
 
-      console.log(dataToSend)
-      //ApiRequest(dataToSend);
+      ApiRequest(dataToSend);
     }
   };
 
@@ -212,6 +214,7 @@ function CreateAccountForm() {
               id="account-type"
               sx={styledSelect}
               value={accountType}
+              error={!!formErrors.accountError}
               onChange={handleChange}
             >
               <MenuItem value="customer">Client</MenuItem>
