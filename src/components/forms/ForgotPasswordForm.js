@@ -2,31 +2,18 @@ import { React, useState } from 'react';
 import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PhoneIcon from '../../assets/phone.svg';
-import { ForgotPasswordEndPoint, RetrieveSurnameEndpoint } from '../../services/EndPoints';
-import { useToken } from '../../Hooks/TokenContext.js';
+import { ForgotPasswordEndPoint } from '../../services/EndPoints';
 
 function ForgotPasswordForm() {
-  const tokens = useToken();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ phone: '' });
   const [formErrors, setFormErrors] = useState({ phoneError: '' });
 
-  const getAccount = () => {
-    const Token = tokens.accessToken;
-
-    RetrieveSurnameEndpoint(Token)
-      .then((response) => {
-        const { lastName } = response.data;
-        return lastName;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const handleButtonClick = () => {
     //const { phone } = formData;
     const errors = {};
+    const accountResetType = sessionStorage.getItem('passReset');
+    const accountType = JSON.parse(accountResetType).accountType;
 
     // form validation
     if (!formData.phone) {
@@ -42,15 +29,13 @@ function ForgotPasswordForm() {
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
     } else {
-      const accountType = ApiRequest();
-
       const dataToSend = {
         number: formData.phone,
         accountType: accountType
       };
 
       console.log(dataToSend);
-      //ApiRequest(formData);
+      ApiRequest(dataToSend);
     }
   };
 
@@ -59,6 +44,14 @@ function ForgotPasswordForm() {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
+          const id = response.data.id;
+
+          const resetID = {
+            resetID: id
+          };
+
+          sessionStorage.setItem('passReset', JSON.stringify(resetID));
+
           navigate('/onetimepin');
         }
       })
