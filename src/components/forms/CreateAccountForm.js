@@ -17,7 +17,7 @@ import { RegisterEndPoint } from '../../services/EndPoints';
 
 function CreateAccountForm() {
   const navigate = useNavigate();
-  const [accountType, setAccountType] = useState('customer');
+  const [accountType, setAccountType] = useState('');
 
   //initial form state and error state
   const initialFormState = {
@@ -45,7 +45,7 @@ function CreateAccountForm() {
   };
 
   const handleButtonClick = async () => {
-    const { password, confirmPassword, phone, accountType } = formData;
+    const { password, confirmPassword, phone } = formData;
 
     const errors = {};
 
@@ -74,10 +74,11 @@ function CreateAccountForm() {
       const dataToSend = {
         number: phone,
         password: password,
-        accountType: 'customer'
+        accountType: accountType
       };
 
-      ApiRequest(dataToSend);
+      console.log(dataToSend)
+      //ApiRequest(dataToSend);
     }
   };
 
