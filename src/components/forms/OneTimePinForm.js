@@ -30,9 +30,27 @@ const OneTimePinFForm = () => {
   };
 
   const handleButtonClick = () => {
+    const { password, confirmPassword } = formData;
+
+    console.log(formData);
+
+    const errors = {};
+
     if (validateOtp(otp)) {
       // If OTP is valid, navigate to the next page
-      navigate('/');
+      if (password === '') {
+        errors.passwordError = 'Password is required';
+      }
+
+      if (password !== confirmPassword) {
+        errors.confirmPasswordError = 'Passwords do not match';
+      }
+
+      if (Object.keys(errors).length > 0) {
+        setFormErrors(errors);
+      } else {
+        navigate('/');
+      }
     } else {
       setError('Invalid OTP. Please enter a 6-digit numeric code.');
     }
@@ -48,6 +66,9 @@ const OneTimePinFForm = () => {
     const pattern = /^\d{6}$/;
     return pattern.test(otp);
   };
+
+
+  
 
   const styledFormControl = {
     width: '100%',
