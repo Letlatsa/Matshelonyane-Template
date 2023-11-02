@@ -2,12 +2,27 @@ import { React, useState } from 'react';
 import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PhoneIcon from '../../assets/phone.svg';
-import { ForgotPasswordEndPoint } from '../../services/EndPoints';
+import { ForgotPasswordEndPoint, RetrieveSurnameEndpoint } from '../../services/EndPoints';
+import { useToken } from '../../Hooks/TokenContext.js';
 
 function ForgotPasswordForm() {
+  const tokens = useToken();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ phone: '' });
   const [formErrors, setFormErrors] = useState({ phoneError: '' });
+
+  const getAccount = () => {
+    const Token = tokens.accessToken;
+
+    RetrieveSurnameEndpoint(Token)
+      .then((response) => {
+        const { lastName } = response.data;
+        return lastName;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleButtonClick = () => {
     //const { phone } = formData;
@@ -27,15 +42,15 @@ function ForgotPasswordForm() {
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
     } else {
-      const user = sessionStorage.getItem('user');
+      const accountType = ApiRequest();
 
       const dataToSend = {
         number: formData.phone,
-        accountType: JSON.parse(user).profileType
+        accountType: accountType
       };
 
       console.log(dataToSend);
-      ApiRequest(formData);
+      //ApiRequest(formData);
     }
   };
 

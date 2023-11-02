@@ -100,6 +100,7 @@ const LoginForm = () => {
     alert(event.target.value);
   };
   const handleButtonClicked = () => {
+    sessionStorage.setItem('passReset', JSON.stringify(accountType));
     navigate('/forgotpassword');
   };
 
