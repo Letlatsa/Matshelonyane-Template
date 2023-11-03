@@ -126,6 +126,15 @@ const LoginForm = () => {
     navigate('/forgotpassword');
   };
 
+  const TokenSession = (accessToken, refreshToken) => {
+    const Tokens = {
+      accessToken: accessToken,
+      refreshToken: refreshToken
+    };
+
+    sessionStorage.setItem('Tokens', JSON.stringify(Tokens));
+  };
+
   const styledFormControl = {
     width: '100%',
     color: 'white'
