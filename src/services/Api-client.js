@@ -1,5 +1,8 @@
 import axios from 'axios';
 
-const BaseUrl = 'https://matshelonyane.com/api/iam/v1/';
+const IAMBaseUrl = 'https://matshelonyane.com/api/iam/v1';
+const FleetBaseUrl = 'https://matshelonyane.com/api/fleet/v1';
 
-export default axios.create({ baseURL: BaseUrl });
+
+export const IAMApiClient = axios.create({ baseURL: IAMBaseUrl });
+export const FleetApiClient = axios.create({ baseURL: FleetBaseUrl });

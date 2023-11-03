@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Avatar, Stack } from '@mui/material';
 import {
   Box,
@@ -77,6 +77,7 @@ const styledAvatarBox = {
   alignItems: 'center',
   position: 'relative'
 };
+
 // eslint-disable-next-line no-unused-vars
 const styledHelperText = {
   color: 'red',
@@ -85,51 +86,53 @@ const styledHelperText = {
 
 function TruckProfile() {
   const initialFormState = {
-    plateNumber: '',
+    platNumber: '',
     truckType: '',
-    weightCapacity: ''
+    maxLoadCapacity: ''
   };
   const initialErrorState = {
-    plateNumberError: '',
+    platNumberError: '',
     truckTypeError: '',
-    weightCapacityError: ''
+    maxLoadCapacityError: ''
   };
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState(initialErrorState);
   const [avatarImage, setAvatarImage] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
-  const [truckType, setTruckType] = useState();
+
+  const [file, setFile] = useState(null);
   const navigate = useNavigate();
+
+  const handleTrucktypeChange = async (event) => {
+    const selectedTruckType = event.target.value;
+    console.log('Selected Truck Type:', selectedTruckType);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const validateForm = () => {
-    const { plateNumber, weightCapacity } = formData;
+    console.log('validateForm called');
+    const { platNumber, maxLoadCapacity, truckType } = formData;
+
     const errors = {};
 
-    if (!plateNumber) {
-      errors.plateNumberError = 'PlateNumber  is required';
+    if (!platNumber) {
+      errors.platNumberError = 'PlateNumber  is required';
     }
-
-    if (!truckType) {
-      errors.truckTypeError = 'TruckType is required';
-    }
-    if (!weightCapacity) {
-      errors.weightCapacityError = 'Weight Capacity is required';
+    if (!maxLoadCapacity) {
+      errors.maxLoadCapacityError = 'Weight Capacity is required';
     }
 
     setFormErrors(errors);
-
+    console.log('validateForm');
     if (Object.keys(errors).length === 0) {
-      console.log('Success');
+      console.log('lets gooo');
+
       navigate('/truckprofilecomplete');
     }
-  };
-
-  const handleTrucktypeChange = (event) => {
-    setTruckType(event.target.value);
   };
 
   const handleImageChange = (e) => {
@@ -137,6 +140,8 @@ function TruckProfile() {
 
     if (file) {
       const reader = new FileReader();
+
+      setFile(file);
 
       reader.onload = (e) => {
         setAvatarImage(e.target.result);
@@ -179,11 +184,12 @@ function TruckProfile() {
         <input
           type="file"
           accept="image/*"
-          id="avatar-upload"
+          id="truckPic"
+          name="truckPic"
           style={{ display: 'none' }}
           onChange={handleImageChange}
         />
-        <label htmlFor="avatar-upload">
+        <label htmlFor="truckPic">
           <Box sx={styledAvatarBox}>
             {avatarImage ? (
               <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 130, height: 130 }} />
@@ -222,20 +228,20 @@ function TruckProfile() {
                     Plate Number
                   </div>
                 }
-                type="plateNumber"
-                name="plateNumber"
+                type="platNumber"
+                name="platNumber"
                 placeholder="Enter your plate number"
                 sx={styledTextField}
-                value={formData.plateNumber}
+                value={formData.platNumber}
                 onChange={handleInputChange}
-                error={!!formErrors.plateNumberError}
-                helperText={formErrors.plateNumberError}
+                error={!!formErrors.platNumberError}
+                helperText={formErrors.platNumberError}
               />
             </Box>
           </FormControl>
           <FormControl sx={styledFormControl}>
             <Box sx={inputContainerBox}>
-              <InputLabel id="Truck-type" sx={styledInputLabel}>
+              <InputLabel id="truckType" sx={styledInputLabel}>
                 <Box sx={accountLabelContainer}>
                   <img src={TruckIcon} alt="Truck-type" width="30" height="20" />
                   <Box>Truck-type</Box>
@@ -243,17 +249,14 @@ function TruckProfile() {
               </InputLabel>
               <Select
                 variant="standard"
-                labelId="Truck-type"
+                labelId="truckType"
                 id="truckType"
                 sx={styledSelect}
-                value={truckType}
                 onChange={handleTrucktypeChange}
-                error={!!formErrors.truckTypeError}
               >
-                <MenuItem value="Client">Type 1</MenuItem>
-                <MenuItem value="Driver">Type 2</MenuItem>
+                <MenuItem value="id">Small</MenuItem>
+                <MenuItem value="id">Small</MenuItem>
               </Select>
-              {/* <FormHelperText sx={styledHelperText}>{formErrors.truckTypeError}</FormHelperText> */}
             </Box>
           </FormControl>
           <FormControl sx={styledFormControl}>
@@ -271,14 +274,14 @@ function TruckProfile() {
                   Weight Capacity
                 </div>
               }
-              type="weightCapacity"
-              name="weightCapacity"
+              type="maxLoadCapacity"
+              name="maxLoadCapacity"
               placeholder="Enter your Truck weight capacity"
               sx={styledTextField}
-              value={formData.weightCapacity}
+              value={formData.maxLoadCapacity}
               onChange={handleInputChange}
-              error={!!formErrors.weightCapacityError}
-              helperText={formErrors.weightCapacityError}
+              error={!!formErrors.maxLoadCapacityError}
+              helperText={formErrors.maxLoadCapacityError}
             />
           </FormControl>
           <Box>
