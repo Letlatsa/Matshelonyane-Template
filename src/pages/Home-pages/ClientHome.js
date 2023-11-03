@@ -53,14 +53,14 @@ const ClientHome = () => {
       } = userData.data;
 
       const user = {
-        _id,
-        firstName,
-        lastName,
-        propic,
-        profileType,
-        deliveryArea,
-        driversLicense,
-        account
+        _id: _id,
+        firstName: firstName,
+        lastName: lastName,
+        propic: propic,
+        profileType: profileType,
+        deliveryArea: deliveryArea,
+        driversLicense: driversLicense,
+        account: account
       };
 
       setLastName(lastName);
