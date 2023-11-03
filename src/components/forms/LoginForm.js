@@ -21,7 +21,7 @@ import { useToken } from '../../Hooks/TokenContext';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-
+  const [accountType, setAccountType] = useState('');
   const [formData, setFormData] = useState({ phone: '', password: '', accountType: '' });
 
   const { setTokenData } = useToken();
