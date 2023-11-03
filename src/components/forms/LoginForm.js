@@ -75,6 +75,8 @@ const LoginForm = () => {
           const { accessToken, refreshToken } = response.data;
           setTokenData(accessToken, refreshToken);
 
+          TokenSession(accessToken, refreshToken);
+
           userRedirect(accountType, accessToken);
         }
       })
