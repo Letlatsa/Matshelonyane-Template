@@ -4,13 +4,15 @@ import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 
 import { useNavigate } from 'react-router-dom';
-import { ClientProfileEndpoint } from '../../services/EndPoints';
+import { updateProfilePictureEndpoint } from '../../services/EndPoints';
 import { useToken } from '../../Hooks/TokenContext';
 
 function ClientHomeProfile() {
-  const { tokens } = useToken();
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
 
   const userData = sessionStorage.getItem('user');
+
   const initialFormState = {
     firstName: JSON.parse(userData).firstName,
     lastName: JSON.parse(userData).lastName
@@ -32,7 +34,6 @@ function ClientHomeProfile() {
   };
   const validateForm = () => {
     const { firstName, lastName } = formData;
-    const accessToken = tokens.accessToken;
     const errors = {};
 
     if (!firstName) {
@@ -57,7 +58,7 @@ function ClientHomeProfile() {
     }
   };
   const ApiRequest = (formData, accessToken) => {
-    ClientProfileEndpoint(formData, accessToken)
+    updateProfilePictureEndpoint(formData, accessToken)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
