@@ -5,7 +5,6 @@ import AccountIcon from '../../assets/account.svg';
 
 import { useNavigate } from 'react-router-dom';
 import { updateProfilePictureEndpoint } from '../../services/EndPoints';
-import { useToken } from '../../Hooks/TokenContext';
 
 function ClientHomeProfile() {
   const TokenSession = sessionStorage.getItem('Tokens');
