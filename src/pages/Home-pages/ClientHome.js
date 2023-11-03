@@ -64,8 +64,7 @@ const ClientHome = () => {
       };
 
       setLastName(lastName);
-      setPropic(propic);
-      
+
       sessionStorage.setItem('lastName', JSON.stringify(user));
       console.log('this is the lastname', lastName);
     });
