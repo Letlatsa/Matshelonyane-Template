@@ -16,12 +16,15 @@ import { useNavigate } from 'react-router-dom';
 
 const ClientProfile = () => {
   const navigate = useNavigate();
-  const user = sessionStorage.getItem('user');
-  const userData = {
-    _id: JSON.parse(user)._id,
-  }
+  const userData = sessionStorage.getItem('user');
 
-  console.log(userData);
+  const { _id, firstName, lastName, propic, profileType, deliveryArea, driversLicense, account } =
+    JSON.parse(userData);
+
+  const accountData = {
+    _id: account._id,
+    number: account.number
+  };
 
   const styledProfileBox = {
     borderRadius: '100px',
@@ -172,7 +175,7 @@ const ClientProfile = () => {
               letterSpacing: '-0.17px'
             }}
           >
-            Client Doe
+            {firstName} {lastName}
           </Typography>
           <Typography
             sx={{
@@ -186,7 +189,7 @@ const ClientProfile = () => {
               marginBottom: '15px'
             }}
           >
-            Gaborone
+            {deliveryArea}
           </Typography>
           <Button
             variant="text"
@@ -261,7 +264,7 @@ const ClientProfile = () => {
               }}
             >
               <Typography sx={styledStackTypography}>Phone number:</Typography>
-              <Typography sx={styledStackTypography}> 71234356</Typography>
+              <Typography sx={styledStackTypography}> {accountData.number}</Typography>
             </Box>
             <Box
               sx={{
@@ -271,7 +274,7 @@ const ClientProfile = () => {
               }}
             >
               <Typography sx={styledStackTypography}>Location:</Typography>
-              <Typography sx={styledStackTypography}>Gaborone</Typography>
+              <Typography sx={styledStackTypography}>{deliveryArea}</Typography>
             </Box>
           </Stack>
         </Card>
