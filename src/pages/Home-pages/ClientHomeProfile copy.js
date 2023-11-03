@@ -9,9 +9,11 @@ import { useToken } from '../../Hooks/TokenContext';
 
 function ClientHomeProfile() {
   const { tokens } = useToken();
+
+  const userData = sessionStorage.getItem('user');
   const initialFormState = {
-    firstName: '',
-    lastName: ''
+    firstName: JSON.parse(userData).firstName,
+    lastName: JSON.parse(userData).lastName
   };
 
   const initialErrorState = {
@@ -47,8 +49,7 @@ function ClientHomeProfile() {
       const formData = new FormData();
 
       if (avatarImage) {
-        formData.append('firstName', firstName);
-        formData.append('lastName', lastName);
+        formData.append('profileId', JSON.parse(userData)._id);
         formData.append('file', file);
 
         ApiRequest(formData, accessToken);
@@ -213,6 +214,9 @@ function ClientHomeProfile() {
                 onChange={handleInputChange}
                 error={!!formErrors.firstNameError}
                 helperText={formErrors.firstNameError}
+                InputProps={{
+                  readOnly: true
+                }}
               />
               <TextField
                 variant="standard"
@@ -236,6 +240,9 @@ function ClientHomeProfile() {
                 onChange={handleInputChange}
                 error={!!formErrors.lastNameError}
                 helperText={formErrors.lastNameError}
+                InputProps={{
+                  readOnly: true
+                }}
               />
             </Box>
             <Box>
