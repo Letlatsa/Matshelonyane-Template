@@ -124,5 +124,4 @@ export {
   TruckRegisterEndPoint,
   TruckRetrieveEndpoint,
   RetrieveTruckerSurnameEndpoint
-
 };

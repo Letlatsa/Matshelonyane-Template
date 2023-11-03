@@ -14,15 +14,15 @@ import TextButton from '../Buttons/TextButton';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
-import { LoginEndPoint } from '../../services/EndPoints';
+import { LoginEndPoint, RetrieveSurnameEndpoint } from '../../services/EndPoints';
 
 import { useToken } from '../../Hooks/TokenContext';
 
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const [accountType, setAccountType] = useState('customer');
-  const [formData, setFormData] = useState({ phone: '', password: '', accountType: 'customer' });
+  const [accountType, setAccountType] = useState('');
+  const [formData, setFormData] = useState({ phone: '', password: '' });
   const { setTokenData } = useToken();
   const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const LoginForm = () => {
 
   const handleButtonClick = async () => {
     console.log('Button Clicked');
-    const { phone, password, accountType } = formData;
+    const { phone, password } = formData;
     const errors = {};
 
     console.log(formData);
@@ -64,6 +64,8 @@ const LoginForm = () => {
         accountType: accountType
       };
 
+      console.log(dataToSend)
+
       ApiRequest(dataToSend);
     }
   };
@@ -73,21 +75,10 @@ const LoginForm = () => {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          if (accountType === 'customer') {
-            const { accessToken, refreshToken } = response.data;
-            setTokenData(accessToken, refreshToken);
+          const { accessToken, refreshToken } = response.data;
+          setTokenData(accessToken, refreshToken);
 
-            console.log('Access Token:', accessToken);
-            console.log('Refresh Token:', refreshToken);
-
-            navigate('/clientonboardingprofile');
-          }
-
-          if (accountType === 'driver') {
-            const { accessToken, refreshToken } = response.data;
-            setTokenData(accessToken, refreshToken);
-            navigate('/truckerOnboardingProfile');
-          }
+          userRedirect(accountType, accessToken);
         }
       })
       .catch((error) => {
@@ -95,10 +86,41 @@ const LoginForm = () => {
       });
   };
 
+  const userRedirect = (accountType, accessToken) => {
+    RetrieveSurnameEndpoint(accessToken)
+      .then((response) => {
+        if (response.status === 200) {
+          const { lastName } = response.data;
+          if (!lastName || lastName === undefined || lastName === null) {
+            onboardingRedirecter(accountType);
+          } else {
+            homeRedirecter(accountType);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const onboardingRedirecter = (accountType) => {
+    if (accountType === 'driver') {
+      navigate('/truckerOnboardingProfile');
+    }
+    navigate('/clientonboardingprofile');
+  };
+
+  const homeRedirecter = (accountType) => {
+    if (accountType === 'driver') {
+      navigate('/truckerhome');
+    }
+    navigate('/clienthome');
+  };
+
   const handleChange = (event) => {
     setAccountType(event.target.value);
-    alert(event.target.value);
   };
+
   const handleButtonClicked = () => {
     const restAccountType = {
       accountType: accountType
