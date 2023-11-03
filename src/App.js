@@ -22,7 +22,7 @@ import TruckerProfileView from './pages/Home-pages/TruckerProfileView';
 import TruckerProposalPage from './pages/Home-pages/TruckerProposalPage';
 import MenuOverlay from './components/HomeComponents/MenuOverlay';
 import ClientOverlay from './pages/Home-pages/ClientOverlay';
-import ClientHomeProfile from './pages/Home-pages/ClientHomeProfile';
+import ClientHomeProfile from './pages/Home-pages/ClientEditProfile';
 
 function App() {
   return (

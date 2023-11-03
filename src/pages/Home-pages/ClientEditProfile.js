@@ -4,11 +4,10 @@ import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 
 import { useNavigate } from 'react-router-dom';
-import { updateProfilePictureEndpoint } from '../../services/EndPoints';
+import { updateProfilePictureEndpoint, RetrieveSurnameEndpoint } from '../../services/EndPoints';
 
 function ClientHomeProfile() {
   const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
 
   const userData = sessionStorage.getItem('user');
 
@@ -52,6 +51,8 @@ function ClientHomeProfile() {
         formData.append('profileId', JSON.parse(userData)._id);
         formData.append('file', file);
 
+        const accessToken = JSON.parse(TokenSession).accessToken;
+
         ApiRequest(formData, accessToken);
       }
     }
@@ -61,13 +62,43 @@ function ClientHomeProfile() {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          navigate('/clientprofilecomplete');
+          refreshSession(accessToken);
+          navigate('/clientprofile');
         }
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  const refreshSession = (accessToken) => {
+    RetrieveSurnameEndpoint(accessToken).then((userData) => {
+      const {
+        _id,
+        firstName,
+        lastName,
+        propic,
+        profileType,
+        deliveryArea,
+        driversLicense,
+        account
+      } = userData.data;
+
+      const user = {
+        _id: _id,
+        firstName: firstName,
+        lastName: lastName,
+        propic: propic,
+        profileType: profileType,
+        deliveryArea: deliveryArea,
+        driversLicense: driversLicense,
+        account: account
+      };
+
+      sessionStorage.setItem('user', JSON.stringify(user));
+    });
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
