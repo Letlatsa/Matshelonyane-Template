@@ -16,11 +16,14 @@ import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
 import { LoginEndPoint } from '../../services/EndPoints';
 
+import { useToken } from '../../Hooks/TokenContext';
+
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [accountType, setAccountType] = useState('customer');
   const [formData, setFormData] = useState({ phone: '', password: '', accountType: 'customer' });
+  const { setTokenData } = useToken();
   const navigate = useNavigate();
 
   const [formErrors, setFormErrors] = useState({
@@ -71,10 +74,18 @@ const LoginForm = () => {
         console.log(response);
         if (response.status === 200) {
           if (accountType === 'customer') {
+            const { accessToken, refreshToken } = response.data;
+            setTokenData(accessToken, refreshToken);
+
+            console.log('Access Token:', accessToken);
+            console.log('Refresh Token:', refreshToken);
+
             navigate('/clientonboardingprofile');
           }
 
           if (accountType === 'driver') {
+            const { accessToken, refreshToken } = response.data;
+            setTokenData(accessToken, refreshToken);
             navigate('/truckerOnboardingProfile');
           }
         }
@@ -89,6 +100,10 @@ const LoginForm = () => {
     alert(event.target.value);
   };
   const handleButtonClicked = () => {
+    const restAccountType = {
+      accountType: accountType
+    };
+    sessionStorage.setItem('passReset', JSON.stringify(restAccountType));
     navigate('/forgotpassword');
   };
 

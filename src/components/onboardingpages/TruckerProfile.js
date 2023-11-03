@@ -16,6 +16,9 @@ import LocationIcon from '../../assets/location.svg';
 import ProgressBar from './ProgressBar';
 import { useNavigate } from 'react-router-dom';
 
+import { TruckerProfileEndpoint } from '../../services/EndPoints';
+import { useToken } from '../../Hooks/TokenContext';
+
 const styledFormControl = {
   width: '100%',
   color: 'white',
@@ -72,6 +75,10 @@ const accountLabelContainer = {
   alignItems: 'center'
 };
 function TruckerProfile() {
+  const { tokens } = useToken();
+
+  console.log(tokens);
+
   const initialFormState = {
     firstName: '',
     lastName: '',
@@ -90,6 +97,7 @@ function TruckerProfile() {
   const [avatarImage, setAvatarImage] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedLocation, setSelectedLocation] = useState('');
+  const [file, setFile] = useState(null);
   const navigate = useNavigate();
 
   const locationOptions = [
@@ -150,6 +158,7 @@ function TruckerProfile() {
 
   const validateForm = () => {
     const { firstName, lastName, phone } = formData;
+    const accessToken = tokens.accessToken;
     const errors = {};
 
     if (!firstName) {
@@ -173,9 +182,32 @@ function TruckerProfile() {
     console.log(formErrors);
 
     if (Object.keys(errors).length === 0) {
-      console.log('Success');
-      navigate('/onboardinglicense');
+      const formData = new FormData();
+
+      if (avatarImage) {
+        formData.append('firstName', firstName);
+        formData.append('lastName', lastName);
+        formData.append('deliveryArea', selectedLocation);
+        formData.append('file', file);
+
+        ApiRequest(formData, accessToken);
+      }
     }
+  };
+
+  const ApiRequest = (formData, accessToken) => {
+    TruckerProfileEndpoint(formData, accessToken)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          const user = response.data;
+          sessionStorage.setItem('user', JSON.stringify(user));
+          navigate('/onboardinglicense');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleLocationChange = (event) => {
@@ -188,11 +220,14 @@ function TruckerProfile() {
     if (file) {
       const reader = new FileReader();
 
+      setFile(file);
+
       reader.onload = (e) => {
         setAvatarImage(e.target.result);
       };
 
       reader.readAsDataURL(file);
+      console.log(file);
     }
   };
   // eslint-disable-next-line no-unused-vars
