@@ -34,7 +34,7 @@ const ClientHome = () => {
   const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
 
-  const storedLastName = sessionStorage.getItem('lastName');
+  const storedLastName = 'Doe';
   const [lastName, setLastName] = useState(storedLastName || '');
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
@@ -52,7 +52,7 @@ const ClientHome = () => {
         account
       } = userData.data;
 
-      console.log(_id)
+      console.log(_id);
 
       const user = {
         _id: _id,
