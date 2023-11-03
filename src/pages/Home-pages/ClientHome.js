@@ -13,7 +13,6 @@ import ClientBottomNav from '../../components/HomeComponents/Client/ClientBottom
 import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
 import { useToken } from '../../Hooks/TokenContext';
 
-
 import {
   Container,
   FormControl,
@@ -36,18 +35,41 @@ const ClientHome = () => {
   const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
+  const [propic, setPropic] = useState('');
 
   const storedLastName = sessionStorage.getItem('lastName');
   const [lastName, setLastName] = useState(storedLastName || '');
-  const accessToken = tokens.accessToken;
-
-  console.log('this is the token', accessToken);
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
 
   useEffect(() => {
     RetrieveSurnameEndpoint(accessToken).then((userData) => {
-      const { lastName } = userData.data;
+      const {
+        _id,
+        firstName,
+        lastName,
+        propic,
+        profileType,
+        deliveryArea,
+        driversLicense,
+        account
+      } = userData.data;
+
+      const user = {
+        _id,
+        firstName,
+        lastName,
+        propic,
+        profileType,
+        deliveryArea,
+        driversLicense,
+        account
+      };
+
       setLastName(lastName);
-      sessionStorage.setItem('lastName', lastName);
+      setPropic(propic);
+      
+      sessionStorage.setItem('lastName', JSON.stringify(user));
       console.log('this is the lastname', lastName);
     });
   }, [accessToken]);
