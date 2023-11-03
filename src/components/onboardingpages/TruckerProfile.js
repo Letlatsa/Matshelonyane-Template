@@ -12,7 +12,6 @@ import {
 } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
-import UploadIcon from '../../assets/upload.svg';
 import LocationIcon from '../../assets/location.svg';
 import ProgressBar from './ProgressBar';
 import { useNavigate } from 'react-router-dom';
@@ -247,12 +246,6 @@ function TruckerProfile() {
     alignItems: 'center',
     position: 'relative'
   };
-  const uploadIconStyle = {
-    position: 'absolute',
-    right: '100px',
-    bottom: '0px',
-    cursor: 'pointer'
-  };
   const styledSelect = {
     width: '100%',
     color: 'white',
@@ -271,8 +264,7 @@ function TruckerProfile() {
             color: 'white',
             textAlign: 'center',
             marginBottom: '15px',
-            marginLeft: '15px',
-            textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
             fontWeight: 'bold',
             marginTop: '50px'
           }}
@@ -289,13 +281,10 @@ function TruckerProfile() {
         <label htmlFor="avatar-upload">
           <Box sx={styledAvatarBox}>
             {avatarImage ? (
-              <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 100, height: 100 }} />
+              <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 130, height: 130 }} />
             ) : (
-              <Avatar alt="User Avatar" sx={{ width: 100, height: 100 }}></Avatar>
+              <Avatar alt="User Avatar" sx={{ width: 130, height: 130 }}></Avatar>
             )}
-            <Box style={uploadIconStyle}>
-              <img src={UploadIcon} alt="Account" width="30" height="20" />
-            </Box>
           </Box>
         </label>
 
@@ -305,7 +294,9 @@ function TruckerProfile() {
             color: 'white',
             textAlign: 'center',
             marginBottom: '50px',
-            marginLeft: '15px'
+            marginTop: '15px',
+            fontWeight: '700',
+            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
           }}
         >
           Upload your profile picture
