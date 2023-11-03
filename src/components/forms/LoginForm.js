@@ -14,15 +14,16 @@ import TextButton from '../Buttons/TextButton';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
-import { LoginEndPoint } from '../../services/EndPoints';
+import { LoginEndPoint, RetrieveSurnameEndpoint } from '../../services/EndPoints';
 
 import { useToken } from '../../Hooks/TokenContext';
 
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const [accountType, setAccountType] = useState('');
+
   const [formData, setFormData] = useState({ phone: '', password: '', accountType: '' });
+
   const { setTokenData } = useToken();
   const navigate = useNavigate();
 
@@ -61,6 +62,7 @@ const LoginForm = () => {
         password: password,
         accountType: accountType
       };
+
       ApiRequest(dataToSend);
     }
   };
@@ -70,21 +72,10 @@ const LoginForm = () => {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          if (accountType === 'customer') {
-            const { accessToken, refreshToken } = response.data;
-            setTokenData(accessToken, refreshToken);
+          const { accessToken, refreshToken } = response.data;
+          setTokenData(accessToken, refreshToken);
 
-            console.log('Access Token:', accessToken);
-            console.log('Refresh Token:', refreshToken);
-
-            navigate('/clientonboardingprofile');
-          }
-
-          if (accountType === 'driver') {
-            const { accessToken, refreshToken } = response.data;
-            setTokenData(accessToken, refreshToken);
-            navigate('/truckerOnboardingProfile');
-          }
+          userRedirect(accountType, accessToken);
         }
       })
       .catch((error) => {
@@ -92,10 +83,46 @@ const LoginForm = () => {
       });
   };
 
+  const userRedirect = (accountType, accessToken) => {
+    RetrieveSurnameEndpoint(accessToken)
+      .then((response) => {
+        if (response.status === 200) {
+          const { lastName } = response.data;
+          if (!lastName || lastName === undefined || lastName === null) {
+            onboardingRedirecter(accountType);
+          } else {
+            homeRedirecter(accountType);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const onboardingRedirecter = (accountType) => {
+    if (accountType === 'driver') {
+      navigate('/truckerOnboardingProfile');
+    }
+    navigate('/clientonboardingprofile');
+  };
+
+  const homeRedirecter = (accountType) => {
+    if (accountType === 'driver') {
+      navigate('/truckerhome');
+    }
+    navigate('/clienthome');
+  };
+
   const handleChange = (event) => {
     setAccountType(event.target.value);
   };
+
   const handleButtonClicked = () => {
+    const restAccountType = {
+      accountType: accountType
+    };
+    sessionStorage.setItem('passReset', JSON.stringify(restAccountType));
     navigate('/forgotpassword');
   };
 
@@ -106,26 +133,25 @@ const LoginForm = () => {
 
   const styledTypography = {
     fontSize: 24,
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+    textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     fontWeight: 'bold',
-    marginBottom: '25px'
+    marginBottom: '50px',
+    color: 'white'
   };
 
   const styledTextField = {
     width: '100%',
     '& input': {
       color: 'white',
-      borderBottom: ' 3px solid white'
+      borderBottom: ' 2px solid white'
     },
     '& label': {
       color: 'white'
     },
-    marginBottom: '10px'
+    marginBottom: '15px'
   };
 
   const styledInputLabel = {
-    marginTop: 8,
-    left: -14,
     color: 'white',
     '&:hover': {
       color: 'white'
@@ -136,7 +162,7 @@ const LoginForm = () => {
     width: '100%',
     color: 'white',
     borderBottom: ' 2px solid white',
-    marginBottom: '10px'
+    marginBottom: '15px'
   };
 
   const styledBox = {
@@ -161,6 +187,7 @@ const LoginForm = () => {
     fontWeight: '100',
     textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     backgroundColor: 'transparent',
+    marginBottom: '30px',
     '&:hover': {
       backgroundColor: 'transparent'
     }
@@ -188,11 +215,11 @@ const LoginForm = () => {
   };
   return (
     <Box>
-      <FormControl sx={styledFormControl}>
-        <Box sx={{ right: '10px !important' }}>
-          <Typography sx={styledTypography}>Welcome to Matshelonyane!</Typography>
-        </Box>
-        <Box sx={inputContainerBox}>
+      <Box sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px' }}>
+        <Typography sx={styledTypography}>Welcome to Matshelonyane!</Typography>
+      </Box>
+      <Box sx={inputContainerBox}>
+        <FormControl variant="standard" sx={styledFormControl}>
           <InputLabel id="Account-type" sx={styledInputLabel}>
             <Box sx={accountLabelContainer}>
               <img
@@ -217,7 +244,11 @@ const LoginForm = () => {
             <MenuItem value="customer">Client</MenuItem>
             <MenuItem value="driver">Driver</MenuItem>
           </Select>
+        </FormControl>
+
+        <FormControl variant="standard" sx={styledFormControl}>
           <TextField
+            size="small"
             variant="standard"
             label={
               <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -243,6 +274,8 @@ const LoginForm = () => {
             error={!!formErrors.phoneError}
             helperText={formErrors.phoneError}
           />
+        </FormControl>
+        <FormControl variant="standard" sx={styledFormControl}>
           <TextField
             variant="standard"
             label={
@@ -269,39 +302,41 @@ const LoginForm = () => {
             error={!!formErrors.passwordError}
             helperText={formErrors.passwordError}
           />
-        </Box>
-        <Box>
-          <Box sx={styledBox}>
-            <Button variant="text" sx={forgotPasswordButton} onClick={handleButtonClicked}>
-              Forgot Password ?
-            </Button>
-          </Box>
-          <Button
-            variant="text"
-            color="primary"
-            type="submit"
-            sx={styledSubmitButton}
-            onClick={handleButtonClick}
-          >
-            Login
+        </FormControl>
+      </Box>
+      <Box>
+        <Box sx={styledBox}>
+          <Button variant="text" sx={forgotPasswordButton} onClick={handleButtonClicked}>
+            Forgot Password ?
           </Button>
-          <Box sx={styledBox}>
-            <Typography
-              sx={
-                (styledTypography,
-                {
-                  textAlign: 'center'
-                })
-              }
-            >
-              Don't have an account?
-            </Typography>
-          </Box>
-          <Box sx={styledBox}>
-            <TextButton />
-          </Box>
         </Box>
-      </FormControl>
+        <Button
+          variant="text"
+          color="primary"
+          type="submit"
+          sx={styledSubmitButton}
+          onClick={handleButtonClick}
+        >
+          Login
+        </Button>
+        <Box sx={styledBox}>
+          <Typography
+            sx={
+              (styledTypography,
+              {
+                textAlign: 'center',
+                color: 'white',
+                textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+              })
+            }
+          >
+            Don't have an account?
+          </Typography>
+        </Box>
+        <Box sx={styledBox}>
+          <TextButton />
+        </Box>
+      </Box>
     </Box>
   );
 };

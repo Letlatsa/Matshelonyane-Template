@@ -76,7 +76,7 @@ function CreateAccountForm() {
       // Ensure that formData matches the expected payload format
       const dataToSend = {
         number: phone,
-        password: password,
+        password: password
         accountType: accountType
       };
 

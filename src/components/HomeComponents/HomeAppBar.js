@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AppBar from '@mui/material/AppBar';
@@ -10,10 +10,29 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
+import { RetrieveTruckerSurnameEndpoint } from '../../services/EndPoints';
+import { useToken } from '../../Hooks/TokenContext';
 
 const HomeAppBar = () => {
+  const { tokens } = useToken();
   const navigate = useNavigate();
   const [isOverlay, setIsOverlay] = useState(false);
+
+  const storedLastName = sessionStorage.getItem('lastName');
+  const [lastName, setLastName] = useState(storedLastName || '');
+
+  const accessToken = tokens.accessToken;
+
+  useEffect(() => {
+    RetrieveTruckerSurnameEndpoint(accessToken).then((userData) => {
+      const { lastName } = userData.data;
+      setLastName(lastName);
+      sessionStorage.setItem('lastName', lastName);
+      console.log('this is the lastname', lastName);
+    });
+  }, [accessToken]);
+
+  console.log('this is the token', accessToken);
 
   const handleButtonClicked = () => {
     navigate('/truckerprofileview');
@@ -74,7 +93,7 @@ const HomeAppBar = () => {
             color: '#58362A'
           }}
         >
-          Hi, Doe
+          Hi, {lastName}
         </Typography>
         <Button onClick={handleButtonClicked}>
           <Box sx={styledProfileBox}>

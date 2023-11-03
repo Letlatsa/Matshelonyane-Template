@@ -44,7 +44,7 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
 
   const overlayStyles = {
     background: 'rgba(198, 149, 133, 0.70)',
-    backdropFilter: 'blur(10px)',
+    backdropFilter: 'blur(40px)',
     height: '100vh',
     position: 'absolute',
     width: '100%',
@@ -54,13 +54,16 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
 
   const openOverlayStyles = {
     background: 'rgba(198, 149, 133, 0.70)',
-    backdropFilter: "blur('20px')",
+    backdropFilter: "blur('40px')",
     height: '100vh',
     position: 'absolute',
     width: '100%',
     transition: 'ease .5s',
     transform: 'translateX(0)',
-    zIndex: 1000
+    zIndex: 1000,
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar': { width: '0.4em' },
+    '&::-webkit-scrollbar-thumb': { backgroundColor: 'transparent' }
   };
 
   const styleListItemBox = {
@@ -97,7 +100,14 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
         </AppBar>
       </Box>
       <Container sx={{ paddingTop: '80px' }}>
-        <Typography sx={{ color: '#f8f8f8', fontSize: '24px', marginBottom: '30px' }}>
+        <Typography
+          sx={{
+            color: '#f8f8f8',
+            fontSize: '24px',
+            marginBottom: '30px',
+            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+          }}
+        >
           Settings
         </Typography>
         <Box sx={{ marginBottom: '50px' }}>
@@ -239,7 +249,8 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
               fontWeight: '300',
               fontSize: '14px',
               textTransform: 'none',
-              boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+              marginBottom: '30px',
               '&:hover': {
                 backgroundColor: '#58362A',
                 color: 'white',

@@ -2,10 +2,10 @@ import React from 'react';
 
 function ProgressBar({ currentStep }) {
   const steps = [1, 2, 3];
-  const stepColors = ['#C69585', '#808080', '#808080'];
+  const stepColors = ['#C69585', '#525252', '#525252'];
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '-20px' }}>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       {steps.map((step, index) => (
         <div key={step} style={{ display: 'flex', alignItems: 'center' }}>
           <div
@@ -18,7 +18,6 @@ function ProgressBar({ currentStep }) {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              marginRight: '15px',
               fontSize: '20px'
             }}
           >
@@ -27,10 +26,10 @@ function ProgressBar({ currentStep }) {
           {index < steps.length - 1 && (
             <div
               style={{
-                width: '50px',
+                width: '10vw',
                 height: '4px',
                 backgroundColor: stepColors[index],
-                margin: '0 5px',
+                margin: '0 6vw',
                 marginTop: '15px'
               }}
             />
