@@ -11,7 +11,6 @@ import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
 import ClientBottomNav from '../../components/HomeComponents/Client/ClientBottomNav';
 
 import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
-import { RetrieveDriverNameEndpoint } from '../../services/EndPoints';
 import { useToken } from '../../Hooks/TokenContext';
 
 
@@ -37,7 +36,6 @@ const ClientHome = () => {
   const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
-  const [firstName, setFirstName] = useState('');
 
   const storedLastName = sessionStorage.getItem('lastName');
   const [lastName, setLastName] = useState(storedLastName || '');
@@ -51,14 +49,6 @@ const ClientHome = () => {
       setLastName(lastName);
       sessionStorage.setItem('lastName', lastName);
       console.log('this is the lastname', lastName);
-    });
-  }, [accessToken]);
-
-  useEffect(() => {
-    RetrieveDriverNameEndpoint(accessToken).then((driverData) => {
-      const { firstName1, lastName1 } = driverData;
-      setFirstName(firstName1);
-      setLastName(lastName1);
     });
   }, [accessToken]);
 
