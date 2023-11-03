@@ -11,7 +11,6 @@ import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
 import ClientBottomNav from '../../components/HomeComponents/Client/ClientBottomNav';
 
 import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
-import { useToken } from '../../Hooks/TokenContext';
 
 import {
   Container,
@@ -30,12 +29,10 @@ import SearchIcon from '../../assets/searchIcon.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ClientHome = () => {
-  const { tokens } = useToken();
   const navigate = useNavigate();
   const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
-  const [propic, setPropic] = useState('');
 
   const storedLastName = sessionStorage.getItem('lastName');
   const [lastName, setLastName] = useState(storedLastName || '');
