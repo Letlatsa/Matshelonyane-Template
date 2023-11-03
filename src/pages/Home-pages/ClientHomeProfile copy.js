@@ -7,47 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { ClientProfileEndpoint } from '../../services/EndPoints';
 import { useToken } from '../../Hooks/TokenContext';
 
-const styledFormControl = {
-  width: '100%',
-  color: 'white'
-};
-
-const styledTextField = {
-  width: '100%',
-  '& input': {
-    color: 'white',
-    borderBottom: ' 3px solid white'
-  },
-  '& label': {
-    color: 'white'
-  },
-  marginBottom: '10px'
-};
-
-const inputContainerBox = {
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  marginBottom: '30px'
-};
-
-const styledSubmitButton = {
-  fontSize: 18,
-  backgroundColor: '#EBDBD5',
-  width: '100%',
-  borderRadius: '15px',
-  height: '50px',
-  color: '#58362A',
-  fontWeight: '400',
-  textTransform: 'none',
-  marginBottom: '30px',
-  boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-  '&:hover': {
-    backgroundColor: 'transparent'
-  }
-};
-
 function ClientHomeProfile() {
   const { tokens } = useToken();
   const initialFormState = {
@@ -124,19 +83,71 @@ function ClientHomeProfile() {
     }
   };
 
+  const styledFormControl = {
+    width: '100%',
+    color: 'white'
+  };
+
+  const styledTextField = {
+    width: '100%',
+    '& input': {
+      color: 'white',
+      borderBottom: ' 3px solid white'
+    },
+    '& label': {
+      color: 'white'
+    },
+    marginBottom: '10px'
+  };
+
+  const inputContainerBox = {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: '30px'
+  };
+
+  const styledSubmitButton = {
+    fontSize: 18,
+    backgroundColor: '#EBDBD5',
+    width: '100%',
+    borderRadius: '15px',
+    height: '50px',
+    color: '#58362A',
+    fontWeight: '400',
+    textTransform: 'none',
+    marginBottom: '30px',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.3)',
+    '&:hover': {
+      backgroundColor: '#58362A',
+      color: 'white'
+    }
+  };
+
   const styledAvatarBox = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative'
   };
+
   return (
-    <div>
-      <Box>
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'rgba(196, 149, 133, .7)',
+        display: 'flex',
+        justifyContent: 'center',
+        overflowY: 'scroll'
+      }}
+    >
+      <Box sx={{ width: '85vw', overflowY: 'scroll', paddingTop: '50px' }}>
         <Typography
           sx={{
             fontSize: 24,
-            color: 'white',
+            color: '#ffffff',
             textAlign: 'center',
             marginBottom: '30px',
             marginLeft: '15px',
@@ -144,7 +155,7 @@ function ClientHomeProfile() {
             fontWeight: 'bold'
           }}
         >
-          Let’s us get to know you
+          Edit your profile
         </Typography>
         <input
           type="file"
@@ -167,7 +178,7 @@ function ClientHomeProfile() {
         <Typography
           sx={{
             fontSize: 14,
-            color: 'white',
+            color: '#ffffff',
             textAlign: 'center',
             marginBottom: '50px',
             marginTop: '15px',
@@ -235,7 +246,7 @@ function ClientHomeProfile() {
                 sx={styledSubmitButton}
                 onClick={validateForm}
               >
-                Proceed
+                Save
               </Button>
             </Box>
           </FormControl>

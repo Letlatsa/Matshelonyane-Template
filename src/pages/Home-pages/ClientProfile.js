@@ -99,7 +99,10 @@ const ClientProfile = () => {
 
   const handleButtonClicked = () => {
     navigate('/clienthome');
-    console.log('Button clicked');
+  };
+
+  const handleOnEditButtonClicked = () => {
+    navigate('/clienteditprofile');
   };
 
   return (
@@ -210,6 +213,7 @@ const ClientProfile = () => {
                 transition: 'ease-in .3s'
               }
             }}
+            onClick={handleOnEditButtonClicked}
           >
             Edit
           </Button>
