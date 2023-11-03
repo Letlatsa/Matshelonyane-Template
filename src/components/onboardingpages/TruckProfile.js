@@ -164,7 +164,7 @@ function TruckProfile() {
 
   return (
     <div>
-      <Box sx={{ width: '100%', marginRight: '50px' }}>
+      <Box sx={{ width: '100%' }}>
         <Box>
           <ProgressBar currentStep={currentStep} />
         </Box>
@@ -174,8 +174,7 @@ function TruckProfile() {
             color: 'white',
             textAlign: 'center',
             marginBottom: '15px',
-            marginLeft: '15px',
-            textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
             fontWeight: 'bold',
             marginTop: '50px'
           }}
@@ -193,13 +192,10 @@ function TruckProfile() {
         <label htmlFor="truckPic">
           <Box sx={styledAvatarBox}>
             {avatarImage ? (
-              <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 100, height: 100 }} />
+              <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 130, height: 130 }} />
             ) : (
-              <Avatar alt="User Avatar" sx={{ width: 100, height: 100 }}></Avatar>
+              <Avatar alt="User Avatar" sx={{ width: 130, height: 130 }}></Avatar>
             )}
-            {/*  <Box style={uploadIconStyle}>
-              <img src={UploadIcon} alt="Account" width="30" height="20" />
-            </Box> */}
           </Box>
         </label>
         <Typography
@@ -208,7 +204,9 @@ function TruckProfile() {
             color: 'white',
             textAlign: 'center',
             marginBottom: '50px',
-            marginLeft: '15px'
+            marginTop: '15px',
+            fontWeight: '700',
+            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
           }}
         >
           Upload a picture of your truck

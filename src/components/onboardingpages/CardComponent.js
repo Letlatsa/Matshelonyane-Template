@@ -10,16 +10,16 @@ const StyledCard = {
   width: '100vw',
   height: '100vh',
   margin: '0 auto',
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'column',
   justifyContent: 'center',
-  backgroundColor: '#e2e8f02a',
+  backgroundColor: 'rgba(198, 149, 133, .3)',
   borderRadius: '0',
-  backdropFilter: 'blur(30px)',
+  backdropFilter: 'blur(40px)',
   position: 'fixed',
   top: '0',
-  left: '0'
+  left: '0',
+  overflowY: 'scroll',
+  '&::-webkit-scrollbar': { width: '0.4em' },
+  '&::-webkit-scrollbar-thumb': { backgroundColor: 'transparent' }
 };
 
 const StyledBox = {
@@ -38,9 +38,7 @@ function CardComponent({ children }) {
             ntent
             sx={{
               overflowY: 'scroll',
-              paddingTop: '30px',
-              '&::-webkit-scrollbar': { width: '0.4em' },
-              '&::-webkit-scrollbar-thumb': { backgroundColor: 'transparent' }
+              paddingTop: '30px'
             }}
           >
             {children}
