@@ -1,10 +1,21 @@
 import { React, useState } from 'react';
-import { Avatar } from '@mui/material';
-import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
+import {
+  Box,
+  FormControl,
+  TextField,
+  Typography,
+  Button,
+  Avatar,
+  AppBar,
+  Toolbar,
+  IconButton
+} from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 
 import { useNavigate } from 'react-router-dom';
 import { updateProfilePictureEndpoint, RetrieveSurnameEndpoint } from '../../services/EndPoints';
+
+import BackArrow from '../../assets/backVectorWhite.svg';
 
 function ClientHomeProfile() {
   const TokenSession = sessionStorage.getItem('Tokens');
@@ -115,6 +126,10 @@ function ClientHomeProfile() {
     }
   };
 
+  const handleButtonBackArrowClicked = () => {
+    navigate('/clientprofile');
+  };
+
   const styledFormControl = {
     width: '100%',
     color: 'white'
@@ -163,6 +178,10 @@ function ClientHomeProfile() {
     alignItems: 'center',
     position: 'relative'
   };
+  const styledAppBar = {
+    background: 'transparent',
+    boxShadow: 'none'
+  };
 
   return (
     <div
@@ -175,7 +194,21 @@ function ClientHomeProfile() {
         overflowY: 'scroll'
       }}
     >
-      <Box sx={{ width: '85vw', overflowY: 'scroll', paddingTop: '50px' }}>
+      <AppBar position="fixed" sx={styledAppBar}>
+        <Toolbar sx={{ height: '70px' }}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={handleButtonBackArrowClicked}
+          >
+            <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ width: '85vw', overflowY: 'scroll', paddingTop: '60px' }}>
         <Typography
           sx={{
             fontSize: 24,
