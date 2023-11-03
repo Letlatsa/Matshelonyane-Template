@@ -17,7 +17,7 @@ import { RegisterEndPoint } from '../../services/EndPoints';
 
 function CreateAccountForm() {
   const navigate = useNavigate();
-  const [accountType, setAccountType] = useState('customer');
+  const [accountType, setAccountType] = useState('');
 
   //initial form state and error state
   const initialFormState = {
@@ -27,6 +27,7 @@ function CreateAccountForm() {
   };
 
   const initialErrorState = {
+    accountError: '',
     phoneError: '',
     passwordError: '',
     confirmPasswordError: ''
@@ -45,7 +46,7 @@ function CreateAccountForm() {
   };
 
   const handleButtonClick = async () => {
-    const { password, confirmPassword, phone, accountType } = formData;
+    const { password, confirmPassword, phone } = formData;
 
     const errors = {};
 
@@ -65,7 +66,9 @@ function CreateAccountForm() {
       errors.confirmPasswordError = 'Passwords do not match';
     }
 
-    
+    if (!accountType){
+      errors.accountError = 'Enter ccount types'
+    }
 
     setFormErrors(errors);
 
@@ -73,8 +76,8 @@ function CreateAccountForm() {
       // Ensure that formData matches the expected payload format
       const dataToSend = {
         number: phone,
-        password: password,
-        accountType: 'driver'
+        password: password
+        accountType: accountType
       };
 
       ApiRequest(dataToSend);
@@ -211,6 +214,7 @@ function CreateAccountForm() {
               id="account-type"
               sx={styledSelect}
               value={accountType}
+              error={!!formErrors.accountError}
               onChange={handleChange}
             >
               <MenuItem value="customer">Client</MenuItem>
