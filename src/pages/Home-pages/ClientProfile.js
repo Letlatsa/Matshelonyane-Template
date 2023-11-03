@@ -16,6 +16,13 @@ import { useNavigate } from 'react-router-dom';
 
 const ClientProfile = () => {
   const navigate = useNavigate();
+  const user = sessionStorage.getItem('user');
+  const userData = {
+    _id: JSON.parse(user)._id,
+  }
+
+  console.log(userData);
+
   const styledProfileBox = {
     borderRadius: '100px',
     display: 'flex',

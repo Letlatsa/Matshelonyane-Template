@@ -52,6 +52,8 @@ const ClientHome = () => {
         account
       } = userData.data;
 
+      console.log(_id)
+
       const user = {
         _id: _id,
         firstName: firstName,
@@ -65,7 +67,7 @@ const ClientHome = () => {
 
       setLastName(lastName);
 
-      sessionStorage.setItem('lastName', JSON.stringify(user));
+      sessionStorage.setItem('user', JSON.stringify(user));
       console.log('this is the lastname', lastName);
     });
   }, [accessToken]);
