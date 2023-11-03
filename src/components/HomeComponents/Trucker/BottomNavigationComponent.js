@@ -20,7 +20,7 @@ const BottomNavigationComponent = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
   };
 
   const styledNavActiveAction = {
@@ -31,7 +31,7 @@ const BottomNavigationComponent = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
   };
 
   const styledBottomNav = {

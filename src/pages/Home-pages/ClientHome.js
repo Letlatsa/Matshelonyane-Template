@@ -7,8 +7,13 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
+
+import ClientBottomNav from '../../components/HomeComponents/Client/ClientBottomNav';
+
 import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
+import { RetrieveDriverNameEndpoint } from '../../services/EndPoints';
 import { useToken } from '../../Hooks/TokenContext';
+
 
 import {
   Container,
@@ -19,17 +24,11 @@ import {
   MenuItem,
   Card,
   Rating,
-  BottomNavigation,
-  BottomNavigationAction,
   Stack
 } from '@mui/material';
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import SearchIcon from '../../assets/searchIcon.svg';
-import homeIcon from '../../assets/homeVector.svg';
-import messageIcon from '../../assets/evaMessage.svg';
-import clipBoardIcon from '../../assets/Group1.svg';
-import requestIcon from '../../assets/requestIcon.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ClientHome = () => {
@@ -38,8 +37,10 @@ const ClientHome = () => {
   const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
-  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('');
 
+  const storedLastName = sessionStorage.getItem('lastName');
+  const [lastName, setLastName] = useState(storedLastName || '');
   const accessToken = tokens.accessToken;
 
   console.log('this is the token', accessToken);
@@ -48,9 +49,18 @@ const ClientHome = () => {
     RetrieveSurnameEndpoint(accessToken).then((userData) => {
       const { lastName } = userData.data;
       setLastName(lastName);
+      sessionStorage.setItem('lastName', lastName);
       console.log('this is the lastname', lastName);
     });
-  }, []);
+  }, [accessToken]);
+
+  useEffect(() => {
+    RetrieveDriverNameEndpoint(accessToken).then((driverData) => {
+      const { firstName1, lastName1 } = driverData;
+      setFirstName(firstName1);
+      setLastName(lastName1);
+    });
+  }, [accessToken]);
 
   const handleChange = (event) => {
     setRating(event.target.value);
@@ -63,16 +73,8 @@ const ClientHome = () => {
   // Styles
 
   const styledAppBar = {
-    backgroundColor: '#ffffff',
-    color: '#000000',
+    backgroundColor: 'transparent',
     boxShadow: 'none'
-  };
-
-  const styledBottomNav = {
-    position: 'fixed',
-    bottom: 0,
-    width: '100%',
-    height: '80px'
   };
 
   const styledProfileBox = {
@@ -86,7 +88,7 @@ const ClientHome = () => {
     marginLeft: 1,
     height: '50px',
     width: '50px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   };
 
   const handleButtonClicked = () => {
@@ -104,7 +106,7 @@ const ClientHome = () => {
   };
 
   return (
-    <div>
+    <div className="homeContainer">
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
           <MenuOverlay isOverlay={isOverlay} setIsOverlay={setIsOverlay} />
@@ -161,7 +163,8 @@ const ClientHome = () => {
               fontSize: '24px',
               color: '#58362A',
               fontWeight: 400,
-              marginBottom: '30px'
+              marginBottom: '30px',
+              textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
             }}
           >
             Lets find your hauler
@@ -179,7 +182,7 @@ const ClientHome = () => {
                 height: '100%',
                 display: 'flex',
                 justifyContent: 'space-between',
-                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)',
+                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
                 borderRadius: '5px',
                 padding: 0,
                 alignItems: 'center'
@@ -207,7 +210,7 @@ const ClientHome = () => {
         <Container>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box>
-              <Typography sx={{ fontSize: '20px' }}>Truckers</Typography>
+              <Typography sx={{ fontSize: '20px', color: '#58362A' }}>Truckers</Typography>
             </Box>
             <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '296px' }}></Box>
           </Box>
@@ -220,7 +223,9 @@ const ClientHome = () => {
               marginBottom: '30px'
             }}
           >
-            <Typography sx={{ fontSize: '16px', marginLeft: '10px' }}>Sort by:</Typography>
+            <Typography sx={{ fontSize: '16px', marginLeft: '10px', color: '#58362A' }}>
+              Sort by:
+            </Typography>
             <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
               <InputLabel sx={{ fontSize: '14px' }} id="rating-simple-select-label">
                 Location
@@ -235,7 +240,7 @@ const ClientHome = () => {
                 sx={{
                   fontSize: '14px',
                   width: '100%',
-                  boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
+                  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
                 }}
               >
                 <MenuItem sx={{ fontSize: '14px' }} value={10}>
@@ -256,7 +261,9 @@ const ClientHome = () => {
                 width: '100%',
                 backgroundColor: '#C69585',
                 paddingTop: '15px',
-                paddingBottom: '15px'
+                paddingBottom: '15px',
+                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                borderRadius: '10px'
               }}
             >
               <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
@@ -318,7 +325,7 @@ const ClientHome = () => {
                         fontWeight: '300',
                         fontSize: '14px',
                         textTransform: 'none',
-                        boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+                        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
                         '&:hover': {
                           backgroundColor: '#58362A',
                           color: 'white',
@@ -326,7 +333,7 @@ const ClientHome = () => {
                         }
                       }}
                     >
-                      Request Pickup
+                      View Profile
                     </Button>
                   </Box>
                 </Stack>
@@ -335,102 +342,7 @@ const ClientHome = () => {
           </Stack>
         </Container>
       </Box>
-      <BottomNavigation showLabels onChange={handleNavigation} value={value} sx={styledBottomNav}>
-        <BottomNavigationAction
-          value="Home"
-          icon={
-            <Box
-              sx={{
-                backgroundColor: '#C69585',
-                width: '40px',
-                height: '40px',
-                borderRadius: '50px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
-              }}
-            >
-              <img src={homeIcon} alt="Phone" width="30" height="20" sx={{ marginRight: '30px' }} />
-            </Box>
-          }
-        />
-        <BottomNavigationAction
-          value="Chat"
-          icon={
-            <Box
-              sx={{
-                backgroundColor: '#C69585',
-                width: '40px',
-                height: '40px',
-                borderRadius: '50px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
-              }}
-            >
-              <img
-                src={messageIcon}
-                alt="Phone"
-                width="30"
-                height="20"
-                sx={{ marginRight: '30px' }}
-              />
-            </Box>
-          }
-        />
-        <BottomNavigationAction
-          value="Group"
-          icon={
-            <Box
-              sx={{
-                backgroundColor: '#C69585',
-                width: '40px',
-                height: '40px',
-                borderRadius: '50px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
-              }}
-            >
-              <img
-                src={clipBoardIcon}
-                alt="Phone"
-                width="30"
-                height="20"
-                sx={{ marginRight: '30px' }}
-              />
-            </Box>
-          }
-        />
-        <BottomNavigationAction
-          value="Request"
-          icon={
-            <Box
-              sx={{
-                backgroundColor: '#C69585',
-                width: '40px',
-                height: '40px',
-                borderRadius: '50px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)'
-              }}
-            >
-              <img
-                src={requestIcon}
-                alt="Phone"
-                width="30"
-                height="20"
-                sx={{ marginRight: '30px' }}
-              />
-            </Box>
-          }
-        />
-      </BottomNavigation>
+      <ClientBottomNav value={value} handleNavigation={handleNavigation} />
     </div>
   );
 };

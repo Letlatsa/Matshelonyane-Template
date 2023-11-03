@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PhoneIcon from '../../assets/phone.svg';
+import { ForgotPasswordEndPoint } from '../../services/EndPoints';
 
 function ForgotPasswordForm() {
   const navigate = useNavigate();
@@ -11,12 +12,14 @@ function ForgotPasswordForm() {
   const handleButtonClick = () => {
     //const { phone } = formData;
     const errors = {};
+    const accountResetType = sessionStorage.getItem('passReset');
+    const accountType = JSON.parse(accountResetType).accountType;
 
     // form validation
     if (!formData.phone) {
       errors.phoneError = 'Phone number is required';
-    } else if (!/^[7]\d{7}$/.test(formData.phone)) {
-      errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
+    } else if (!/^[2]\d{10}$/.test(formData.phone)) {
+      errors.phoneError = 'Phone number must start with 2 and be 11 digits long';
     }
 
     if (!/^\d+$/.test(formData.phone)) {
@@ -26,8 +29,35 @@ function ForgotPasswordForm() {
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
     } else {
-      navigate('/onetimepin');
+      const dataToSend = {
+        number: formData.phone,
+        accountType: accountType
+      };
+
+      console.log(dataToSend);
+      ApiRequest(dataToSend);
     }
+  };
+
+  const ApiRequest = (formData) => {
+    ForgotPasswordEndPoint(formData)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          const id = response.data.id;
+
+          const resetID = {
+            resetID: id
+          };
+
+          sessionStorage.setItem('passReset', JSON.stringify(resetID));
+
+          navigate('/onetimepin');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const styledFormControl = {
