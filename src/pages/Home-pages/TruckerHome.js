@@ -10,14 +10,6 @@ import SearchFilter from '../../components/HomeComponents/SearchFilter';
 
 import { Container, Stack } from '@mui/material';
 const TruckerHome = () => {
-  const [value, setValue] = useState('Home');
-  const [isOverlay, setIsOverlay] = useState(false);
-
-  const storedLastName = 'Doe';
-  const [lastName, setLastName] = useState(storedLastName || '');
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
-
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
