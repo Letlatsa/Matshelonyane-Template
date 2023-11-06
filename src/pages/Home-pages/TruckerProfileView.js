@@ -16,6 +16,17 @@ import { useNavigate } from 'react-router-dom';
 
 const TruckerProfileView = () => {
   const navigate = useNavigate();
+
+  const userData = sessionStorage.getItem('user');
+
+  const { _id, firstName, lastName, propic, profileType, deliveryArea, driversLicense, account } =
+    JSON.parse(userData);
+
+  const accountData = {
+    _id: account._id,
+    number: account.number
+  };
+
   const styledProfileBox = {
     borderRadius: '100px',
     display: 'flex',
@@ -162,7 +173,7 @@ const TruckerProfileView = () => {
               letterSpacing: '-0.17px'
             }}
           >
-            John Doe
+            {firstName} {lastName}
           </Typography>
           <Typography
             sx={{
@@ -176,7 +187,7 @@ const TruckerProfileView = () => {
               marginBottom: '15px'
             }}
           >
-            Gaborone
+            {deliveryArea}
           </Typography>
           <Button
             variant="text"
@@ -263,7 +274,7 @@ const TruckerProfileView = () => {
               }}
             >
               <Typography sx={styledStackTypography}>Phone number:</Typography>
-              <Typography sx={styledStackTypography}> 71234356</Typography>
+              <Typography sx={styledStackTypography}> {accountData.number}</Typography>
             </Box>
             <Box
               sx={{
@@ -272,8 +283,8 @@ const TruckerProfileView = () => {
                 justifyContent: 'space-between'
               }}
             >
-              <Typography sx={styledStackTypography}>Operation location:</Typography>
-              <Typography sx={styledStackTypography}>Gaborone, Mogoditshane</Typography>
+              <Typography sx={styledStackTypography}>Location:</Typography>
+              <Typography sx={styledStackTypography}>{deliveryArea}</Typography>
             </Box>
           </Stack>
         </Card>
