@@ -1,4 +1,5 @@
-import * as React from 'react';
+import {React, useState} from 'react';
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import BottomNavigationComponent from '../../components/HomeComponents/Trucker/BottomNavigationComponent';
@@ -9,6 +10,14 @@ import SearchFilter from '../../components/HomeComponents/SearchFilter';
 
 import { Container, Stack } from '@mui/material';
 const TruckerHome = () => {
+  const [value, setValue] = useState('Home');
+  const [isOverlay, setIsOverlay] = useState(false);
+
+  const storedLastName = 'Doe';
+  const [lastName, setLastName] = useState(storedLastName || '');
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
