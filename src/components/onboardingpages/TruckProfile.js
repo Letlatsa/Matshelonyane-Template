@@ -14,6 +14,7 @@ import AccountIcon from '../../assets/account.svg';
 import WeightIcon from '../../assets/weight.svg';
 import TruckIcon from '../../assets/truck.svg';
 import ProgressBar from './ProgressBar';
+import { TruckRetrieveEndpoint } from '../../services/EndPoints';
 import { useNavigate } from 'react-router-dom';
 
 const styledFormControl = {
@@ -103,8 +104,36 @@ function TruckProfile() {
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
 
+  const [truckType, setTruckType] = useState([]);
+  const [selectedTruckType, setSelectedTruckType] = useState([]);
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
+
+  useEffect(() => {
+    const fetchTruckData = async () => {
+      try {
+        getTruckTypes(accessToken);
+      } catch (error) {
+        console.error('Error fetching truck types: ', error);
+      }
+    };
+
+    fetchTruckData();
+  }, [accessToken]);
+
+  const getTruckTypes = (accessToken) => {
+    TruckRetrieveEndpoint(accessToken)
+      .then((truckData) => {
+        setTruckType(truckData.data);
+      })
+      .catch((error) => {
+        console.log(error, 'Error Fetching Data');
+      });
+  };
+
   const handleTrucktypeChange = async (event) => {
     const selectedTruckType = event.target.value;
+    setSelectedTruckType(selectedTruckType);
     console.log('Selected Truck Type:', selectedTruckType);
   };
 
@@ -254,9 +283,13 @@ function TruckProfile() {
                 id="truckType"
                 sx={styledSelect}
                 onChange={handleTrucktypeChange}
+                value={selectedTruckType}
               >
-                <MenuItem value="id">Small</MenuItem>
-                <MenuItem value="id">Small</MenuItem>
+                {truckType.map((truckData) => (
+                  <MenuItem key={truckData._id} value={truckData._id}>
+                    {truckData.name}
+                  </MenuItem>
+                ))}
               </Select>
             </Box>
           </FormControl>
