@@ -113,10 +113,7 @@ function TruckProfile() {
     const fetchTruckData = async () => {
       try {
         //const getTruckTypes = await TruckRetrieveEndpoint(accessToken);
-        const types = getTruckTypes(accessToken);
-        setTruckType(types);
-        console.log(types, 'i am trucktypes');
-
+        getTruckTypes(accessToken);
         //   if (Array.isArray(truckData)) {
         //     const truckTypes = truckData.map((truck) => ({
         //       _id: truck._id,
@@ -142,7 +139,7 @@ function TruckProfile() {
   const getTruckTypes = (accessToken) => {
     TruckRetrieveEndpoint(accessToken)
       .then((truckData) => {
-        return truckData.data;
+        setTruckType(truckData.data);
       })
       .catch((error) => {
         console.log(error, 'i am error');
@@ -303,14 +300,11 @@ function TruckProfile() {
                 onChange={handleTrucktypeChange}
                 value={selectedTruckType}
               >
-                {truckType?.map((truckData) => {
-                  console.log('Truck object:', truckData);
-                  return (
-                    <MenuItem key={truckData._id} value={truckData.name}>
-                      {truckData.name}
-                    </MenuItem>
-                  );
-                })}
+                {truckType.map((truckData) => (
+                  <MenuItem key={truckData._id} value={truckData.name}>
+                    {truckData.name}
+                  </MenuItem>
+                ))}
               </Select>
             </Box>
           </FormControl>
