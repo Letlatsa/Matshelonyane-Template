@@ -14,6 +14,7 @@ import AccountIcon from '../../assets/account.svg';
 import WeightIcon from '../../assets/weight.svg';
 import TruckIcon from '../../assets/truck.svg';
 import ProgressBar from './ProgressBar';
+import { RetrieveTruckerSurnameEndpoint, TruckRetrieveEndpoint } from '../../services/EndPoints';
 import { useNavigate } from 'react-router-dom';
 
 const styledFormControl = {
@@ -103,8 +104,54 @@ function TruckProfile() {
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
 
+  const [truckType, setTruckType] = useState([]);
+  const [selectedTruckType, setSelectedTruckType] = useState([]);
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
+
+  useEffect(() => {
+    const fetchTruckData = async () => {
+      try {
+        //const getTruckTypes = await TruckRetrieveEndpoint(accessToken);
+        const types = getTruckTypes(accessToken);
+        setTruckType(types);
+        console.log(types, 'i am trucktypes');
+
+        //   if (Array.isArray(truckData)) {
+        //     const truckTypes = truckData.map((truck) => ({
+        //       _id: truck._id,
+        //       name: truck.name
+        //     }));
+        //     console.log(truckData, 'i am trucktypes');
+        //     setTruckType(truckTypes);
+
+        //     console.log('Truck data:', truckData);
+        //   } else if (typeof truckData === 'object') {
+        //     setTruckType([{ _id: truckData._id, name: truckData.name }]);
+        //   } else {
+        //     console.error('Invalid truck data format. Expected an array or object.');
+        //   }
+      } catch (error) {
+        console.error('Error fetching truck types: ', error);
+      }
+    };
+
+    fetchTruckData();
+  }, [accessToken]);
+
+  const getTruckTypes = (accessToken) => {
+    TruckRetrieveEndpoint(accessToken)
+      .then((truckData) => {
+        return truckData.data;
+      })
+      .catch((error) => {
+        console.log(error, 'i am error');
+      });
+  };
+
   const handleTrucktypeChange = async (event) => {
     const selectedTruckType = event.target.value;
+    setSelectedTruckType(selectedTruckType);
     console.log('Selected Truck Type:', selectedTruckType);
   };
 
@@ -254,9 +301,16 @@ function TruckProfile() {
                 id="truckType"
                 sx={styledSelect}
                 onChange={handleTrucktypeChange}
+                value={selectedTruckType}
               >
-                <MenuItem value="id">Small</MenuItem>
-                <MenuItem value="id">Small</MenuItem>
+                {truckType?.map((truckData) => {
+                  console.log('Truck object:', truckData);
+                  return (
+                    <MenuItem key={truckData._id} value={truckData.name}>
+                      {truckData.name}
+                    </MenuItem>
+                  );
+                })}
               </Select>
             </Box>
           </FormControl>
