@@ -13,6 +13,7 @@ import {
 import BackArrow from '../../assets/backVector.svg';
 import EditIcon from '../../assets/EditVector.svg';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const TruckerProfileView = () => {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ const TruckerProfileView = () => {
     _id: account._id,
     number: account.number
   };
+  
+  useEffect(() => {});
 
   const styledProfileBox = {
     borderRadius: '100px',
@@ -104,7 +107,6 @@ const TruckerProfileView = () => {
   const handleEditButtonClicked = () => {
     navigate('/truckereditprofile');
   };
-
 
   return (
     <div>

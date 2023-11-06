@@ -103,6 +103,18 @@ const TruckRetrieveEndpoint = async (Token) => {
   }
 };
 
+const UserTrucksEndpoint = async (Token) => {
+  try {
+    const response = await FleetApiClient.get('/trucks', {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error retrieving trucks:', error);
+    throw error;
+  }
+}
+
 export {
   LoginEndPoint,
   RegisterEndPoint,
@@ -114,5 +126,6 @@ export {
   TruckRegisterEndPoint,
   TruckRetrieveEndpoint,
   RetrieveTruckerSurnameEndpoint,
-  updateProfilePictureEndpoint
+  updateProfilePictureEndpoint,
+  UserTrucksEndpoint
 };
