@@ -70,6 +70,17 @@ const RetrieveTruckerSurnameEndpoint = async (Token) => {
   }
 };
 
+const updateProfilePictureEndpoint = async (formData, Token) => {
+  try {
+    const response = await IAMApiClient.put('/propic', formData, {
+      headers: { 'Content-Typen': 'multipart/form-data', Authorization: `Bearer ${Token}` }
+    });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 ///Fleet endpoints
 const TruckRegisterEndPoint = async (formData, Token) => {
@@ -102,6 +113,6 @@ export {
   RetrieveSurnameEndpoint,
   TruckRegisterEndPoint,
   TruckRetrieveEndpoint,
-  RetrieveTruckerSurnameEndpoint
-
+  RetrieveTruckerSurnameEndpoint,
+  updateProfilePictureEndpoint
 };
