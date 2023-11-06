@@ -11,10 +11,8 @@ import Box from '@mui/material/Box';
 
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
-import { useToken } from '../../Hooks/TokenContext';
 
 const HomeAppBar = () => {
-  const { tokens } = useToken();
   const navigate = useNavigate();
   const [isOverlay, setIsOverlay] = useState(false);
 
