@@ -14,7 +14,7 @@ import AccountIcon from '../../assets/account.svg';
 import WeightIcon from '../../assets/weight.svg';
 import TruckIcon from '../../assets/truck.svg';
 import ProgressBar from './ProgressBar';
-import { TruckRetrieveEndpoint } from '../../services/EndPoints';
+import { TruckRetrieveEndpoint, TruckRegisterEndPoint } from '../../services/EndPoints';
 import { useNavigate } from 'react-router-dom';
 
 const styledFormControl = {
@@ -144,7 +144,7 @@ function TruckProfile() {
 
   const validateForm = () => {
     console.log('validateForm called');
-    const { platNumber, maxLoadCapacity, truckType } = formData;
+    const { platNumber, maxLoadCapacity } = formData;
 
     const errors = {};
     if (!platNumber) {
@@ -159,10 +159,26 @@ function TruckProfile() {
     setFormErrors(errors);
     console.log('validateForm');
     if (Object.keys(errors).length === 0) {
-      console.log('lets gooo');
+      const truckData = new FormData();
+      truckData.append('platNumber', formData.platNumber);
+      truckData.append('truckType', selectedTruckType);
+      truckData.append('maxLoadCapacity', formData.maxLoadCapacity);
+      truckData.append('file', file);
 
-      navigate('/truckprofilecomplete');
+      registerTruck(truckData, accessToken);
     }
+  };
+
+  const registerTruck = (truckData, accessToken) => {
+    TruckRegisterEndPoint(truckData, accessToken)
+      .then((response) => {
+        if (response.status === 200) {
+          navigate('/truckprofilecomplete');
+        }
+      })
+      .catch((error) => {
+        console.log(error, 'Error Fetching Data');
+      });
   };
 
   const handleImageChange = (e) => {
