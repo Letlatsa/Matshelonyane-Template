@@ -14,7 +14,7 @@ import AccountIcon from '../../assets/account.svg';
 import WeightIcon from '../../assets/weight.svg';
 import TruckIcon from '../../assets/truck.svg';
 import ProgressBar from './ProgressBar';
-import { RetrieveTruckerSurnameEndpoint, TruckRetrieveEndpoint } from '../../services/EndPoints';
+import { TruckRetrieveEndpoint } from '../../services/EndPoints';
 import { useNavigate } from 'react-router-dom';
 
 const styledFormControl = {
@@ -112,22 +112,7 @@ function TruckProfile() {
   useEffect(() => {
     const fetchTruckData = async () => {
       try {
-        //const getTruckTypes = await TruckRetrieveEndpoint(accessToken);
         getTruckTypes(accessToken);
-        //   if (Array.isArray(truckData)) {
-        //     const truckTypes = truckData.map((truck) => ({
-        //       _id: truck._id,
-        //       name: truck.name
-        //     }));
-        //     console.log(truckData, 'i am trucktypes');
-        //     setTruckType(truckTypes);
-
-        //     console.log('Truck data:', truckData);
-        //   } else if (typeof truckData === 'object') {
-        //     setTruckType([{ _id: truckData._id, name: truckData.name }]);
-        //   } else {
-        //     console.error('Invalid truck data format. Expected an array or object.');
-        //   }
       } catch (error) {
         console.error('Error fetching truck types: ', error);
       }
@@ -142,7 +127,7 @@ function TruckProfile() {
         setTruckType(truckData.data);
       })
       .catch((error) => {
-        console.log(error, 'i am error');
+        console.log(error, 'Error Fetching Data');
       });
   };
 
@@ -301,7 +286,7 @@ function TruckProfile() {
                 value={selectedTruckType}
               >
                 {truckType.map((truckData) => (
-                  <MenuItem key={truckData._id} value={truckData.name}>
+                  <MenuItem key={truckData._id} value={truckData._id}>
                     {truckData.name}
                   </MenuItem>
                 ))}
