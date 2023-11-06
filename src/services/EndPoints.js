@@ -1,7 +1,6 @@
 //import IAMApiClient from './Api-client';
 import { IAMApiClient } from './Api-client';
 import { FleetApiClient } from './Api-client';
-import axios from 'axios';
 
 const LoginEndPoint = async (formData) => {
   const response = await IAMApiClient.post('/login', formData, {
