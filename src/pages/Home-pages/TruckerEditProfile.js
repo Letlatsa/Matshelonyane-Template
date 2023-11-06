@@ -74,7 +74,7 @@ function TruckerHomeProfile() {
         console.log(response);
         if (response.status === 200) {
           refreshSession(accessToken);
-          navigate('/clientprofile');
+          navigate('/truckerprofileview');
         }
       })
       .catch((error) => {
