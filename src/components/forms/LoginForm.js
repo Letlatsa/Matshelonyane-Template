@@ -105,15 +105,17 @@ const LoginForm = () => {
   const onboardingRedirecter = (accountType) => {
     if (accountType === 'driver') {
       navigate('/truckerOnboardingProfile');
+    } else {
+      navigate('/clientonboardingprofile');
     }
-    navigate('/clientonboardingprofile');
   };
 
   const homeRedirecter = (accountType) => {
     if (accountType === 'driver') {
       navigate('/truckerhome');
+    } else {
+      navigate('/clienthome');
     }
-    navigate('/clienthome');
   };
 
   const handleChange = (event) => {
