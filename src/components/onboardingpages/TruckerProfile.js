@@ -11,7 +11,6 @@ import {
   MenuItem
 } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
-import PhoneIcon from '../../assets/phone.svg';
 import LocationIcon from '../../assets/location.svg';
 import ProgressBar from './ProgressBar';
 import { useNavigate } from 'react-router-dom';
@@ -157,7 +156,7 @@ function TruckerProfile() {
   };
 
   const validateForm = () => {
-    const { firstName, lastName, phone } = formData;
+    const { firstName, lastName } = formData;
     const accessToken = tokens.accessToken;
     const errors = {};
 
@@ -167,13 +166,7 @@ function TruckerProfile() {
     if (!lastName) {
       errors.lastNameError = 'Lastname is required';
     }
-    if (!phone) {
-      errors.phoneError = 'Phone number is required';
-    } else if (!/^[7]\d{7}$/.test(phone)) {
-      errors.phoneError = 'Phone number must start with 7 and be 8 digits long';
-    } else if (!/^\d+$/.test(phone)) {
-      errors.phoneError = 'Phone number can only contain digits';
-    }
+
     if (!selectedLocation) {
       console.log(selectedLocation);
       errors.locationError = 'Location is required';
@@ -350,31 +343,6 @@ function TruckerProfile() {
                 error={!!formErrors.lastNameError}
                 helperText={formErrors.lastNameError}
               />
-              <TextField
-                variant="standard"
-                label={
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                      src={PhoneIcon}
-                      alt="Phone"
-                      width="30"
-                      height="20"
-                      sx={{ marginRight: '30px' }}
-                    />
-                    Phone Number
-                  </div>
-                }
-                type="phone"
-                name="phone"
-                placeholder="Enter your phone number"
-                sx={styledTextField}
-                value={formData.phone}
-                onChange={handleInputChange}
-                error={!!formErrors.phoneError}
-                helperText={formErrors.phoneError}
-              />
-
-              {/* <FormHelperText sx={styledHelperText}>{formErrors.locationError}</FormHelperText> */}
             </Stack>
           </FormControl>
           <FormControl sx={{ width: '100%' }}>
