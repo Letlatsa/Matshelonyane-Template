@@ -70,26 +70,6 @@ const RetrieveTruckerSurnameEndpoint = async (Token) => {
   }
 };
 
-const RetrieveDriverNameEndpoint = async (Token) => {
-  try {
-    const response = await IAMApiClient.get('/', {
-      headers: { Authorization: `Bearer ${Token}` }
-    });
-
-    const driverData = response.data.filter((user) => user.accountType === 'driver');
-
-    if (driverData.length > 0) {
-      const { firstName, lastName } = driverData[0];
-
-      return { firstName, lastName };
-    } else {
-      throw new Error('No user with accountType "driver" found.');
-    }
-  } catch (error) {
-    console.error('Error occurred while making the request:', error);
-    throw error;
-  }
-};
 
 ///Fleet endpoints
 const TruckRegisterEndPoint = async (formData, Token) => {
@@ -120,7 +100,6 @@ export {
   ForgotPasswordEndPoint,
   UpdateDriverLicenseEndPoint,
   RetrieveSurnameEndpoint,
-  RetrieveDriverNameEndpoint,
   TruckRegisterEndPoint,
   TruckRetrieveEndpoint,
   RetrieveTruckerSurnameEndpoint
