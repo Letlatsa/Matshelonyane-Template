@@ -11,8 +11,6 @@ import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
 import ClientBottomNav from '../../components/HomeComponents/Client/ClientBottomNav';
 
 import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
-import { useToken } from '../../Hooks/TokenContext';
-
 
 import {
   Container,
@@ -31,23 +29,45 @@ import SearchIcon from '../../assets/searchIcon.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ClientHome = () => {
-  const { tokens } = useToken();
   const navigate = useNavigate();
   const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
 
-  const storedLastName = sessionStorage.getItem('lastName');
+  const storedLastName = 'Doe';
   const [lastName, setLastName] = useState(storedLastName || '');
-  const accessToken = tokens.accessToken;
-
-  console.log('this is the token', accessToken);
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
 
   useEffect(() => {
     RetrieveSurnameEndpoint(accessToken).then((userData) => {
-      const { lastName } = userData.data;
+      const {
+        _id,
+        firstName,
+        lastName,
+        propic,
+        profileType,
+        deliveryArea,
+        driversLicense,
+        account
+      } = userData.data;
+
+      console.log(_id);
+
+      const user = {
+        _id: _id,
+        firstName: firstName,
+        lastName: lastName,
+        propic: propic,
+        profileType: profileType,
+        deliveryArea: deliveryArea,
+        driversLicense: driversLicense,
+        account: account
+      };
+
       setLastName(lastName);
-      sessionStorage.setItem('lastName', lastName);
+
+      sessionStorage.setItem('user', JSON.stringify(user));
       console.log('this is the lastname', lastName);
     });
   }, [accessToken]);

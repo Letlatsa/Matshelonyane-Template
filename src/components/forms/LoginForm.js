@@ -75,6 +75,8 @@ const LoginForm = () => {
           const { accessToken, refreshToken } = response.data;
           setTokenData(accessToken, refreshToken);
 
+          TokenSession(accessToken, refreshToken);
+
           userRedirect(accountType, accessToken);
         }
       })
@@ -124,6 +126,15 @@ const LoginForm = () => {
     };
     sessionStorage.setItem('passReset', JSON.stringify(restAccountType));
     navigate('/forgotpassword');
+  };
+
+  const TokenSession = (accessToken, refreshToken) => {
+    const Tokens = {
+      accessToken: accessToken,
+      refreshToken: refreshToken
+    };
+
+    sessionStorage.setItem('Tokens', JSON.stringify(Tokens));
   };
 
   const styledFormControl = {
