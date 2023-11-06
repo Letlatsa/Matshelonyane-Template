@@ -118,9 +118,10 @@ function TruckProfile() {
     const { platNumber, maxLoadCapacity, truckType } = formData;
 
     const errors = {};
-
     if (!platNumber) {
-      errors.platNumberError = 'PlateNumber  is required';
+      errors.platNumberError = 'Plate number is required';
+    } else if (!/^[A-Z]\s\d{3}\s[A-Z]{3}$/.test(platNumber)) {
+      errors.platNumberError = 'Plate number must follow the format  B 123 ABC';
     }
     if (!maxLoadCapacity) {
       errors.maxLoadCapacityError = 'Weight Capacity is required';
