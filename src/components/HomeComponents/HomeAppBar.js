@@ -10,24 +10,45 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
-import { RetrieveTruckerSurnameEndpoint } from '../../services/EndPoints';
-import { useToken } from '../../Hooks/TokenContext';
+import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
 
 const HomeAppBar = () => {
-  const { tokens } = useToken();
   const navigate = useNavigate();
   const [isOverlay, setIsOverlay] = useState(false);
 
-  const storedLastName = sessionStorage.getItem('lastName');
+  const storedLastName = 'Doe';
   const [lastName, setLastName] = useState(storedLastName || '');
 
-  const accessToken = tokens.accessToken;
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
 
   useEffect(() => {
-    RetrieveTruckerSurnameEndpoint(accessToken).then((userData) => {
-      const { lastName } = userData.data;
+    RetrieveSurnameEndpoint(accessToken).then((userData) => {
+      const {
+        _id,
+        firstName,
+        lastName,
+        propic,
+        profileType,
+        deliveryArea,
+        driversLicense,
+        account
+      } = userData.data;
+
+      const user = {
+        _id: _id,
+        firstName: firstName,
+        lastName: lastName,
+        propic: propic,
+        profileType: profileType,
+        deliveryArea: deliveryArea,
+        driversLicense: driversLicense,
+        account: account
+      };
+
       setLastName(lastName);
-      sessionStorage.setItem('lastName', lastName);
+
+      sessionStorage.setItem('user', JSON.stringify(user));
       console.log('this is the lastname', lastName);
     });
   }, [accessToken]);

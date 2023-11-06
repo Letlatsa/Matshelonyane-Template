@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import BottomNavigationComponent from '../../components/HomeComponents/Trucker/BottomNavigationComponent';
