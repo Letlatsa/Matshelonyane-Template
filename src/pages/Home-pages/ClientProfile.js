@@ -218,12 +218,7 @@ const ClientProfile = () => {
             Edit
           </Button>
         </Box>
-        <Card sx={styledCard}>
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>123</Typography>
-            <Typography sx={styledBriefSmallText}>Requests made</Typography>
-          </Box>
-        </Card>
+
         <Box sx={styledDeviderBox}>
           <Box>
             <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
@@ -244,16 +239,6 @@ const ClientProfile = () => {
             >
               <Typography sx={styledStackTypography}>Phone number:</Typography>
               <Typography sx={styledStackTypography}> {accountData.number}</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Location:</Typography>
-              <Typography sx={styledStackTypography}>{deliveryArea}</Typography>
             </Box>
           </Stack>
         </Card>
