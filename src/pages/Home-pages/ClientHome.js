@@ -8,8 +8,6 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
 
-import ClientBottomNav from '../../components/HomeComponents/Client/ClientBottomNav';
-
 import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
 
 import {
@@ -20,7 +18,6 @@ import {
   Select,
   MenuItem,
   Card,
-  Rating,
   Stack
 } from '@mui/material';
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
@@ -30,7 +27,6 @@ import { useNavigate } from 'react-router-dom';
 
 const ClientHome = () => {
   const navigate = useNavigate();
-  const [rating, setRating] = useState('');
   const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
 
@@ -71,10 +67,6 @@ const ClientHome = () => {
       console.log('this is the lastname', lastName);
     });
   }, [accessToken]);
-
-  const handleChange = (event) => {
-    setRating(event.target.value);
-  };
 
   const handleNavigation = (event, newValue) => {
     setValue(newValue);
@@ -244,9 +236,6 @@ const ClientHome = () => {
                 small
                 labelId="rating-simple-select-label"
                 id="demo-simple-select"
-                value={rating}
-                label="Rating"
-                onChange={handleChange}
                 sx={{
                   fontSize: '14px',
                   width: '100%',
@@ -297,13 +286,12 @@ const ClientHome = () => {
                   >
                     <Box>
                       <Typography sx={{ fontSize: '15px' }}>John Doe</Typography>
-                      <Rating name="size-small" size="small" />
                     </Box>
                     <Box sx={{ textAlign: 'right' }}>
                       <Typography
                         sx={{
                           fontSize: '16px',
-                          filter: 'blur(10deg)',
+                          filter: 'blur(3px)',
                           display: 'flex',
                           alignItems: 'center'
                         }}
@@ -352,7 +340,6 @@ const ClientHome = () => {
           </Stack>
         </Container>
       </Box>
-      <ClientBottomNav value={value} handleNavigation={handleNavigation} />
     </div>
   );
 };
