@@ -10,13 +10,11 @@ import {
   FormControl,
   Select,
   InputLabel,
-  MenuItem,
-  Switch
+  MenuItem
 } from '@mui/material';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
 import AccountIcon from '../../assets/account.svg';
-import NotificationBell from '../../assets/bellVector.svg';
 import RightArrow from '../../assets/rightVectorArrow.svg';
 import LocationPin from '../../assets/circum_location-on1.svg';
 import { useNavigate } from 'react-router-dom';
@@ -141,45 +139,9 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
               <Typography sx={styledStackTypography}>Change password</Typography>
               <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
             </Box>
-            <Box sx={styleListItemBox}>
-              <Typography sx={styledStackTypography}>Switch account</Typography>
-              <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
-            </Box>
           </Stack>
         </Box>
-        <Box sx={{ marginBottom: '50px' }}>
-          <Box
-            sx={{
-              borderBottom: 'solid 1px white',
-              width: '100%',
-              display: 'flex',
-              alignContent: 'center',
-              marginBottom: '25px',
-              color: 'white'
-            }}
-          >
-            <img
-              src={NotificationBell}
-              alt="Notification Icon"
-              width="20"
-              height="20"
-              style={{
-                marginRight: '20px'
-              }}
-            />
-            <Typography sx={settingSectionText}>Notifications</Typography>
-          </Box>
-          <Stack spacing={2}>
-            <Box sx={styleListItemBox}>
-              <Typography sx={styledStackTypography}>Messages</Typography>
-              <Switch></Switch>
-            </Box>
-            <Box sx={styleListItemBox}>
-              <Typography sx={styledStackTypography}>Requests</Typography>
-              <Switch></Switch>
-            </Box>
-          </Stack>
-        </Box>
+
         <Box sx={{ marginBottom: '50px' }}>
           <Box
             sx={{
