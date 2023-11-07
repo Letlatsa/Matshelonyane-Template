@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Avatar, Stack } from '@mui/material';
 import {
   Box,
@@ -15,7 +15,7 @@ import LocationIcon from '../../assets/location.svg';
 import ProgressBar from './ProgressBar';
 import { useNavigate } from 'react-router-dom';
 
-import { TruckerProfileEndpoint } from '../../services/EndPoints';
+import { TruckerProfileEndpoint, LocationRetrieveEndpoint } from '../../services/EndPoints';
 import { useToken } from '../../Hooks/TokenContext';
 
 const styledFormControl = {
@@ -95,60 +95,44 @@ function TruckerProfile() {
   const [formErrors, setFormErrors] = useState(initialErrorState);
   const [avatarImage, setAvatarImage] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedLocation, setSelectedLocation] = useState('');
+
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
 
-  const locationOptions = [
-    'Gaborone',
-    'Francistown',
-    'Molepolole',
-    'Maun',
-    'Serowe',
-    'Kanye',
-    'Mahalapye',
-    'Mochudi',
-    'Lobatse',
-    'Palapye',
-    'Ramotswa',
-    'Mogoditshane',
-    'Letlhakane',
-    'Tonota',
-    'Thamaga',
-    'Bobonong',
-    'Jwaneng',
-    'Orapa',
-    'Tlokweng',
-    'Selibe-Phikwe',
-    'Tshabong',
-    'Mmadinare',
-    'Gabane',
-    'Ghanzi',
-    'Kasane',
-    'Masunga',
-    'Moshupa',
-    'Mmopane',
-    'Lerala',
-    'Shakawe',
-    'Lecheng',
-    'Kang',
-    'Pandamatenga',
-    'Mmathethe',
-    'Rakops',
-    'Tsabong',
-    'Gweta',
-    'Tsetsebjwe',
-    'Pilane',
-    'Kalamare',
-    'Metsimotlhabe',
-    'Mokoboxane',
-    'Morwa',
-    'Sefophe',
-    'Tati Siding',
-    'Tsetsebjwe',
-    'Tshane',
-    'Tshesebe'
-  ];
+  const [location, setLocation] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
+
+  //const locationOptions = ['Gaborone', 'Francistown', 'Molepolole'];
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        getLocations(accessToken);
+      } catch (error) {
+        console.error('Error fetching locations: ', error);
+      }
+    };
+
+    fetchLocationData();
+  }, [accessToken]);
+
+  const getLocations = (accessToken) => {
+    LocationRetrieveEndpoint(accessToken)
+      .then((locationData) => {
+        setLocation(locationData.data);
+      })
+      .catch((error) => {
+        console.log(error, 'Error Fetching Data');
+      });
+  };
+
+  const handleLocationChange = (event) => {
+    const selectedLocation = event.target.value;
+    setSelectedLocation(selectedLocation);
+    console.log('Selected Locatiion:', selectedLocation);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -157,7 +141,7 @@ function TruckerProfile() {
 
   const validateForm = () => {
     const { firstName, lastName } = formData;
-    const accessToken = tokens.accessToken;
+    // const accessToken = tokens.accessToken;
     const errors = {};
 
     if (!firstName) {
@@ -201,10 +185,6 @@ function TruckerProfile() {
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  const handleLocationChange = (event) => {
-    setSelectedLocation(event.target.value);
   };
 
   const handleImageChange = (e) => {
@@ -360,17 +340,17 @@ function TruckerProfile() {
             </InputLabel>
             <Select
               labelId="location-label"
-              id="location"
-              name="location"
+              id="deliveryArea"
+              name="deliveryArea"
               value={selectedLocation}
               onChange={handleLocationChange}
               variant="standard"
               sx={styledSelect}
               error={!!formErrors.locationError}
             >
-              {locationOptions.map((option, index) => (
-                <MenuItem key={index} value={option}>
-                  {option}
+              {location.map((locationData) => (
+                <MenuItem key={locationData._id} value={locationData.name}>
+                  {locationData.name}
                 </MenuItem>
               ))}
             </Select>
