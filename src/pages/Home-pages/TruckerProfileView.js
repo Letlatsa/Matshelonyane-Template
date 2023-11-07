@@ -46,26 +46,6 @@ const TruckerProfileView = () => {
     boxShadow: 'none'
   };
 
-  const styleBriefInfo = {
-    width: '100px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
-  };
-
-  const styledBriefBigText = {
-    color: '#F8F8F8',
-    fontSize: '24px'
-  };
-
-  const styledBriefSmallText = {
-    color: '#F8F8F8',
-    fontSize: '16px',
-    fontWeight: 300,
-    letterSpacing: '-0.17px'
-  };
-
   const styledCard = {
     width: '100%',
     backgroundColor: '#C69585',
@@ -218,22 +198,7 @@ const TruckerProfileView = () => {
             Edit
           </Button>
         </Box>
-        <Card sx={styledCard}>
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>12</Typography>
-            <Typography sx={styledBriefSmallText}>Jobs Taken</Typography>
-          </Box>
-          <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>4.0</Typography>
-            <Typography sx={styledBriefSmallText}>Rating</Typography>
-          </Box>
-          <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>2</Typography>
-            <Typography sx={styledBriefSmallText}>Fleet</Typography>
-          </Box>
-        </Card>
+
         <Box sx={styledDeviderBox}>
           <Box>
             <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
