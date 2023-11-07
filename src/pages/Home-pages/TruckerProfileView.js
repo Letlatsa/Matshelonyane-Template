@@ -13,6 +13,9 @@ import {
 import BackArrow from '../../assets/backVector.svg';
 import EditIcon from '../../assets/EditVector.svg';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+
+import { UserTrucksEndpoint } from '../../services/EndPoints';
 
 const TruckerProfileView = () => {
   const navigate = useNavigate();
@@ -26,6 +29,24 @@ const TruckerProfileView = () => {
     _id: account._id,
     number: account.number
   };
+
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
+
+  useEffect(() => {
+    UserTrucksEndpoint(accessToken)
+      .then((response) => {
+        const { _id, platNumber, truckType, maxLoadCapacity } = response.data;
+
+        const truckData = {
+          _id: _id,
+          platNumber: platNumber,
+          truckType: truckType,
+          maxLoadCapacity: maxLoadCapacity
+        };
+      })
+      .catch((error) => {});
+  });
 
   const styledProfileBox = {
     borderRadius: '100px',
@@ -84,7 +105,6 @@ const TruckerProfileView = () => {
   const handleEditButtonClicked = () => {
     navigate('/truckereditprofile');
   };
-
 
   return (
     <div>
