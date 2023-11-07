@@ -99,8 +99,13 @@ const TruckerProfileView = () => {
   };
   const handleButtonClicked = () => {
     navigate('/truckerhome');
-    console.log('Button clicked');
   };
+
+  const handleEditButtonClicked = () => {
+    navigate('/truckereditprofile');
+  };
+
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -208,6 +213,7 @@ const TruckerProfileView = () => {
                 transition: 'ease-in .3s'
               }
             }}
+            onClick={handleEditButtonClicked}
           >
             Edit
           </Button>
