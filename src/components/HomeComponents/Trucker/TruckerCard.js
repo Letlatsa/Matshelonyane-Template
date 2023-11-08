@@ -4,11 +4,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Card, Stack, Box } from '@mui/material';
 import PhoneIcon from '../../../assets/phone.svg';
+import LocationIcon from '../../../assets/location.svg';
 
 const TruckerCard = () => {
   const navigate = useNavigate();
   const handleButtonClickedProposalPage = () => {
-    navigate('/truckerproposalpage');
+    navigate('/clientprofile');
   };
 
   const styledProfileBox = {
@@ -54,7 +55,7 @@ const TruckerCard = () => {
             }}
           >
             <Box>
-              <Typography sx={{ fontSize: '15px' }}>John Doe</Typography>
+              <Typography sx={{ fontSize: '15px', paddingTop: '15px' }}>John Doe</Typography>
             </Box>
             <Box sx={{ textAlign: 'right' }}>
               <Typography
@@ -62,45 +63,23 @@ const TruckerCard = () => {
                   fontSize: '16px',
                   filter: 'blur(10deg)',
                   display: 'flex',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  paddingTop: '15px',
+                  marginRight: '40px'
                 }}
               >
                 <img
-                  src={PhoneIcon}
+                  src={LocationIcon}
                   alt="Phone"
                   width="30"
                   height="20"
-                  sx={{ marginRight: '30px' }}
+                  sx={{ marginRight: '15px' }}
                 />
-                78322342
+                Gaborone
               </Typography>
-              <Typography sx={{ fontSize: '13px', fontWeight: 300 }}>Trucks Owned: 2</Typography>
             </Box>
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-            <Button
-              variant="text"
-              sx={{
-                backgroundColor: '#FBF8F7',
-                textColor: '#58362A',
-                width: '280px',
-                borderRadius: '5px',
-                height: '25px',
-                color: '#58362A',
-                fontWeight: '300',
-                fontSize: '14px',
-                textTransform: 'none',
-                boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-                '&:hover': {
-                  backgroundColor: '#58362A',
-                  color: 'white',
-                  transition: 'ease-in .3s'
-                }
-              }}
-            >
-              Apply
-            </Button>
-          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'end' }}></Box>
         </Stack>
       </Box>
     </Card>
