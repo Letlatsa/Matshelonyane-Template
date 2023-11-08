@@ -35,7 +35,7 @@ const TruckCard = ({ truck }) => {
           }}
         >
           <Typography sx={styledStackTypography}>Plate number:</Typography>
-          <Typography sx={styledStackTypography}> B 123 ABC</Typography>
+          <Typography sx={styledStackTypography}> {truck.platNumber}</Typography>
         </Box>
         <Box
           sx={{
@@ -45,7 +45,7 @@ const TruckCard = ({ truck }) => {
           }}
         >
           <Typography sx={styledStackTypography}>Truck type:</Typography>
-          <Typography sx={styledStackTypography}> Refrigerated cargo</Typography>
+          <Typography sx={styledStackTypography}>{truck.truckType.name}</Typography>
         </Box>
         <Box
           sx={{
@@ -55,7 +55,7 @@ const TruckCard = ({ truck }) => {
           }}
         >
           <Typography sx={styledStackTypography}>Weight capacity:</Typography>
-          <Typography sx={styledStackTypography}> 3.5 ton</Typography>
+          <Typography sx={styledStackTypography}>{truck.maxLoadCapacity.$numberDecimal}</Typography>
         </Box>
       </Stack>
     </Card>

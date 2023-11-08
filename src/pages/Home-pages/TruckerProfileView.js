@@ -20,7 +20,7 @@ import { UserTrucksEndpoint } from '../../services/EndPoints';
 
 const TruckerProfileView = () => {
   const navigate = useNavigate();
-  const { trucks, setTrucks } = useState([]);
+  const [trucks, setTrucks] = useState([]);
 
   const userData = sessionStorage.getItem('user');
 
@@ -42,7 +42,9 @@ const TruckerProfileView = () => {
           setTrucks(response.data);
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log(error);
+      });
   });
 
   const styledProfileBox = {
@@ -311,7 +313,9 @@ const TruckerProfileView = () => {
             <img src={EditIcon} alt="MenuIcon" width="14" height="14" />
           </Button>
         </Box>
-        <TruckCard />
+        {trucks?.map((truck) => (
+          <TruckCard key={truck._id} truck={truck} />
+        ))}
       </Container>
     </div>
   );
