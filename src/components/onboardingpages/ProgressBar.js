@@ -81,26 +81,24 @@ function ProgressBar({ currentStep }) {
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={styledOptionContainer}>
-          <div style={styledStep1}>{currentStep === 2 ? <CheckIcon /> : 1}</div>
+          <div style={styledStep1}>{currentStep >= 2 ? <CheckIcon /> : 1}</div>
           <Typography sx={styledTypography}>Profile setup</Typography>
         </div>
-        <div style={currentStep === 2 ? styeldStepBarActive : styeldStepBar} />
+        <div style={currentStep >= 2 ? styeldStepBarActive : styeldStepBar} />
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={styledOptionContainer}>
-          <div style={currentStep === 2 ? styledStepCurrent : styledStep}>
-            {currentStep === 3 ? <CheckIcon /> : 2}
+          <div style={currentStep >= 2 ? styledStepCurrent : styledStep}>
+            {currentStep > 2 ? <CheckIcon /> : 2}
           </div>
-          <Typography sx={styledTypography}>Profile setup</Typography>
+          <Typography sx={styledTypography}>License</Typography>
         </div>
-        <div style={currentStep === 3 ? styeldStepBarActive : styeldStepBar} />
+        <div style={currentStep > 2 ? styeldStepBarActive : styeldStepBar} />
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={styledOptionContainer}>
-          <div style={currentStep === 3 ? styledStepCurrent : styledStep}>
-            {currentStep === 3 ? <CheckIcon /> : 3}
-          </div>
-          <Typography sx={styledTypography}>Profile setup</Typography>
+          <div style={currentStep > 2 ? styledStepCurrent : styledStep}>3</div>
+          <Typography sx={styledTypography}>Fleet Setup</Typography>
         </div>
       </div>
     </div>
