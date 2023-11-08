@@ -214,7 +214,7 @@ const ClientHome = () => {
             <Box>
               <Typography sx={{ fontSize: '20px', color: '#58362A' }}>Truckers</Typography>
             </Box>
-            <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '296px' }}></Box>
+            <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '65vw' }}></Box>
           </Box>
           <Box
             sx={{

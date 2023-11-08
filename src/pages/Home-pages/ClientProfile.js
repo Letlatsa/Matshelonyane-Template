@@ -223,7 +223,7 @@ const ClientProfile = () => {
           <Box>
             <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
           </Box>
-          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
+          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '65vw' }}></Box>
         </Box>
         <Box
           sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '40px' }}
