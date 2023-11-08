@@ -67,9 +67,6 @@ const OneTimePinFForm = () => {
     return pattern.test(otp);
   };
 
-
-  
-
   const styledFormControl = {
     width: '100%',
     color: 'white'
@@ -118,7 +115,9 @@ const OneTimePinFForm = () => {
     marginBottom: '30px',
     boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     '&:hover': {
-      backgroundColor: 'transparent'
+      backgroundColor: '#58362A',
+      color: 'white',
+      transition: 'ease-in .3s'
     }
   };
 
