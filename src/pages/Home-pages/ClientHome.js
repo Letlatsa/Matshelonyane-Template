@@ -87,7 +87,6 @@ const ClientHome = () => {
     backgroundColor: '#EBDBD5',
     padding: 0,
     borderradius: '50px',
-    marginLeft: 1,
     height: '50px',
     width: '50px',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
@@ -264,9 +263,9 @@ const ClientHome = () => {
                 boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
                 borderRadius: '10px'
               }}
-            >
-              <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
+            >s
+              <Box sx={{ display: 'flex', width: '100%'}}>
+                <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px', justifyContent: 'flex-start' }}>
                   <Box sx={styledProfileBox} onClick={handleButtonTruckerProfileClicked}>
                     <img
                       src="https://picsum.photos/200/300"
@@ -275,11 +274,11 @@ const ClientHome = () => {
                     />
                   </Box>
                 </Box>
-                <Stack spacing={2} sx={{ paddingRight: '15px' }}>
+                <Stack spacing={2}>
                   <Box
                     sx={{
                       display: 'flex',
-                      width: '280px',
+                      width: '65vw',
                       justifyContent: 'space-between',
                       color: 'white'
                     }}
@@ -316,7 +315,7 @@ const ClientHome = () => {
                       sx={{
                         backgroundColor: '#EBDBD5',
                         textColor: '#58362A',
-                        width: '280px',
+                        width: '100%',
                         borderRadius: '5px',
                         height: '25px',
                         color: '#58362A',
