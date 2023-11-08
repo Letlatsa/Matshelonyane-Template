@@ -74,7 +74,9 @@ const OnboardingLicense = () => {
     marginBottom: '50px',
     boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     '&:hover': {
-      backgroundColor: 'transparent'
+      backgroundColor: '#58362A',
+      color: 'white',
+      transition: 'ease-in .3s'
     }
   };
   const styledButtonone = {
@@ -89,7 +91,9 @@ const OnboardingLicense = () => {
     marginBottom: '50px',
     boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     '&:hover': {
-      backgroundColor: 'transparent'
+      backgroundColor: '#58362A',
+      color: 'white',
+      transition: 'ease-in .3s'
     }
   };
 
