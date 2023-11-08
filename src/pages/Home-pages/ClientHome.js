@@ -8,8 +8,8 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
 
-import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
-
+import { RetrieveSurnameEndpoint, LocationRetrieveEndpoint } from '../../services/EndPoints';
+import { useToken } from '../../Hooks/TokenContext';
 import {
   Container,
   FormControl,
@@ -32,8 +32,38 @@ const ClientHome = () => {
 
   const storedLastName = 'Doe';
   const [lastName, setLastName] = useState(storedLastName || '');
+  const [location, setLocation] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        getLocations(accessToken);
+      } catch (error) {
+        console.error('Error fetching locations: ', error);
+      }
+    };
+
+    fetchLocationData();
+  }, [accessToken]);
+
+  const getLocations = (accessToken) => {
+    LocationRetrieveEndpoint(accessToken)
+      .then((locationData) => {
+        setLocation(locationData.data);
+      })
+      .catch((error) => {
+        console.log(error, 'Error Fetching Data');
+      });
+  };
+
+  const handleLocationChange = (event) => {
+    const selectedLocation = event.target.value;
+    setSelectedLocation(selectedLocation);
+    console.log('Selected Locatiion:', selectedLocation);
+  };
 
   useEffect(() => {
     RetrieveSurnameEndpoint(accessToken).then((userData) => {
@@ -233,24 +263,23 @@ const ClientHome = () => {
                 Location
               </InputLabel>
               <Select
-                small
-                labelId="rating-simple-select-label"
-                id="demo-simple-select"
+                labelId="location-label"
+                id="deliveryArea"
+                name="deliveryArea"
+                value={selectedLocation}
+                onChange={handleLocationChange}
+                variant="standard"
                 sx={{
                   fontSize: '14px',
                   width: '100%',
                   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
                 }}
               >
-                <MenuItem sx={{ fontSize: '14px' }} value={10}>
-                  Gaborone
-                </MenuItem>
-                <MenuItem sx={{ fontSize: '14px' }} value={20}>
-                  Francistown
-                </MenuItem>
-                <MenuItem sx={{ fontSize: '14px' }} value={30}>
-                  Maun
-                </MenuItem>
+                {location.map((locationData) => (
+                  <MenuItem key={locationData._id} value={locationData.name}>
+                    {locationData.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Box>
@@ -304,9 +333,6 @@ const ClientHome = () => {
                           sx={{ marginRight: '30px' }}
                         />
                         78322342
-                      </Typography>
-                      <Typography sx={{ fontSize: '13px', fontWeight: 300 }}>
-                        Trucks Owned: 2
                       </Typography>
                     </Box>
                   </Box>
