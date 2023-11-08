@@ -68,6 +68,18 @@ const RetrieveTruckerSurnameEndpoint = async (Token) => {
     throw error;
   }
 };
+const RetrieveAccountTypeEndpoint = async (Token) => {
+  try {
+    const response = await IAMApiClient.get('/me', {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error('Error occurred while making the request overyal component:', error);
+    throw error;
+  }
+};
 
 const updateProfilePictureEndpoint = async (formData, Token) => {
   try {
@@ -139,5 +151,6 @@ export {
   RetrieveTruckerSurnameEndpoint,
   updateProfilePictureEndpoint,
   UserTrucksEndpoint,
-  LocationRetrieveEndpoint
+  LocationRetrieveEndpoint,
+  RetrieveAccountTypeEndpoint
 };
