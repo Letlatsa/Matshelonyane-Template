@@ -13,12 +13,14 @@ import {
 import BackArrow from '../../assets/backVector.svg';
 import EditIcon from '../../assets/EditVector.svg';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
 
 import { UserTrucksEndpoint } from '../../services/EndPoints';
 
 const TruckerProfileView = () => {
   const navigate = useNavigate();
+  const [trucks, setTrucks] = useState([]);
 
   const userData = sessionStorage.getItem('user');
 
@@ -36,16 +38,13 @@ const TruckerProfileView = () => {
   useEffect(() => {
     UserTrucksEndpoint(accessToken)
       .then((response) => {
-        const { _id, platNumber, truckType, maxLoadCapacity } = response.data;
-
-        const truckData = {
-          _id: _id,
-          platNumber: platNumber,
-          truckType: truckType,
-          maxLoadCapacity: maxLoadCapacity
-        };
+        if (response.status === 200) {
+          setTrucks(response.data);
+        }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log(error);
+      });
   });
 
   const styledProfileBox = {
@@ -314,40 +313,9 @@ const TruckerProfileView = () => {
             <img src={EditIcon} alt="MenuIcon" width="14" height="14" />
           </Button>
         </Box>
-        <Card sx={styledCard}>
-          <Stack spacing={2} sx={styledStack}>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Plate number:</Typography>
-              <Typography sx={styledStackTypography}> B 123 ABC</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Truck type:</Typography>
-              <Typography sx={styledStackTypography}> Refrigerated cargo</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Weight capacity:</Typography>
-              <Typography sx={styledStackTypography}> 3.5 ton</Typography>
-            </Box>
-          </Stack>
-        </Card>
+        {trucks?.map((truck) => (
+          <TruckCard key={truck._id} truck={truck} />
+        ))}
       </Container>
     </div>
   );
