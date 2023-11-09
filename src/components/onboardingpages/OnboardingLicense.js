@@ -10,7 +10,7 @@ import { UpdateDriverLicenseEndPoint } from '../../services/EndPoints';
 
 const OnboardingLicense = () => {
   const { tokens } = useToken();
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
   const [imageSrc, setImageSrc] = useState(null);
   const [file, setFile] = useState(null);
 
