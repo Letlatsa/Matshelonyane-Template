@@ -26,7 +26,7 @@ const TruckerHome = () => {
             <Box>
               <Typography sx={{ fontSize: '15px' }}>Your Profile views</Typography>
             </Box>
-            <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '230px' }}></Box>
+            <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '55vw' }}></Box>
           </Box>
           <SearchFilter />
           <Stack spacing={2}>

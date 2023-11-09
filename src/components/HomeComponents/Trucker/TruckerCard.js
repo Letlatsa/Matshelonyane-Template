@@ -35,7 +35,7 @@ const TruckerCard = () => {
         paddingBottom: '15px'
       }}
     >
-      <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+      <Box sx={{ display: 'flex', width: '100%'}}>
         <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
           <Box sx={styledProfileBox} onClick={handleButtonClickedProposalPage}>
             <img
@@ -49,7 +49,7 @@ const TruckerCard = () => {
           <Box
             sx={{
               display: 'flex',
-              width: '280px',
+              width: '70vw',
               justifyContent: 'space-between',
               color: 'white'
             }}
@@ -57,7 +57,7 @@ const TruckerCard = () => {
             <Box>
               <Typography sx={{ fontSize: '15px', paddingTop: '15px' }}>John Doe</Typography>
             </Box>
-            <Box sx={{ textAlign: 'right' }}>
+            <Box sx={{ textAlign: 'right', display: 'flex', justifyContent: 'end' }}>
               <Typography
                 sx={{
                   fontSize: '16px',
@@ -65,7 +65,7 @@ const TruckerCard = () => {
                   display: 'flex',
                   alignItems: 'center',
                   paddingTop: '15px',
-                  marginRight: '40px'
+                  marginRight: '15px'
                 }}
               >
                 <img
