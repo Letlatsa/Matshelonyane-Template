@@ -126,6 +126,18 @@ const LocationRetrieveEndpoint = async (Token) => {
   }
 };
 
+const EditProfileEndPoint = async (formData, Token) => {
+  try {
+    const response = await IAMApiClient.put('/profile', formData, {
+      headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${Token}` }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export {
   LoginEndPoint,
   RegisterEndPoint,
@@ -139,5 +151,6 @@ export {
   RetrieveTruckerSurnameEndpoint,
   updateProfilePictureEndpoint,
   UserTrucksEndpoint,
-  LocationRetrieveEndpoint
+  LocationRetrieveEndpoint,
+  EditProfileEndPoint
 };

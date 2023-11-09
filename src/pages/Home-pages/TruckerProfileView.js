@@ -45,7 +45,7 @@ const TruckerProfileView = () => {
       .catch((error) => {
         console.log(error);
       });
-  });
+  }, [accessToken]);
 
   const styledProfileBox = {
     borderRadius: '100px',
