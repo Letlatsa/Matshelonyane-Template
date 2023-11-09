@@ -7,12 +7,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
+
 import {
   RetrieveSurnameEndpoint,
   TrucksInDeliveryArea,
   LocationRetrieveEndpoint
 } from '../../services/EndPoints';
-
 
 import {
   Container,
@@ -142,7 +142,6 @@ const ClientHome = () => {
     fetchTruckerData();
   }, [accessToken, deliveryAreaId]);
 
-
   const getTrucksersInArea = (accessToken, deliveryAreaId) => {
     TrucksInDeliveryArea(accessToken, deliveryAreaId)
       .then((truckersData) => {
@@ -153,19 +152,6 @@ const ClientHome = () => {
       .catch((error) => {
         console.error('Error fetching truckers', error);
       });
-
-  const styledProfileBox = {
-    borderRadius: '30px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#EBDBD5',
-    padding: 0,
-    borderradius: '50px',
-    height: '50px',
-    width: '50px',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
-
   };
 
   const handleButtonClicked = () => {
@@ -312,12 +298,6 @@ const ClientHome = () => {
                 value={selectedLocation}
                 onChange={handleLocationChange}
                 variant="standard"
-                 sx={{
-                  fontSize: '14px',
-                  width: '100%',
-                  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
-                }}
-
               >
                 {location.map((locationData) => (
                   <MenuItem key={locationData._id} value={locationData._id}>
@@ -348,33 +328,15 @@ const ClientHome = () => {
                         alt=""
                         style={{ width: '44px', height: '44px', borderRadius: 50 }}
                       />
-</Box>
+                    </Box>
                   </Box>
                   <Stack spacing={2} sx={{ paddingRight: '15px' }}>
                     <Box
                       sx={{
-
                         display: 'flex',
                         width: '280px',
                         justifyContent: 'space-between',
                         color: 'white'
-
-                        backgroundColor: '#EBDBD5',
-                        textColor: '#58362A',
-                        width: '100%',
-                        borderRadius: '5px',
-                        height: '25px',
-                        color: '#58362A',
-                        fontWeight: '300',
-                        fontSize: '14px',
-                        textTransform: 'none',
-                        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                        '&:hover': {
-                          backgroundColor: '#58362A',
-                          color: 'white',
-                          transition: 'ease-in .3s'
-                        }
-
                       }}
                     >
                       <Box>
