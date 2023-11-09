@@ -10,7 +10,7 @@ import { UpdateDriverLicenseEndPoint } from '../../services/EndPoints';
 
 const OnboardingLicense = () => {
   const { tokens } = useToken();
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
   const [imageSrc, setImageSrc] = useState(null);
   const [file, setFile] = useState(null);
 
@@ -125,7 +125,9 @@ const OnboardingLicense = () => {
 
   const styledImage = {
     marginBottom: '30px',
-    width: '100%'
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover'
   };
 
   return (
@@ -138,7 +140,10 @@ const OnboardingLicense = () => {
           <Typography sx={styledHeaingTypography}>Let’s verify your drivers license</Typography>
 
           <Box sx={styledBox}>
-            <label htmlFor="license-upload" style={{ maxWidth: '320px', objectFit: 'cover' }}>
+            <label
+              htmlFor="license-upload"
+              style={{ maxWidth: '330px', objectFit: 'cover', width: '90vw', maxHeight: "200px", height: '200px', overflowY: 'none' }}
+            >
               {imageSrc ? (
                 <img src={imageSrc} alt="License" style={styledImage} />
               ) : (

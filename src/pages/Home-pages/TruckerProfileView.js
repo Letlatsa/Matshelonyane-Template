@@ -45,7 +45,7 @@ const TruckerProfileView = () => {
       .catch((error) => {
         console.log(error);
       });
-  });
+  }, [accessToken]);
 
   const styledProfileBox = {
     borderRadius: '100px',
@@ -222,7 +222,7 @@ const TruckerProfileView = () => {
           <Box>
             <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
           </Box>
-          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
+          <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '66vw' }}></Box>
         </Box>
         <Card sx={styledCard}>
           <Stack spacing={2} sx={styledStack}>
@@ -252,7 +252,7 @@ const TruckerProfileView = () => {
           <Box>
             <Typography sx={{ fontSize: '20px' }}>Fleet</Typography>
           </Box>
-          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
+          <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '75vw'}}></Box>
         </Box>
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '20px' }}>
         </Box>
