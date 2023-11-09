@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import {
   AppBar,
   Box,
-  Button,
+  //Button,
   Card,
   Container,
   IconButton,
@@ -12,41 +13,45 @@ import {
 } from '@mui/material';
 
 import BackArrow from '../../assets/backVector.svg';
-import EditIcon from '../../assets/EditVector.svg';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
+//import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
 
-import { UserTrucksEndpoint } from '../../services/EndPoints';
+import { UserTrucksEndpoint, ViewTruckerInfo } from '../../services/EndPoints';
+import { useParams } from 'react-router-dom';
 
 const ClientTruckerProfile = () => {
+  const { truckerId } = useParams();
+
   const navigate = useNavigate();
-  const [trucks, setTrucks] = useState([]);
-
-  // const userData = sessionStorage.getItem('user');
-
-  /*   const { _id, firstName, lastName, propic, profileType, deliveryArea, driversLicense, account } =
-    JSON.parse(userData);
-
-  const accountData = {
-    _id: account._id,
-    number: account.number
-  };
-
+  const [truckersData, setTruckersData] = useState([]);
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
 
   useEffect(() => {
-    UserTrucksEndpoint(accessToken)
-      .then((response) => {
-        if (response.status === 200) {
-          setTrucks(response.data);
-        }
+    console.log('Current truckerId:', truckerId);
+    const fetchTruckerData = () => {
+      try {
+        getTruckersInArea(accessToken, truckerId);
+      } catch (error) {
+        console.error('profile data: ', error);
+      }
+    };
+
+    fetchTruckerData();
+  }, [accessToken, truckerId]);
+
+  const getTruckersInArea = (accessToken, truckerId) => {
+    ViewTruckerInfo(accessToken, truckerId)
+      .then((truckersData) => {
+        setTruckersData(truckersData);
+        console.log('profile Data:', truckersData);
+        return truckersData.data;
       })
       .catch((error) => {
-        console.log(error);
+        console.error('Error fetching profiles of truckers', error);
       });
-  }); */
+  };
 
   const styledProfileBox = {
     borderRadius: '100px',
@@ -173,7 +178,9 @@ const ClientTruckerProfile = () => {
               lineHeight: 'normal',
               letterSpacing: '-0.17px'
             }}
-          ></Typography>
+          >
+            {truckersData.firstName} {truckersData.lastName}
+          </Typography>
           <Typography
             sx={{
               color: '#C69585',
@@ -204,7 +211,9 @@ const ClientTruckerProfile = () => {
               }}
             >
               <Typography sx={styledStackTypography}>Phone number:</Typography>
-              <Typography sx={styledStackTypography}> </Typography>
+              <Typography sx={styledStackTypography}>
+                {truckersData.account && truckersData.account.number}
+              </Typography>
             </Box>
             <Box
               sx={{
@@ -213,12 +222,12 @@ const ClientTruckerProfile = () => {
                 justifyContent: 'space-between'
               }}
             >
-              <Typography sx={styledStackTypography}>Location:</Typography>
-              <Typography sx={styledStackTypography}></Typography>
+              <Typography sx={styledStackTypography}>Operation Location:</Typography>
+              <Typography sx={styledStackTypography}>{truckersData.deliveryArea}</Typography>
             </Box>
           </Stack>
         </Card>
-        <Box sx={styledDeviderBox}>
+        {/* <Box sx={styledDeviderBox}>
           <Box>
             <Typography sx={{ fontSize: '20px' }}>Fleet</Typography>
           </Box>
@@ -226,10 +235,10 @@ const ClientTruckerProfile = () => {
         </Box>
         <Box
           sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '20px' }}
-        ></Box>
-        {trucks?.map((truck) => (
+        ></Box> */}
+        {/*  {trucks?.map((truck) => (
           <TruckCard key={truck._id} truck={truck} />
-        ))}
+        ))} */}
       </Container>
     </div>
   );
