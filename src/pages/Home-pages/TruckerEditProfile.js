@@ -110,32 +110,31 @@ function TruckerHomeProfile() {
         if (propicWait === 200) {
           const profileWait = ProfileApiRequest(profileFrom, accessToken);
           if (profileWait === 200) {
-            navigate('/truckerprofileview');
+            refreshSession(accessToken);
           } else {
             console.log('Error updating profile');
-            navigate('/truckerprofileview');
+            refreshSession(accessToken);
           }
         } else {
           console.log('Error updating profile');
-          navigate('/truckerprofileview');
         }
       } else {
         const profileWait = ProfileApiRequest(profileFrom, accessToken);
         if (profileWait === 200) {
-          navigate('/truckerprofileview');
+          refreshSession(accessToken);
         } else {
           console.log('Error updating profile');
-          navigate('/truckerprofileview');
+          refreshSession(accessToken);
         }
       }
     }
   };
+
   const PropicApiRequest = (formData, accessToken) => {
     updateProfilePictureEndpoint(formData, accessToken)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          refreshSession(accessToken);
           return 200;
         } else return 400;
       })
@@ -148,7 +147,6 @@ function TruckerHomeProfile() {
     EditProfileEndPoint(formData, accessToken)
       .then((response) => {
         if (response.status === 200) {
-          refreshSession(accessToken);
           return 200;
         } else return 400;
       })
@@ -193,6 +191,8 @@ function TruckerHomeProfile() {
       };
 
       sessionStorage.setItem('user', JSON.stringify(user));
+
+      navigate('/truckerprofileview');
     });
   };
 
