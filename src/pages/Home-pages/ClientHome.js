@@ -237,7 +237,7 @@ const ClientHome = () => {
               marginBottom: '50px'
             }}
           >
-            <Container
+            {/* <Container
               sx={{
                 width: '100%',
                 height: '100%',
@@ -265,7 +265,7 @@ const ClientHome = () => {
                   sx={{ marginRight: '30px' }}
                 />
               </IconButton>
-            </Container>
+            </Container> */}
           </FormControl>
         </Container>
         <Container>
@@ -385,7 +385,7 @@ const ClientHome = () => {
                           }
                         }}
                         onClick={() =>
-                          navigate(`/clienttruckerprofile/${truckersData.profile._id}`)
+                          navigate(`/clienttruckerprofile/${truckersData.profile.account}`)
                         }
                       >
                         View Profile

@@ -150,6 +150,18 @@ const EditProfileEndPoint = async (formData, Token) => {
   }
 };
 
+const ViewTruckerInfo = async (Token, account) => {
+  try {
+    const response = await IAMApiClient.get(`/trucker?accID=${account}`, {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    console.log('Response hhhhhhhhh', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving profiles:', error);
+  }
+};
+
 export {
   LoginEndPoint,
   RegisterEndPoint,
@@ -165,5 +177,6 @@ export {
   UserTrucksEndpoint,
   LocationRetrieveEndpoint,
   TrucksInDeliveryArea,
-  EditProfileEndPoint
+  EditProfileEndPoint,
+  ViewTruckerInfo
 };
