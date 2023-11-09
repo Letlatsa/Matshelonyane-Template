@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import {
   Box,
   FormControl,
@@ -8,7 +8,10 @@ import {
   Avatar,
   AppBar,
   Toolbar,
-  IconButton
+  IconButton,
+  Select,
+  MenuItem,
+  InputLabel
 } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 
@@ -16,13 +19,19 @@ import { useNavigate } from 'react-router-dom';
 import {
   updateProfilePictureEndpoint,
   RetrieveSurnameEndpoint,
-  EditProfileEndPoint
+  EditProfileEndPoint,
+  LocationRetrieveEndpoint
 } from '../../services/EndPoints';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
+import LocationIcon from '../../assets/location.svg';
 
 function TruckerHomeProfile() {
+  const [location, setLocation] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
+
   const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
 
   const userData = sessionStorage.getItem('user');
 
@@ -35,13 +44,27 @@ function TruckerHomeProfile() {
 
   const initialErrorState = {
     firstNameError: '',
-    lastNameError: ''
+    lastNameError: '',
+    locationError: ''
   };
+
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState(initialErrorState);
   const [avatarImage, setAvatarImage] = useState(null);
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        getLocations(accessToken);
+      } catch (error) {
+        console.error('Error fetching locations: ', error);
+      }
+    };
+
+    fetchLocationData();
+  }, [accessToken]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -58,31 +81,52 @@ function TruckerHomeProfile() {
       errors.lastNameError = 'Lastname is required';
     }
 
+    if (!selectedLocation) {
+      console.log(selectedLocation);
+      errors.locationError = 'Location is required';
+    }
+
     setFormErrors(errors);
     console.log(formErrors);
 
     if (Object.keys(errors).length === 0) {
       const formData = new FormData();
-      const profileFrom = new FormData();
 
-      const updatedInfo = {
-        firstName: firstName,
-        lastName: lastName
+      const profileFrom = {
+        profileId: _id,
+        updatedInfo: {
+          firstName: firstName,
+          lastName: lastName,
+          deliveryArea: selectedLocation ? selectedLocation : deliveryArea
+        }
       };
 
       if (avatarImage) {
         formData.append('profileId', JSON.parse(userData)._id);
         formData.append('file', file);
 
-        profileFrom = {
-          profileId: _id,
-          updatedInfo: updatedInfo
-        };
+        const propicWait = PropicApiRequest(formData, accessToken);
 
-        const accessToken = JSON.parse(TokenSession).accessToken;
-
-        PropicApiRequest(formData, accessToken);
-        ProfileApiRequest(profileFrom, accessToken);
+        if (propicWait === 200) {
+          const profileWait = ProfileApiRequest(profileFrom, accessToken);
+          if (profileWait === 200) {
+            navigate('/truckerprofileview');
+          } else {
+            console.log('Error updating profile');
+            navigate('/truckerprofileview');
+          }
+        } else {
+          console.log('Error updating profile');
+          navigate('/truckerprofileview');
+        }
+      } else {
+        const profileWait = ProfileApiRequest(profileFrom, accessToken);
+        if (profileWait === 200) {
+          navigate('/truckerprofileview');
+        } else {
+          console.log('Error updating profile');
+          navigate('/truckerprofileview');
+        }
       }
     }
   };
@@ -92,8 +136,8 @@ function TruckerHomeProfile() {
         console.log(response);
         if (response.status === 200) {
           refreshSession(accessToken);
-          navigate('/truckerprofileview');
-        }
+          return 200;
+        } else return 400;
       })
       .catch((error) => {
         console.log(error);
@@ -105,12 +149,22 @@ function TruckerHomeProfile() {
       .then((response) => {
         if (response.status === 200) {
           refreshSession(accessToken);
-          navigate('/truckerprofileview');
-        }
+          return 200;
+        } else return 400;
       })
       .catch((error) => {
         console.log(error);
         throw error;
+      });
+  };
+
+  const getLocations = (accessToken) => {
+    LocationRetrieveEndpoint(accessToken)
+      .then((locationData) => {
+        setLocation(locationData.data);
+      })
+      .catch((error) => {
+        console.log(error, 'Error Fetching Data');
       });
   };
 
@@ -158,6 +212,12 @@ function TruckerHomeProfile() {
     }
   };
 
+  const handleLocationChange = (event) => {
+    const selectedLocation = event.target.value;
+    setSelectedLocation(selectedLocation);
+    console.log('Selected Locatiion:', selectedLocation);
+  };
+
   const handleButtonBackArrowClicked = () => {
     navigate('/truckerprofileview');
   };
@@ -183,8 +243,7 @@ function TruckerHomeProfile() {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: '30px'
+    alignItems: 'center'
   };
 
   const styledSubmitButton = {
@@ -215,6 +274,24 @@ function TruckerHomeProfile() {
     boxShadow: 'none'
   };
 
+  const styledSelect = {
+    width: '100%',
+    color: 'white',
+    borderBottom: ' 2px solid white',
+    marginBottom: '50px'
+  };
+
+  const accountLabelContainer = {
+    display: 'flex',
+    alignItems: 'center'
+  };
+
+  const styledInputLabel = {
+    color: 'white',
+    '&:hover': {
+      color: 'white'
+    }
+  };
   return (
     <div
       style={{
@@ -310,9 +387,6 @@ function TruckerHomeProfile() {
                 onChange={handleInputChange}
                 error={!!formErrors.firstNameError}
                 helperText={formErrors.firstNameError}
-                InputProps={{
-                  readOnly: true
-                }}
               />
               <TextField
                 variant="standard"
@@ -336,23 +410,50 @@ function TruckerHomeProfile() {
                 onChange={handleInputChange}
                 error={!!formErrors.lastNameError}
                 helperText={formErrors.lastNameError}
-                InputProps={{
-                  readOnly: true
-                }}
               />
             </Box>
-            <Box>
-              <Button
-                variant="text"
-                color="primary"
-                type="submit"
-                sx={styledSubmitButton}
-                onClick={validateForm}
-              >
-                Save
-              </Button>
-            </Box>
           </FormControl>
+          <FormControl sx={styledFormControl}>
+            <InputLabel id="location-label" variant="standard" sx={styledInputLabel}>
+              <Box sx={accountLabelContainer}>
+                <img
+                  src={LocationIcon}
+                  alt="Location"
+                  width="30"
+                  height="20"
+                  sx={{ marginRight: '30px' }}
+                />
+                Delivery Area
+              </Box>
+            </InputLabel>
+            <Select
+              labelId="location-label"
+              id="deliveryArea"
+              name="deliveryArea"
+              value={selectedLocation}
+              onChange={handleLocationChange}
+              variant="standard"
+              sx={styledSelect}
+              error={!!formErrors.locationError}
+            >
+              {location.map((locationData) => (
+                <MenuItem key={locationData._id} value={locationData.name}>
+                  {locationData.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Box>
+            <Button
+              variant="text"
+              color="primary"
+              type="submit"
+              sx={styledSubmitButton}
+              onClick={validateForm}
+            >
+              Save
+            </Button>
+          </Box>
         </Box>
       </Box>
     </div>
