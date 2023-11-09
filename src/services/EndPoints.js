@@ -126,7 +126,6 @@ const LocationRetrieveEndpoint = async (Token) => {
   }
 };
 
-
 const TrucksInDeliveryArea = async (Token, deliveryAreaId) => {
   try {
     const response = await FleetApiClient.get(`/deliveryarea?deliveryArea=${deliveryAreaId}`, {
@@ -136,7 +135,8 @@ const TrucksInDeliveryArea = async (Token, deliveryAreaId) => {
     return response.data;
   } catch (error) {
     console.error('Error retrieving trucks in delivery area:', error);
-
+  }
+};
 const EditProfileEndPoint = async (formData, Token) => {
   try {
     const response = await IAMApiClient.put('/profile', formData, {
@@ -166,5 +166,4 @@ export {
   LocationRetrieveEndpoint,
   TrucksInDeliveryArea,
   EditProfileEndPoint
-
 };
