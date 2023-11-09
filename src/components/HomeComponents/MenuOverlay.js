@@ -21,6 +21,52 @@ import { useState, useEffect } from 'react';
 import { LocationRetrieveEndpoint } from '../../services/EndPoints';
 
 const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
+  const userData = sessionStorage.getItem('user');
+  const { profileType } = JSON.parse(userData);
+
+  const navigate = useNavigate();
+
+  const [location, setLocation] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        getLocations(accessToken);
+      } catch (error) {
+        console.error('Error fetching locations: ', error);
+      }
+    };
+
+    fetchLocationData();
+  }, [accessToken]);
+
+  const getLocations = (accessToken) => {
+    LocationRetrieveEndpoint(accessToken)
+      .then((locationData) => {
+        setLocation(locationData.data);
+      })
+      .catch((error) => {
+        console.log(error, 'Error Fetching Data');
+      });
+  };
+
+  const handleLocationChange = (event) => {
+    const selectedLocation = event.target.value;
+    setSelectedLocation(selectedLocation);
+    console.log('Selected Locatiion:', selectedLocation);
+  };
+
+  const handleLogout = () => {
+    navigate('/');
+  };
+
+  const handleButtonBackArrowClicked = () => {
+    setIsOverlay(false);
+  };
+
   const styledAppBar = {
     background: 'transparent',
     boxShadow: 'none'
@@ -70,50 +116,6 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
     fontSize: '16px',
     fontWeight: 600
   };
-  const navigate = useNavigate();
-
-  const [location, setLocation] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState([]);
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
-
-  useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        getLocations(accessToken);
-      } catch (error) {
-        console.error('Error fetching locations: ', error);
-      }
-    };
-
-    fetchLocationData();
-  }, [accessToken]);
-
-  const getLocations = (accessToken) => {
-    LocationRetrieveEndpoint(accessToken)
-      .then((locationData) => {
-        setLocation(locationData.data);
-      })
-      .catch((error) => {
-        console.log(error, 'Error Fetching Data');
-      });
-  };
-
-  const handleLocationChange = (event) => {
-    const selectedLocation = event.target.value;
-    setSelectedLocation(selectedLocation);
-    console.log('Selected Locatiion:', selectedLocation);
-  };
-
-  const handleLogout = () => {
-    navigate('/');
-  };
-
-  const handleButtonBackArrowClicked = () => {
-    setIsOverlay(false);
-  };
-  const userData = sessionStorage.getItem('user');
-  const { profileType } = JSON.parse(userData);
 
   const renderLocationDropdown =
     profileType === 'driver' ? (
