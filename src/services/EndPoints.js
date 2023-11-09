@@ -126,6 +126,19 @@ const LocationRetrieveEndpoint = async (Token) => {
   }
 };
 
+const TrucksInDeliveryArea = async (Token, deliveryAreaId) => {
+  try {
+    const response = await FleetApiClient.get(`/deliveryarea?deliveryArea=${deliveryAreaId}`, {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    console.log('Response', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving trucks in delivery area:', error);
+    throw error;
+  }
+};
+
 export {
   LoginEndPoint,
   RegisterEndPoint,
@@ -139,5 +152,6 @@ export {
   RetrieveTruckerSurnameEndpoint,
   updateProfilePictureEndpoint,
   UserTrucksEndpoint,
-  LocationRetrieveEndpoint
+  LocationRetrieveEndpoint,
+  TrucksInDeliveryArea
 };
