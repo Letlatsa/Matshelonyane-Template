@@ -28,10 +28,10 @@ const TruckerHome = () => {
             </Box>
             <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '55vw' }}></Box>
           </Box>
-          <SearchFilter />
-          <Stack spacing={2}>
+
+          {/* <Stack spacing={2}>
             <TruckerCard />
-          </Stack>
+          </Stack> */}
         </Container>
       </Box>
     </div>

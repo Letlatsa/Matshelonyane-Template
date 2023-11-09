@@ -122,6 +122,7 @@ const ClientHome = () => {
 
       sessionStorage.setItem('user', JSON.stringify(user));
       console.log('this is the lastname', lastName);
+      console.log(userData);
     });
   }, [accessToken]);
 
