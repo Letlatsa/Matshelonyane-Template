@@ -7,9 +7,13 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
+import {
+  RetrieveSurnameEndpoint,
+  TrucksInDeliveryArea,
+  LocationRetrieveEndpoint
+} from '../../services/EndPoints';
 
-import { RetrieveSurnameEndpoint, LocationRetrieveEndpoint } from '../../services/EndPoints';
-import { useToken } from '../../Hooks/TokenContext';
+
 import {
   Container,
   FormControl,
@@ -26,12 +30,34 @@ import SearchIcon from '../../assets/searchIcon.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ClientHome = () => {
+  // Styles
+
+  const styledAppBar = {
+    backgroundColor: 'transparent',
+    boxShadow: 'none'
+  };
+
+  const styledProfileBox = {
+    borderRadius: '30px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#EBDBD5',
+    padding: 0,
+    borderradius: '50px',
+    marginLeft: 1,
+    height: '50px',
+    width: '50px',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+  };
   const navigate = useNavigate();
   const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
 
   const storedLastName = 'Doe';
   const [lastName, setLastName] = useState(storedLastName || '');
+  const [truckersData, setTruckersData] = useState([]);
+  const [deliveryAreaId, setDeliveryAreaId] = useState('65434e0376d09d13951a4314');
   const [location, setLocation] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState([]);
   const TokenSession = sessionStorage.getItem('Tokens');
@@ -62,6 +88,7 @@ const ClientHome = () => {
   const handleLocationChange = (event) => {
     const selectedLocation = event.target.value;
     setSelectedLocation(selectedLocation);
+    setDeliveryAreaId(selectedLocation);
     console.log('Selected Locatiion:', selectedLocation);
   };
 
@@ -102,12 +129,30 @@ const ClientHome = () => {
     setValue(newValue);
   };
 
-  // Styles
+  useEffect(() => {
+    console.log('Current Delivery Area ID:', deliveryAreaId);
+    const fetchTruckerData = async () => {
+      try {
+        getTrucksersInArea(accessToken, deliveryAreaId);
+      } catch (error) {
+        console.error('Error fetching truckers data: ', error);
+      }
+    };
 
-  const styledAppBar = {
-    backgroundColor: 'transparent',
-    boxShadow: 'none'
-  };
+    fetchTruckerData();
+  }, [accessToken, deliveryAreaId]);
+
+
+  const getTrucksersInArea = (accessToken, deliveryAreaId) => {
+    TrucksInDeliveryArea(accessToken, deliveryAreaId)
+      .then((truckersData) => {
+        setTruckersData(truckersData);
+        console.log('Truckers Data:', truckersData);
+        return truckersData.data;
+      })
+      .catch((error) => {
+        console.error('Error fetching truckers', error);
+      });
 
   const styledProfileBox = {
     borderRadius: '30px',
@@ -120,14 +165,13 @@ const ClientHome = () => {
     height: '50px',
     width: '50px',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+
   };
 
   const handleButtonClicked = () => {
     navigate('/clientprofile');
   };
-  const handleButtonTruckerProfileClicked = () => {
-    navigate('/clienttruckerprofile');
-  };
+
   const handleButtonOverlayClicked = () => {
     if (isOverlay === false) {
       setIsOverlay(true);
@@ -268,14 +312,15 @@ const ClientHome = () => {
                 value={selectedLocation}
                 onChange={handleLocationChange}
                 variant="standard"
-                sx={{
+                 sx={{
                   fontSize: '14px',
                   width: '100%',
                   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
                 }}
+
               >
                 {location.map((locationData) => (
-                  <MenuItem key={locationData._id} value={locationData.name}>
+                  <MenuItem key={locationData._id} value={locationData._id}>
                     {locationData.name}
                   </MenuItem>
                 ))}
@@ -283,62 +328,37 @@ const ClientHome = () => {
             </FormControl>
           </Box>
           <Stack spacing={2}>
-            <Card
-              sx={{
-                width: '100%',
-                backgroundColor: '#C69585',
-                paddingTop: '15px',
-                paddingBottom: '15px',
-                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                borderRadius: '10px'
-              }}
-            >s
-              <Box sx={{ display: 'flex', width: '100%'}}>
-                <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px', justifyContent: 'flex-start' }}>
-                  <Box sx={styledProfileBox} onClick={handleButtonTruckerProfileClicked}>
-                    <img
-                      src="https://picsum.photos/200/300"
-                      alt=""
-                      style={{ width: '44px', height: '44px', borderRadius: 50 }}
-                    />
+            {truckersData?.map((truckersData) => (
+              <Card
+                key={truckersData._id}
+                sx={{
+                  width: '100%',
+                  backgroundColor: '#C69585',
+                  paddingTop: '15px',
+                  paddingBottom: '15px',
+                  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                  borderRadius: '10px'
+                }}
+              >
+                <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                  <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
+                    <Box sx={styledProfileBox}>
+                      <img
+                        src={truckersData.profile.propic}
+                        alt=""
+                        style={{ width: '44px', height: '44px', borderRadius: 50 }}
+                      />
+</Box>
                   </Box>
-                </Box>
-                <Stack spacing={2}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      width: '65vw',
-                      justifyContent: 'space-between',
-                      color: 'white'
-                    }}
-                  >
-                    <Box>
-                      <Typography sx={{ fontSize: '15px' }}>John Doe</Typography>
-                    </Box>
-                    <Box sx={{ textAlign: 'right' }}>
-                      <Typography
-                        sx={{
-                          fontSize: '16px',
-                          filter: 'blur(3px)',
-                          display: 'flex',
-                          alignItems: 'center'
-                        }}
-                      >
-                        <img
-                          src={PhoneIcon}
-                          alt="Phone"
-                          width="30"
-                          height="20"
-                          sx={{ marginRight: '30px' }}
-                        />
-                        78322342
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                    <Button
-                      variant="text"
+                  <Stack spacing={2} sx={{ paddingRight: '15px' }}>
+                    <Box
                       sx={{
+
+                        display: 'flex',
+                        width: '280px',
+                        justifyContent: 'space-between',
+                        color: 'white'
+
                         backgroundColor: '#EBDBD5',
                         textColor: '#58362A',
                         width: '100%',
@@ -354,14 +374,65 @@ const ClientHome = () => {
                           color: 'white',
                           transition: 'ease-in .3s'
                         }
+
                       }}
                     >
-                      View Profile
-                    </Button>
-                  </Box>
-                </Stack>
-              </Box>
-            </Card>
+                      <Box>
+                        <Typography sx={{ fontSize: '15px' }}>
+                          {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ textAlign: 'right' }}>
+                        <Typography
+                          sx={{
+                            fontSize: '16px',
+                            filter: 'blur(3px)',
+                            display: 'flex',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <img
+                            src={PhoneIcon}
+                            alt="Phone"
+                            width="30"
+                            height="20"
+                            sx={{ marginRight: '30px' }}
+                          />
+                          78322342
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                      <Button
+                        variant="text"
+                        sx={{
+                          backgroundColor: '#EBDBD5',
+                          textColor: '#58362A',
+                          width: '280px',
+                          borderRadius: '5px',
+                          height: '25px',
+                          color: '#58362A',
+                          fontWeight: '300',
+                          fontSize: '14px',
+                          textTransform: 'none',
+                          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                          '&:hover': {
+                            backgroundColor: '#58362A',
+                            color: 'white',
+                            transition: 'ease-in .3s'
+                          }
+                        }}
+                        onClick={() =>
+                          navigate(`/clienttruckerprofile/${truckersData.profile._id}`)
+                        }
+                      >
+                        View Profile
+                      </Button>
+                    </Box>
+                  </Stack>
+                </Box>
+              </Card>
+            ))}
           </Stack>
         </Container>
       </Box>

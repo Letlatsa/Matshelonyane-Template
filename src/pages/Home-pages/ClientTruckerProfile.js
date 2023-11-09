@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import {
   AppBar,
   Box,
@@ -11,10 +12,42 @@ import {
 } from '@mui/material';
 
 import BackArrow from '../../assets/backVector.svg';
+import EditIcon from '../../assets/EditVector.svg';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
 
-const ClientTruckerProfie = () => {
+import { UserTrucksEndpoint } from '../../services/EndPoints';
+
+const ClientTruckerProfile = () => {
   const navigate = useNavigate();
+  const [trucks, setTrucks] = useState([]);
+
+  // const userData = sessionStorage.getItem('user');
+
+  /*   const { _id, firstName, lastName, propic, profileType, deliveryArea, driversLicense, account } =
+    JSON.parse(userData);
+
+  const accountData = {
+    _id: account._id,
+    number: account.number
+  };
+
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
+
+  useEffect(() => {
+    UserTrucksEndpoint(accessToken)
+      .then((response) => {
+        if (response.status === 200) {
+          setTrucks(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }); */
+
   const styledProfileBox = {
     borderRadius: '100px',
     display: 'flex',
@@ -32,26 +65,6 @@ const ClientTruckerProfie = () => {
     backgroundColor: '#ffffff',
     color: '#000000',
     boxShadow: 'none'
-  };
-
-  const styleBriefInfo = {
-    width: '100px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
-  };
-
-  const styledBriefBigText = {
-    color: '#F8F8F8',
-    fontSize: '24px'
-  };
-
-  const styledBriefSmallText = {
-    color: '#F8F8F8',
-    fontSize: '16px',
-    fontWeight: 300,
-    letterSpacing: '-0.17px'
   };
 
   const styledCard = {
@@ -87,8 +100,8 @@ const ClientTruckerProfie = () => {
   };
   const handleButtonClicked = () => {
     navigate('/clienthome');
-    console.log('Button clicked');
   };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -160,9 +173,7 @@ const ClientTruckerProfie = () => {
               lineHeight: 'normal',
               letterSpacing: '-0.17px'
             }}
-          >
-            John Doe
-          </Typography>
+          ></Typography>
           <Typography
             sx={{
               color: '#C69585',
@@ -174,48 +185,9 @@ const ClientTruckerProfie = () => {
               letterSpacing: '-0.17px',
               marginBottom: '15px'
             }}
-          >
-            Gaborone
-          </Typography>
-          <Button
-            variant="text"
-            sx={{
-              backgroundColor: '#EBDBD5',
-              textColor: '#58362A',
-              width: '196px',
-              borderRadius: '15px',
-              height: '50px',
-              color: '#58362A',
-              fontWeight: '300',
-              fontSize: '14px',
-              textTransform: 'none',
-              boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-              '&:hover': {
-                backgroundColor: '#58362A',
-                color: 'white',
-                transition: 'ease-in .3s'
-              }
-            }}
-          >
-            Message
-          </Button>
+          ></Typography>
         </Box>
-        <Card sx={styledCard}>
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>12</Typography>
-            <Typography sx={styledBriefSmallText}>Jobs Taken</Typography>
-          </Box>
-          <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>4.0</Typography>
-            <Typography sx={styledBriefSmallText}>Rating</Typography>
-          </Box>
-          <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>2</Typography>
-            <Typography sx={styledBriefSmallText}>Fleet</Typography>
-          </Box>
-        </Card>
+
         <Box sx={styledDeviderBox}>
           <Box>
             <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
@@ -232,7 +204,7 @@ const ClientTruckerProfie = () => {
               }}
             >
               <Typography sx={styledStackTypography}>Phone number:</Typography>
-              <Typography sx={styledStackTypography}> 71234356</Typography>
+              <Typography sx={styledStackTypography}> </Typography>
             </Box>
             <Box
               sx={{
@@ -241,8 +213,8 @@ const ClientTruckerProfie = () => {
                 justifyContent: 'space-between'
               }}
             >
-              <Typography sx={styledStackTypography}>Operation location:</Typography>
-              <Typography sx={styledStackTypography}>Gaborone, Mogoditshane</Typography>
+              <Typography sx={styledStackTypography}>Location:</Typography>
+              <Typography sx={styledStackTypography}></Typography>
             </Box>
           </Stack>
         </Card>
@@ -252,43 +224,15 @@ const ClientTruckerProfie = () => {
           </Box>
           <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
         </Box>
-        <Card sx={styledCard}>
-          <Stack spacing={2} sx={styledStack}>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Plate number:</Typography>
-              <Typography sx={styledStackTypography}> B 123 ABC</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Truck type:</Typography>
-              <Typography sx={styledStackTypography}> Refrigerated cargo</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Weight capacity:</Typography>
-              <Typography sx={styledStackTypography}> 3.5 ton</Typography>
-            </Box>
-          </Stack>
-        </Card>
+        <Box
+          sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '20px' }}
+        ></Box>
+        {trucks?.map((truck) => (
+          <TruckCard key={truck._id} truck={truck} />
+        ))}
       </Container>
     </div>
   );
 };
 
-export default ClientTruckerProfie;
+export default ClientTruckerProfile;
