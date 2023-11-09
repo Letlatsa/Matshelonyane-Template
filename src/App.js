@@ -23,7 +23,8 @@ import TruckerProposalPage from './pages/Home-pages/TruckerProposalPage';
 import MenuOverlay from './components/HomeComponents/MenuOverlay';
 import ClientOverlay from './pages/Home-pages/ClientOverlay';
 import ClientHomeProfile from './pages/Home-pages/ClientEditProfile';
-import TruckerHomeProfile from './pages/Home-pages/TruckerEditProfile'
+import TruckerHomeProfile from './pages/Home-pages/TruckerEditProfile';
+import TruckerProfile from './pages/Home-pages/TruckerProfileView';
 
 function App() {
   return (
@@ -45,15 +46,14 @@ function App() {
         {/*New routes*/}
         <Route path="/clienthome" element={<ClientHome />}></Route>
         <Route path="/clientprofile" element={<ClientProfile />}></Route>
-        <Route path="/clienttruckerprofile" element={<ClientTruckerProfile />}></Route>
+        <Route path="/clienttruckerprofile/:truckerId" element={<ClientTruckerProfile />} />
         <Route path="/truckerhome" element={<Truckerhome />}></Route>
         <Route path="/truckerprofileview" element={<TruckerProfileView />}></Route>
         <Route path="/overlay" element={<MenuOverlay />}></Route>
         <Route path="/clientoverlay" element={<ClientOverlay />}></Route>
         <Route path="/truckerproposalpage" element={<TruckerProposalPage />}></Route>
-        <Route path='/clienteditprofile' element={<ClientHomeProfile/>}></Route>
-        <Route path='/truckereditprofile' element={<TruckerHomeProfile/>}></Route>
-
+        <Route path="/clienteditprofile" element={<ClientHomeProfile />}></Route>
+        <Route path="/truckereditprofile" element={<TruckerHomeProfile />}></Route>
       </Routes>
     </div>
   );

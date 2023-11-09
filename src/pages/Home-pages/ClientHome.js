@@ -8,7 +8,11 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
 
-import { RetrieveSurnameEndpoint, TrucksInDeliveryArea } from '../../services/EndPoints';
+import {
+  RetrieveSurnameEndpoint,
+  TrucksInDeliveryArea,
+  LocationRetrieveEndpoint
+} from '../../services/EndPoints';
 
 import {
   Container,
@@ -54,12 +58,40 @@ const ClientHome = () => {
   const [lastName, setLastName] = useState(storedLastName || '');
 
   const [truckersData, setTruckersData] = useState([]);
-  console.log(truckersData, 'hii');
   const [deliveryAreaId, setDeliveryAreaId] = useState('65434e0376d09d13951a4314');
-  const [selectedDeliveryAreaId, setSelectedDeliveryAreaId] = useState('');
-
+  const [location, setLocation] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        getLocations(accessToken);
+      } catch (error) {
+        console.error('Error fetching locations: ', error);
+      }
+    };
+
+    fetchLocationData();
+  }, [accessToken]);
+
+  const getLocations = (accessToken) => {
+    LocationRetrieveEndpoint(accessToken)
+      .then((locationData) => {
+        setLocation(locationData.data);
+      })
+      .catch((error) => {
+        console.log(error, 'Error Fetching Data');
+      });
+  };
+
+  const handleLocationChange = (event) => {
+    const selectedLocation = event.target.value;
+    setSelectedLocation(selectedLocation);
+    setDeliveryAreaId(selectedLocation);
+    console.log('Selected Locatiion:', selectedLocation);
+  };
 
   useEffect(() => {
     RetrieveSurnameEndpoint(accessToken).then((userData) => {
@@ -123,17 +155,10 @@ const ClientHome = () => {
       });
   };
 
-  const handleDeliveryAreaChange = (event) => {
-    const selectedDeliveryArea = event.target.value;
-    setSelectedDeliveryAreaId(selectedDeliveryArea);
-    console.log('Selected Truck Type:', selectedDeliveryArea);
-  };
   const handleButtonClicked = () => {
     navigate('/clientprofile');
   };
-  const handleButtonTruckerProfileClicked = () => {
-    navigate('/clienttruckerprofile');
-  };
+
   const handleButtonOverlayClicked = () => {
     if (isOverlay === false) {
       setIsOverlay(true);
@@ -268,22 +293,18 @@ const ClientHome = () => {
                 Location
               </InputLabel>
               <Select
-                small
-                labelId="rating-simple-select-label"
+                labelId="location-label"
                 id="deliveryArea"
-                sx={{
-                  fontSize: '14px',
-                  width: '100%',
-                  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
-                }}
-                onChange={handleDeliveryAreaChange}
+                name="deliveryArea"
+                value={selectedLocation}
+                onChange={handleLocationChange}
+                variant="standard"
               >
-                <MenuItem sx={{ fontSize: '14px' }} value={'65434e0376d09d13951a4314'}>
-                  Gaborone
-                </MenuItem>
-                <MenuItem sx={{ fontSize: '14px' }} value={'65434e1976d09d13951a4316'}>
-                  Tlokweng
-                </MenuItem>
+                {location.map((locationData) => (
+                  <MenuItem key={locationData._id} value={locationData._id}>
+                    {locationData.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Box>
@@ -302,7 +323,7 @@ const ClientHome = () => {
               >
                 <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                   <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
-                    <Box sx={styledProfileBox} onClick={handleButtonTruckerProfileClicked}>
+                    <Box sx={styledProfileBox}>
                       <img
                         src={truckersData.profile.propic}
                         alt=""
@@ -364,6 +385,9 @@ const ClientHome = () => {
                             transition: 'ease-in .3s'
                           }
                         }}
+                        onClick={() =>
+                          navigate(`/clienttruckerprofile/${truckersData.profile._id}`)
+                        }
                       >
                         View Profile
                       </Button>
