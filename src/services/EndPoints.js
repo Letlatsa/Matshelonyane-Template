@@ -151,5 +151,6 @@ export {
   RetrieveTruckerSurnameEndpoint,
   updateProfilePictureEndpoint,
   UserTrucksEndpoint,
-  LocationRetrieveEndpoint
+  LocationRetrieveEndpoint,
+  EditProfileEndPoint
 };

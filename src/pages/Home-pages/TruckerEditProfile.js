@@ -13,7 +13,11 @@ import {
 import AccountIcon from '../../assets/account.svg';
 
 import { useNavigate } from 'react-router-dom';
-import { updateProfilePictureEndpoint, RetrieveSurnameEndpoint } from '../../services/EndPoints';
+import {
+  updateProfilePictureEndpoint,
+  RetrieveSurnameEndpoint,
+  EditProfileEndPoint
+} from '../../services/EndPoints';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
 
@@ -22,9 +26,11 @@ function TruckerHomeProfile() {
 
   const userData = sessionStorage.getItem('user');
 
+  const { _id, firstName, lastName, propic, deliveryArea } = JSON.parse(userData);
+
   const initialFormState = {
-    firstName: JSON.parse(userData).firstName,
-    lastName: JSON.parse(userData).lastName
+    firstName: firstName,
+    lastName: lastName
   };
 
   const initialErrorState = {
@@ -57,18 +63,30 @@ function TruckerHomeProfile() {
 
     if (Object.keys(errors).length === 0) {
       const formData = new FormData();
+      const profileFrom = new FormData();
+
+      const updatedInfo = {
+        firstName: firstName,
+        lastName: lastName
+      };
 
       if (avatarImage) {
         formData.append('profileId', JSON.parse(userData)._id);
         formData.append('file', file);
 
+        profileFrom = {
+          profileId: _id,
+          updatedInfo: updatedInfo
+        };
+
         const accessToken = JSON.parse(TokenSession).accessToken;
 
-        ApiRequest(formData, accessToken);
+        PropicApiRequest(formData, accessToken);
+        ProfileApiRequest(profileFrom, accessToken);
       }
     }
   };
-  const ApiRequest = (formData, accessToken) => {
+  const PropicApiRequest = (formData, accessToken) => {
     updateProfilePictureEndpoint(formData, accessToken)
       .then((response) => {
         console.log(response);
@@ -79,6 +97,20 @@ function TruckerHomeProfile() {
       })
       .catch((error) => {
         console.log(error);
+      });
+  };
+
+  const ProfileApiRequest = (formData, accessToken) => {
+    EditProfileEndPoint(formData, accessToken)
+      .then((response) => {
+        if (response.status === 200) {
+          refreshSession(accessToken);
+          navigate('/truckerprofileview');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
       });
   };
 
