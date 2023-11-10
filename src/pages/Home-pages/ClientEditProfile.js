@@ -27,15 +27,11 @@ import BackArrow from '../../assets/backVectorWhite.svg';
 import LocationIcon from '../../assets/location.svg';
 
 function ClientHomeProfile() {
-  const [location, setLocation] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState([]);
+  const userData = sessionStorage.getItem('user');
+  const { _id, firstName, lastName, propic } = JSON.parse(userData);
 
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
-
-  const userData = sessionStorage.getItem('user');
-
-  const { _id, firstName, lastName, propic, deliveryArea } = JSON.parse(userData);
 
   const initialFormState = {
     firstName: firstName,
@@ -81,23 +77,19 @@ function ClientHomeProfile() {
       errors.lastNameError = 'Lastname is required';
     }
 
-    if (!selectedLocation) {
-      console.log(selectedLocation);
-      errors.locationError = 'Location is required';
-    }
-
     setFormErrors(errors);
     console.log(formErrors);
 
     if (Object.keys(errors).length === 0) {
       const formData = new FormData();
+      formData.append('profileId', JSON.parse(userData)._id);
+      formData.append('file', file);
 
       const profileFrom = {
         profileId: _id,
         updatedInfo: {
           firstName: firstName,
-          lastName: lastName,
-          deliveryArea: selectedLocation ? selectedLocation : deliveryArea
+          lastName: lastName
         }
       };
 
@@ -105,9 +97,6 @@ function ClientHomeProfile() {
       const profileWait = ProfileApiRequest(profileFrom, accessToken);
 
       if (avatarImage) {
-        formData.append('profileId', JSON.parse(userData)._id);
-        formData.append('file', file);
-
         if (propicWait === 200 && profileWait === 200) {
           refreshSession(accessToken);
         } else {
@@ -143,16 +132,6 @@ function ClientHomeProfile() {
       .catch((error) => {
         console.log(error);
         throw error;
-      });
-  };
-
-  const getLocations = (accessToken) => {
-    LocationRetrieveEndpoint(accessToken)
-      .then((locationData) => {
-        setLocation(locationData.data);
-      })
-      .catch((error) => {
-        console.log(error, 'Error Fetching Data');
       });
   };
 
@@ -202,11 +181,6 @@ function ClientHomeProfile() {
     }
   };
 
-  const handleLocationChange = (event) => {
-    const selectedLocation = event.target.value;
-    setSelectedLocation(selectedLocation);
-    console.log('Selected Locatiion:', selectedLocation);
-  };
 
   const handleButtonBackArrowClicked = () => {
     navigate('/truckerprofileview');
@@ -402,36 +376,6 @@ function ClientHomeProfile() {
                 helperText={formErrors.lastNameError}
               />
             </Box>
-          </FormControl>
-          <FormControl sx={styledFormControl}>
-            <InputLabel id="location-label" variant="standard" sx={styledInputLabel}>
-              <Box sx={accountLabelContainer}>
-                <img
-                  src={LocationIcon}
-                  alt="Location"
-                  width="30"
-                  height="20"
-                  sx={{ marginRight: '30px' }}
-                />
-                Delivery Area
-              </Box>
-            </InputLabel>
-            <Select
-              labelId="location-label"
-              id="deliveryArea"
-              name="deliveryArea"
-              value={selectedLocation}
-              onChange={handleLocationChange}
-              variant="standard"
-              sx={styledSelect}
-              error={!!formErrors.locationError}
-            >
-              {location.map((locationData) => (
-                <MenuItem key={locationData._id} value={locationData._id}>
-                  {locationData.name}
-                </MenuItem>
-              ))}
-            </Select>
           </FormControl>
           <Box>
             <Button
