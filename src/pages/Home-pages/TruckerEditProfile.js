@@ -427,7 +427,7 @@ function TruckerHomeProfile() {
               error={!!formErrors.locationError}
             >
               {location.map((locationData) => (
-                <MenuItem key={locationData._id} value={locationData.name}>
+                <MenuItem key={locationData._id} value={locationData._id}>
                   {locationData.name}
                 </MenuItem>
               ))}
