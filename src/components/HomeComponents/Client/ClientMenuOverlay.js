@@ -11,14 +11,10 @@ import {
 import BackArrow from '../../../assets/backVectorWhite.svg';
 import AccountIcon from '../../../assets/account.svg';
 import RightArrow from '../../../assets/rightVectorArrow.svg';
-import LocationPin from '../../../assets/circum_location-on1.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ClientMenuOverlay = ({ isOverlay, setIsOverlay }) => {
   const navigate = useNavigate();
-
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
 
   const handleLogout = () => {
     navigate('/');
