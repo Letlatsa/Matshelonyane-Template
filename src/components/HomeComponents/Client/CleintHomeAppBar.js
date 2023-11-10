@@ -88,6 +88,7 @@ const ClientHomeAppBar = () => {
 
   return (
     <AppBar position="fixed" sx={styledAppBar}>
+      <ClientMenuOverlay isOverlay={isOverlay} setIsOverlay={setIsOverlay} />
       <Toolbar sx={{ height: '70px' }}>
         <IconButton
           size="large"
