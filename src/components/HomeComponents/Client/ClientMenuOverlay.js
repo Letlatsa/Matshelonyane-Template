@@ -18,46 +18,13 @@ import RightArrow from '../../assets/rightVectorArrow.svg';
 import LocationPin from '../../assets/circum_location-on1.svg';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { LocationRetrieveEndpoint } from '../../services/EndPoints';
+import { LocationRetrieveEndpoint } from '../../../services/EndPoints';
 
-const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
-  const userData = sessionStorage.getItem('user');
-  const { profileType } = JSON.parse(userData);
-
+const ClientMenuOverlay = ({ isOverlay, setIsOverlay }) => {
   const navigate = useNavigate();
 
-  const [location, setLocation] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState([]);
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
-
-  useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        getLocations(accessToken);
-      } catch (error) {
-        console.error('Error fetching locations: ', error);
-      }
-    };
-
-    fetchLocationData();
-  }, [accessToken]);
-
-  const getLocations = (accessToken) => {
-    LocationRetrieveEndpoint(accessToken)
-      .then((locationData) => {
-        setLocation(locationData.data);
-      })
-      .catch((error) => {
-        console.log(error, 'Error Fetching Data');
-      });
-  };
-
-  const handleLocationChange = (event) => {
-    const selectedLocation = event.target.value;
-    setSelectedLocation(selectedLocation);
-    console.log('Selected Locatiion:', selectedLocation);
-  };
 
   const handleLogout = () => {
     navigate('/');
@@ -116,64 +83,6 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
     fontSize: '16px',
     fontWeight: 600
   };
-
-  const renderLocationDropdown =
-    profileType === 'driver' ? (
-      <Box sx={{ marginBottom: '50px' }}>
-        <Box
-          sx={{
-            borderBottom: 'solid 1px white',
-            width: '100%',
-            display: 'flex',
-            alignContent: 'center',
-            marginBottom: '25px',
-            color: 'white'
-          }}
-        >
-          <img
-            src={LocationPin}
-            alt="Location Icon"
-            width="20"
-            height="20"
-            style={{
-              marginRight: '20px'
-            }}
-          />
-          <Typography sx={settingSectionText}>Current Location</Typography>
-        </Box>
-        <Stack spacing={2}>
-          <Box sx={styleListItemBox}>
-            <FormControl sx={{ m: 0, minWidth: 120, width: '100%' }} size="small">
-              <InputLabel sx={{ fontSize: '14px', color: 'white' }} id="rating-simple-select-label">
-                Location
-              </InputLabel>
-              <Select
-                labelId="location-label"
-                id="deliveryArea"
-                name="deliveryArea"
-                value={selectedLocation}
-                onChange={handleLocationChange}
-                variant="standard"
-                sx={{
-                  color: 'white',
-                  fontSize: '14px',
-                  width: '100%',
-                  '&:border': {
-                    color: 'white'
-                  }
-                }}
-              >
-                {location.map((locationData) => (
-                  <MenuItem key={locationData._id} value={locationData._id}>
-                    {locationData.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-        </Stack>
-      </Box>
-    ) : null;
 
   return (
     <div style={isOverlay ? openOverlayStyles : overlayStyles}>
@@ -237,7 +146,29 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
             </Box>
           </Stack>
         </Box>
-        <Box> {renderLocationDropdown}</Box>
+        <Box sx={{ marginBottom: '50px' }}>
+          <Box
+            sx={{
+              borderBottom: 'solid 1px white',
+              width: '100%',
+              display: 'flex',
+              alignContent: 'center',
+              marginBottom: '25px',
+              color: 'white'
+            }}
+          >
+            <img
+              src={LocationPin}
+              alt="Location Icon"
+              width="20"
+              height="20"
+              style={{
+                marginRight: '20px'
+              }}
+            />
+            <Typography sx={settingSectionText}>Current Location</Typography>
+          </Box>
+        </Box>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
           <Button
             variant="text"
@@ -269,4 +200,4 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
   );
 };
 
-export default MenuOverlay;
+export default ClientMenuOverlay;
