@@ -8,10 +8,7 @@ import {
   Avatar,
   AppBar,
   Toolbar,
-  IconButton,
-  Select,
-  MenuItem,
-  InputLabel
+  IconButton
 } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
 
@@ -20,11 +17,9 @@ import {
   updateProfilePictureEndpoint,
   RetrieveSurnameEndpoint,
   EditProfileEndPoint,
-  LocationRetrieveEndpoint
 } from '../../services/EndPoints';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
-import LocationIcon from '../../assets/location.svg';
 
 function ClientHomeProfile() {
   const userData = sessionStorage.getItem('user');
@@ -49,18 +44,6 @@ function ClientHomeProfile() {
   const [avatarImage, setAvatarImage] = useState(null);
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        getLocations(accessToken);
-      } catch (error) {
-        console.error('Error fetching locations: ', error);
-      }
-    };
-
-    fetchLocationData();
-  }, [accessToken]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -238,24 +221,7 @@ function ClientHomeProfile() {
     boxShadow: 'none'
   };
 
-  const styledSelect = {
-    width: '100%',
-    color: 'white',
-    borderBottom: ' 2px solid white',
-    marginBottom: '50px'
-  };
-
-  const accountLabelContainer = {
-    display: 'flex',
-    alignItems: 'center'
-  };
-
-  const styledInputLabel = {
-    color: 'white',
-    '&:hover': {
-      color: 'white'
-    }
-  };
+ 
   return (
     <div
       style={{
