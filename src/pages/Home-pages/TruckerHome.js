@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import HomeAppBar from '../../components/HomeComponents/CleintHomeAppBar';
+import TruckerHomeAppBar from '../../components/HomeComponents/Trucker/TruckerHomeAppBar';
 import TruckerCard from '../../components/HomeComponents/Trucker/TruckerCard';
 import SearchComponent from '../../components/HomeComponents/Trucker/SearchComponent';
 import SearchFilter from '../../components/HomeComponents/SearchFilter';
@@ -10,7 +10,7 @@ const TruckerHome = () => {
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
-        <HomeAppBar />
+        <TruckerHomeAppBar />
       </Box>
       <Box>
         <SearchComponent />

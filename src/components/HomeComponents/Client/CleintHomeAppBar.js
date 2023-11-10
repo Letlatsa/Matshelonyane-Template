@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import MenuOverlay from './Client/ClientMenuOverlay';
+import ClientMenuOverlay from './ClientMenuOverlay';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
-import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
+import { RetrieveSurnameEndpoint } from '../../../services/EndPoints';
 
-const HomeAppBar = () => {
+const ClientHomeAppBar = () => {
   const navigate = useNavigate();
   const [isOverlay, setIsOverlay] = useState(false);
 
@@ -88,7 +88,6 @@ const HomeAppBar = () => {
 
   return (
     <AppBar position="fixed" sx={styledAppBar}>
-      <MenuOverlay isOverlay={isOverlay} setIsOverlay={setIsOverlay} />
       <Toolbar sx={{ height: '70px' }}>
         <IconButton
           size="large"
@@ -130,4 +129,4 @@ const HomeAppBar = () => {
   );
 };
 
-export default HomeAppBar;
+export default ClientHomeAppBar;

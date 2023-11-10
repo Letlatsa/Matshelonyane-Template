@@ -17,7 +17,6 @@ import AccountIcon from '../../assets/account.svg';
 import RightArrow from '../../assets/rightVectorArrow.svg';
 import LocationPin from '../../assets/circum_location-on1.svg';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import { LocationRetrieveEndpoint } from '../../../services/EndPoints';
 
 const ClientMenuOverlay = ({ isOverlay, setIsOverlay }) => {
