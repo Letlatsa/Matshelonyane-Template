@@ -140,29 +140,6 @@ const ClientMenuOverlay = ({ isOverlay, setIsOverlay }) => {
             </Box>
           </Stack>
         </Box>
-        <Box sx={{ marginBottom: '50px' }}>
-          <Box
-            sx={{
-              borderBottom: 'solid 1px white',
-              width: '100%',
-              display: 'flex',
-              alignContent: 'center',
-              marginBottom: '25px',
-              color: 'white'
-            }}
-          >
-            <img
-              src={LocationPin}
-              alt="Location Icon"
-              width="20"
-              height="20"
-              style={{
-                marginRight: '20px'
-              }}
-            />
-            <Typography sx={settingSectionText}>Current Location</Typography>
-          </Box>
-        </Box>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
           <Button
             variant="text"
