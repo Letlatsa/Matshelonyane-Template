@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import HomeAppBar from '../../components/HomeComponents/HomeAppBar';
+import HomeAppBar from '../../components/HomeComponents/CleintHomeAppBar';
 import TruckerCard from '../../components/HomeComponents/Trucker/TruckerCard';
 import SearchComponent from '../../components/HomeComponents/Trucker/SearchComponent';
 import SearchFilter from '../../components/HomeComponents/SearchFilter';
