@@ -101,31 +101,21 @@ function ClientHomeProfile() {
         }
       };
 
+      const propicWait = PropicApiRequest(formData, accessToken);
+      const profileWait = ProfileApiRequest(profileFrom, accessToken);
+
       if (avatarImage) {
         formData.append('profileId', JSON.parse(userData)._id);
         formData.append('file', file);
 
-        const propicWait = PropicApiRequest(formData, accessToken);
-
-        if (propicWait === 200) {
-          const profileWait = ProfileApiRequest(profileFrom, accessToken);
-          if (profileWait === 200) {
-            refreshSession(accessToken);
-          } else {
-            console.log('Error updating profile');
-            refreshSession(accessToken);
-          }
+        if (propicWait === 200 && profileWait === 200) {
+          refreshSession(accessToken);
         } else {
-          console.log('Error updating profile');
+          refreshSession(accessToken);
         }
       } else {
-        const profileWait = ProfileApiRequest(profileFrom, accessToken);
-        if (profileWait === 200) {
-          refreshSession(accessToken);
-        } else {
-          console.log('Error updating profile');
-          refreshSession(accessToken);
-        }
+        console.log('Error updating profile');
+        refreshSession(accessToken);
       }
     }
   };
@@ -192,7 +182,7 @@ function ClientHomeProfile() {
 
       sessionStorage.setItem('user', JSON.stringify(user));
 
-      navigate('/truckerprofileview');
+      navigate('/clientprofile');
     });
   };
 
@@ -459,6 +449,5 @@ function ClientHomeProfile() {
     </div>
   );
 }
-
 
 export default ClientHomeProfile;
