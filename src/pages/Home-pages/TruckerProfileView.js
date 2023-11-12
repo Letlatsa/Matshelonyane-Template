@@ -54,14 +54,31 @@ const TruckerProfileView = () => {
     DownloadUmageEndPoint(key)
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data);
-          setProfilePic(response.data);
+          const image = byteConvert(response.data);
+          setProfilePic(image);
         }
       })
       .catch((error) => {
         console.log(error);
         throw error;
       });
+  };
+
+  const byteConvert = (byteImage) => {
+    try {
+      if (!byteImage || byteImage.length === 0) {
+        throw new Error('Empty or invalid byteImage');
+      }
+
+      const uint8Array = new Uint8Array(byteImage);
+      const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
+      const imageUrl = `data:image/png;base64,${base64String}`;
+      console.log(imageUrl);
+      return imageUrl;
+    } catch (error) {
+      console.error('Error converting byteImage:', error);
+      throw error;
+    }
   };
 
   const styledProfileBox = {
@@ -178,7 +195,7 @@ const TruckerProfileView = () => {
         >
           <Box sx={styledProfileBox}>
             <img
-              src="https://picsum.photos/200/300"
+              src={profilePic}
               alt=""
               style={{ width: '95px', height: '95px', borderRadius: 100, backgroundColor: 'grey' }}
             />
