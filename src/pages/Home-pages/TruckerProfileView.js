@@ -25,8 +25,7 @@ const TruckerProfileView = () => {
 
   const userData = sessionStorage.getItem('user');
 
-  const { _id, firstName, lastName, propic, profileType, deliveryArea, driversLicense, account } =
-    JSON.parse(userData);
+  const { firstName, lastName, propic, deliveryArea, account } = JSON.parse(userData);
 
   const accountData = {
     _id: account._id,
@@ -54,31 +53,16 @@ const TruckerProfileView = () => {
     DownloadUmageEndPoint(key)
       .then((response) => {
         if (response.status === 200) {
-          const image = byteConvert(response.data);
-          setProfilePic(image);
+          const bybeImage = response.data;
+
+          const imageUrl = `data:image/png;base64,${bybeImage}`;
+          setProfilePic(imageUrl);
         }
       })
       .catch((error) => {
         console.log(error);
         throw error;
       });
-  };
-
-  const byteConvert = (byteImage) => {
-    try {
-      if (!byteImage || byteImage.length === 0) {
-        throw new Error('Empty or invalid byteImage');
-      }
-
-      const uint8Array = new Uint8Array(byteImage);
-      const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
-      const imageUrl = `data:image/png;base64,${base64String}`;
-      console.log(imageUrl);
-      return imageUrl;
-    } catch (error) {
-      console.error('Error converting byteImage:', error);
-      throw error;
-    }
   };
 
   const styledProfileBox = {
