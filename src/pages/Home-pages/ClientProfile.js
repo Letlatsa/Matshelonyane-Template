@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   AppBar,
   Box,
@@ -12,17 +13,38 @@ import {
 
 import BackArrow from '../../assets/backVector.svg';
 import { useNavigate } from 'react-router-dom';
+import { DownloadUmageEndPoint } from '../../services/EndPoints';
 
 const ClientProfile = () => {
   const navigate = useNavigate();
   const userData = sessionStorage.getItem('user');
+  const [profilePic, setProfilePic] = useState('');
 
-  const { firstName, lastName, deliveryArea, account } =
-    JSON.parse(userData);
+  const { firstName, lastName, deliveryArea, account } = JSON.parse(userData);
 
   const accountData = {
     _id: account._id,
     number: account.number
+  };
+
+  useEffect(() => {
+    getProfilePic(account.profilePic);
+  }, [account.profilePic]);
+
+  const getProfilePic = async (key) => {
+    DownloadUmageEndPoint(key)
+      .then((response) => {
+        if (response.status === 200) {
+          const bybeImage = response.data;
+
+          const imageUrl = `data:image/png;base64,${bybeImage}`;
+          setProfilePic(imageUrl);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
   };
 
   const styledProfileBox = {
@@ -43,9 +65,6 @@ const ClientProfile = () => {
     color: '#000000',
     boxShadow: 'none'
   };
-
-
-
 
   const styledCard = {
     width: '100%',
@@ -144,7 +163,7 @@ const ClientProfile = () => {
         >
           <Box sx={styledProfileBox}>
             <img
-              src="https://picsum.photos/200/300"
+              src={profilePic}
               alt=""
               style={{ width: '95px', height: '95px', borderRadius: 100, backgroundColor: 'grey' }}
             />
