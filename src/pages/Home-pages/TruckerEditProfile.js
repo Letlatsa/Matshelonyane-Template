@@ -20,7 +20,8 @@ import {
   updateProfilePictureEndpoint,
   RetrieveSurnameEndpoint,
   EditProfileEndPoint,
-  LocationRetrieveEndpoint
+  LocationRetrieveEndpoint,
+  DownloadUmageEndPoint
 } from '../../services/EndPoints';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
@@ -34,6 +35,8 @@ function TruckerHomeProfile() {
   const accessToken = JSON.parse(TokenSession).accessToken;
 
   const userData = sessionStorage.getItem('user');
+
+  const [profilePic, setProfilePic] = useState('');
 
   const { _id, firstName, lastName, propic, deliveryArea } = JSON.parse(userData);
 
@@ -62,6 +65,8 @@ function TruckerHomeProfile() {
         console.error('Error fetching locations: ', error);
       }
     };
+
+    getProfilePic(propic);
 
     fetchLocationData();
   }, [accessToken]);
@@ -202,6 +207,22 @@ function TruckerHomeProfile() {
     }
   };
 
+  const getProfilePic = async (key) => {
+    DownloadUmageEndPoint(key)
+      .then((response) => {
+        if (response.status === 200) {
+          const bybeImage = response.data;
+
+          const imageUrl = `data:image/png;base64,${bybeImage}`;
+          setProfilePic(imageUrl);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  };
+
   const handleLocationChange = (event) => {
     const selectedLocation = event.target.value;
     setSelectedLocation(selectedLocation);
@@ -334,7 +355,7 @@ function TruckerHomeProfile() {
             {avatarImage ? (
               <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 130, height: 130 }} />
             ) : (
-              <Avatar alt="User Avatar" sx={{ width: 130, height: 130 }}></Avatar>
+              <Avatar alt="User Avatar" src={profilePic} sx={{ width: 130, height: 130 }}></Avatar>
             )}
           </Box>
         </label>

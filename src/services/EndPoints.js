@@ -163,6 +163,19 @@ const ViewTruckerInfo = async (Token, account) => {
   }
 };
 
+const DownloadUmageEndPoint = async (key) => {
+  try {
+    const response = await IAMApiClient.get(`/download?key=${key}`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+
+    throw error;
+  }
+};
+
 export {
   LoginEndPoint,
   RegisterEndPoint,
@@ -179,5 +192,6 @@ export {
   LocationRetrieveEndpoint,
   TrucksInDeliveryArea,
   EditProfileEndPoint,
-  ViewTruckerInfo
+  ViewTruckerInfo,
+  DownloadUmageEndPoint
 };
