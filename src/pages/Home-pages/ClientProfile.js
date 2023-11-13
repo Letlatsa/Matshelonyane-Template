@@ -18,7 +18,7 @@ const ClientProfile = () => {
   const navigate = useNavigate();
   const userData = sessionStorage.getItem('user');
 
-  const { _id, firstName, lastName, propic, profileType, deliveryArea, driversLicense, account } =
+  const { firstName, lastName, deliveryArea, account } =
     JSON.parse(userData);
 
   const accountData = {
@@ -45,25 +45,8 @@ const ClientProfile = () => {
     boxShadow: 'none'
   };
 
-  const styleBriefInfo = {
-    width: '120px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
-  };
 
-  const styledBriefBigText = {
-    color: '#F8F8F8',
-    fontSize: '24px'
-  };
 
-  const styledBriefSmallText = {
-    color: '#F8F8F8',
-    fontSize: '16px',
-    fontWeight: 300,
-    letterSpacing: '-0.17px'
-  };
 
   const styledCard = {
     width: '100%',
