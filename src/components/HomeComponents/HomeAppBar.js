@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
-import { RetrieveSurnameEndpoint } from '../../services/EndPoints';
+import { RetrieveSurnameEndpoint, DownloadUmageEndPoint } from '../../services/EndPoints';
 
 const HomeAppBar = () => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const HomeAppBar = () => {
 
   const storedLastName = 'Doe';
   const [lastName, setLastName] = useState(storedLastName || '');
+  const [profilePic, setProfilePic] = useState('');
 
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
@@ -47,11 +48,28 @@ const HomeAppBar = () => {
       };
 
       setLastName(lastName);
+      getProfilePic(propic);
 
       sessionStorage.setItem('user', JSON.stringify(user));
       console.log('this is the lastname', lastName);
     });
   }, [accessToken]);
+
+  const getProfilePic = async (key) => {
+    DownloadUmageEndPoint(key)
+      .then((response) => {
+        if (response.status === 200) {
+          const bybeImage = response.data;
+
+          const imageUrl = `data:image/png;base64,${bybeImage}`;
+          setProfilePic(imageUrl);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  };
 
   console.log('this is the token', accessToken);
 
@@ -119,7 +137,7 @@ const HomeAppBar = () => {
         <Button onClick={handleButtonClicked}>
           <Box sx={styledProfileBox}>
             <img
-              src="https://picsum.photos/200/300"
+              src={profilePic}
               alt=""
               style={{ width: '44px', height: '44px', borderRadius: 50 }}
             />
