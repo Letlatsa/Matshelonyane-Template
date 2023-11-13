@@ -18,7 +18,6 @@ import {
 import {
   Container,
   FormControl,
-  TextField,
   InputLabel,
   Select,
   MenuItem,
@@ -27,7 +26,6 @@ import {
 } from '@mui/material';
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import PhoneIcon from '../../assets/phone.svg';
-import SearchIcon from '../../assets/searchIcon.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ClientHome = () => {
@@ -52,7 +50,6 @@ const ClientHome = () => {
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   };
   const navigate = useNavigate();
-  const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
 
   const storedLastName = 'Doe';
@@ -130,9 +127,6 @@ const ClientHome = () => {
     });
   }, [accessToken]);
 
-  const handleNavigation = (event, newValue) => {
-    setValue(newValue);
-  };
 
   useEffect(() => {
     console.log('Current Delivery Area ID:', deliveryAreaId);
