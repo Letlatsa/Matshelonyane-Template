@@ -163,6 +163,22 @@ const ViewTruckerInfo = async (Token, account) => {
   }
 };
 
+const PostProfileVisits = async (Token, data) => {
+  try {
+    const response = await FleetApiClient.post('/visit', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Token}`
+      }
+    });
+
+    console.log('Response:', response);
+    return response;
+  } catch (error) {
+    console.error('Error posting profile visit', error);
+  }
+};
+
 export {
   LoginEndPoint,
   RegisterEndPoint,
@@ -179,5 +195,6 @@ export {
   LocationRetrieveEndpoint,
   TrucksInDeliveryArea,
   EditProfileEndPoint,
-  ViewTruckerInfo
+  ViewTruckerInfo,
+  PostProfileVisits
 };
