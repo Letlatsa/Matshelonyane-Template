@@ -163,6 +163,17 @@ const ViewTruckerInfo = async (Token, account) => {
   }
 };
 
+const GetServiceLocation = async (loc) => {
+  try {
+    const response = await FleetApiClient.get(`/location?loc=${loc}`, {
+      headers: { 'Content-Typen': 'multipart/form-data' }
+    });
+  } catch (error) {
+    console.error('Error retrieving location:', error);
+    throw error;
+  }
+};
+
 export {
   LoginEndPoint,
   RegisterEndPoint,
