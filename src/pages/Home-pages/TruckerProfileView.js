@@ -16,13 +16,15 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
 
-import { UserTrucksEndpoint } from '../../services/EndPoints';
+import { UserTrucksEndpoint, GetServiceLocation } from '../../services/EndPoints';
 
 const TruckerProfileView = () => {
   const navigate = useNavigate();
   const [trucks, setTrucks] = useState([]);
 
   const userData = sessionStorage.getItem('user');
+
+  const [location, setLocation] = useState('');
 
   const { _id, firstName, lastName, propic, profileType, deliveryArea, driversLicense, account } =
     JSON.parse(userData);
@@ -45,7 +47,23 @@ const TruckerProfileView = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [accessToken]);
+
+    getLocation(deliveryArea);
+  }, [accessToken, deliveryArea]);
+
+  const getLocation = (locationId) => {
+    GetServiceLocation(locationId)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response.data);
+          const { name } = response.data;
+          setLocation(name);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const styledProfileBox = {
     borderRadius: '100px',
@@ -191,7 +209,7 @@ const TruckerProfileView = () => {
               marginBottom: '15px'
             }}
           >
-            {deliveryArea}
+            {location}
           </Typography>
           <Button
             variant="text"
@@ -244,7 +262,7 @@ const TruckerProfileView = () => {
               }}
             >
               <Typography sx={styledStackTypography}>Location:</Typography>
-              <Typography sx={styledStackTypography}>{deliveryArea}</Typography>
+              <Typography sx={styledStackTypography}>{location}</Typography>
             </Box>
           </Stack>
         </Card>
@@ -252,10 +270,11 @@ const TruckerProfileView = () => {
           <Box>
             <Typography sx={{ fontSize: '20px' }}>Fleet</Typography>
           </Box>
-          <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '75vw'}}></Box>
+          <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '75vw' }}></Box>
         </Box>
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '20px' }}>
-        </Box>
+        <Box
+          sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '20px' }}
+        ></Box>
         {trucks?.map((truck) => (
           <TruckCard key={truck._id} truck={truck} />
         ))}
