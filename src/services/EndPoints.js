@@ -168,6 +168,7 @@ const GetServiceLocation = async (loc) => {
     const response = await FleetApiClient.get(`/location?loc=${loc}`, {
       headers: { 'Content-Typen': 'multipart/form-data' }
     });
+    return response;
   } catch (error) {
     console.error('Error retrieving location:', error);
     throw error;
@@ -190,5 +191,6 @@ export {
   LocationRetrieveEndpoint,
   TrucksInDeliveryArea,
   EditProfileEndPoint,
-  ViewTruckerInfo
+  ViewTruckerInfo,
+  GetServiceLocation
 };
