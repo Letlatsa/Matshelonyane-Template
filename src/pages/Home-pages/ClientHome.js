@@ -11,7 +11,8 @@ import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
 import {
   RetrieveSurnameEndpoint,
   TrucksInDeliveryArea,
-  LocationRetrieveEndpoint
+  LocationRetrieveEndpoint,
+  DownloadUmageEndPoint
 } from '../../services/EndPoints';
 
 import {
@@ -60,6 +61,8 @@ const ClientHome = () => {
   const [deliveryAreaId, setDeliveryAreaId] = useState('65434e0376d09d13951a4314');
   const [location, setLocation] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState([]);
+  const [profilePic, setProfilePic] = useState('');
+
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
 
@@ -119,6 +122,7 @@ const ClientHome = () => {
       };
 
       setLastName(lastName);
+      getProfilePic(propic);
 
       sessionStorage.setItem('user', JSON.stringify(user));
       console.log('this is the lastname', lastName);
@@ -152,6 +156,22 @@ const ClientHome = () => {
       })
       .catch((error) => {
         console.error('Error fetching truckers', error);
+      });
+  };
+
+  const getProfilePic = async (key) => {
+    DownloadUmageEndPoint(key)
+      .then((response) => {
+        if (response.status === 200) {
+          const bybeImage = response.data;
+
+          const imageUrl = `data:image/png;base64,${bybeImage}`;
+          setProfilePic(imageUrl);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
       });
   };
 
@@ -208,7 +228,7 @@ const ClientHome = () => {
             <Button onClick={handleButtonClicked}>
               <Box sx={styledProfileBox}>
                 <img
-                  src="https://picsum.photos/200/300"
+                  src={profilePic}
                   alt=""
                   style={{ width: '44px', height: '44px', borderRadius: 50 }}
                 />
