@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 
 import BackArrow from '../../assets/backVector.svg';
-import EditIcon from '../../assets/EditVector.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ClientProfile = () => {
