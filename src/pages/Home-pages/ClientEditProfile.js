@@ -13,7 +13,11 @@ import {
 import AccountIcon from '../../assets/account.svg';
 
 import { useNavigate } from 'react-router-dom';
-import { updateProfilePictureEndpoint, RetrieveSurnameEndpoint,DownloadUmageEndPoint } from '../../services/EndPoints';
+import {
+  updateProfilePictureEndpoint,
+  RetrieveSurnameEndpoint,
+  DownloadUmageEndPoint
+} from '../../services/EndPoints';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
 
@@ -21,11 +25,13 @@ function ClientHomeProfile() {
   const TokenSession = sessionStorage.getItem('Tokens');
 
   const userData = sessionStorage.getItem('user');
+  const { firstName, lastName, propic } = JSON.parse(userData);
+
   const [profilePic, setProfilePic] = useState('');
 
   const initialFormState = {
-    firstName: JSON.parse(userData).firstName,
-    lastName: JSON.parse(userData).lastName
+    firstName: firstName,
+    lastName: lastName
   };
 
   const initialErrorState = {
@@ -129,8 +135,8 @@ function ClientHomeProfile() {
   };
 
   useEffect(() => {
-    getProfilePic(JSON.parse(userData).account.profilePic);
-  }, [userData]);
+    getProfilePic(propic);
+  }, [propic]);
 
   const getProfilePic = async (key) => {
     DownloadUmageEndPoint(key)
