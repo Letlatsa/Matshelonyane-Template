@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import {
   Box,
   FormControl,
@@ -13,7 +13,7 @@ import {
 import AccountIcon from '../../assets/account.svg';
 
 import { useNavigate } from 'react-router-dom';
-import { updateProfilePictureEndpoint, RetrieveSurnameEndpoint } from '../../services/EndPoints';
+import { updateProfilePictureEndpoint, RetrieveSurnameEndpoint,DownloadUmageEndPoint } from '../../services/EndPoints';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
 
@@ -21,6 +21,7 @@ function ClientHomeProfile() {
   const TokenSession = sessionStorage.getItem('Tokens');
 
   const userData = sessionStorage.getItem('user');
+  const [profilePic, setProfilePic] = useState('');
 
   const initialFormState = {
     firstName: JSON.parse(userData).firstName,
@@ -68,6 +69,7 @@ function ClientHomeProfile() {
       }
     }
   };
+
   const ApiRequest = (formData, accessToken) => {
     updateProfilePictureEndpoint(formData, accessToken)
       .then((response) => {
@@ -124,6 +126,26 @@ function ClientHomeProfile() {
 
       reader.readAsDataURL(file);
     }
+  };
+
+  useEffect(() => {
+    getProfilePic(JSON.parse(userData).account.profilePic);
+  }, [userData]);
+
+  const getProfilePic = async (key) => {
+    DownloadUmageEndPoint(key)
+      .then((response) => {
+        if (response.status === 200) {
+          const bybeImage = response.data;
+
+          const imageUrl = `data:image/png;base64,${bybeImage}`;
+          setProfilePic(imageUrl);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
   };
 
   const handleButtonBackArrowClicked = () => {
@@ -235,7 +257,7 @@ function ClientHomeProfile() {
             {avatarImage ? (
               <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 130, height: 130 }} />
             ) : (
-              <Avatar alt="User Avatar" sx={{ width: 130, height: 130 }}></Avatar>
+              <Avatar alt="User Avatar" src={profilePic} sx={{ width: 130, height: 130 }}></Avatar>
             )}
           </Box>
         </label>

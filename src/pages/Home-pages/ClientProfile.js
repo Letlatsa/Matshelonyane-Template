@@ -20,7 +20,7 @@ const ClientProfile = () => {
   const userData = sessionStorage.getItem('user');
   const [profilePic, setProfilePic] = useState('');
 
-  const { firstName, lastName, deliveryArea, account } = JSON.parse(userData);
+  const { firstName, lastName, propic, account } = JSON.parse(userData);
 
   const accountData = {
     _id: account._id,
@@ -28,8 +28,8 @@ const ClientProfile = () => {
   };
 
   useEffect(() => {
-    getProfilePic(account.profilePic);
-  }, [account.profilePic]);
+    getProfilePic(propic);
+  }, [propic]);
 
   const getProfilePic = async (key) => {
     DownloadUmageEndPoint(key)
@@ -193,7 +193,6 @@ const ClientProfile = () => {
               marginBottom: '15px'
             }}
           >
-            {deliveryArea}
           </Typography>
           <Button
             variant="text"
