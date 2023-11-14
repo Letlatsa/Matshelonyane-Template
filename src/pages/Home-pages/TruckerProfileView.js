@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
 
-import { UserTrucksEndpoint, DownloadUmageEndPoint } from '../../services/EndPoints';
+import { UserTrucksEndpoint, DownloadUmageEndPoint, GetServiceLocation } from '../../services/EndPoints';
 
 const TruckerProfileView = () => {
   const navigate = useNavigate();
@@ -24,6 +24,8 @@ const TruckerProfileView = () => {
   const [profilePic, setProfilePic] = useState('');
 
   const userData = sessionStorage.getItem('user');
+
+  const [location, setLocation] = useState('');
 
   const { firstName, lastName, propic, deliveryArea, account } = JSON.parse(userData);
 
@@ -47,7 +49,24 @@ const TruckerProfileView = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [accessToken, propic]);
+
+    getLocation(deliveryArea);
+  }, [accessToken, deliveryArea]);
+
+  const getLocation = (locationId) => {
+    GetServiceLocation(locationId)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response.data);
+          const { name } = response.data;
+          setLocation(name);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   const getProfilePic = async (key) => {
     DownloadUmageEndPoint(key)
@@ -209,7 +228,7 @@ const TruckerProfileView = () => {
               marginBottom: '15px'
             }}
           >
-            {deliveryArea}
+            {location}
           </Typography>
           <Button
             variant="text"
@@ -262,7 +281,7 @@ const TruckerProfileView = () => {
               }}
             >
               <Typography sx={styledStackTypography}>Location:</Typography>
-              <Typography sx={styledStackTypography}>{deliveryArea}</Typography>
+              <Typography sx={styledStackTypography}>{location}</Typography>
             </Box>
           </Stack>
         </Card>

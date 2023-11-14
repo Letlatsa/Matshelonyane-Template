@@ -180,6 +180,18 @@ const PostProfileVisits = async (Token, data) => {
   }
 };
 
+const GetServiceLocation = async (loc) => {
+  try {
+    const response = await FleetApiClient.get(`/location?loc=${loc}`, {
+      headers: { 'Content-Typen': 'multipart/form-data' }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error retrieving location:', error);
+    throw error;
+  }
+};
+    
 const DownloadUmageEndPoint = async (key) => {
   try {
     const response = await IAMApiClient.get(`/download?key=${key}`, {
@@ -188,7 +200,6 @@ const DownloadUmageEndPoint = async (key) => {
     return response;
   } catch (error) {
     console.log(error);
-
     throw error;
   }
 };
@@ -212,4 +223,6 @@ export {
   ViewTruckerInfo,
   PostProfileVisits,
   DownloadUmageEndPoint,
+  GetServiceLocation,
+  DownloadUmageEndPoint
 };
