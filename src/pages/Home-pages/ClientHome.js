@@ -12,6 +12,7 @@ import {
   RetrieveSurnameEndpoint,
   TrucksInDeliveryArea,
   LocationRetrieveEndpoint,
+  PostProfileVisits,
   DownloadUmageEndPoint
 } from '../../services/EndPoints';
 
@@ -107,6 +108,14 @@ const ClientHome = () => {
 
       console.log(_id);
 
+      let accountID; // store the account._id
+
+      if (account && account._id) {
+        accountID = account._id;
+      } else {
+        console.error('account or account._id is undefined');
+      }
+
       const user = {
         _id: _id,
         firstName: firstName,
@@ -115,7 +124,7 @@ const ClientHome = () => {
         profileType: profileType,
         deliveryArea: deliveryArea,
         driversLicense: driversLicense,
-        account: account
+        account: accountID
       };
 
       setLastName(lastName);
@@ -132,7 +141,22 @@ const ClientHome = () => {
     console.log('Current Delivery Area ID:', deliveryAreaId);
     const fetchTruckerData = async () => {
       try {
-        getTrucksersInArea(accessToken, deliveryAreaId);
+        // Fetch location data to get the deliveryAreaId
+        const locationResponse = await LocationRetrieveEndpoint(accessToken);
+        const selectedLocation = locationResponse.data.find(
+          (location) => location._id === deliveryAreaId
+        );
+
+        if (selectedLocation) {
+          // Update the state with the selected location
+          setSelectedLocation(selectedLocation._id);
+          setDeliveryAreaId(selectedLocation._id);
+
+          // Get truckers data for the selected location
+          getTrucksersInArea(accessToken, selectedLocation._id);
+        } else {
+          console.error('Selected location not found.');
+        }
       } catch (error) {
         console.error('Error fetching truckers data: ', error);
       }
@@ -180,7 +204,7 @@ const ClientHome = () => {
       setIsOverlay(false);
     }
   };
-
+  //profile visits
   return (
     <div className="homeContainer">
       <Box sx={{ flexGrow: 1 }}>
@@ -399,9 +423,33 @@ const ClientHome = () => {
                             transition: 'ease-in .3s'
                           }
                         }}
-                        onClick={() =>
-                          navigate(`/clienttruckerprofile/${truckersData.profile.account}`)
-                        }
+                        onClick={async () => {
+                          const {
+                            profile: { account: driverId }
+                          } = truckersData;
+
+                          const userData = sessionStorage.getItem('user');
+
+                          const { account } = JSON.parse(userData);
+
+                          const data = {
+                            locationID: selectedLocation,
+                            driverID: driverId,
+                            clientID: account
+                          };
+                          console.log('data', data);
+
+                          try {
+                            // Call PostProfileVisits
+                            const response = await PostProfileVisits(accessToken, data);
+                            console.log('Profile visit response:', response);
+
+                            // Navigate to the trucker's profile
+                            navigate(`/clienttruckerprofile/${truckersData.profile.account}`);
+                          } catch (error) {
+                            console.error('Error handling profile visit:', error);
+                          }
+                        }}
                       >
                         View Profile
                       </Button>
