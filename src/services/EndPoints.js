@@ -176,6 +176,20 @@ const PostProfileVisits = async (Token, data) => {
     return response;
   } catch (error) {
     console.error('Error posting profile visit', error);
+    throw error;
+  }
+};
+
+const DownloadUmageEndPoint = async (key) => {
+  try {
+    const response = await IAMApiClient.get(`/download?key=${key}`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+
+    throw error;
   }
 };
 
@@ -196,5 +210,6 @@ export {
   TrucksInDeliveryArea,
   EditProfileEndPoint,
   ViewTruckerInfo,
-  PostProfileVisits
+  PostProfileVisits,
+  DownloadUmageEndPoint,
 };

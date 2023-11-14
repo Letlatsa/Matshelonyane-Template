@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuOverlay from '../../components/HomeComponents/MenuOverlay';
+import ClientMenuOverlay from '../../components/HomeComponents/Client/ClientMenuOverlay';
 
 import {
   RetrieveSurnameEndpoint,
@@ -195,7 +195,7 @@ const ClientHome = () => {
     <div className="homeContainer">
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
-          <MenuOverlay isOverlay={isOverlay} setIsOverlay={setIsOverlay} />
+          <ClientMenuOverlay isOverlay={isOverlay} setIsOverlay={setIsOverlay} />
           <Toolbar sx={{ height: '70px' }}>
             <IconButton
               size="large"

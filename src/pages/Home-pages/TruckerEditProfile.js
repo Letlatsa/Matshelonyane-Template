@@ -20,7 +20,8 @@ import {
   updateProfilePictureEndpoint,
   RetrieveSurnameEndpoint,
   EditProfileEndPoint,
-  LocationRetrieveEndpoint
+  LocationRetrieveEndpoint,
+  DownloadUmageEndPoint
 } from '../../services/EndPoints';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
@@ -34,6 +35,8 @@ function TruckerHomeProfile() {
   const accessToken = JSON.parse(TokenSession).accessToken;
 
   const userData = sessionStorage.getItem('user');
+
+  const [profilePic, setProfilePic] = useState('');
 
   const { _id, firstName, lastName, propic, deliveryArea } = JSON.parse(userData);
 
@@ -63,6 +66,8 @@ function TruckerHomeProfile() {
       }
     };
 
+    getProfilePic(propic);
+
     fetchLocationData();
   }, [accessToken]);
 
@@ -91,6 +96,8 @@ function TruckerHomeProfile() {
 
     if (Object.keys(errors).length === 0) {
       const formData = new FormData();
+      formData.append('profileId', JSON.parse(userData)._id);
+      formData.append('file', file);
 
       const profileFrom = {
         profileId: _id,
@@ -101,31 +108,19 @@ function TruckerHomeProfile() {
         }
       };
 
+      const propicWait = PropicApiRequest(formData, accessToken);
+      const profileWait = ProfileApiRequest(profileFrom, accessToken);
+
       if (avatarImage) {
-        formData.append('profileId', JSON.parse(userData)._id);
-        formData.append('file', file);
-
-        const propicWait = PropicApiRequest(formData, accessToken);
-
-        if (propicWait === 200) {
-          const profileWait = ProfileApiRequest(profileFrom, accessToken);
-          if (profileWait === 200) {
-            refreshSession(accessToken);
-          } else {
-            console.log('Error updating profile');
-            refreshSession(accessToken);
-          }
+        if (propicWait === 200 && profileWait === 200) {
+          refreshSession(accessToken);
         } else {
           console.log('Error updating profile');
+          refreshSession(accessToken);
         }
       } else {
-        const profileWait = ProfileApiRequest(profileFrom, accessToken);
-        if (profileWait === 200) {
-          refreshSession(accessToken);
-        } else {
-          console.log('Error updating profile');
-          refreshSession(accessToken);
-        }
+        console.log('Error updating profile');
+        refreshSession(accessToken);
       }
     }
   };
@@ -210,6 +205,22 @@ function TruckerHomeProfile() {
 
       reader.readAsDataURL(file);
     }
+  };
+
+  const getProfilePic = async (key) => {
+    DownloadUmageEndPoint(key)
+      .then((response) => {
+        if (response.status === 200) {
+          const bybeImage = response.data;
+
+          const imageUrl = `data:image/png;base64,${bybeImage}`;
+          setProfilePic(imageUrl);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
   };
 
   const handleLocationChange = (event) => {
@@ -344,7 +355,7 @@ function TruckerHomeProfile() {
             {avatarImage ? (
               <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 130, height: 130 }} />
             ) : (
-              <Avatar alt="User Avatar" sx={{ width: 130, height: 130 }}></Avatar>
+              <Avatar alt="User Avatar" src={profilePic} sx={{ width: 130, height: 130 }}></Avatar>
             )}
           </Box>
         </label>
@@ -437,7 +448,7 @@ function TruckerHomeProfile() {
               error={!!formErrors.locationError}
             >
               {location.map((locationData) => (
-                <MenuItem key={locationData._id} value={locationData.name}>
+                <MenuItem key={locationData._id} value={locationData._id}>
                   {locationData.name}
                 </MenuItem>
               ))}
