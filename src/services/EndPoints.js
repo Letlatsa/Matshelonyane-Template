@@ -223,6 +223,5 @@ export {
   ViewTruckerInfo,
   PostProfileVisits,
   DownloadUmageEndPoint,
-  GetServiceLocation,
-  DownloadUmageEndPoint
+  GetServiceLocation
 };
