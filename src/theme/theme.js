@@ -11,6 +11,10 @@ const colors = {
   background: '#FBF8F7'
 };
 
+const shadows = {
+  default: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+};
+
 const theme = createTheme({
   breakpoints: {
     values: {
@@ -32,10 +36,10 @@ const theme = createTheme({
       main: colors.error
     },
     background: {
-      default: '#FBF8F7'
+      default: colors.background
     },
     warning: {
-      main: '#FFC107'
+      main: colors.warning
     }
   },
   typography: {
@@ -43,17 +47,17 @@ const theme = createTheme({
     h1: {
       fontSize: '1.5rem',
       fontWeight: 700,
-      textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+      textShadow: shadows.default
     },
     h2: {
       fontSize: '1.5rem',
       fontWeight: 400,
-      textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+      textShadow: shadows.default
     },
     h3: {
       fontSize: '1.25rem',
       fontWeight: 400,
-      textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+      textShadow: shadows.default
     },
     h4: {
       fontSize: '1rem',
@@ -73,27 +77,51 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: '15px',
-          fontSize: 16,
           width: '100%',
           '&:hover': {
             backgroundColor: '#EBDBD5'
           }
+        },
+        standard: {
+          backgroundColor: '#EBDBD5',
+          color: '#58362A',
+          fontSize: 18
         }
       }
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          marginBottom: '30px',
-          width: '100%',
-          '& label': {
-            color: 'white'
-          },
-          '& input': {
-            color: 'white',
-            borderBottom: ' 2px solid white'
-          }
+    }
+  },
+  MuiTextField: {
+    styleOverrides: {
+      root: {
+        marginBottom: '30px',
+        width: '100%',
+        '& label': {
+          color: 'white'
+        },
+        '& input': {
+          color: 'white',
+          borderBottom: ' 2px solid white'
         }
+      }
+    }
+  },
+  MuiFormControl: {
+    styleOverrides: {
+      root: {
+        marginBottom: '30px',
+        width: '100%',
+        '& label': {
+          color: 'white'
+        },
+        '& input': {
+          color: 'white',
+          borderBottom: ' 2px solid white'
+        }
+      },
+      standard: {
+        backgroundColor: '#EBDBD5',
+        color: '#58362A',
+        fontSize: 18
       }
     }
   }
