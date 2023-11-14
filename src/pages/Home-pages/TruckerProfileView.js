@@ -60,7 +60,13 @@ const TruckerProfileView = () => {
           console.log(response.data);
           const { name } = response.data;
           setLocation(name);
-  }, [accessToken, propic]);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   const getProfilePic = async (key) => {
     DownloadUmageEndPoint(key)
