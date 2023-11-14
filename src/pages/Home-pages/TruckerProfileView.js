@@ -16,18 +16,18 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
 
-import { UserTrucksEndpoint, GetServiceLocation } from '../../services/EndPoints';
+import { UserTrucksEndpoint, DownloadUmageEndPoint, GetServiceLocation } from '../../services/EndPoints';
 
 const TruckerProfileView = () => {
   const navigate = useNavigate();
   const [trucks, setTrucks] = useState([]);
+  const [profilePic, setProfilePic] = useState('');
 
   const userData = sessionStorage.getItem('user');
 
   const [location, setLocation] = useState('');
 
-  const { _id, firstName, lastName, propic, profileType, deliveryArea, driversLicense, account } =
-    JSON.parse(userData);
+  const { firstName, lastName, propic, deliveryArea, account } = JSON.parse(userData);
 
   const accountData = {
     _id: account._id,
@@ -38,6 +38,8 @@ const TruckerProfileView = () => {
   const accessToken = JSON.parse(TokenSession).accessToken;
 
   useEffect(() => {
+    getProfilePic(propic);
+
     UserTrucksEndpoint(accessToken)
       .then((response) => {
         if (response.status === 200) {
@@ -58,10 +60,21 @@ const TruckerProfileView = () => {
           console.log(response.data);
           const { name } = response.data;
           setLocation(name);
+  }, [accessToken, propic]);
+
+  const getProfilePic = async (key) => {
+    DownloadUmageEndPoint(key)
+      .then((response) => {
+        if (response.status === 200) {
+          const bybeImage = response.data;
+
+          const imageUrl = `data:image/png;base64,${bybeImage}`;
+          setProfilePic(imageUrl);
         }
       })
       .catch((error) => {
         console.log(error);
+        throw error;
       });
   };
 
@@ -179,7 +192,7 @@ const TruckerProfileView = () => {
         >
           <Box sx={styledProfileBox}>
             <img
-              src="https://picsum.photos/200/300"
+              src={profilePic}
               alt=""
               style={{ width: '95px', height: '95px', borderRadius: 100, backgroundColor: 'grey' }}
             />

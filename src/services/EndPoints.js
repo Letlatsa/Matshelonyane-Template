@@ -174,6 +174,18 @@ const GetServiceLocation = async (loc) => {
     throw error;
   }
 };
+    
+const DownloadUmageEndPoint = async (key) => {
+  try {
+    const response = await IAMApiClient.get(`/download?key=${key}`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 export {
   LoginEndPoint,
@@ -192,5 +204,6 @@ export {
   TrucksInDeliveryArea,
   EditProfileEndPoint,
   ViewTruckerInfo,
-  GetServiceLocation
+  GetServiceLocation,
+  DownloadUmageEndPoint
 };
