@@ -25,11 +25,9 @@ import BackArrow from '../../assets/backVectorWhite.svg';
 function ClientHomeProfile() {
   const userData = sessionStorage.getItem('user');
 
-  const { firstName, lastName, propic } = JSON.parse(userData);
+  const { _id, firstName, lastName, propic } = JSON.parse(userData);
 
   const [profilePic, setProfilePic] = useState('');
-
-  const { _id, firstName, lastName } = JSON.parse(userData);
 
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
