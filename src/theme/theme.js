@@ -5,6 +5,9 @@ const colors = {
   primaryVarient: '#EBDBD5',
   secondary: '#58362A',
   error: '#f44336',
+  warning: '#FFC107',
+  info: '#2196f3',
+  success: '#4caf50',
   background: '#FBF8F7'
 };
 
@@ -23,13 +26,16 @@ const theme = createTheme({
       varient: colors.primaryVarient
     },
     secondary: {
-      main: '#58362A'
+      main: colors.secondary
     },
     error: {
-      main: '#f44336'
+      main: colors.error
     },
     background: {
       default: '#FBF8F7'
+    },
+    warning: {
+      main: '#FFC107'
     }
   },
   typography: {
