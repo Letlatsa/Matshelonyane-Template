@@ -1,5 +1,13 @@
 import { createTheme } from '@mui/material/styles';
 
+const colors = {
+  primary: '#C69585',
+  primaryVarient: '#EBDBD5',
+  secondary: '#58362A',
+  error: '#f44336',
+  background: '#FBF8F7'
+};
+
 const theme = createTheme({
   breakpoints: {
     values: {
@@ -11,47 +19,78 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: '#1976D2',
+      main: colors.primary,
+      varient: colors.primaryVarient
     },
     secondary: {
-      main: '#4CAF50',
+      main: '#58362A'
     },
     error: {
-      main: '#f44336',
+      main: '#f44336'
     },
     background: {
-      default: '#F5F5F5',
-    },
+      default: '#FBF8F7'
+    }
   },
   typography: {
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: 'Lato',
     h1: {
-      fontSize: '2.5rem',
-      fontWeight: 500,
+      fontSize: '1.5rem',
+      fontWeight: 700,
+      textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
     },
     h2: {
-      fontSize: '2rem',
-      fontWeight: 500,
+      fontSize: '1.5rem',
+      fontWeight: 400,
+      textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
     },
-    // Add more typography configurations as needed
+    h3: {
+      fontSize: '1.25rem',
+      fontWeight: 400,
+      textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+    },
+    h4: {
+      fontSize: '1rem',
+      fontWeight: 500
+    },
+    h5: {
+      fontSize: '1rem',
+      fontWeight: 400
+    }
   },
-  spacing: 8,
+  spacing: 15,
   shape: {
-    borderRadius: 8,
+    borderRadius: 10
   },
   components: {
     MuiButton: {
       styleOverrides: {
-        // Additional style overrides for the Button component
-      },
+        root: {
+          borderRadius: '15px',
+          fontSize: 16,
+          width: '100%',
+          '&:hover': {
+            backgroundColor: '#EBDBD5'
+          }
+        }
+      }
     },
     MuiTextField: {
       styleOverrides: {
-        // Additional style overrides for the TextField component
-      },
-    },
-    // Add more component-specific overrides as needed
-  },
+        root: {
+          marginBottom: '30px',
+          width: '100%',
+          '& label': {
+            color: 'white'
+          },
+          '& input': {
+            color: 'white',
+            borderBottom: ' 2px solid white'
+          }
+        }
+      }
+    }
+  }
 });
 
 export default theme;
