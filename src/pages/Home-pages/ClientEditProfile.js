@@ -16,18 +16,23 @@ import { useNavigate } from 'react-router-dom';
 import {
   updateProfilePictureEndpoint,
   RetrieveSurnameEndpoint,
-  DownloadUmageEndPoint
+  DownloadUmageEndPoint,
+  EditProfileEndPoint,
 } from '../../services/EndPoints';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
 
 function ClientHomeProfile() {
-  const TokenSession = sessionStorage.getItem('Tokens');
-
   const userData = sessionStorage.getItem('user');
+
   const { firstName, lastName, propic } = JSON.parse(userData);
 
   const [profilePic, setProfilePic] = useState('');
+
+  const { _id, firstName, lastName } = JSON.parse(userData);
+
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
 
   const initialFormState = {
     firstName: firstName,
@@ -36,8 +41,10 @@ function ClientHomeProfile() {
 
   const initialErrorState = {
     firstNameError: '',
-    lastNameError: ''
+    lastNameError: '',
+    locationError: ''
   };
+
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState(initialErrorState);
   const [avatarImage, setAvatarImage] = useState(null);
@@ -64,29 +71,56 @@ function ClientHomeProfile() {
 
     if (Object.keys(errors).length === 0) {
       const formData = new FormData();
+      formData.append('profileId', JSON.parse(userData)._id);
+      formData.append('file', file);
+
+      const profileFrom = {
+        profileId: _id,
+        updatedInfo: {
+          firstName: firstName,
+          lastName: lastName
+        }
+      };
+
+      const propicWait = PropicApiRequest(formData, accessToken);
+      const profileWait = ProfileApiRequest(profileFrom, accessToken);
 
       if (avatarImage) {
-        formData.append('profileId', JSON.parse(userData)._id);
-        formData.append('file', file);
-
-        const accessToken = JSON.parse(TokenSession).accessToken;
-
-        ApiRequest(formData, accessToken);
+        if (propicWait === 200 && profileWait === 200) {
+          refreshSession(accessToken);
+        } else {
+          refreshSession(accessToken);
+        }
+      } else {
+        console.log('Error updating profile');
+        refreshSession(accessToken);
       }
     }
   };
-
-  const ApiRequest = (formData, accessToken) => {
+    
+  const PropicApiRequest = (formData, accessToken) => {
     updateProfilePictureEndpoint(formData, accessToken)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          refreshSession(accessToken);
-          navigate('/clientprofile');
-        }
+          return 200;
+        } else return 400;
       })
       .catch((error) => {
         console.log(error);
+      });
+  };
+
+  const ProfileApiRequest = (formData, accessToken) => {
+    EditProfileEndPoint(formData, accessToken)
+      .then((response) => {
+        if (response.status === 200) {
+          return 200;
+        } else return 400;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
       });
   };
 
@@ -115,6 +149,8 @@ function ClientHomeProfile() {
       };
 
       sessionStorage.setItem('user', JSON.stringify(user));
+
+      navigate('/clientprofile');
     });
   };
 
@@ -133,6 +169,7 @@ function ClientHomeProfile() {
       reader.readAsDataURL(file);
     }
   };
+
 
   useEffect(() => {
     getProfilePic(propic);
@@ -155,7 +192,7 @@ function ClientHomeProfile() {
   };
 
   const handleButtonBackArrowClicked = () => {
-    navigate('/clientprofile');
+    navigate('/truckerprofileview');
   };
 
   const styledFormControl = {
@@ -179,8 +216,7 @@ function ClientHomeProfile() {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: '30px'
+    alignItems: 'center'
   };
 
   const styledSubmitButton = {
@@ -211,6 +247,7 @@ function ClientHomeProfile() {
     boxShadow: 'none'
   };
 
+ 
   return (
     <div
       style={{
@@ -306,9 +343,6 @@ function ClientHomeProfile() {
                 onChange={handleInputChange}
                 error={!!formErrors.firstNameError}
                 helperText={formErrors.firstNameError}
-                InputProps={{
-                  readOnly: true
-                }}
               />
               <TextField
                 variant="standard"
@@ -332,23 +366,20 @@ function ClientHomeProfile() {
                 onChange={handleInputChange}
                 error={!!formErrors.lastNameError}
                 helperText={formErrors.lastNameError}
-                InputProps={{
-                  readOnly: true
-                }}
               />
             </Box>
-            <Box>
-              <Button
-                variant="text"
-                color="primary"
-                type="submit"
-                sx={styledSubmitButton}
-                onClick={validateForm}
-              >
-                Save
-              </Button>
-            </Box>
           </FormControl>
+          <Box>
+            <Button
+              variant="text"
+              color="primary"
+              type="submit"
+              sx={styledSubmitButton}
+              onClick={validateForm}
+            >
+              Save
+            </Button>
+          </Box>
         </Box>
       </Box>
     </div>
