@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   AppBar,
   Box,
@@ -11,19 +12,39 @@ import {
 } from '@mui/material';
 
 import BackArrow from '../../assets/backVector.svg';
-import EditIcon from '../../assets/EditVector.svg';
 import { useNavigate } from 'react-router-dom';
+import { DownloadUmageEndPoint } from '../../services/EndPoints';
 
 const ClientProfile = () => {
   const navigate = useNavigate();
   const userData = sessionStorage.getItem('user');
+  const [profilePic, setProfilePic] = useState('');
 
-  const { _id, firstName, lastName, propic, profileType, deliveryArea, driversLicense, account } =
-    JSON.parse(userData);
+  const { firstName, lastName, propic, account } = JSON.parse(userData);
 
   const accountData = {
     _id: account._id,
     number: account.number
+  };
+
+  useEffect(() => {
+    getProfilePic(propic);
+  }, [propic]);
+
+  const getProfilePic = async (key) => {
+    DownloadUmageEndPoint(key)
+      .then((response) => {
+        if (response.status === 200) {
+          const bybeImage = response.data;
+
+          const imageUrl = `data:image/png;base64,${bybeImage}`;
+          setProfilePic(imageUrl);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
   };
 
   const styledProfileBox = {
@@ -43,26 +64,6 @@ const ClientProfile = () => {
     backgroundColor: '#ffffff',
     color: '#000000',
     boxShadow: 'none'
-  };
-
-  const styleBriefInfo = {
-    width: '120px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
-  };
-
-  const styledBriefBigText = {
-    color: '#F8F8F8',
-    fontSize: '24px'
-  };
-
-  const styledBriefSmallText = {
-    color: '#F8F8F8',
-    fontSize: '16px',
-    fontWeight: 300,
-    letterSpacing: '-0.17px'
   };
 
   const styledCard = {
@@ -162,7 +163,7 @@ const ClientProfile = () => {
         >
           <Box sx={styledProfileBox}>
             <img
-              src="https://picsum.photos/200/300"
+              src={profilePic}
               alt=""
               style={{ width: '95px', height: '95px', borderRadius: 100, backgroundColor: 'grey' }}
             />
@@ -192,7 +193,6 @@ const ClientProfile = () => {
               marginBottom: '15px'
             }}
           >
-            {deliveryArea}
           </Typography>
           <Button
             variant="text"

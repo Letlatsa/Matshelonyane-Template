@@ -11,13 +11,13 @@ import ClientMenuOverlay from '../../components/HomeComponents/Client/ClientMenu
 import {
   RetrieveSurnameEndpoint,
   TrucksInDeliveryArea,
-  LocationRetrieveEndpoint
+  LocationRetrieveEndpoint,
+  DownloadUmageEndPoint
 } from '../../services/EndPoints';
 
 import {
   Container,
   FormControl,
-  TextField,
   InputLabel,
   Select,
   MenuItem,
@@ -26,7 +26,6 @@ import {
 } from '@mui/material';
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import PhoneIcon from '../../assets/phone.svg';
-import SearchIcon from '../../assets/searchIcon.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ClientHome = () => {
@@ -51,7 +50,6 @@ const ClientHome = () => {
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   };
   const navigate = useNavigate();
-  const [value, setValue] = useState('Home');
   const [isOverlay, setIsOverlay] = useState(false);
 
   const storedLastName = 'Doe';
@@ -60,6 +58,8 @@ const ClientHome = () => {
   const [deliveryAreaId, setDeliveryAreaId] = useState('65434e0376d09d13951a4314');
   const [location, setLocation] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState([]);
+  const [profilePic, setProfilePic] = useState('');
+
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
 
@@ -119,6 +119,7 @@ const ClientHome = () => {
       };
 
       setLastName(lastName);
+      getProfilePic(propic);
 
       sessionStorage.setItem('user', JSON.stringify(user));
       console.log('this is the lastname', lastName);
@@ -126,9 +127,6 @@ const ClientHome = () => {
     });
   }, [accessToken]);
 
-  const handleNavigation = (event, newValue) => {
-    setValue(newValue);
-  };
 
   useEffect(() => {
     console.log('Current Delivery Area ID:', deliveryAreaId);
@@ -152,6 +150,22 @@ const ClientHome = () => {
       })
       .catch((error) => {
         console.error('Error fetching truckers', error);
+      });
+  };
+
+  const getProfilePic = async (key) => {
+    DownloadUmageEndPoint(key)
+      .then((response) => {
+        if (response.status === 200) {
+          const bybeImage = response.data;
+
+          const imageUrl = `data:image/png;base64,${bybeImage}`;
+          setProfilePic(imageUrl);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
       });
   };
 
@@ -208,7 +222,7 @@ const ClientHome = () => {
             <Button onClick={handleButtonClicked}>
               <Box sx={styledProfileBox}>
                 <img
-                  src="https://picsum.photos/200/300"
+                  src={profilePic}
                   alt=""
                   style={{ width: '44px', height: '44px', borderRadius: 50 }}
                 />
