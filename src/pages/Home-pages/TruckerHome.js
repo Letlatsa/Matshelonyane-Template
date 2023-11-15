@@ -91,7 +91,7 @@ const TruckerHome = () => {
               marginBottom: '30px'
             }}
           >
-            <Typography sx={{ fontSize: '16px', marginLeft: '10px' }}>Sort by:</Typography>
+            {/* <Typography sx={{ fontSize: '16px', marginLeft: '10px' }}>Sort by:</Typography>
 
             <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
               <InputLabel sx={{ fontSize: '14px' }} id="rating-simple-select-label">
@@ -111,11 +111,11 @@ const TruckerHome = () => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>
+            </FormControl> */}
           </Box>
-          {/*  <Stack spacing={2}>
+          <Stack spacing={2}>
             <TruckerCard />
-          </Stack> */}
+          </Stack>
         </Container>
       </Box>
     </div>

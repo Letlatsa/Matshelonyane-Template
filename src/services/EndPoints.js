@@ -206,7 +206,7 @@ const DownloadUmageEndPoint = async (key) => {
 
 const GetProfileVisits = async (Token) => {
   try {
-    const response = await IAMApiClient.get(`/profileVisits`, {
+    const response = await FleetApiClient.get(`/profileViews`, {
       headers: { Authorization: `Bearer ${Token}` }
     });
     console.log('Response get profile visits', response.data);
