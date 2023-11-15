@@ -78,14 +78,32 @@ const theme = createTheme({
         root: {
           borderRadius: '15px',
           width: '100%',
+          color: colors.primary,
+          boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
           '&:hover': {
-            backgroundColor: '#EBDBD5'
+            backgroundColor: colors.secondary
           }
         },
-        standard: {
-          backgroundColor: '#EBDBD5',
-          color: '#58362A',
-          fontSize: 18
+        contained: {
+          backgroundColor: colors.primaryVarient,
+          color: colors.primary,
+          fontSize: 18,
+          '&:hover': {
+            backgroundColor: colors.secondary
+          }
+        },
+        text: {
+          color: colors.primary,
+          textShadow: shadows.default,
+          backgroundColor: 'transparent',
+          '&:hover': {
+            backgroundColor: 'transparent'
+          }
+        },
+        outlined: {
+          color: colors.primary,
+          boxShadow: shadows.default,
+          
         }
       }
     }
