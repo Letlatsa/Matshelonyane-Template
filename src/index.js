@@ -4,19 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { TokenProvider } from './Hooks/TokenContext';
 
-const theme = createTheme({
-  breakpoints: {
-    values: {
-      mobile: 0,
-      tablet: 640,
-      laptop: 1024,
-      desktop: 1280
-    }
-  }
-});
+import theme from './theme/theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
