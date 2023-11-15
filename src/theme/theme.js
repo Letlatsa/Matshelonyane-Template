@@ -199,6 +199,18 @@ const theme = createTheme({
           // })
         }
       }
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        backgroundColor: '#ffffff',
+        color: '#000000',
+        boxShadow: 'none'
+      }
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        height: '70px'
+      }
     }
   }
 });
