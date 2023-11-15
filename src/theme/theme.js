@@ -102,44 +102,43 @@ const theme = createTheme({
         },
         outlined: {
           color: colors.primary,
-          boxShadow: shadows.default,
-          
+          boxShadow: shadows.default
         }
       }
-    }
-  },
-  MuiTextField: {
-    styleOverrides: {
-      root: {
-        marginBottom: '30px',
-        width: '100%',
-        '& label': {
-          color: 'white'
-        },
-        '& input': {
-          color: 'white',
-          borderBottom: ' 2px solid white'
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          marginBottom: '30px',
+          width: '100%',
+          '& label': {
+            color: 'white'
+          },
+          '& input': {
+            color: 'white',
+            borderBottom: ' 2px solid white'
+          }
         }
       }
-    }
-  },
-  MuiFormControl: {
-    styleOverrides: {
-      root: {
-        marginBottom: '30px',
-        width: '100%',
-        '& label': {
-          color: 'white'
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          marginBottom: '30px',
+          width: '100%',
+          '& label': {
+            color: 'white'
+          },
+          '& input': {
+            color: 'white',
+            borderBottom: ' 2px solid white'
+          }
         },
-        '& input': {
-          color: 'white',
-          borderBottom: ' 2px solid white'
+        standard: {
+          backgroundColor: '#EBDBD5',
+          color: '#58362A',
+          fontSize: 18
         }
-      },
-      standard: {
-        backgroundColor: '#EBDBD5',
-        color: '#58362A',
-        fontSize: 18
       }
     }
   }
