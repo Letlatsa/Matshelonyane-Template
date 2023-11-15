@@ -1,6 +1,6 @@
 import React from 'react';
-import CardComponent from './CardComponent';
-import AccountCreatedContent from './AccountCreatedContent';
+import CardComponent from '../../components/OnboardingComponents/CardComponent';
+import AccountCreatedContent from '../../components/OnboardingComponents/AccountCreatedContent';
 
 function AccountCreated() {
   return (

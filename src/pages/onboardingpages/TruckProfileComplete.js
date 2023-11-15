@@ -1,6 +1,6 @@
 import React from 'react';
-import CardComponent from './CardComponent';
-import TruckProfileCompleteContent from './TruckProfileCompleteContent';
+import CardComponent from '../../components/OnboardingComponents/CardComponent';
+import TruckProfileCompleteContent from '../../components/OnboardingComponents/TruckProfileCompleteContent';
 
 function TruckProfileComplete() {
   return (

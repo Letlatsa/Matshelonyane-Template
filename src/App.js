@@ -1,17 +1,18 @@
+import { Route, Routes } from 'react-router-dom';
+
 import CreateAccount from './pages/CreateAccount';
 import ForgotPassword from './pages/ForgotPassword';
 import LoginPage from './pages/LoginPage';
-import { Route, Routes } from 'react-router-dom';
 import OneTimePin from './pages/OneTimePin';
 import Dashboard from './pages/Dashboard';
-import AccountCreated from './components/onboardingpages/AccountCreated';
-import OnboardingLicense from './components/onboardingpages/OnboardingLicense';
-import TruckerOnboardingProfile from './components/onboardingpages/TruckerOnboardingProfile';
-import TruckOnboardingProfile from './components/onboardingpages/TruckOnboardingProfile';
-import TruckProfileComplete from './components/onboardingpages/TruckProfileComplete';
-import ClientOnboardingProfile from './components/onboardingpages/ClientOnboardingProfile';
-import ClientProfileComplete from './components/onboardingpages/ClientProfileComplete';
-import ClientAccountCreated from './components/onboardingpages/ClientAccountCreated';
+import AccountCreated from './pages/onboardingpages/AccountCreated';
+import OnboardingLicense from './pages/onboardingpages/OnboardingLicense';
+import TruckerOnboardingProfile from './pages/onboardingpages/TruckerOnboardingProfile';
+import TruckOnboardingProfile from './pages/onboardingpages/TruckOnboardingProfile';
+import TruckProfileComplete from './pages/onboardingpages/TruckProfileComplete';
+import ClientOnboardingProfile from './pages/onboardingpages/ClientOnboardingProfile';
+import ClientProfileComplete from './pages/onboardingpages/ClientProfileComplete';
+import ClientAccountCreated from './pages/onboardingpages/ClientAccountCreated';
 
 /*New imports */
 import ClientHome from './pages/Home-pages/ClientHome';

@@ -1,6 +1,6 @@
 import React from 'react';
-import CardComponent from '../onboardingpages/CardComponent';
-import TruckProfile from './TruckProfile';
+import CardComponent from '../../components/OnboardingComponents/CardComponent';
+import TruckProfile from '../../components/OnboardingComponents/TruckProfile';
 
 function TruckOnboardingProfile() {
   return (

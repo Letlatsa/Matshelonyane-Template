@@ -1,6 +1,6 @@
 import React from 'react';
-import TruckerProfile from './TruckerProfile';
-import CardComponent from '../onboardingpages/CardComponent';
+import TruckerProfile from '../../components/OnboardingComponents/TruckerProfile';
+import CardComponent from '../../components/OnboardingComponents/CardComponent';
 function TruckerOnboardingProfile() {
   return (
     <div>
