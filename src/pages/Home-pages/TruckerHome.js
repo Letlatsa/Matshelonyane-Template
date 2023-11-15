@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Box from '@mui/material/Box';
 import {
   Container,

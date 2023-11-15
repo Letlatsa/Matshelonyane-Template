@@ -38,7 +38,7 @@ const TruckerCard = () => {
   };
 
   const handleButtonClickedProposalPage = () => {
-    navigate('/clientprofile');
+    navigate('/truckerhome');
   };
 
   const styledProfileBox = {
@@ -70,7 +70,7 @@ const TruckerCard = () => {
         >
           <Box sx={{ display: 'flex', width: '100%' }}>
             <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
-              <Box sx={styledProfileBox} onClick={handleButtonClickedProposalPage}>
+              <Box sx={styledProfileBox}>
                 <img
                   src="https://picsum.photos/200/300"
                   alt=""
@@ -89,7 +89,7 @@ const TruckerCard = () => {
               >
                 <Box>
                   <Typography sx={{ fontSize: '15px', paddingTop: '15px' }}>
-                    {client.client || 'null'} {/* Render client name */}
+                    {client.client}
                   </Typography>
                 </Box>
                 <Box
