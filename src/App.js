@@ -1,7 +1,8 @@
+import { Route, Routes } from 'react-router-dom';
+
 import CreateAccount from './pages/CreateAccount';
 import ForgotPassword from './pages/ForgotPassword';
 import LoginPage from './pages/LoginPage';
-import { Route, Routes } from 'react-router-dom';
 import OneTimePin from './pages/OneTimePin';
 import Dashboard from './pages/Dashboard';
 import AccountCreated from './pages/onboardingpages/AccountCreated';
