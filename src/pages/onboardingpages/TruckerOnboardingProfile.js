@@ -1,15 +1,14 @@
 import React from 'react';
+import TruckerProfile from './TruckerProfile';
 import CardComponent from './CardComponent';
-import AccountCreatedContent from './AccountCreatedContent';
-
-function AccountCreated() {
+function TruckerOnboardingProfile() {
   return (
     <div>
       <CardComponent>
-        <AccountCreatedContent />
+        <TruckerProfile />
       </CardComponent>
     </div>
   );
 }
 
-export default AccountCreated;
+export default TruckerOnboardingProfile;
