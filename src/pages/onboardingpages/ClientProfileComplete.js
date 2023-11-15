@@ -1,6 +1,6 @@
 import React from 'react';
-import CardComponent from './CardComponent';
-import ClientProfileCompleteContent from './ClientProfileCompleteContent';
+import CardComponent from '../../components/OnboardingComponents/CardComponent';
+import ClientProfileCompleteContent from '../../components/OnboardingComponents/ClientProfileCompleteContent';
 
 function ClientProfileComplete() {
   return (
