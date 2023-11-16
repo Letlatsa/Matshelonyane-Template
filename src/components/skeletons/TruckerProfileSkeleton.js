@@ -48,36 +48,47 @@ const styledStackTypography = {
 // Your Skeleton component representing the loading state
 const TruckerProfileSkeleton = () => (
   <Stack spacing={2}>
-    <Box sx={styledProfileBox}>
-      <Skeleton variant="circular" width={95} height={95} />
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginBottom: '50px'
+      }}
+    >
+      <Box sx={styledProfileBox}>
+        <Skeleton
+          variant="circular"
+          width={95}
+          height={95}
+          style={{
+            width: '95px',
+            height: '95px',
+            borderRadius: 100,
+            backgroundColor: 'grey'
+          }}
+        />
+      </Box>
     </Box>
+
     <Typography
       sx={{
-        color: ' #58362A',
+        color: '#58362A',
         fontFamily: 'Lato',
         fontSize: '24px',
         fontStyle: 'normal',
         fontWeight: 400,
         lineHeight: 'normal',
-        letterSpacing: '-0.17px'
+        letterSpacing: '-0.17px',
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center'
       }}
     >
       <Skeleton variant="text" width={150} />
     </Typography>
-    <Typography
-      sx={{
-        color: '#C69585',
-        fontFamily: 'Lato',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 400,
-        lineHeight: 'normal',
-        letterSpacing: '-0.17px',
-        marginBottom: '15px'
-      }}
-    >
-      <Skeleton variant="text" width={200} />
-    </Typography>
+
     <Box sx={styledDeviderBox}>
       <Box>
         <Typography sx={{ fontSize: '20px' }}>
@@ -111,7 +122,6 @@ const TruckerProfileSkeleton = () => (
           }}
         >
           <Typography sx={styledStackTypography}>
-            {' '}
             <Skeleton variant="text" width={100} height={20} />
           </Typography>
           <Typography sx={styledStackTypography}>

@@ -32,11 +32,18 @@ const ClientTruckerProfile = () => {
   const accessToken = JSON.parse(TokenSession).accessToken;
 
   useEffect(() => {
+    // Simulate data loading
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
     console.log('Current truckerId:', truckerId);
     const fetchTruckerData = () => {
       try {
         getTruckersInArea(accessToken, truckerId);
-        setIsLoading(false);
       } catch (error) {
         console.error('profile data: ', error);
       }
@@ -49,6 +56,7 @@ const ClientTruckerProfile = () => {
     ViewTruckerInfo(accessToken, truckerId)
       .then((truckersData) => {
         setTruckersData(truckersData);
+
         console.log('profile Data:', truckersData);
         return truckersData.data;
       })
@@ -156,93 +164,94 @@ const ClientTruckerProfile = () => {
         </AppBar>
       </Box>
       <Container sx={{ marginTop: '90px' }}>
-        <Box
-          sx={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginBottom: '50px'
-          }}
-        >
-          <Box sx={styledProfileBox}>
-            <img
-              src="https://picsum.photos/200/300"
-              alt=""
-              style={{ width: '95px', height: '95px', borderRadius: 100, backgroundColor: 'grey' }}
-            />
-          </Box>
-          <Typography
-            sx={{
-              color: ' #58362A',
-              fontFamily: 'Lato',
-              fontSize: '24px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: 'normal',
-              letterSpacing: '-0.17px'
-            }}
-          >
-            {truckersData.firstName} {truckersData.lastName}
-          </Typography>
-          <Typography
-            sx={{
-              color: '#C69585',
-              fontFamily: 'Lato',
-              fontSize: '16px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: 'normal',
-              letterSpacing: '-0.17px',
-              marginBottom: '15px'
-            }}
-          ></Typography>
-        </Box>
-
-        <Box sx={styledDeviderBox}>
-          <Box>
-            <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
-          </Box>
-          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
-        </Box>
-        <Card sx={styledCard}>
-          <Stack spacing={2} sx={styledStack}>
+        {isLoading ? ( // Check if data is loading, if true, show the skeleton
+          <TruckerProfileSkeleton />
+        ) : (
+          <>
             <Box
               sx={{
-                display: 'flex',
                 width: '100%',
-                justifyContent: 'space-between'
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginBottom: '50px'
               }}
             >
-              <Typography sx={styledStackTypography}>Phone number:</Typography>
-              <Typography sx={styledStackTypography}>
-                {truckersData.account && truckersData.account.number}
+              <Box sx={styledProfileBox}>
+                <img
+                  src="https://picsum.photos/200/300"
+                  alt=""
+                  style={{
+                    width: '95px',
+                    height: '95px',
+                    borderRadius: 100,
+                    backgroundColor: 'grey'
+                  }}
+                />
+              </Box>
+              <Typography
+                sx={{
+                  color: ' #58362A',
+                  fontFamily: 'Lato',
+                  fontSize: '24px',
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  lineHeight: 'normal',
+                  letterSpacing: '-0.17px'
+                }}
+              >
+                {truckersData.firstName} {truckersData.lastName}
+              </Typography>
+              <Typography
+                sx={{
+                  color: '#C69585',
+                  fontFamily: 'Lato',
+                  fontSize: '16px',
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  lineHeight: 'normal',
+                  letterSpacing: '-0.17px',
+                  marginBottom: '15px'
+                }}
+              >
+                {/* Placeholder text goes here */}
               </Typography>
             </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Operation Location:</Typography>
-              <Typography sx={styledStackTypography}>{truckersData.deliveryArea}</Typography>
+
+            <Box sx={styledDeviderBox}>
+              <Box>
+                <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
+              </Box>
+              <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
             </Box>
-          </Stack>
-        </Card>
-        {/* <Box sx={styledDeviderBox}>
-          <Box>
-            <Typography sx={{ fontSize: '20px' }}>Fleet</Typography>
-          </Box>
-          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
-        </Box>
-        <Box
-          sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '20px' }}
-        ></Box> */}
-        {/*  {trucks?.map((truck) => (
-          <TruckCard key={truck._id} truck={truck} />
-        ))} */}
+            <Card sx={styledCard}>
+              <Stack spacing={2} sx={styledStack}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography sx={styledStackTypography}>Phone number:</Typography>
+                  <Typography sx={styledStackTypography}>
+                    {truckersData.account && truckersData.account.number}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography sx={styledStackTypography}>Operation Location:</Typography>
+                  <Typography sx={styledStackTypography}>{truckersData.deliveryArea}</Typography>
+                </Box>
+              </Stack>
+            </Card>
+          </>
+        )}
       </Container>
     </div>
   );
