@@ -41,7 +41,7 @@ function AccountCreatedContent() {
         <Box sx={{widows: '100%'}}>
           <Typography variant='h1' sx={{ ...styledTypography, textAlign: 'center' }}>Account Created</Typography>
           <Typography
-          variant='h4'
+          variant='h5'
             sx={{
               color: 'white',
               textAlign: 'center',
