@@ -193,7 +193,7 @@ const LoginForm = () => {
 
   const forgotPasswordButton = {
     marginBottom: '30px',
-    width: '43vw',
+    width: '170px',
     alignSelf: 'end'
   };
 
