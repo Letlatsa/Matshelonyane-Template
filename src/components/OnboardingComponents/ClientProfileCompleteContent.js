@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const styledBoxContent = {
   width: '100%',
-  minHeight: '100vh'
+  minHeight: '90vh'
 };
 const styledBox = {
   width: '100%',

@@ -138,6 +138,7 @@ const theme = createTheme({
         root: {
           width: '100%',
           color: 'white',
+          borderBottom: ' 2px solid white',
           '& label': {
             color: 'white'
           },
