@@ -238,6 +238,17 @@ const theme = createTheme({
         height: '70px'
       }
     }
+  },
+  MuiOtpInput: {
+    styleOverrides: {
+      root: {
+        width: '100%',
+        '& input': {
+          color: 'white',
+          borderBottom: ' 2px solid white'
+        }
+      }
+    }
   }
 });
 
