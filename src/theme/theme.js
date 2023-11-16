@@ -133,6 +133,31 @@ const theme = createTheme({
         }
       }
     },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          width: '100%',
+          color: 'white',
+          '& label': {
+            color: 'white'
+          },
+          '& input': {
+            color: 'white',
+            borderBottom: ' 2px solid white'
+          }
+        },
+        standard: {
+          width: '100%',
+          '& input': {
+            color: 'white',
+            borderBottom: ' 3px solid white'
+          },
+          '& label': {
+            color: 'white'
+          }
+        }
+      }
+    },
     MuiFormControl: {
       styleOverrides: {
         root: {
