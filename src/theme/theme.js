@@ -76,10 +76,10 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          fontSize: 18,
           borderRadius: '15px',
           width: '100%',
           color: colors.primary,
-          boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
           '&:hover': {
             backgroundColor: colors.secondary
           }
@@ -87,15 +87,17 @@ const theme = createTheme({
         contained: {
           backgroundColor: colors.primaryVarient,
           color: colors.primary,
+          boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
           fontSize: 18,
           '&:hover': {
-            backgroundColor: colors.secondary
+            backgroundColor: colors.secondary,
+            transition: 'ease-in .3s'
           }
         },
         text: {
           color: colors.primary,
           textShadow: shadows.default,
-          backgroundColor: 'transparent',
+          fontWeight: 700,
           '&:hover': {
             backgroundColor: 'transparent'
           }
@@ -204,7 +206,7 @@ const theme = createTheme({
       styleOverrides: {
         backgroundColor: '#ffffff',
         color: '#000000',
-        boxShadow: 'none'
+        boxShadow: 'none',
       }
     },
     MuiToolbar: {
