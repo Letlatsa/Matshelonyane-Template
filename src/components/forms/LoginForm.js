@@ -148,8 +148,6 @@ const LoginForm = () => {
   const styledTypography = {
     fontSize: 24,
     textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    fontWeight: 'bold',
-    marginBottom: '50px',
     color: 'white'
   };
 
