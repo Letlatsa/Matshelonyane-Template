@@ -210,18 +210,13 @@ const LoginForm = () => {
     display: 'flex',
     alignItems: 'center'
   };
+
   const styledSubmitButton = {
     fontSize: 18,
-    backgroundColor: '#EBDBD5',
-    textColor: '#58362A',
     width: '100%',
-    borderRadius: '15px',
     height: '50px',
-    color: '#58362A',
-    fontWeight: '100',
     textTransform: 'none',
     marginBottom: '30px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     '&:hover': {
       backgroundColor: '#58362A',
       color: 'white',
@@ -326,7 +321,7 @@ const LoginForm = () => {
           </Button>
         </Box>
         <Button
-          variant="text"
+          variant="contained"
           color="primary"
           type="submit"
           sx={styledSubmitButton}

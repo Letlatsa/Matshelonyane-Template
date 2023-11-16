@@ -79,15 +79,14 @@ const theme = createTheme({
           fontSize: 18,
           borderRadius: '15px',
           width: '100%',
-          color: colors.primary,
+          color: colors.secondary,
           '&:hover': {
             backgroundColor: colors.secondary
           }
         },
         contained: {
           backgroundColor: colors.primaryVarient,
-          color: colors.primary,
-          boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+          boxShadow: shadows.default,
           fontSize: 18,
           '&:hover': {
             backgroundColor: colors.secondary,
@@ -95,7 +94,6 @@ const theme = createTheme({
           }
         },
         text: {
-          color: colors.primary,
           textShadow: shadows.default,
           fontWeight: 700,
           '&:hover': {
