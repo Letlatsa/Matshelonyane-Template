@@ -175,7 +175,6 @@ const LoginForm = () => {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: '5px'
   };
 
   const forgotPasswordButton = {

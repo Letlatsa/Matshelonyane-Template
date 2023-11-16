@@ -7,7 +7,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Button
+  Button,
+  Stack
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PhoneIcon from '../../assets/phone.svg';
@@ -121,46 +122,20 @@ function CreateAccountForm() {
     marginBottom: '10px'
   };
 
-  const styledInputLabel = {
-    marginTop: 8,
-    left: -15,
-    color: 'white',
-    '&:hover': {
-      color: 'white'
-    }
-  };
-
   const styledSelect = {
     width: '100%',
-    color: 'white',
-    borderBottom: ' 2px solid white',
-    marginBottom: '10px'
+    borderBottom: ' 1px solid white'
   };
 
-  const inputContainerBox = {
+  const inputContainer = {
     width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
     marginBottom: '30px'
   };
 
   const styledSubmitButton = {
-    fontSize: 18,
-    backgroundColor: '#EBDBD5',
-    width: '100%',
-    borderRadius: '15px',
     height: '50px',
-    color: '#58362A',
-    fontWeight: '100',
-    textTransform: 'none',
     marginBottom: '30px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    '&:hover': {
-      backgroundColor: '#58362A',
-      color: 'white',
-      transition: 'ease-in .3s'
-    }
+    marginTop: '15px'
   };
 
   const accountLabelContainer = {
@@ -170,13 +145,13 @@ function CreateAccountForm() {
 
   return (
     <div>
-      <Box sx={{ marginTop: '20px' }}>
+      <Box sx={{ marginTop: '20px', color: 'white' }}>
         <Box sx={{ right: '10px !important' }}>
           <Typography sx={styledTypography}>Create an Account</Typography>
         </Box>
-        <Box sx={inputContainerBox}>
+        <Stack spacing={1} sx={inputContainer}>
           <FormControl variant="standard" sx={styledFormControl}>
-            <InputLabel id="Account-type" sx={styledInputLabel}>
+            <InputLabel id="Account-type">
               <Box sx={accountLabelContainer}>
                 <img
                   src={AccountIcon}
@@ -224,6 +199,8 @@ function CreateAccountForm() {
               error={!!formErrors.phoneError}
               helperText={formErrors.phoneError}
             />
+          </FormControl>
+          <FormControl variant="standard" sx={styledFormControl}>
             <TextField
               variant="standard"
               label={
@@ -246,6 +223,8 @@ function CreateAccountForm() {
               error={!!formErrors.passwordError}
               helperText={formErrors.passwordError}
             />
+          </FormControl>
+          <FormControl variant="standard" sx={styledFormControl}>
             <TextField
               variant="standard"
               label={
@@ -269,11 +248,10 @@ function CreateAccountForm() {
               helperText={formErrors.confirmPasswordError}
             />
           </FormControl>
-        </Box>
+        </Stack>
         <Box>
           <Button
-            variant="text"
-            color="primary"
+            variant="contained"
             type="submit"
             sx={styledSubmitButton}
             onClick={handleButtonClick}
