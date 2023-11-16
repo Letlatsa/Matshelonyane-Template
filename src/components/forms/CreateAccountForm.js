@@ -113,9 +113,6 @@ function CreateAccountForm() {
     marginBottom: '25px'
   };
 
-  const styledTextField = {
-  };
-
   const styledBox = {
     width: '100%',
     display: 'flex',
@@ -174,11 +171,11 @@ function CreateAccountForm() {
   return (
     <div>
       <Box sx={{ marginTop: '20px' }}>
-        <FormControl sx={styledFormControl}>
-          <Box sx={{ right: '10px !important' }}>
-            <Typography sx={styledTypography}>Create an Account</Typography>
-          </Box>
-          <Box sx={inputContainerBox}>
+        <Box sx={{ right: '10px !important' }}>
+          <Typography sx={styledTypography}>Create an Account</Typography>
+        </Box>
+        <Box sx={inputContainerBox}>
+          <FormControl variant="standard" sx={styledFormControl}>
             <InputLabel id="Account-type" sx={styledInputLabel}>
               <Box sx={accountLabelContainer}>
                 <img
@@ -203,7 +200,8 @@ function CreateAccountForm() {
               <MenuItem value="customer">Client</MenuItem>
               <MenuItem value="driver">Driver</MenuItem>
             </Select>
-
+          </FormControl>
+          <FormControl variant="standard" sx={styledFormControl}>
             <TextField
               variant="standard"
               label={
@@ -221,7 +219,6 @@ function CreateAccountForm() {
               type="phone"
               name="phone"
               placeholder="Enter your phone number"
-              sx={styledTextField}
               value={formData.phone}
               onChange={handleInputChange}
               error={!!formErrors.phoneError}
@@ -244,7 +241,6 @@ function CreateAccountForm() {
               type="password"
               name="password"
               placeholder="Enter your password"
-              sx={styledTextField}
               value={formData.password}
               onChange={handleInputChange}
               error={!!formErrors.passwordError}
@@ -267,43 +263,42 @@ function CreateAccountForm() {
               type="password"
               name="confirmPassword"
               placeholder="Enter your password"
-              sx={styledTextField}
               value={formData.confirmPassword}
               onChange={handleInputChange}
               error={!!formErrors.confirmPasswordError}
               helperText={formErrors.confirmPasswordError}
             />
-          </Box>
-          <Box>
-            <Button
-              variant="text"
-              color="primary"
-              type="submit"
-              sx={styledSubmitButton}
-              onClick={handleButtonClick}
+          </FormControl>
+        </Box>
+        <Box>
+          <Button
+            variant="text"
+            color="primary"
+            type="submit"
+            sx={styledSubmitButton}
+            onClick={handleButtonClick}
+          >
+            Sign Up
+          </Button>
+          <Box sx={styledBox}>
+            <Typography
+              sx={
+                (styledTypography,
+                {
+                  textAlign: 'center'
+                })
+              }
             >
-              Sign Up
-            </Button>
-            <Box sx={styledBox}>
-              <Typography
-                sx={
-                  (styledTypography,
-                  {
-                    textAlign: 'center'
-                  })
-                }
-              >
-                Already have an account?
-              </Typography>
-            </Box>
-
-            <Box sx={styledBox}>
-              <Button variant="text" onClick={handleButtonClicked}>
-                Login
-              </Button>
-            </Box>
+              Already have an account?
+            </Typography>
           </Box>
-        </FormControl>
+
+          <Box sx={styledBox}>
+            <Button variant="text" onClick={handleButtonClicked}>
+              Login
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </div>
   );
