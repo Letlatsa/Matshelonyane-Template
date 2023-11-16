@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import ClientMenuOverlay from '../../components/HomeComponents/Client/ClientMenuOverlay';
+import HeaderSkeleton from '../../components/skeletons/HeaderSkeleton';
 
 import {
   RetrieveSurnameEndpoint,
@@ -16,15 +17,7 @@ import {
   DownloadUmageEndPoint
 } from '../../services/EndPoints';
 
-import {
-  Container,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Card,
-  Stack
-} from '@mui/material';
+import { Container, FormControl, InputLabel, Select, MenuItem, Card, Stack } from '@mui/material';
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import { useNavigate } from 'react-router-dom';
@@ -52,6 +45,7 @@ const ClientHome = () => {
   };
   const navigate = useNavigate();
   const [isOverlay, setIsOverlay] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
 
   const storedLastName = 'Doe';
   const [lastName, setLastName] = useState(storedLastName || '');
@@ -63,6 +57,15 @@ const ClientHome = () => {
 
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
+
+  //skeleton timeout
+  useEffect(() => {
+    // Simulate data loading
+    const timeout = setTimeout(() => {
+      setIsLoadingData(false);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     const fetchLocationData = async () => {
@@ -135,7 +138,6 @@ const ClientHome = () => {
       console.log(userData);
     });
   }, [accessToken]);
-
 
   useEffect(() => {
     console.log('Current Delivery Area ID:', deliveryAreaId);
@@ -227,31 +229,42 @@ const ClientHome = () => {
                 sx={{ marginRight: '30px' }}
               />
             </IconButton>
-            <Typography
-              variant="h6"
-              sx={{
-                flexGrow: 1,
-                textAlign: 'end',
-                height: '50px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                marginRight: '10px',
-                paddingTop: '7px',
-                color: '#58362A'
-              }}
-            >
-              Hi, {lastName}
-            </Typography>
-            <Button onClick={handleButtonClicked}>
-              <Box sx={styledProfileBox}>
-                <img
-                  src={profilePic}
-                  alt=""
-                  style={{ width: '44px', height: '44px', borderRadius: 50 }}
-                />
-              </Box>
-            </Button>
+
+            {/* Check if data is loading */}
+            {isLoadingData ? (
+              // Render skeleton while data is loading
+              <HeaderSkeleton />
+            ) : (
+              // Render actual content when data is loaded
+              <>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    flexGrow: 1,
+                    textAlign: 'end',
+                    height: '50px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    marginRight: '10px',
+                    paddingTop: '7px',
+                    color: '#58362A'
+                  }}
+                >
+                  Hi, {lastName}
+                </Typography>
+
+                <Button onClick={handleButtonClicked}>
+                  <Box sx={styledProfileBox}>
+                    <img
+                      src={profilePic}
+                      alt=""
+                      style={{ width: '44px', height: '44px', borderRadius: 50 }}
+                    />
+                  </Box>
+                </Button>
+              </>
+            )}
           </Toolbar>
         </AppBar>
       </Box>
