@@ -102,18 +102,6 @@ function CreateAccountForm() {
     navigate('/');
   };
 
-  const styledFormControl = {
-    width: '100%',
-    color: 'white'
-  };
-
-  const styledTypography = {
-    fontSize: 24,
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    fontWeight: 'bold',
-    marginBottom: '25px'
-  };
-
   const styledBox = {
     width: '100%',
     display: 'flex',
@@ -147,10 +135,10 @@ function CreateAccountForm() {
     <div>
       <Box sx={{ marginTop: '20px', color: 'white' }}>
         <Box sx={{ right: '10px !important', marginBottom: '50px' }}>
-          <Typography sx={styledTypography}>Create an Account</Typography>
+          <Typography>Create an Account</Typography>
         </Box>
         <Stack spacing={1} sx={inputContainer}>
-          <FormControl variant="standard" sx={styledFormControl}>
+          <FormControl variant="standard">
             <InputLabel id="Account-type">
               <Box sx={accountLabelContainer}>
                 <img
@@ -176,7 +164,7 @@ function CreateAccountForm() {
               <MenuItem value="driver">Driver</MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="standard" sx={styledFormControl}>
+          <FormControl variant="standard">
             <TextField
               variant="standard"
               label={
@@ -200,7 +188,7 @@ function CreateAccountForm() {
               helperText={formErrors.phoneError}
             />
           </FormControl>
-          <FormControl variant="standard" sx={styledFormControl}>
+          <FormControl variant="standard">
             <TextField
               variant="standard"
               label={
@@ -224,7 +212,7 @@ function CreateAccountForm() {
               helperText={formErrors.passwordError}
             />
           </FormControl>
-          <FormControl variant="standard" sx={styledFormControl}>
+          <FormControl variant="standard">
             <TextField
               variant="standard"
               label={
@@ -260,12 +248,9 @@ function CreateAccountForm() {
           </Button>
           <Box sx={styledBox}>
             <Typography
-              sx={
-                (styledTypography,
-                {
-                  textAlign: 'center'
-                })
-              }
+              sx={{
+                textAlign: 'center'
+              }}
             >
               Already have an account?
             </Typography>
