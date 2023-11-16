@@ -8,7 +8,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Button
+  Button,
+  Stack
 } from '@mui/material';
 import TextButton from '../Buttons/TextButton';
 import AccountIcon from '../../assets/account.svg';
@@ -160,8 +161,7 @@ const LoginForm = () => {
     },
     '& label': {
       color: 'white'
-    },
-    marginBottom: '15px'
+    }
   };
 
   const styledInputLabel = {
@@ -174,16 +174,13 @@ const LoginForm = () => {
   const styledSelect = {
     width: '100%',
     color: 'white',
-    borderBottom: ' 2px solid white',
-    marginBottom: '15px'
+    borderBottom: ' 2px solid white'
   };
 
   const styledBox = {
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: '10px'
+    flexDirection: 'column'
   };
 
   const inputContainerBox = {
@@ -191,19 +188,13 @@ const LoginForm = () => {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: '10px'
+    marginBottom: '5px'
   };
 
   const forgotPasswordButton = {
-    color: '#FDB299',
-    alignSelf: 'end',
-    fontWeight: '100',
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    backgroundColor: 'transparent',
     marginBottom: '30px',
-    '&:hover': {
-      backgroundColor: 'transparent'
-    }
+    width: '43vw',
+    alignSelf: 'end'
   };
 
   const accountLabelContainer = {
@@ -212,23 +203,16 @@ const LoginForm = () => {
   };
 
   const styledSubmitButton = {
-    fontSize: 18,
-    width: '100%',
     height: '50px',
-    textTransform: 'none',
-    marginBottom: '30px',
-    '&:hover': {
-      backgroundColor: '#58362A',
-      color: 'white',
-      transition: 'ease-in .3s'
-    }
+    marginBottom: '30px'
   };
+
   return (
     <Box>
       <Box sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px' }}>
         <Typography sx={styledTypography}>Welcome to Matshelonyane!</Typography>
       </Box>
-      <Box sx={inputContainerBox}>
+      <Stack sx={inputContainerBox} spacing={1}>
         <FormControl variant="standard" sx={styledFormControl}>
           <InputLabel id="Account-type" sx={styledInputLabel}>
             <Box sx={accountLabelContainer}>
@@ -313,7 +297,7 @@ const LoginForm = () => {
             helperText={formErrors.passwordError}
           />
         </FormControl>
-      </Box>
+      </Stack>
       <Box>
         <Box sx={styledBox}>
           <Button variant="text" sx={forgotPasswordButton} onClick={handleButtonClicked}>

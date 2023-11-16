@@ -80,6 +80,7 @@ const theme = createTheme({
           borderRadius: '15px',
           width: '100%',
           color: colors.secondary,
+          textTransform: 'none',
           '&:hover': {
             backgroundColor: colors.secondary
           }
@@ -90,11 +91,13 @@ const theme = createTheme({
           fontSize: 18,
           '&:hover': {
             backgroundColor: colors.secondary,
-            transition: 'ease-in .3s'
+            transition: 'ease-in .3s',
+            color: 'white'
           }
         },
         text: {
           textShadow: shadows.default,
+          color: colors.primary,
           fontWeight: 700,
           '&:hover': {
             backgroundColor: 'transparent'
@@ -109,7 +112,6 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          marginBottom: '30px',
           width: '100%',
           '& label': {
             color: 'white'
@@ -120,7 +122,6 @@ const theme = createTheme({
           }
         },
         standard: {
-          marginBottom: '10px',
           width: '100%',
           '& input': {
             color: 'white',
@@ -135,7 +136,6 @@ const theme = createTheme({
     MuiFormControl: {
       styleOverrides: {
         root: {
-          marginBottom: '30px',
           width: '100%',
           '& label': {
             color: 'white'
@@ -204,7 +204,7 @@ const theme = createTheme({
       styleOverrides: {
         backgroundColor: '#ffffff',
         color: '#000000',
-        boxShadow: 'none',
+        boxShadow: 'none'
       }
     },
     MuiToolbar: {
