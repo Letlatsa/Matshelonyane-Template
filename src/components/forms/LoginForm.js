@@ -151,17 +151,6 @@ const LoginForm = () => {
     color: 'white'
   };
 
-  const styledTextField = {
-    width: '100%',
-    '& input': {
-      color: 'white',
-      borderBottom: ' 2px solid white'
-    },
-    '& label': {
-      color: 'white'
-    }
-  };
-
   const styledInputLabel = {
     color: 'white',
     '&:hover': {
@@ -257,7 +246,6 @@ const LoginForm = () => {
             type="phone"
             name="phone"
             placeholder="Enter your phone number"
-            sx={styledTextField}
             value={formData.phone}
             onChange={(e) => {
               setFormData({ ...formData, phone: e.target.value });
@@ -285,7 +273,6 @@ const LoginForm = () => {
             type="password"
             name="password"
             placeholder="Enter your password"
-            sx={styledTextField}
             value={formData.password}
             onChange={(e) => {
               setFormData({ ...formData, password: e.target.value });

@@ -114,15 +114,6 @@ function CreateAccountForm() {
   };
 
   const styledTextField = {
-    width: '100%',
-    '& input': {
-      color: 'white',
-      borderBottom: ' 3px solid white'
-    },
-    '& label': {
-      color: 'white'
-    },
-    marginBottom: '10px'
   };
 
   const styledBox = {
@@ -131,16 +122,6 @@ function CreateAccountForm() {
     flexDirection: 'column',
     alignItems: 'center',
     marginBottom: '10px'
-  };
-
-  const styledTextButton = {
-    color: '#FDB299',
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    fontWeight: '600',
-    backgroundColor: 'transparent',
-    '&:hover': {
-      backgroundColor: 'transparent'
-    }
   };
 
   const styledInputLabel = {
@@ -317,7 +298,7 @@ function CreateAccountForm() {
             </Box>
 
             <Box sx={styledBox}>
-              <Button variant="text" sx={styledTextButton} onClick={handleButtonClicked}>
+              <Button variant="text" onClick={handleButtonClicked}>
                 Login
               </Button>
             </Box>
