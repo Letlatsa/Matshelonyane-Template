@@ -140,17 +140,6 @@ const LoginForm = () => {
     sessionStorage.setItem('Tokens', JSON.stringify(Tokens));
   };
 
-  const styledFormControl = {
-    width: '100%',
-    color: 'white'
-  };
-
-  const styledTypography = {
-    fontSize: 24,
-    textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    color: 'white'
-  };
-
   const styledInputLabel = {
     color: 'white',
     '&:hover': {
@@ -174,7 +163,7 @@ const LoginForm = () => {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'center'
   };
 
   const forgotPasswordButton = {
@@ -195,11 +184,11 @@ const LoginForm = () => {
 
   return (
     <Box>
-      <Box sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px' }}>
-        <Typography sx={styledTypography}>Welcome to Matshelonyane!</Typography>
+      <Box sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px', color: "white" }}>
+        <Typography variant='h1'>Welcome to Matshelonyane!</Typography>
       </Box>
       <Stack sx={inputContainerBox} spacing={1}>
-        <FormControl variant="standard" sx={styledFormControl}>
+        <FormControl variant="standard">
           <InputLabel id="Account-type" sx={styledInputLabel}>
             <Box sx={accountLabelContainer}>
               <img
@@ -226,7 +215,7 @@ const LoginForm = () => {
           </Select>
         </FormControl>
 
-        <FormControl variant="standard" sx={styledFormControl}>
+        <FormControl variant="standard">
           <TextField
             size="small"
             variant="standard"
@@ -254,7 +243,7 @@ const LoginForm = () => {
             helperText={formErrors.phoneError}
           />
         </FormControl>
-        <FormControl variant="standard" sx={styledFormControl}>
+        <FormControl variant="standard">
           <TextField
             variant="standard"
             label={
@@ -299,14 +288,10 @@ const LoginForm = () => {
         </Button>
         <Box sx={styledBox}>
           <Typography
-            sx={
-              (styledTypography,
-              {
-                textAlign: 'center',
-                color: 'white',
-                textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
-              })
-            }
+            sx={{
+              textAlign: 'center',
+              color: 'white',
+            }}
           >
             Don't have an account?
           </Typography>
