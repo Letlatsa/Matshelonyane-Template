@@ -19,11 +19,14 @@ import { useEffect, useState } from 'react';
 
 import { UserTrucksEndpoint, ViewTruckerInfo } from '../../services/EndPoints';
 import { useParams } from 'react-router-dom';
+import TruckerProfileSkeleton from '../../components/skeletons/TruckerProfileSkeleton';
 
 const ClientTruckerProfile = () => {
   const { truckerId } = useParams();
 
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
   const [truckersData, setTruckersData] = useState([]);
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
@@ -33,6 +36,7 @@ const ClientTruckerProfile = () => {
     const fetchTruckerData = () => {
       try {
         getTruckersInArea(accessToken, truckerId);
+        setIsLoading(false);
       } catch (error) {
         console.error('profile data: ', error);
       }
