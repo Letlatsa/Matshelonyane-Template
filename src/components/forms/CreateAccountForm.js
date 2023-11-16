@@ -135,7 +135,7 @@ function CreateAccountForm() {
     <div>
       <Box sx={{ marginTop: '20px', color: 'white' }}>
         <Box sx={{ right: '10px !important', marginBottom: '50px' }}>
-          <Typography>Create an Account</Typography>
+          <Typography variant='h1'>Create an Account</Typography>
         </Box>
         <Stack spacing={1} sx={inputContainer}>
           <FormControl variant="standard">
