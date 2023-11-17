@@ -16,18 +16,11 @@ import {
   DownloadUmageEndPoint
 } from '../../services/EndPoints';
 
-import {
-  Container,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Card,
-  Stack
-} from '@mui/material';
+import { Container, FormControl, InputLabel, Select, MenuItem, Card, Stack } from '@mui/material';
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import { useNavigate } from 'react-router-dom';
+import theme from '../../theme/theme';
 
 const ClientHome = () => {
   // Styles
@@ -42,7 +35,7 @@ const ClientHome = () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#EBDBD5',
+    backgroundColor: theme.palette.primary.variant,
     padding: 0,
     borderradius: '50px',
     marginLeft: 1,
@@ -135,7 +128,6 @@ const ClientHome = () => {
       console.log(userData);
     });
   }, [accessToken]);
-
 
   useEffect(() => {
     console.log('Current Delivery Area ID:', deliveryAreaId);
@@ -238,12 +230,12 @@ const ClientHome = () => {
                 justifyContent: 'center',
                 marginRight: '10px',
                 paddingTop: '7px',
-                color: '#58362A'
+                color: theme.palette.secondary.main
               }}
             >
               Hi, {lastName}
             </Typography>
-            <Button onClick={handleButtonClicked}>
+            <Box onClick={handleButtonClicked}>
               <Box sx={styledProfileBox}>
                 <img
                   src={profilePic}
@@ -251,20 +243,16 @@ const ClientHome = () => {
                   style={{ width: '44px', height: '44px', borderRadius: 50 }}
                 />
               </Box>
-            </Button>
+            </Box>
           </Toolbar>
         </AppBar>
       </Box>
       <Box>
         <Container sx={{ marginTop: '90px' }}>
           <Typography
+            variant="h2"
             sx={{
-              fontFamily: 'lato',
-              fontSize: '24px',
-              color: '#58362A',
-              fontWeight: 400,
-              marginBottom: '30px',
-              textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+              color: theme.palette.secondary.main
             }}
           >
             Lets find your hauler
@@ -272,8 +260,7 @@ const ClientHome = () => {
           <FormControl
             sx={{
               width: '100%',
-              height: '50px',
-              marginBottom: '50px'
+              height: '50px'
             }}
           >
             {/* <Container
@@ -310,9 +297,13 @@ const ClientHome = () => {
         <Container>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box>
-              <Typography sx={{ fontSize: '20px', color: '#58362A' }}>Truckers</Typography>
+              <Typography variant="h3" sx={{ color: theme.palette.secondary.main }}>
+                Truckers
+              </Typography>
             </Box>
-            <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '65vw' }}></Box>
+            <Box
+              sx={{ backgroundColor: theme.palette.secondary.main, height: '.2px', width: '65vw' }}
+            ></Box>
           </Box>
           <Box
             sx={{
@@ -320,13 +311,22 @@ const ClientHome = () => {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
+              alignContent: 'center',
               marginBottom: '30px'
             }}
           >
-            <Typography sx={{ fontSize: '16px', marginLeft: '10px', color: '#58362A' }}>
+            <Typography
+              variant="h4"
+              sx={{
+                marginLeft: '10px',
+                marginTop: '12px',
+                color: theme.palette.secondary.main,
+                width: '100px'
+              }}
+            >
               Sort by:
             </Typography>
-            <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
+            <FormControl sx={{ m: 0, minWidth: 120, display: 'flex' }}>
               <InputLabel sx={{ fontSize: '14px' }} id="rating-simple-select-label">
                 Location
               </InputLabel>
@@ -379,7 +379,7 @@ const ClientHome = () => {
                       }}
                     >
                       <Box>
-                        <Typography sx={{ fontSize: '15px' }}>
+                        <Typography variant="h4" sx={{ fontSize: '15px' }}>
                           {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
                         </Typography>
                       </Box>
@@ -405,23 +405,17 @@ const ClientHome = () => {
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                       <Button
-                        variant="text"
+                        variant="contained"
                         sx={{
-                          backgroundColor: '#EBDBD5',
-                          textColor: '#58362A',
+                          fontSize: '14px',
                           width: '280px',
                           borderRadius: '5px',
                           height: '25px',
-                          color: '#58362A',
-                          fontWeight: '300',
-                          fontSize: '14px',
-                          textTransform: 'none',
-                          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                          color: theme.palette.secondary.main,
                           '&:hover': {
-                            backgroundColor: '#58362A',
-                            color: 'white',
-                            transition: 'ease-in .3s'
-                          }
+                            color: theme.palette.primary.main
+                          },
+                          textTransform: 'none'
                         }}
                         onClick={async () => {
                           const {
