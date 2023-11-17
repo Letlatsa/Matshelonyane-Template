@@ -6,6 +6,7 @@ import SearchComponent from '../../components/HomeComponents/Trucker/SearchCompo
 import SearchFilter from '../../components/HomeComponents/SearchFilter';
 
 import { Container, Stack } from '@mui/material';
+import theme from '../../theme/theme';
 const TruckerHome = () => {
   return (
     <div>
@@ -24,9 +25,9 @@ const TruckerHome = () => {
             }}
           >
             <Box>
-              <Typography sx={{ fontSize: '15px' }}>Your Profile views</Typography>
+              <Typography variant='h4' sx={{ fontSize: '15px', color: theme.palette.secondary.main }}>Your Profile views</Typography>
             </Box>
-            <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '55vw' }}></Box>
+            <Box sx={{ backgroundColor: theme.palette.primary.main, height: '.5px', width: '55vw' }}></Box>
           </Box>
 
           {/* <Stack spacing={2}>
