@@ -119,9 +119,9 @@ const theme = createTheme({
             color: 'white'
           },
           '& input': {
-            color: 'white',
             borderBottom: ' 2px solid white'
-          }
+          },
+          '& fieldset': { border: 'none' }
         },
         standard: {
           marginBottom: '10px',
@@ -133,24 +133,43 @@ const theme = createTheme({
           '& label': {
             color: 'white'
           }
+        },
+        filled: {
+          marginBottom: '10px',
+          width: '100%',
+          '& input': {
+            color: 'white',
+            borderBottom: ' 3px solid white'
+          },
+          '& label': {
+            color: 'white'
+          }
+        },
+        outlined: {
+          marginBottom: '10px',
+          width: '100%',
+          '& input': {
+            color: colors.secondary.main,
+          },
+          '& label': {
+            color: 'white'
+          }
         }
       }
     },
     MuiFormControl: {
       styleOverrides: {
         root: {
-          marginBottom: '30px',
           width: '100%',
           '& label': {
-            color: 'white'
+            color: colors.primary.main
           },
           '& input': {
-            color: 'white',
             borderBottom: ' 2px solid white'
           }
         },
         standard: {
-          color: colors.primary,
+          color: colors.secondary.main,
           fontSize: 18
         }
       }
