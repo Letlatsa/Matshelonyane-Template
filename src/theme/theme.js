@@ -27,7 +27,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: colors.primary,
-      varient: colors.primaryVarient
+      variant: colors.primaryVarient
     },
     secondary: {
       main: colors.secondary

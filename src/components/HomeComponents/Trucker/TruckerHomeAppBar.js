@@ -96,7 +96,7 @@ const TruckerHomeAppBar = () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#EBDBD5',
+    backgroundColor: theme.palette.primary.variant,
     padding: 0,
     borderradius: '50px',
     marginLeft: 1,
