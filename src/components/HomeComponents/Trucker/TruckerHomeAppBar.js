@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 
 import EllipsisV from '../../../assets/ellipsisVIcon.svg';
 import { RetrieveSurnameEndpoint, DownloadUmageEndPoint } from '../../../services/EndPoints';
+import theme from '../../../theme/theme';
 
 const TruckerHomeAppBar = () => {
   const navigate = useNavigate();
@@ -127,14 +128,14 @@ const TruckerHomeAppBar = () => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
+            color: theme.palette.secondary.main,
             marginRight: '10px',
             paddingTop: '7px',
-            color: '#58362A'
           }}
         >
           Hi, {lastName}
         </Typography>
-        <Button onClick={handleButtonClicked}>
+        <Box onClick={handleButtonClicked}>
           <Box sx={styledProfileBox}>
             <img
               src={profilePic}
@@ -142,7 +143,7 @@ const TruckerHomeAppBar = () => {
               style={{ width: '44px', height: '44px', borderRadius: 50 }}
             />
           </Box>
-        </Button>
+        </Box>
       </Toolbar>
     </AppBar>
   );

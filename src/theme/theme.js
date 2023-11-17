@@ -66,6 +66,10 @@ const theme = createTheme({
     h5: {
       fontSize: '1rem',
       fontWeight: 400
+    },
+    h6: {
+      fontSize: '1.5rem',
+      fontWeight: 300
     }
   },
   spacing: 15,
