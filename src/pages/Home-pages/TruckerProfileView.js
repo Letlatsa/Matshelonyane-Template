@@ -15,11 +15,19 @@ import EditIcon from '../../assets/EditVector.svg';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
+import TruckerProfileSkeleton from '../../components/skeletons/TruckerProfileViewSkeleton';
 
-import { UserTrucksEndpoint, DownloadUmageEndPoint, GetServiceLocation } from '../../services/EndPoints';
+import {
+  UserTrucksEndpoint,
+  DownloadUmageEndPoint,
+  GetServiceLocation
+} from '../../services/EndPoints';
 
 const TruckerProfileView = () => {
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(true);
+
   const [trucks, setTrucks] = useState([]);
   const [profilePic, setProfilePic] = useState('');
 
@@ -36,6 +44,14 @@ const TruckerProfileView = () => {
 
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
+
+  useEffect(() => {
+    // Simulate data loading
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     getProfilePic(propic);
@@ -66,7 +82,6 @@ const TruckerProfileView = () => {
         console.log(error);
       });
   };
-
 
   const getProfilePic = async (key) => {
     DownloadUmageEndPoint(key)
@@ -187,116 +202,127 @@ const TruckerProfileView = () => {
         </AppBar>
       </Box>
       <Container sx={{ marginTop: '90px' }}>
-        <Box
-          sx={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginBottom: '50px'
-          }}
-        >
-          <Box sx={styledProfileBox}>
-            <img
-              src={profilePic}
-              alt=""
-              style={{ width: '95px', height: '95px', borderRadius: 100, backgroundColor: 'grey' }}
-            />
-          </Box>
-          <Typography
-            sx={{
-              color: ' #58362A',
-              fontFamily: 'Lato',
-              fontSize: '24px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: 'normal',
-              letterSpacing: '-0.17px'
-            }}
-          >
-            {firstName} {lastName}
-          </Typography>
-          <Typography
-            sx={{
-              color: '#C69585',
-              fontFamily: 'Lato',
-              fontSize: '16px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: 'normal',
-              letterSpacing: '-0.17px',
-              marginBottom: '15px'
-            }}
-          >
-            {location}
-          </Typography>
-          <Button
-            variant="text"
-            sx={{
-              backgroundColor: '#EBDBD5',
-              textColor: '#58362A',
-              width: '196px',
-              borderRadius: '15px',
-              height: '50px',
-              color: '#58362A',
-              fontWeight: '300',
-              fontSize: '20px',
-              textTransform: 'none',
-              boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-              '&:hover': {
-                backgroundColor: '#58362A',
-                color: 'white',
-                transition: 'ease-in .3s'
-              }
-            }}
-            onClick={handleEditButtonClicked}
-          >
-            Edit
-          </Button>
-        </Box>
+        {isLoading ? ( // Check if data is loading, if true, show the skeleton
+          <TruckerProfileSkeleton />
+        ) : (
+          <>
+            <Box
+              sx={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginBottom: '50px'
+              }}
+            >
+              <Box sx={styledProfileBox}>
+                <img
+                  src={profilePic}
+                  alt=""
+                  style={{
+                    width: '95px',
+                    height: '95px',
+                    borderRadius: 100,
+                    backgroundColor: 'grey'
+                  }}
+                />
+              </Box>
+              <Typography
+                sx={{
+                  color: ' #58362A',
+                  fontFamily: 'Lato',
+                  fontSize: '24px',
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  lineHeight: 'normal',
+                  letterSpacing: '-0.17px'
+                }}
+              >
+                {firstName} {lastName}
+              </Typography>
+              <Typography
+                sx={{
+                  color: '#C69585',
+                  fontFamily: 'Lato',
+                  fontSize: '16px',
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  lineHeight: 'normal',
+                  letterSpacing: '-0.17px',
+                  marginBottom: '15px'
+                }}
+              >
+                {location}
+              </Typography>
+              <Button
+                variant="text"
+                sx={{
+                  backgroundColor: '#EBDBD5',
+                  textColor: '#58362A',
+                  width: '196px',
+                  borderRadius: '15px',
+                  height: '50px',
+                  color: '#58362A',
+                  fontWeight: '300',
+                  fontSize: '20px',
+                  textTransform: 'none',
+                  boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+                  '&:hover': {
+                    backgroundColor: '#58362A',
+                    color: 'white',
+                    transition: 'ease-in .3s'
+                  }
+                }}
+                onClick={handleEditButtonClicked}
+              >
+                Edit
+              </Button>
+            </Box>
 
-        <Box sx={styledDeviderBox}>
-          <Box>
-            <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
-          </Box>
-          <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '66vw' }}></Box>
-        </Box>
-        <Card sx={styledCard}>
-          <Stack spacing={2} sx={styledStack}>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Phone number:</Typography>
-              <Typography sx={styledStackTypography}> {accountData.number}</Typography>
+            <Box sx={styledDeviderBox}>
+              <Box>
+                <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
+              </Box>
+              <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '66vw' }}></Box>
+            </Box>
+            <Card sx={styledCard}>
+              <Stack spacing={2} sx={styledStack}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography sx={styledStackTypography}>Phone number:</Typography>
+                  <Typography sx={styledStackTypography}> {accountData.number}</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography sx={styledStackTypography}>Location:</Typography>
+                  <Typography sx={styledStackTypography}>{location}</Typography>
+                </Box>
+              </Stack>
+            </Card>
+            <Box sx={styledDeviderBox}>
+              <Box>
+                <Typography sx={{ fontSize: '20px' }}>Fleet</Typography>
+              </Box>
+              <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '75vw' }}></Box>
             </Box>
             <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Location:</Typography>
-              <Typography sx={styledStackTypography}>{location}</Typography>
-            </Box>
-          </Stack>
-        </Card>
-        <Box sx={styledDeviderBox}>
-          <Box>
-            <Typography sx={{ fontSize: '20px' }}>Fleet</Typography>
-          </Box>
-          <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '75vw' }}></Box>
-        </Box>
-        <Box
-          sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '20px' }}
-        ></Box>
-        {trucks?.map((truck) => (
-          <TruckCard key={truck._id} truck={truck} />
-        ))}
+              sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '20px' }}
+            ></Box>
+            {trucks?.map((truck) => (
+              <TruckCard key={truck._id} truck={truck} />
+            ))}
+          </>
+        )}
       </Container>
     </div>
   );
