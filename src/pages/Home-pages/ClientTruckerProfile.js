@@ -17,7 +17,11 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 //import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
 
-import { UserTrucksEndpoint, ViewTruckerInfo } from '../../services/EndPoints';
+import {
+  UserTrucksEndpoint,
+  ViewTruckerInfo,
+  DownloadUmageEndPoint
+} from '../../services/EndPoints';
 import { useParams } from 'react-router-dom';
 
 const ClientTruckerProfile = () => {
@@ -25,33 +29,29 @@ const ClientTruckerProfile = () => {
 
   const navigate = useNavigate();
   const [truckersData, setTruckersData] = useState([]);
+  const [imageData, setImageData] = useState(null);
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
 
   useEffect(() => {
-    console.log('Current truckerId:', truckerId);
-    const fetchTruckerData = () => {
+    const fetchTruckerData = async () => {
       try {
-        getTruckersInArea(accessToken, truckerId);
+        const truckerInfo = await ViewTruckerInfo(accessToken, truckerId);
+        setTruckersData(truckerInfo);
+        console.log('profile Data:', truckerInfo);
+
+        // Download the image
+        const imageResponse = await DownloadUmageEndPoint(truckerInfo.propic);
+        const imageData = imageResponse.data;
+        setImageData(imageData);
+        console.log('' + imageData);
       } catch (error) {
-        console.error('profile data: ', error);
+        console.error('Error fetching trucker profile or image:', error);
       }
     };
 
     fetchTruckerData();
   }, [accessToken, truckerId]);
-
-  const getTruckersInArea = (accessToken, truckerId) => {
-    ViewTruckerInfo(accessToken, truckerId)
-      .then((truckersData) => {
-        setTruckersData(truckersData);
-        console.log('profile Data:', truckersData);
-        return truckersData.data;
-      })
-      .catch((error) => {
-        console.error('Error fetching profiles of truckers', error);
-      });
-  };
 
   const styledProfileBox = {
     borderRadius: '100px',
@@ -163,8 +163,8 @@ const ClientTruckerProfile = () => {
         >
           <Box sx={styledProfileBox}>
             <img
-              src="https://picsum.photos/200/300"
-              alt=""
+              src={imageData ? `data:image/jpeg;base64,${imageData}` : ''}
+              alt="Trucker Profile"
               style={{ width: '95px', height: '95px', borderRadius: 100, backgroundColor: 'grey' }}
             />
           </Box>
