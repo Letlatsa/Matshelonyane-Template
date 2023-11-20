@@ -17,76 +17,6 @@ import ProgressBar from './ProgressBar';
 import { TruckRetrieveEndpoint, TruckRegisterEndPoint } from '../../services/EndPoints';
 import { useNavigate } from 'react-router-dom';
 
-const styledFormControl = {
-  width: '100%',
-  color: 'white'
-};
-
-const styledTextField = {
-  width: '100%',
-  '& input': {
-    color: 'white',
-    borderBottom: ' 3px solid white'
-  },
-  '& label': {
-    color: 'white'
-  }
-};
-
-const inputContainerBox = {
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center'
-};
-
-const styledSubmitButton = {
-  fontSize: 18,
-  backgroundColor: '#EBDBD5',
-  width: '100%',
-  borderRadius: '15px',
-  height: '50px',
-  color: '#58362A',
-  fontWeight: '400',
-  textTransform: 'none',
-  marginTop: '30px',
-  boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-  '&:hover': {
-    backgroundColor: '#58362A',
-    color: 'white',
-    transition: 'ease-in .3s'
-  }
-};
-const styledInputLabel = {
-  left: -15,
-  color: 'white',
-  '&:hover': {
-    color: 'white'
-  }
-};
-
-const styledSelect = {
-  width: '100%',
-  color: 'white',
-  borderBottom: ' 2px solid white'
-};
-const accountLabelContainer = {
-  display: 'flex',
-  alignItems: 'center'
-};
-const styledAvatarBox = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  position: 'relative'
-};
-
-// eslint-disable-next-line no-unused-vars
-const styledHelperText = {
-  color: 'red',
-  marginRight: '150px'
-};
-
 function TruckProfile() {
   const initialFormState = {
     platNumber: '',
@@ -210,6 +140,29 @@ function TruckProfile() {
     }
   };
 
+  const inputContainerBox = {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  };
+
+  const styledSubmitButton = {
+    height: '50px',
+    marginTop: '30px'
+  };
+
+  const accountLabelContainer = {
+    display: 'flex',
+    alignItems: 'center'
+  };
+  const styledAvatarBox = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative'
+  };
+
   return (
     <div>
       <Box sx={{ width: '100%' }}>
@@ -217,14 +170,11 @@ function TruckProfile() {
           <ProgressBar currentStep={currentStep} />
         </Box>
         <Typography
+        variant='h1'
           sx={{
-            fontSize: 24,
             color: 'white',
             textAlign: 'center',
-            marginBottom: '15px',
-            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-            fontWeight: 'bold',
-            marginTop: '50px'
+            marginBottom: '15px'
           }}
         >
           Fleet setup
@@ -247,20 +197,18 @@ function TruckProfile() {
           </Box>
         </label>
         <Typography
+        variant='h4'
           sx={{
-            fontSize: 14,
             color: 'white',
             textAlign: 'center',
             marginBottom: '50px',
             marginTop: '15px',
-            fontWeight: '700',
-            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
           }}
         >
           Upload a picture of your truck
         </Typography>
-        <Stack spacing={2}>
-          <FormControl sx={styledFormControl}>
+        <Stack spacing={1}>
+          <FormControl>
             <Box sx={inputContainerBox}>
               <TextField
                 variant="standard"
@@ -279,7 +227,6 @@ function TruckProfile() {
                 type="platNumber"
                 name="platNumber"
                 placeholder="Enter your plate number"
-                sx={styledTextField}
                 value={formData.platNumber}
                 onChange={handleInputChange}
                 error={!!formErrors.platNumberError}
@@ -287,19 +234,23 @@ function TruckProfile() {
               />
             </Box>
           </FormControl>
-          <FormControl sx={styledFormControl}>
+          <FormControl variant="standard">
             <Box sx={inputContainerBox}>
-              <InputLabel id="truckType" sx={styledInputLabel}>
+              <InputLabel id="truckType">
                 <Box sx={accountLabelContainer}>
-                  <img src={TruckIcon} alt="Truck-type" width="30" height="20" />
+                  <img
+                    src={TruckIcon}
+                    sx={{ marginRight: '30px' }}
+                    alt="Truck-type"
+                    width="30"
+                    height="20"
+                  />
                   <Box>Truck-type</Box>
                 </Box>
               </InputLabel>
               <Select
-                variant="standard"
                 labelId="truckType"
                 id="truckType"
-                sx={styledSelect}
                 onChange={handleTrucktypeChange}
                 value={selectedTruckType}
               >
@@ -311,7 +262,7 @@ function TruckProfile() {
               </Select>
             </Box>
           </FormControl>
-          <FormControl sx={styledFormControl}>
+          <FormControl>
             <TextField
               variant="standard"
               label={
@@ -329,7 +280,6 @@ function TruckProfile() {
               type="maxLoadCapacity"
               name="maxLoadCapacity"
               placeholder="Enter your Truck weight capacity"
-              sx={styledTextField}
               value={formData.maxLoadCapacity}
               onChange={handleInputChange}
               error={!!formErrors.maxLoadCapacityError}
@@ -338,7 +288,7 @@ function TruckProfile() {
           </FormControl>
           <Box>
             <Button
-              variant="text"
+              variant="contained"
               color="primary"
               type="submit"
               sx={styledSubmitButton}
@@ -348,8 +298,8 @@ function TruckProfile() {
             </Button>
           </Box>
           <Typography
+            variant="h4"
             sx={{
-              fontSize: 16,
               color: 'white',
               textAlign: 'center',
               marginBottom: '50px',

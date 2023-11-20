@@ -173,9 +173,23 @@ const ClientHome = () => {
   const getTrucksersInArea = (accessToken, deliveryAreaId) => {
     TrucksInDeliveryArea(accessToken, deliveryAreaId)
       .then((truckersData) => {
-        setTruckersData(truckersData);
-        console.log('Truckers Data:', truckersData);
-        return truckersData.data;
+        const updatedTruckersData = truckersData.map(async (trucker) => {
+          try {
+            const response = await DownloadUmageEndPoint(trucker.profile.propic);
+            if (response.status === 200) {
+              const bybeImage = response.data;
+              const imageUrl = `data:image/png;base64,${bybeImage}`;
+              console.log('Image URL:', imageUrl);
+              return { ...trucker, propic: imageUrl };
+            }
+          } catch (error) {
+            console.error('Error fetching profile picture:', error);
+          }
+          return trucker;
+        });
+        Promise.all(updatedTruckersData).then((data) => {
+          setTruckersData(data);
+        });
       })
       .catch((error) => {
         console.error('Error fetching truckers', error);
@@ -190,6 +204,7 @@ const ClientHome = () => {
 
           const imageUrl = `data:image/png;base64,${bybeImage}`;
           setProfilePic(imageUrl);
+          console.log('Profile picture', imageUrl);
         }
       })
       .catch((error) => {
@@ -389,6 +404,40 @@ const ClientHome = () => {
                           alt=""
                           style={{ width: '44px', height: '44px', borderRadius: 50 }}
                         />
+                    </Box>
+                  </Box>
+                  <Stack spacing={2} sx={{ paddingRight: '15px' }}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        width: '280px',
+                        justifyContent: 'space-between',
+                        color: 'white'
+                      }}
+                    >
+                      <Box>
+                        <Typography sx={{ fontSize: '15px' }}>
+                          {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ textAlign: 'right' }}>
+                        <Typography
+                          sx={{
+                            fontSize: '16px',
+                            filter: 'blur(3px)',
+                            display: 'flex',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <img
+                            src={PhoneIcon}
+                            alt="Phone"
+                            width="30"
+                            height="20"
+                            sx={{ marginRight: '30px' }}
+                          />
+                          78322342
+                        </Typography>
                       </Box>
                     </Box>
                     <Stack spacing={2} sx={{ paddingRight: '15px' }}>

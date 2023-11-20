@@ -66,22 +66,7 @@ function ForgotPasswordForm() {
   };
 
   const styledTypography = {
-    fontSize: 24,
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    fontWeight: 'bold',
     marginBottom: '50px'
-  };
-
-  const styledTextField = {
-    width: '100%',
-    '& input': {
-      color: 'white',
-      borderBottom: ' 3px solid white'
-    },
-    '& label': {
-      color: 'white'
-    },
-    marginBottom: '10px'
   };
 
   const inputContainerBox = {
@@ -93,21 +78,8 @@ function ForgotPasswordForm() {
   };
 
   const styledSubmitButton = {
-    fontSize: 18,
-    backgroundColor: '#EBDBD5',
-    width: '100%',
-    borderRadius: '15px',
     height: '50px',
-    color: '#58362A',
-    fontWeight: '100',
-    textTransform: 'none',
-    marginBottom: '30px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    '&:hover': {
-      backgroundColor: '#58362A',
-      color: 'white',
-      transition: 'ease-in .3s'
-    }
+    marginBottom: '30px'
   };
 
   return (
@@ -115,7 +87,7 @@ function ForgotPasswordForm() {
       <Box>
         <FormControl sx={styledFormControl}>
           <Box sx={{ right: '10px !important' }}>
-            <Typography sx={styledTypography}>Recover Account</Typography>
+            <Typography variant='h1' sx={styledTypography}>Recover Account</Typography>
           </Box>
           <Box sx={inputContainerBox}>
             <TextField
@@ -134,8 +106,7 @@ function ForgotPasswordForm() {
               }
               type="phone"
               name="phone"
-              placeholder="Enter your phone number"
-              sx={styledTextField}
+              placeholder="Enter your phone number"S
               value={formData.phone}
               onChange={(e) => {
                 setFormData({ ...formData, phone: e.target.value });
@@ -147,7 +118,7 @@ function ForgotPasswordForm() {
           </Box>
           <Box>
             <Button
-              variant="text"
+              variant="contained"
               color="primary"
               type="submit"
               sx={styledSubmitButton}
@@ -156,6 +127,7 @@ function ForgotPasswordForm() {
               Reset Password
             </Button>
             <Typography
+            variant='h4'
               sx={
                 (styledTypography,
                 {

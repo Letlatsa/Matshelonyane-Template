@@ -7,7 +7,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Button
+  Button,
+  Stack
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PhoneIcon from '../../assets/phone.svg';
@@ -101,30 +102,6 @@ function CreateAccountForm() {
     navigate('/');
   };
 
-  const styledFormControl = {
-    width: '100%',
-    color: 'white'
-  };
-
-  const styledTypography = {
-    fontSize: 24,
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    fontWeight: 'bold',
-    marginBottom: '25px'
-  };
-
-  const styledTextField = {
-    width: '100%',
-    '& input': {
-      color: 'white',
-      borderBottom: ' 3px solid white'
-    },
-    '& label': {
-      color: 'white'
-    },
-    marginBottom: '10px'
-  };
-
   const styledBox = {
     width: '100%',
     display: 'flex',
@@ -133,56 +110,20 @@ function CreateAccountForm() {
     marginBottom: '10px'
   };
 
-  const styledTextButton = {
-    color: '#FDB299',
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    fontWeight: '600',
-    backgroundColor: 'transparent',
-    '&:hover': {
-      backgroundColor: 'transparent'
-    }
-  };
-
-  const styledInputLabel = {
-    marginTop: 8,
-    left: -15,
-    color: 'white',
-    '&:hover': {
-      color: 'white'
-    }
-  };
-
   const styledSelect = {
     width: '100%',
-    color: 'white',
-    borderBottom: ' 2px solid white',
-    marginBottom: '10px'
+    borderBottom: ' 1px solid white'
   };
 
-  const inputContainerBox = {
+  const inputContainer = {
     width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
     marginBottom: '30px'
   };
 
   const styledSubmitButton = {
-    fontSize: 18,
-    backgroundColor: '#EBDBD5',
-    width: '100%',
-    borderRadius: '15px',
     height: '50px',
-    color: '#58362A',
-    fontWeight: '100',
-    textTransform: 'none',
     marginBottom: '30px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    '&:hover': {
-      backgroundColor: '#58362A',
-      color: 'white',
-      transition: 'ease-in .3s'
-    }
+    marginTop: '15px'
   };
 
   const accountLabelContainer = {
@@ -192,13 +133,13 @@ function CreateAccountForm() {
 
   return (
     <div>
-      <Box sx={{ marginTop: '20px' }}>
-        <FormControl sx={styledFormControl}>
-          <Box sx={{ right: '10px !important' }}>
-            <Typography sx={styledTypography}>Create an Account</Typography>
-          </Box>
-          <Box sx={inputContainerBox}>
-            <InputLabel id="Account-type" sx={styledInputLabel}>
+      <Box sx={{ marginTop: '20px', color: 'white' }}>
+        <Box sx={{ right: '10px !important', marginBottom: '50px' }}>
+          <Typography variant='h1'>Create an Account</Typography>
+        </Box>
+        <Stack spacing={1} sx={inputContainer}>
+          <FormControl variant="standard">
+            <InputLabel id="Account-type">
               <Box sx={accountLabelContainer}>
                 <img
                   src={AccountIcon}
@@ -222,7 +163,8 @@ function CreateAccountForm() {
               <MenuItem value="customer">Client</MenuItem>
               <MenuItem value="driver">Driver</MenuItem>
             </Select>
-
+          </FormControl>
+          <FormControl variant="standard">
             <TextField
               variant="standard"
               label={
@@ -240,12 +182,13 @@ function CreateAccountForm() {
               type="phone"
               name="phone"
               placeholder="Enter your phone number"
-              sx={styledTextField}
               value={formData.phone}
               onChange={handleInputChange}
               error={!!formErrors.phoneError}
               helperText={formErrors.phoneError}
             />
+          </FormControl>
+          <FormControl variant="standard">
             <TextField
               variant="standard"
               label={
@@ -263,12 +206,13 @@ function CreateAccountForm() {
               type="password"
               name="password"
               placeholder="Enter your password"
-              sx={styledTextField}
               value={formData.password}
               onChange={handleInputChange}
               error={!!formErrors.passwordError}
               helperText={formErrors.passwordError}
             />
+          </FormControl>
+          <FormControl variant="standard">
             <TextField
               variant="standard"
               label={
@@ -286,43 +230,38 @@ function CreateAccountForm() {
               type="password"
               name="confirmPassword"
               placeholder="Enter your password"
-              sx={styledTextField}
               value={formData.confirmPassword}
               onChange={handleInputChange}
               error={!!formErrors.confirmPasswordError}
               helperText={formErrors.confirmPasswordError}
             />
-          </Box>
-          <Box>
-            <Button
-              variant="text"
-              color="primary"
-              type="submit"
-              sx={styledSubmitButton}
-              onClick={handleButtonClick}
+          </FormControl>
+        </Stack>
+        <Box>
+          <Button
+            variant="contained"
+            type="submit"
+            sx={styledSubmitButton}
+            onClick={handleButtonClick}
+          >
+            Sign Up
+          </Button>
+          <Box sx={styledBox}>
+            <Typography
+              sx={{
+                textAlign: 'center'
+              }}
             >
-              Sign Up
-            </Button>
-            <Box sx={styledBox}>
-              <Typography
-                sx={
-                  (styledTypography,
-                  {
-                    textAlign: 'center'
-                  })
-                }
-              >
-                Already have an account?
-              </Typography>
-            </Box>
-
-            <Box sx={styledBox}>
-              <Button variant="text" sx={styledTextButton} onClick={handleButtonClicked}>
-                Login
-              </Button>
-            </Box>
+              Already have an account?
+            </Typography>
           </Box>
-        </FormControl>
+
+          <Box sx={styledBox}>
+            <Button variant="text" onClick={handleButtonClicked}>
+              Login
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </div>
   );

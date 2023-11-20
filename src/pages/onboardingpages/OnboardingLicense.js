@@ -7,6 +7,7 @@ import '../../styles/login.css';
 import ProgressBar from '../../components/OnboardingComponents/ProgressBar';
 import { useToken } from '../../Hooks/TokenContext';
 import { UpdateDriverLicenseEndPoint } from '../../services/EndPoints';
+import theme from '../../theme/theme';
 
 const OnboardingLicense = () => {
   const { tokens } = useToken();
@@ -63,44 +64,16 @@ const OnboardingLicense = () => {
   };
 
   const styledButton = {
-    fontSize: 18,
-    backgroundColor: '#FDB299',
-    width: '100%',
-    borderRadius: '15px',
     height: '50px',
-    color: '#000000',
-    fontWeight: '400',
-    textTransform: 'none',
     marginBottom: '50px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    '&:hover': {
-      backgroundColor: '#58362A',
-      color: 'white',
-      transition: 'ease-in .3s'
-    }
+    backgroundColor: theme.palette.primary.main,
   };
   const styledButtonone = {
-    fontSize: 18,
-    backgroundColor: '#EBDBD5',
-    width: '100%',
-    borderRadius: '15px',
     height: '50px',
-    color: '#000000',
-    fontWeight: '400',
-    textTransform: 'none',
-    marginBottom: '50px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    '&:hover': {
-      backgroundColor: '#58362A',
-      color: 'white',
-      transition: 'ease-in .3s'
-    }
+    marginBottom: '50px'
   };
 
   const styledHeaingTypography = {
-    fontSize: 20,
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    fontWeight: 'bold',
     color: '#ffffff',
     textAlign: 'center',
     marginBottom: '50px'
@@ -108,8 +81,6 @@ const OnboardingLicense = () => {
 
   const styledTypography = {
     marginTop: '15px',
-    fontSize: 16,
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
     color: '#ffffff',
     textAlign: 'center'
   };
@@ -137,12 +108,19 @@ const OnboardingLicense = () => {
           <ProgressBar currentStep={currentStep} />
         </Box>
         <Box className="LiceneceBox" sx={{ marginTop: '50px' }}>
-          <Typography sx={styledHeaingTypography}>Let’s verify your drivers license</Typography>
+          <Typography variant='h1' sx={styledHeaingTypography}>Let’s verify your drivers license</Typography>
 
           <Box sx={styledBox}>
             <label
               htmlFor="license-upload"
-              style={{ maxWidth: '330px', objectFit: 'cover', width: '90vw', maxHeight: "200px", height: '200px', overflowY: 'none' }}
+              style={{
+                maxWidth: '330px',
+                objectFit: 'cover',
+                width: '90vw',
+                maxHeight: '200px',
+                height: '200px',
+                overflowY: 'none'
+              }}
             >
               {imageSrc ? (
                 <img src={imageSrc} alt="License" style={styledImage} />
@@ -150,7 +128,7 @@ const OnboardingLicense = () => {
                 <img src={LicenceFrame} alt="License" style={styledImage} />
               )}
             </label>
-            <Typography sx={styledTypography}>
+            <Typography variant='h4' sx={styledTypography}>
               Upload a legible picture of your drivers license to verify your info
             </Typography>
           </Box>
@@ -163,10 +141,10 @@ const OnboardingLicense = () => {
               style={{ display: 'none' }}
               onChange={handleImageChange}
             />
-            <Button variant="text" sx={styledButton}>
+            <Button variant="contained" sx={styledButton}>
               Upload Picture
             </Button>
-            <Button variant="text" sx={styledButtonone} onClick={handleButtonClick}>
+            <Button variant="contained" sx={styledButtonone} onClick={handleButtonClick}>
               Proceed
             </Button>
           </Box>

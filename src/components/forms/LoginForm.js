@@ -8,7 +8,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Button
+  Button,
+  Stack
 } from '@mui/material';
 import TextButton from '../Buttons/TextButton';
 import AccountIcon from '../../assets/account.svg';
@@ -139,31 +140,6 @@ const LoginForm = () => {
     sessionStorage.setItem('Tokens', JSON.stringify(Tokens));
   };
 
-  const styledFormControl = {
-    width: '100%',
-    color: 'white'
-  };
-
-  const styledTypography = {
-    fontSize: 24,
-    textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    fontWeight: 'bold',
-    marginBottom: '50px',
-    color: 'white'
-  };
-
-  const styledTextField = {
-    width: '100%',
-    '& input': {
-      color: 'white',
-      borderBottom: ' 2px solid white'
-    },
-    '& label': {
-      color: 'white'
-    },
-    marginBottom: '15px'
-  };
-
   const styledInputLabel = {
     color: 'white',
     '&:hover': {
@@ -174,67 +150,45 @@ const LoginForm = () => {
   const styledSelect = {
     width: '100%',
     color: 'white',
-    borderBottom: ' 2px solid white',
-    marginBottom: '15px'
+    borderBottom: ' 2px solid white'
   };
 
   const styledBox = {
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: '10px'
+    flexDirection: 'column'
   };
 
   const inputContainerBox = {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: '10px'
+    alignItems: 'center'
   };
 
   const forgotPasswordButton = {
-    color: '#FDB299',
-    alignSelf: 'end',
-    fontWeight: '100',
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    backgroundColor: 'transparent',
     marginBottom: '30px',
-    '&:hover': {
-      backgroundColor: 'transparent'
-    }
+    width: '170px',
+    alignSelf: 'end'
   };
 
   const accountLabelContainer = {
     display: 'flex',
     alignItems: 'center'
   };
+
   const styledSubmitButton = {
-    fontSize: 18,
-    backgroundColor: '#EBDBD5',
-    textColor: '#58362A',
-    width: '100%',
-    borderRadius: '15px',
     height: '50px',
-    color: '#58362A',
-    fontWeight: '100',
-    textTransform: 'none',
-    marginBottom: '30px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    '&:hover': {
-      backgroundColor: '#58362A',
-      color: 'white',
-      transition: 'ease-in .3s'
-    }
+    marginBottom: '30px'
   };
+
   return (
     <Box>
-      <Box sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px' }}>
-        <Typography sx={styledTypography}>Welcome to Matshelonyane!</Typography>
+      <Box sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px', color: "white" }}>
+        <Typography variant='h1'>Welcome to Matshelonyane!</Typography>
       </Box>
-      <Box sx={inputContainerBox}>
-        <FormControl variant="standard" sx={styledFormControl}>
+      <Stack sx={inputContainerBox} spacing={1}>
+        <FormControl variant="standard">
           <InputLabel id="Account-type" sx={styledInputLabel}>
             <Box sx={accountLabelContainer}>
               <img
@@ -261,7 +215,7 @@ const LoginForm = () => {
           </Select>
         </FormControl>
 
-        <FormControl variant="standard" sx={styledFormControl}>
+        <FormControl variant="standard">
           <TextField
             size="small"
             variant="standard"
@@ -280,7 +234,6 @@ const LoginForm = () => {
             type="phone"
             name="phone"
             placeholder="Enter your phone number"
-            sx={styledTextField}
             value={formData.phone}
             onChange={(e) => {
               setFormData({ ...formData, phone: e.target.value });
@@ -290,7 +243,7 @@ const LoginForm = () => {
             helperText={formErrors.phoneError}
           />
         </FormControl>
-        <FormControl variant="standard" sx={styledFormControl}>
+        <FormControl variant="standard">
           <TextField
             variant="standard"
             label={
@@ -308,7 +261,6 @@ const LoginForm = () => {
             type="password"
             name="password"
             placeholder="Enter your password"
-            sx={styledTextField}
             value={formData.password}
             onChange={(e) => {
               setFormData({ ...formData, password: e.target.value });
@@ -318,7 +270,7 @@ const LoginForm = () => {
             helperText={formErrors.passwordError}
           />
         </FormControl>
-      </Box>
+      </Stack>
       <Box>
         <Box sx={styledBox}>
           <Button variant="text" sx={forgotPasswordButton} onClick={handleButtonClicked}>
@@ -326,7 +278,7 @@ const LoginForm = () => {
           </Button>
         </Box>
         <Button
-          variant="text"
+          variant="contained"
           color="primary"
           type="submit"
           sx={styledSubmitButton}
@@ -336,14 +288,10 @@ const LoginForm = () => {
         </Button>
         <Box sx={styledBox}>
           <Typography
-            sx={
-              (styledTypography,
-              {
-                textAlign: 'center',
-                color: 'white',
-                textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
-              })
-            }
+            sx={{
+              textAlign: 'center',
+              color: 'white',
+            }}
           >
             Don't have an account?
           </Typography>
