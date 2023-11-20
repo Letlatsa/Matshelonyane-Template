@@ -17,7 +17,11 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 //import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
 
-import { UserTrucksEndpoint, ViewTruckerInfo } from '../../services/EndPoints';
+import {
+  UserTrucksEndpoint,
+  ViewTruckerInfo,
+  DownloadUmageEndPoint
+} from '../../services/EndPoints';
 import { useParams } from 'react-router-dom';
 import TruckerProfileSkeleton from '../../components/skeletons/TruckerProfileSkeleton';
 
@@ -28,6 +32,7 @@ const ClientTruckerProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [truckersData, setTruckersData] = useState([]);
+  const [imageData, setImageData] = useState(null);
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
 
@@ -41,11 +46,19 @@ const ClientTruckerProfile = () => {
 
   useEffect(() => {
     console.log('Current truckerId:', truckerId);
-    const fetchTruckerData = () => {
+    const fetchTruckerData = async () => {
       try {
-        getTruckersInArea(accessToken, truckerId);
+        const truckerInfo = await ViewTruckerInfo(accessToken, truckerId);
+        setTruckersData(truckerInfo);
+        console.log('profile Data:', truckerInfo);
+
+        // Download the image
+        const imageResponse = await DownloadUmageEndPoint(truckerInfo.propic);
+        const imageData = imageResponse.data;
+        setImageData(imageData);
+        console.log('' + imageData);
       } catch (error) {
-        console.error('profile data: ', error);
+        console.error('Error fetching trucker profile or image:', error);
       }
     };
 
@@ -168,64 +181,57 @@ const ClientTruckerProfile = () => {
           <TruckerProfileSkeleton />
         ) : (
           <>
-            <Box
-              sx={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                marginBottom: '50px'
-              }}
-            >
-              <Box sx={styledProfileBox}>
-                <img
-                  src="https://picsum.photos/200/300"
-                  alt=""
-                  style={{
-                    width: '95px',
-                    height: '95px',
-                    borderRadius: 100,
-                    backgroundColor: 'grey'
-                  }}
-                />
-              </Box>
-              <Typography
-                sx={{
-                  color: ' #58362A',
-                  fontFamily: 'Lato',
-                  fontSize: '24px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  letterSpacing: '-0.17px'
-                }}
-              >
-                {truckersData.firstName} {truckersData.lastName}
-              </Typography>
-              <Typography
-                sx={{
-                  color: '#C69585',
-                  fontFamily: 'Lato',
-                  fontSize: '16px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  letterSpacing: '-0.17px',
-                  marginBottom: '15px'
-                }}
-              >
-                {/* Placeholder text goes here */}
-              </Typography>
-            </Box>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginBottom: '50px'
+          }}
+        >
+          <Box sx={styledProfileBox}>
+            <img
+              src={imageData ? `data:image/jpeg;base64,${imageData}` : ''}
+              alt="Trucker Profile"
+              style={{ width: '95px', height: '95px', borderRadius: 100, backgroundColor: 'grey' }}
+            />
+          </Box>
+          <Typography
+            sx={{
+              color: ' #58362A',
+              fontFamily: 'Lato',
+              fontSize: '24px',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              lineHeight: 'normal',
+              letterSpacing: '-0.17px'
+            }}
+          >
+            {truckersData.firstName} {truckersData.lastName}
+          </Typography>
+          <Typography
+            sx={{
+              color: '#C69585',
+              fontFamily: 'Lato',
+              fontSize: '16px',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              lineHeight: 'normal',
+              letterSpacing: '-0.17px',
+              marginBottom: '15px'
+            }}
+          ></Typography>
+        </Box>
 
-            <Box sx={styledDeviderBox}>
-              <Box>
-                <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
-              </Box>
-              <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
-            </Box>
-            <Card sx={styledCard}>
-              <Stack spacing={2} sx={styledStack}>
+        <Box sx={styledDeviderBox}>
+          <Box>
+            <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
+          </Box>
+          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
+        </Box>
+        <Card sx={styledCard}>
+          <Stack spacing={2} sx={styledStack}>
                 <Box
                   sx={{
                     display: 'flex',
