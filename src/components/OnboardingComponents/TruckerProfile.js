@@ -18,61 +18,6 @@ import { useNavigate } from 'react-router-dom';
 import { TruckerProfileEndpoint, LocationRetrieveEndpoint } from '../../services/EndPoints';
 import { useToken } from '../../Hooks/TokenContext';
 
-const styledFormControl = {
-  width: '100%',
-  color: 'white',
-  padding: '0px'
-};
-
-const styledTextField = {
-  width: '100%',
-  '& input': {
-    color: 'white',
-    borderBottom: ' 3px solid white'
-  },
-  '& label': {
-    color: 'white'
-  }
-};
-
-const inputContainerBox = {
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center'
-};
-
-const styledSubmitButton = {
-  fontSize: 18,
-  backgroundColor: '#EBDBD5',
-  width: '100%',
-  borderRadius: '15px',
-  height: '50px',
-  color: '#58362A',
-  fontWeight: '400',
-  textTransform: 'none',
-  marginTop: '20px',
-  marginBottom: '30px',
-  boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-  '&:hover': {
-    backgroundColor: 'transparent'
-  }
-};
-const styledInputLabel = {
-  color: 'white',
-  '&:hover': {
-    color: 'white'
-  }
-};
-// eslint-disable-next-line no-unused-vars
-const styledHelperText = {
-  color: 'red',
-  marginRight: '200px'
-};
-const accountLabelContainer = {
-  display: 'flex',
-  alignItems: 'center'
-};
 function TruckerProfile() {
   const { tokens } = useToken();
 
@@ -212,19 +157,39 @@ function TruckerProfile() {
     } else if (currentStep === 3) {
       navigate('/onboardinglicense');
     }
+  };  
+
+  const inputContainerBox = {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   };
+
+  const styledSubmitButton = {
+    height: '50px',
+    marginTop: '20px',
+    marginBottom: '30px'
+  };
+  const styledInputLabel = {
+    color: 'white',
+    '&:hover': {
+      color: 'white'
+    }
+  }; 
+
+  const accountLabelContainer = {
+    display: 'flex',
+    alignItems: 'center'
+  };
+
   const styledAvatarBox = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative'
-  };
-  const styledSelect = {
-    width: '100%',
-    color: 'white',
-    borderBottom: ' 2px solid white',
-    marginBottom: '10px'
-  };
+  }
+
   return (
     <div>
       <Box>
@@ -232,13 +197,11 @@ function TruckerProfile() {
           <ProgressBar currentStep={currentStep} />
         </Box>
         <Typography
+        variant='h1'
           sx={{
-            fontSize: 24,
             color: 'white',
             textAlign: 'center',
             marginBottom: '15px',
-            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-            fontWeight: 'bold',
             marginTop: '50px'
           }}
         >
@@ -262,20 +225,18 @@ function TruckerProfile() {
         </label>
 
         <Typography
+        variant='h5'
           sx={{
-            fontSize: 14,
             color: 'white',
             textAlign: 'center',
             marginBottom: '50px',
             marginTop: '15px',
-            fontWeight: '700',
-            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
           }}
         >
           Upload your profile picture
         </Typography>
         <Stack spacing={1}>
-          <FormControl sx={styledFormControl}>
+          <FormControl>
             <Stack sx={inputContainerBox} spacing={1}>
               <TextField
                 variant="standard"
@@ -294,7 +255,6 @@ function TruckerProfile() {
                 type="firstName"
                 name="firstName"
                 placeholder="Enter your First Name"
-                sx={styledTextField}
                 value={formData.firstName}
                 onChange={handleInputChange}
                 error={!!formErrors.firstNameError}
@@ -317,7 +277,6 @@ function TruckerProfile() {
                 type="lastName"
                 name="lastName"
                 placeholder="Enter your Last name"
-                sx={styledTextField}
                 value={formData.lastName}
                 onChange={handleInputChange}
                 error={!!formErrors.lastNameError}
@@ -345,7 +304,6 @@ function TruckerProfile() {
               value={selectedLocation}
               onChange={handleLocationChange}
               variant="standard"
-              sx={styledSelect}
               error={!!formErrors.locationError}
             >
               {location.map((locationData) => (
@@ -357,7 +315,7 @@ function TruckerProfile() {
           </FormControl>
           <Box>
             <Button
-              variant="text"
+              variant="contained"
               color="primary"
               type="submit"
               sx={styledSubmitButton}

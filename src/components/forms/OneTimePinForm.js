@@ -1,4 +1,4 @@
-import { Box, FormControl, Typography, Button, TextField } from '@mui/material';
+import { Box, FormControl, Typography, Button, TextField, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { MuiOtpInput } from 'mui-one-time-password-input';
 import { useState } from 'react';
@@ -74,17 +74,7 @@ const OneTimePinFForm = () => {
 
   const styledTypography = {
     fontSize: 24,
-    textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    fontWeight: 'bold',
     marginBottom: '50px'
-  };
-
-  const styledOtpInput = {
-    marginBottom: '20px',
-    width: '100%',
-    '& input': {
-      border: 0
-    }
   };
 
   const inputContainerBox = {
@@ -104,43 +94,30 @@ const OneTimePinFForm = () => {
   };
 
   const styledSubmitButton = {
-    fontSize: 18,
-    backgroundColor: '#EBDBD5',
-    width: '100%',
-    borderRadius: '15px',
     height: '50px',
-    color: '#58362A',
-    fontWeight: '100',
-    textTransform: 'none',
-    marginBottom: '30px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    '&:hover': {
-      backgroundColor: '#58362A',
-      color: 'white',
-      transition: 'ease-in .3s'
-    }
-  };
-
-  const styledTextField = {
-    width: '100%',
-    '& input': {
-      color: 'white',
-      borderBottom: ' 3px solid white'
-    },
-    '& label': {
-      color: 'white'
-    },
-    marginBottom: '20px'
+    marginBottom: '30px'
   };
 
   return (
     <Box>
       <FormControl sx={styledFormControl}>
         <Box sx={{ right: '10px !important' }}>
-          <Typography sx={styledTypography}>One Time Pin</Typography>
+          <Typography variant="h1" sx={styledTypography}>
+            One Time Pin
+          </Typography>
         </Box>
-        <Box sx={inputContainerBox}>
-          <MuiOtpInput sx={styledOtpInput} length={6} value={otp} onChange={handleChange} />
+        <Stack spacing={1} sx={inputContainerBox}>
+          <MuiOtpInput
+          length={6}
+          value={otp}
+          onChange={handleChange}
+          style={{
+            marginBottom: '8px',
+            border: 'none',
+            boxShadow: 'none',
+            /* other styles */
+          }}
+          />
           {error && <div style={{ color: 'red' }}>{error}</div>}
 
           <TextField
@@ -160,7 +137,6 @@ const OneTimePinFForm = () => {
             type="password"
             name="password"
             placeholder="Enter your password"
-            sx={styledTextField}
             value={formData.password}
             onChange={handleInputChange}
             error={!!formErrors.passwordError}
@@ -183,17 +159,16 @@ const OneTimePinFForm = () => {
             type="password"
             name="confirmPassword"
             placeholder="Enter your password"
-            sx={styledTextField}
             value={formData.confirmPassword}
             onChange={handleInputChange}
             error={!!formErrors.confirmPasswordError}
             helperText={formErrors.confirmPasswordError}
           />
-        </Box>
+        </Stack>
       </FormControl>
       <Box>
         <Button
-          variant="text"
+          variant="contained"
           color="primary"
           type="button"
           sx={styledSubmitButton}
@@ -203,6 +178,7 @@ const OneTimePinFForm = () => {
         </Button>
         <Box sx={styledBox}>
           <Typography
+            variant="h5"
             sx={{
               textAlign: 'center',
               color: 'white'
