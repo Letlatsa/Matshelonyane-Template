@@ -474,6 +474,7 @@ const ClientHome = () => {
                           </Typography>
                         </Box>
                       </Box>
+                    </Stack>
                       <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                         <Button
                           variant="text"
