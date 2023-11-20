@@ -78,7 +78,7 @@ function ProgressBar({ currentStep }) {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '5vh' }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={styledOptionContainer}>
           <div style={styledStep1}>{currentStep >= 2 ? <CheckIcon /> : 1}</div>

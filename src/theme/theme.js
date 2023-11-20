@@ -80,26 +80,29 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          fontSize: 18,
           borderRadius: '15px',
           width: '100%',
-          color: colors.primary,
-          boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+          color: colors.secondary,
+          textTransform: 'none',
           '&:hover': {
             backgroundColor: colors.secondary
           }
         },
         contained: {
           backgroundColor: colors.primaryVarient,
-          color: colors.primary,
+          boxShadow: shadows.default,
           fontSize: 18,
           '&:hover': {
-            backgroundColor: colors.secondary
+            backgroundColor: colors.secondary,
+            transition: 'ease-in .3s',
+            color: 'white'
           }
         },
         text: {
-          color: colors.primary,
           textShadow: shadows.default,
-          backgroundColor: 'transparent',
+          color: colors.primary,
+          fontWeight: 700,
           '&:hover': {
             backgroundColor: 'transparent'
           }
@@ -113,7 +116,6 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          marginBottom: '30px',
           width: '100%',
           '& label': {
             color: 'white'
@@ -124,7 +126,32 @@ const theme = createTheme({
           '& fieldset': { border: 'none' }
         },
         standard: {
-          marginBottom: '10px',
+          width: '100%',
+          '& input': {
+            color: 'white',
+            borderBottom: ' 3px solid white'
+          },
+          '& label': {
+            color: 'white'
+          }
+        }
+      }
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          width: '100%',
+          color: 'white',
+          borderBottom: ' 2px solid white',
+          '& label': {
+            color: 'white'
+          },
+          '& input': {
+            color: 'white',
+            borderBottom: ' 2px solid white'
+          }
+        },
+        standard: {
           width: '100%',
           '& input': {
             color: 'white',
@@ -233,6 +260,17 @@ const theme = createTheme({
     MuiToolbar: {
       styleOverrides: {
         height: '70px'
+      }
+    }
+  },
+  MuiOtpInput: {
+    styleOverrides: {
+      root: {
+        width: '100%',
+        '& input': {
+          color: 'white',
+          borderBottom: ' 2px solid white'
+        }
       }
     }
   }

@@ -160,9 +160,23 @@ const ClientHome = () => {
   const getTrucksersInArea = (accessToken, deliveryAreaId) => {
     TrucksInDeliveryArea(accessToken, deliveryAreaId)
       .then((truckersData) => {
-        setTruckersData(truckersData);
-        console.log('Truckers Data:', truckersData);
-        return truckersData.data;
+        const updatedTruckersData = truckersData.map(async (trucker) => {
+          try {
+            const response = await DownloadUmageEndPoint(trucker.profile.propic);
+            if (response.status === 200) {
+              const bybeImage = response.data;
+              const imageUrl = `data:image/png;base64,${bybeImage}`;
+              console.log('Image URL:', imageUrl);
+              return { ...trucker, propic: imageUrl };
+            }
+          } catch (error) {
+            console.error('Error fetching profile picture:', error);
+          }
+          return trucker;
+        });
+        Promise.all(updatedTruckersData).then((data) => {
+          setTruckersData(data);
+        });
       })
       .catch((error) => {
         console.error('Error fetching truckers', error);
@@ -177,6 +191,7 @@ const ClientHome = () => {
 
           const imageUrl = `data:image/png;base64,${bybeImage}`;
           setProfilePic(imageUrl);
+          console.log('Profile picture', imageUrl);
         }
       })
       .catch((error) => {
@@ -363,7 +378,7 @@ const ClientHome = () => {
                   <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
                     <Box sx={styledProfileBox}>
                       <img
-                        src={truckersData.profile.propic}
+                        src={truckersData.propic}
                         alt=""
                         style={{ width: '44px', height: '44px', borderRadius: 50 }}
                       />
