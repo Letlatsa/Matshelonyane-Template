@@ -191,7 +191,7 @@ const GetServiceLocation = async (loc) => {
     throw error;
   }
 };
-    
+
 const DownloadUmageEndPoint = async (key) => {
   try {
     const response = await IAMApiClient.get(`/download?key=${key}`, {
@@ -201,6 +201,18 @@ const DownloadUmageEndPoint = async (key) => {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+};
+
+const GetProfileVisits = async (Token) => {
+  try {
+    const response = await FleetApiClient.get(`/profileViews`, {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    console.log('Response get profile visits', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving visits', error);
   }
 };
 
@@ -223,5 +235,6 @@ export {
   ViewTruckerInfo,
   PostProfileVisits,
   DownloadUmageEndPoint,
-  GetServiceLocation
+  GetServiceLocation,
+  GetProfileVisits
 };

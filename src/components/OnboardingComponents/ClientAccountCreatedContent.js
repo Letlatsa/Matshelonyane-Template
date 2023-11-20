@@ -4,7 +4,7 @@ import AccountCreatedIcon from '../../assets/AccountCreated.svg';
 import { useNavigate } from 'react-router-dom';
 
 const styledBoxContent = {
-  width: { mobile: '90%', tablet: '89%', laptop: '90%', desktop: '90%' },
+  width: '100%',
   minHeight: '100vh'
 };
 const styledBox = {
@@ -13,35 +13,16 @@ const styledBox = {
   flexDirection: 'column',
   alignItems: 'center',
   marginTop: '50px',
-  marginLeft: '15px'
+  marginBottom: '10vh'
 };
 
 const styledSubmitButton = {
-  fontSize: 18,
-  backgroundColor: '#EBDBD5',
-  width: '100%',
-  borderRadius: '15px',
-  height: '50px',
-  color: '#58362A',
-  fontWeight: '400',
-  textTransform: 'none',
-  marginBottom: '200px',
-  boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-  '&:hover': {
-    backgroundColor: '#58362A',
-    color: 'white',
-    transition: 'ease-in .3s'
-  },
-  marginLeft: '15px'
+  height: '50px'
 };
 
 const styledTypography = {
-  fontSize: 24,
-  textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-  fontWeight: 'bold',
   marginBottom: '25px',
   color: 'white',
-  marginLeft: '30px'
 };
 function ClientAccountCreatedContent() {
   const navigate = useNavigate();
@@ -56,14 +37,13 @@ function ClientAccountCreatedContent() {
           <img src={AccountCreatedIcon} alt="Account Created" width="100" height="150"></img>
         </Box>
         <Box>
-          <Typography sx={{ ...styledTypography, textAlign: 'center' }}>Account Created</Typography>
+          <Typography variant='h1' sx={{ ...styledTypography, textAlign: 'center' }}>Account Created</Typography>
           <Typography
+          variant='h5'
             sx={{
-              fontSize: 14,
               color: 'white',
               textAlign: 'center',
-              marginBottom: '50px',
-              marginLeft: '15px'
+              marginBottom: '20vh'
             }}
           >
             Your account has been created successfully.Now, let’s set up your profile.
@@ -71,7 +51,7 @@ function ClientAccountCreatedContent() {
         </Box>
 
         <Button
-          variant="text"
+          variant="contained"
           color="primary"
           type="submit"
           sx={styledSubmitButton}

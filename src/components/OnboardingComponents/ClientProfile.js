@@ -1,56 +1,11 @@
 import { React, useState } from 'react';
 import { Avatar } from '@mui/material';
-import { Box, FormControl, TextField, Typography, Button } from '@mui/material';
+import { Box, FormControl, TextField, Typography, Button, Stack } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
-
-import PhoneIcon from '../../assets/phone.svg';
 
 import { useNavigate } from 'react-router-dom';
 import { ClientProfileEndpoint } from '../../services/EndPoints';
 import { useToken } from '../../Hooks/TokenContext';
-
-const styledFormControl = {
-  width: '100%',
-  color: 'white'
-};
-
-const styledTextField = {
-  width: '100%',
-  '& input': {
-    color: 'white',
-    borderBottom: ' 3px solid white'
-  },
-  '& label': {
-    color: 'white'
-  },
-  marginBottom: '10px'
-};
-
-const inputContainerBox = {
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  marginBottom: '30px'
-};
-
-const styledSubmitButton = {
-  fontSize: 18,
-  backgroundColor: '#EBDBD5',
-  width: '100%',
-  borderRadius: '15px',
-  height: '50px',
-  color: '#58362A',
-  fontWeight: '400',
-  textTransform: 'none',
-  marginBottom: '30px',
-  boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-  '&:hover': {
-    backgroundColor: '#58362A',
-    color: 'white',
-    transition: 'ease-in .3s'
-  }
-};
 
 function ClientProfile() {
   const { tokens } = useToken();
@@ -128,24 +83,37 @@ function ClientProfile() {
     }
   };
 
+  const inputContainerBox = {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  };
+
   const styledAvatarBox = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative'
   };
+
+  const styledSubmitButton = {
+    height: '50px',
+    marginTop: '6vh',
+    marginBottom: '6vh'
+  };
+
   return (
     <div>
-      <Box>
+      <Box
+        sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '90vh' }}
+      >
         <Typography
+          variant="h1"
           sx={{
-            fontSize: 24,
             color: 'white',
             textAlign: 'center',
-            marginBottom: '30px',
-            marginLeft: '15px',
-            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-            fontWeight: 'bold'
+            marginBottom: '5vh'
           }}
         >
           Let’s us get to know you
@@ -169,21 +137,19 @@ function ClientProfile() {
         </label>
 
         <Typography
+          varient="h2"
           sx={{
-            fontSize: 14,
             color: 'white',
             textAlign: 'center',
             marginBottom: '50px',
-            marginTop: '15px',
-            fontWeight: '700',
-            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+            marginTop: '2vh'
           }}
         >
           Upload your profile picture
         </Typography>
         <Box>
-          <FormControl sx={styledFormControl}>
-            <Box sx={inputContainerBox}>
+          <FormControl>
+            <Stack spacing={1} sx={inputContainerBox}>
               <TextField
                 variant="standard"
                 label={
@@ -201,7 +167,6 @@ function ClientProfile() {
                 type="firstName"
                 name="firstName"
                 placeholder="Enter your First Name"
-                sx={styledTextField}
                 value={formData.firstName}
                 onChange={handleInputChange}
                 error={!!formErrors.firstNameError}
@@ -224,16 +189,15 @@ function ClientProfile() {
                 type="lastName"
                 name="lastName"
                 placeholder="Enter your Last name"
-                sx={styledTextField}
                 value={formData.lastName}
                 onChange={handleInputChange}
                 error={!!formErrors.lastNameError}
                 helperText={formErrors.lastNameError}
               />
-            </Box>
+            </Stack>
             <Box>
               <Button
-                variant="text"
+                variant="contained"
                 color="primary"
                 type="submit"
                 sx={styledSubmitButton}

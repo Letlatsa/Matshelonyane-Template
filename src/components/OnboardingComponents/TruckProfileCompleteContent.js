@@ -4,45 +4,23 @@ import AccountCreatedIcon from '../../assets/AccountCreated.svg';
 import { useNavigate } from 'react-router-dom';
 
 const styledBoxContent = {
-  width: { mobile: '90%', tablet: '89%', laptop: '90%', desktop: '90%' },
-  minHeight: '100vh'
+  width: '100%',
+  minHeight: '90vh'
 };
 const styledBox = {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  marginTop: '50px',
-  marginLeft: '15px'
+  marginTop: '10vh',
+  marginBottom: '10vh'
 };
 
 const styledSubmitButton = {
-  fontSize: 18,
-  backgroundColor: '#EBDBD5',
-  width: '100%',
-  borderRadius: '15px',
-  height: '50px',
-  color: '#58362A',
-  fontWeight: '400',
-  textTransform: 'none',
-  marginBottom: '200px',
-  boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-  '&:hover': {
-    backgroundColor: '#58362A',
-    color: 'white',
-    transition: 'ease-in .3s'
-  },
-  marginLeft: '15px'
+  height: '50px'
 };
 
-const styledTypography = {
-  fontSize: 18,
-  textShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-  fontWeight: 'bold',
-  marginBottom: '25px',
-  color: 'white',
-  marginLeft: '30px'
-};
+
 function TruckProfileCompleteContent() {
   const navigate = useNavigate();
 
@@ -56,16 +34,18 @@ function TruckProfileCompleteContent() {
           <img src={AccountCreatedIcon} alt="Account Created" width="100" height="150"></img>
         </Box>
         <Box>
-          <Typography sx={{ ...styledTypography, textAlign: 'center' }}>
+          <Typography
+            variant="h1"
+            sx={{ color: 'white', textAlign: 'center', marginBottom: '2vh' }}
+          >
             You are Ready to Drive !{' '}
           </Typography>
           <Typography
+            variant="h4"
             sx={{
-              fontSize: 14,
               color: 'white',
               textAlign: 'center',
-              marginBottom: '50px',
-              marginLeft: '15px'
+              marginBottom: '20vh'
             }}
           >
             Your account is now activated. Let’s book your first load.{' '}
@@ -73,7 +53,7 @@ function TruckProfileCompleteContent() {
         </Box>
 
         <Button
-          variant="text"
+          variant="contained"
           color="primary"
           type="submit"
           sx={styledSubmitButton}
