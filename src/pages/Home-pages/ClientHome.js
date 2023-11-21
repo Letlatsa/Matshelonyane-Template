@@ -180,7 +180,7 @@ const ClientHome = () => {
             if (response.status === 200) {
               const bybeImage = response.data;
               const imageUrl = `data:image/png;base64,${bybeImage}`;
-              console.log('Image URL:', imageUrl);
+              console.log('Image URL: ', imageUrl);
               return { ...trucker, propic: imageUrl };
             }
           } catch (error) {
@@ -407,7 +407,7 @@ const ClientHome = () => {
                     <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
                       <Box sx={styledProfileBox}>
                         <img
-                          src={truckersData.profile.propic}
+                          src={truckersData.propic}
                           alt=""
                           style={{ width: '44px', height: '44px', borderRadius: 50 }}
                         />
