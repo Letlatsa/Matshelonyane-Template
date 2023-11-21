@@ -89,7 +89,7 @@ const TruckerCard = () => {
               >
                 <Box>
                   <Typography sx={{ fontSize: '15px', paddingTop: '15px' }}>
-                    {client.client}
+                    {client.client.firstName}
                   </Typography>
                 </Box>
                 <Box
