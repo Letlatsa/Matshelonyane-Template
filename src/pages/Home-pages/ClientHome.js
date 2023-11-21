@@ -406,40 +406,40 @@ const ClientHome = () => {
                       </Box>
                     </Box>
                   </Box>
-                  <Stack spacing={2} sx={{ paddingRight: '15px' }}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        width: '280px',
-                        justifyContent: 'space-between',
-                        color: 'white'
-                      }}
-                    >
-                      <Box>
-                        <Typography sx={{ fontSize: '15px' }}>
-                          {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
-                        </Typography>
+                    <Stack spacing={2} sx={{ paddingRight: '15px' }}>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          width: '280px',
+                          justifyContent: 'space-between',
+                          color: 'white'
+                        }}
+                      >
+                        <Box>
+                          <Typography sx={{ fontSize: '15px' }}>
+                            {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ textAlign: 'right' }}>
+                          <Typography
+                            sx={{
+                              fontSize: '16px',
+                              filter: 'blur(3px)',
+                              display: 'flex',
+                              alignItems: 'center'
+                            }}
+                          >
+                            <img
+                              src={PhoneIcon}
+                              alt="Phone"
+                              width="30"
+                              height="20"
+                              sx={{ marginRight: '30px' }}
+                            />
+                            78322342
+                          </Typography>
+                        </Box>
                       </Box>
-                      <Box sx={{ textAlign: 'right' }}>
-                        <Typography
-                          sx={{
-                            fontSize: '16px',
-                            filter: 'blur(3px)',
-                            display: 'flex',
-                            alignItems: 'center'
-                          }}
-                        >
-                          <img
-                            src={PhoneIcon}
-                            alt="Phone"
-                            width="30"
-                            height="20"
-                            sx={{ marginRight: '30px' }}
-                          />
-                          78322342
-                        </Typography>
-                      </Box>
-                    </Box>
                     </Stack>
                       <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                         <Button
