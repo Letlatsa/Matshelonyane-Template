@@ -14,9 +14,12 @@ import {
 import BackArrow from '../../assets/backVector.svg';
 import { useNavigate } from 'react-router-dom';
 import { DownloadUmageEndPoint } from '../../services/EndPoints';
+import ClientProfileSkeleton from '../../components/skeletons/ClientProfileSkeleton';
 
 const ClientProfile = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
   const userData = sessionStorage.getItem('user');
   const [profilePic, setProfilePic] = useState('');
 
@@ -26,6 +29,14 @@ const ClientProfile = () => {
     _id: account._id,
     number: account.number
   };
+
+  useEffect(() => {
+    // Simulate data loading
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     getProfilePic(propic);
@@ -152,96 +163,106 @@ const ClientProfile = () => {
         </AppBar>
       </Box>
       <Container sx={{ marginTop: '90px' }}>
-        <Box
-          sx={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginBottom: '50px'
-          }}
-        >
-          <Box sx={styledProfileBox}>
-            <img
-              src={profilePic}
-              alt=""
-              style={{ width: '95px', height: '95px', borderRadius: 100, backgroundColor: 'grey' }}
-            />
-          </Box>
-          <Typography
-            sx={{
-              color: ' #58362A',
-              fontFamily: 'Lato',
-              fontSize: '24px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: 'normal',
-              letterSpacing: '-0.17px'
-            }}
-          >
-            {firstName} {lastName}
-          </Typography>
-          <Typography
-            sx={{
-              color: '#C69585',
-              fontFamily: 'Lato',
-              fontSize: '16px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: 'normal',
-              letterSpacing: '-0.17px',
-              marginBottom: '15px'
-            }}
-          >
-          </Typography>
-          <Button
-            variant="text"
-            sx={{
-              backgroundColor: '#EBDBD5',
-              textColor: '#58362A',
-              width: '196px',
-              borderRadius: '15px',
-              height: '50px',
-              color: '#58362A',
-              fontWeight: '300',
-              fontSize: '14px',
-              textTransform: 'none',
-              boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-              '&:hover': {
-                backgroundColor: '#58362A',
-                color: 'white',
-                transition: 'ease-in .3s'
-              }
-            }}
-            onClick={handleOnEditButtonClicked}
-          >
-            Edit
-          </Button>
-        </Box>
-
-        <Box sx={styledDeviderBox}>
-          <Box>
-            <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
-          </Box>
-          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '65vw' }}></Box>
-        </Box>
-        <Box
-          sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '40px' }}
-        ></Box>
-        <Card sx={styledCard}>
-          <Stack spacing={2} sx={styledStack}>
+        {isLoading ? ( // Check if data is loading, if true, show the skeleton
+          <ClientProfileSkeleton />
+        ) : (
+          <>
             <Box
               sx={{
-                display: 'flex',
                 width: '100%',
-                justifyContent: 'space-between'
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginBottom: '50px'
               }}
             >
-              <Typography sx={styledStackTypography}>Phone number:</Typography>
-              <Typography sx={styledStackTypography}> {accountData.number}</Typography>
+              <Box sx={styledProfileBox}>
+                <img
+                  src={profilePic}
+                  alt=""
+                  style={{
+                    width: '95px',
+                    height: '95px',
+                    borderRadius: 100,
+                    backgroundColor: 'grey'
+                  }}
+                />
+              </Box>
+              <Typography
+                sx={{
+                  color: ' #58362A',
+                  fontFamily: 'Lato',
+                  fontSize: '24px',
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  lineHeight: 'normal',
+                  letterSpacing: '-0.17px'
+                }}
+              >
+                {firstName} {lastName}
+              </Typography>
+              <Typography
+                sx={{
+                  color: '#C69585',
+                  fontFamily: 'Lato',
+                  fontSize: '16px',
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  lineHeight: 'normal',
+                  letterSpacing: '-0.17px',
+                  marginBottom: '15px'
+                }}
+              ></Typography>
+              <Button
+                variant="text"
+                sx={{
+                  backgroundColor: '#EBDBD5',
+                  textColor: '#58362A',
+                  width: '196px',
+                  borderRadius: '15px',
+                  height: '50px',
+                  color: '#58362A',
+                  fontWeight: '300',
+                  fontSize: '14px',
+                  textTransform: 'none',
+                  boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
+                  '&:hover': {
+                    backgroundColor: '#58362A',
+                    color: 'white',
+                    transition: 'ease-in .3s'
+                  }
+                }}
+                onClick={handleOnEditButtonClicked}
+              >
+                Edit
+              </Button>
             </Box>
-          </Stack>
-        </Card>
+
+            <Box sx={styledDeviderBox}>
+              <Box>
+                <Typography sx={{ fontSize: '20px' }}>Contact</Typography>
+              </Box>
+              <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '65vw' }}></Box>
+            </Box>
+            <Box
+              sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '40px' }}
+            ></Box>
+            <Card sx={styledCard}>
+              <Stack spacing={2} sx={styledStack}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography sx={styledStackTypography}>Phone number:</Typography>
+                  <Typography sx={styledStackTypography}> {accountData.number}</Typography>
+                </Box>
+              </Stack>
+            </Card>
+          </>
+        )}
       </Container>
     </div>
   );

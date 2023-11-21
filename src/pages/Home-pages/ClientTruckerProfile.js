@@ -23,17 +23,29 @@ import {
   DownloadUmageEndPoint
 } from '../../services/EndPoints';
 import { useParams } from 'react-router-dom';
+import TruckerProfileSkeleton from '../../components/skeletons/TruckerProfileSkeleton';
 
 const ClientTruckerProfile = () => {
   const { truckerId } = useParams();
 
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
   const [truckersData, setTruckersData] = useState([]);
   const [imageData, setImageData] = useState(null);
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
 
   useEffect(() => {
+    // Simulate data loading
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    console.log('Current truckerId:', truckerId);
     const fetchTruckerData = async () => {
       try {
         const truckerInfo = await ViewTruckerInfo(accessToken, truckerId);
@@ -52,6 +64,19 @@ const ClientTruckerProfile = () => {
 
     fetchTruckerData();
   }, [accessToken, truckerId]);
+
+  const getTruckersInArea = (accessToken, truckerId) => {
+    ViewTruckerInfo(accessToken, truckerId)
+      .then((truckersData) => {
+        setTruckersData(truckersData);
+
+        console.log('profile Data:', truckersData);
+        return truckersData.data;
+      })
+      .catch((error) => {
+        console.error('Error fetching profiles of truckers', error);
+      });
+  };
 
   const styledProfileBox = {
     borderRadius: '100px',
@@ -152,6 +177,10 @@ const ClientTruckerProfile = () => {
         </AppBar>
       </Box>
       <Container sx={{ marginTop: '90px' }}>
+        {isLoading ? ( // Check if data is loading, if true, show the skeleton
+          <TruckerProfileSkeleton />
+        ) : (
+          <>
         <Box
           sx={{
             width: '100%',
@@ -203,42 +232,32 @@ const ClientTruckerProfile = () => {
         </Box>
         <Card sx={styledCard}>
           <Stack spacing={2} sx={styledStack}>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Phone number:</Typography>
-              <Typography sx={styledStackTypography}>
-                {truckersData.account && truckersData.account.number}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Operation Location:</Typography>
-              <Typography sx={styledStackTypography}>{truckersData.deliveryArea}</Typography>
-            </Box>
-          </Stack>
-        </Card>
-        {/* <Box sx={styledDeviderBox}>
-          <Box>
-            <Typography sx={{ fontSize: '20px' }}>Fleet</Typography>
-          </Box>
-          <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
-        </Box>
-        <Box
-          sx={{ display: 'flex', width: '100%', justifyContent: 'end', marginBottom: '20px' }}
-        ></Box> */}
-        {/*  {trucks?.map((truck) => (
-          <TruckCard key={truck._id} truck={truck} />
-        ))} */}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography sx={styledStackTypography}>Phone number:</Typography>
+                  <Typography sx={styledStackTypography}>
+                    {truckersData.account && truckersData.account.number}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography sx={styledStackTypography}>Operation Location:</Typography>
+                  <Typography sx={styledStackTypography}>{truckersData.deliveryArea}</Typography>
+                </Box>
+              </Stack>
+            </Card>
+          </>
+        )}
       </Container>
     </div>
   );
