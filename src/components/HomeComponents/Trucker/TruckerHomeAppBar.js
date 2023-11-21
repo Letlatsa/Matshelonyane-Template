@@ -11,7 +11,10 @@ import Box from '@mui/material/Box';
 
 import EllipsisV from '../../../assets/ellipsisVIcon.svg';
 import { RetrieveSurnameEndpoint, DownloadUmageEndPoint } from '../../../services/EndPoints';
+
+import theme from '../../../theme/theme';
 import HeaderSkeleton from '../../skeletons/HeaderSkeleton';
+
 
 const TruckerHomeAppBar = () => {
   const navigate = useNavigate();
@@ -107,7 +110,7 @@ const TruckerHomeAppBar = () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#EBDBD5',
+    backgroundColor: theme.palette.primary.variant,
     padding: 0,
     borderradius: '50px',
     marginLeft: 1,
@@ -138,30 +141,30 @@ const TruckerHomeAppBar = () => {
           // Render actual content when data is loaded
           <>
             <Typography
-              variant="h6"
-              sx={{
-                flexGrow: 1,
-                textAlign: 'end',
-                height: '50px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                marginRight: '10px',
-                paddingTop: '7px',
-                color: '#58362A'
-              }}
-            >
-              Hi, {lastName}
-            </Typography>
-            <Button onClick={handleButtonClicked}>
-              <Box sx={styledProfileBox}>
-                <img
-                  src={profilePic}
-                  alt=""
-                  style={{ width: '44px', height: '44px', borderRadius: 50 }}
-                />
-              </Box>
-            </Button>
+            variant="h6"
+            sx={{
+              flexGrow: 1,
+              textAlign: 'end',
+              height: '50px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              color: theme.palette.secondary.main,
+              marginRight: '10px',
+              paddingTop: '7px',
+            }}
+          >
+            Hi, {lastName}
+          </Typography>
+          <Box onClick={handleButtonClicked}>
+            <Box sx={styledProfileBox}>
+              <img
+                src={profilePic}
+                alt=""
+                style={{ width: '44px', height: '44px', borderRadius: 50 }}
+              />
+            </Box>
+          </Box>
           </>
         )}
       </Toolbar>

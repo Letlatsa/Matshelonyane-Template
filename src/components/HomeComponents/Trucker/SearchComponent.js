@@ -1,60 +1,52 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { Container, FormControl, TextField } from '@mui/material';
+import { Container, FormControl, TextField, colors } from '@mui/material';
 import SearchIcon from '../../../assets/searchIcon.svg';
+import theme from '../../../theme/theme';
 
 const SearchComponent = () => {
   return (
-    <Container sx={{ marginTop: '90px' }}>
+    <Container sx={{ marginTop: '90px', marginBottom: '20px' }}>
       <Typography
+        variant="h2"
         sx={{
-          fontFamily: 'lato',
-          fontSize: '24px',
-          color: '#58362A',
-          fontWeight: 400,
-          marginBottom: '30px'
+          marginBottom: '30px',
+          color: theme.palette.secondary.main
         }}
       >
         Lets find your next haul
       </Typography>
-      <FormControl
+
+      <Container
         sx={{
           width: '100%',
-          height: '50px',
-          marginBottom: '50px'
+          display: 'flex',
+          justifyContent: 'space-between',
+          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+          borderRadius: '5px',
+          padding: 0,
+          alignItems: 'center',
         }}
       >
-        <Container
-          sx={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'space-between',
-            boxShadow: '1px 2px 6px rgba(0, 0, 0, 0.3)',
-            borderRadius: '5px',
-            padding: 0,
-            alignItems: 'center'
-          }}
-        >
+        <FormControl variant="standard" sx={{ padding: 0, height: '50px' }}>
           <TextField
+            variant="outlined"
             label="Search..."
-            color=""
-            autoWidth
-            sx={{ width: '100%', paddingLeft: '5px' }}
-            size="small"
+            sx={{
+              width: '100%',
+              paddingLeft: '5px',
+              color: theme.palette.secondary.main,
+              '& label': {
+                color: theme.palette.secondary.main
+              }
+            }}
           />
-          <IconButton sx={{ width: '40px' }}>
-            <img
-              src={SearchIcon}
-              alt="Search"
-              width="30"
-              height="20"
-              sx={{ marginRight: '30px' }}
-            />
-          </IconButton>
-        </Container>
-      </FormControl>
+        </FormControl>
+        <IconButton sx={{ width: '40px', height: '40px' }}>
+          <img src={SearchIcon} alt="Search" width="30" height="20" sx={{ marginRight: '30px' }} />
+        </IconButton>
+      </Container>
     </Container>
   );
 };
