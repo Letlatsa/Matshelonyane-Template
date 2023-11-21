@@ -436,7 +436,6 @@ const ClientHome = () => {
                           style={{ width: '44px', height: '44px', borderRadius: 50 }}
                         />
                       </Box>
-                    </Box>
                   </Box>
                   <Stack spacing={2} sx={{ paddingRight: '15px' }}>
                     <Box
