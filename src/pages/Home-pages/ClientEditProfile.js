@@ -17,7 +17,7 @@ import {
   updateProfilePictureEndpoint,
   RetrieveSurnameEndpoint,
   DownloadUmageEndPoint,
-  EditProfileEndPoint,
+  EditProfileEndPoint
 } from '../../services/EndPoints';
 
 import BackArrow from '../../assets/backVectorWhite.svg';
@@ -95,7 +95,7 @@ function ClientHomeProfile() {
       }
     }
   };
-    
+
   const PropicApiRequest = (formData, accessToken) => {
     updateProfilePictureEndpoint(formData, accessToken)
       .then((response) => {
@@ -168,7 +168,6 @@ function ClientHomeProfile() {
     }
   };
 
-
   useEffect(() => {
     getProfilePic(propic);
   }, [propic]);
@@ -190,7 +189,7 @@ function ClientHomeProfile() {
   };
 
   const handleButtonBackArrowClicked = () => {
-    navigate('/truckerprofileview');
+    navigate('/clientprofile');
   };
 
   const styledFormControl = {
@@ -245,7 +244,6 @@ function ClientHomeProfile() {
     boxShadow: 'none'
   };
 
- 
   return (
     <div
       style={{
