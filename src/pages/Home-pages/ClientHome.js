@@ -471,58 +471,6 @@ const ClientHome = () => {
                             </Typography>
                           </Box>
                         </Box>
-                        <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                          <Button
-                            variant="text"
-                            sx={{
-                              backgroundColor: '#EBDBD5',
-                              textColor: '#58362A',
-                              width: '280px',
-                              borderRadius: '5px',
-                              height: '25px',
-                              color: '#58362A',
-                              fontWeight: '300',
-                              fontSize: '14px',
-                              textTransform: 'none',
-                              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                              '&:hover': {
-                                backgroundColor: '#58362A',
-                                color: 'white',
-                                transition: 'ease-in .3s'
-                              }
-                            }}
-                            onClick={async () => {
-                              const {
-                                profile: { account: driverId }
-                              } = truckersData;
-  
-                              const userData = sessionStorage.getItem('user');
-  
-                              const { account } = JSON.parse(userData);
-  
-                              const data = {
-                                locationID: selectedLocation,
-                                driverID: driverId,
-                                clientID: account
-                              };
-                              console.log('data', data);
-  
-                              try {
-                                // Call PostProfileVisits
-                                const response = await PostProfileVisits(accessToken, data);
-                                console.log('Profile visit response:', response);
-  
-                                // Navigate to the trucker's profile
-                                navigate(`/clienttruckerprofile/${truckersData.profile.account}`);
-                              } catch (error) {
-                                console.error('Error handling profile visit:', error);
-                              }
-                            }}
-                          >
-                            View Profile
-                          </Button>
-                        </Box>
-                      </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                         <Button
                           variant="contained"
