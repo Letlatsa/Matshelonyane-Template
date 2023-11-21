@@ -116,7 +116,7 @@ const TruckerHome = () => {
             </FormControl> */}
           </Box>
           <Stack spacing={2}>
-            <TruckerCard />
+            <TruckerCard accessToken={accessToken}/>
           </Stack>
         </Container>
       </Box>
