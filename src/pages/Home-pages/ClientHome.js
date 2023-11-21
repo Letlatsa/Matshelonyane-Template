@@ -248,31 +248,7 @@ const ClientHome = () => {
                 sx={{ marginRight: '30px' }}
               />
             </IconButton>
-            <Typography
-              variant="h6"
-              sx={{
-                flexGrow: 1,
-                textAlign: 'end',
-                height: '50px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                marginRight: '10px',
-                paddingTop: '7px',
-                color: theme.palette.secondary.main
-              }}
-            >
-              Hi, {lastName}
-            </Typography>
-            <Box onClick={handleButtonClicked}>
-              <Box sx={styledProfileBox}>
-                <img
-                  src={profilePic}
-                  alt=""
-                  style={{ width: '44px', height: '44px', borderRadius: 50 }}
-                />
-              </Box>
-            </Box>
+
             {/* Check if data is loading */}
             {isLoadingData ? (
               // Render skeleton while data is loading
@@ -281,30 +257,30 @@ const ClientHome = () => {
               // Render actual content when data is loaded
               <>
                 <Typography
-                variant="h6"
-                sx={{
-                  flexGrow: 1,
-                  textAlign: 'end',
-                  height: '50px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  marginRight: '10px',
-                  paddingTop: '7px',
-                  color: theme.palette.secondary.main
-                }}
-              >
-                Hi, {lastName}
-              </Typography>
-              <Box onClick={handleButtonClicked}>
-                <Box sx={styledProfileBox}>
-                  <img
-                    src={profilePic}
-                    alt=""
-                    style={{ width: '44px', height: '44px', borderRadius: 50 }}
-                  />
+                  variant="h6"
+                  sx={{
+                    flexGrow: 1,
+                    textAlign: 'end',
+                    height: '50px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    marginRight: '10px',
+                    paddingTop: '7px',
+                    color: theme.palette.secondary.main
+                  }}
+                >
+                  Hi, {lastName}
+                </Typography>
+                <Box onClick={handleButtonClicked}>
+                  <Box sx={styledProfileBox}>
+                    <img
+                      src={profilePic}
+                      alt=""
+                      style={{ width: '44px', height: '44px', borderRadius: 50 }}
+                    />
+                  </Box>
                 </Box>
-              </Box>
               </>
             )}
           </Toolbar>
@@ -446,31 +422,31 @@ const ClientHome = () => {
                           color: 'white'
                         }}
                       >
-                          <Box>
-                            <Typography variant="h4" sx={{ fontSize: '15px' }}>
-                              {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
-                            </Typography>
-                          </Box>
-                          <Box sx={{ textAlign: 'right' }}>
-                            <Typography
-                              sx={{
-                                fontSize: '16px',
-                                filter: 'blur(3px)',
-                                display: 'flex',
-                                alignItems: 'center'
-                              }}
-                            >
-                              <img
-                                src={PhoneIcon}
-                                alt="Phone"
-                                width="30"
-                                height="20"
-                                sx={{ marginRight: '30px' }}
-                              />
-                              78322342
-                            </Typography>
-                          </Box>
+                        <Box>
+                          <Typography variant="h4" sx={{ fontSize: '15px' }}>
+                            {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
+                          </Typography>
                         </Box>
+                        <Box sx={{ textAlign: 'right' }}>
+                          <Typography
+                            sx={{
+                              fontSize: '16px',
+                              filter: 'blur(3px)',
+                              display: 'flex',
+                              alignItems: 'center'
+                            }}
+                          >
+                            <img
+                              src={PhoneIcon}
+                              alt="Phone"
+                              width="30"
+                              height="20"
+                              sx={{ marginRight: '30px' }}
+                            />
+                            78322342
+                          </Typography>
+                        </Box>
+                      </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                         <Button
                           variant="contained"
@@ -489,23 +465,23 @@ const ClientHome = () => {
                             const {
                               profile: { account: driverId }
                             } = truckersData;
-  
+
                             const userData = sessionStorage.getItem('user');
-  
+
                             const { account } = JSON.parse(userData);
-  
+
                             const data = {
                               locationID: selectedLocation,
                               driverID: driverId,
                               clientID: account
                             };
                             console.log('data', data);
-  
+
                             try {
                               // Call PostProfileVisits
                               const response = await PostProfileVisits(accessToken, data);
                               console.log('Profile visit response:', response);
-  
+
                               // Navigate to the trucker's profile
                               navigate(`/clienttruckerprofile/${truckersData.profile.account}`);
                             } catch (error) {
