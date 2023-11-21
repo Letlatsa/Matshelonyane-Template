@@ -27,7 +27,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: colors.primary,
-      varient: colors.primaryVarient
+      variant: colors.primaryVarient
     },
     secondary: {
       main: colors.secondary
@@ -66,6 +66,10 @@ const theme = createTheme({
     h5: {
       fontSize: '1rem',
       fontWeight: 400
+    },
+    h6: {
+      fontSize: '1.5rem',
+      fontWeight: 300
     }
   },
   spacing: 15,
@@ -117,9 +121,9 @@ const theme = createTheme({
             color: 'white'
           },
           '& input': {
-            color: 'white',
             borderBottom: ' 2px solid white'
-          }
+          },
+          '& fieldset': { border: 'none' }
         },
         standard: {
           width: '100%',
@@ -156,6 +160,27 @@ const theme = createTheme({
           '& label': {
             color: 'white'
           }
+        },
+        filled: {
+          marginBottom: '10px',
+          width: '100%',
+          '& input': {
+            color: 'white',
+            borderBottom: ' 3px solid white'
+          },
+          '& label': {
+            color: 'white'
+          }
+        },
+        outlined: {
+          marginBottom: '10px',
+          width: '100%',
+          '& input': {
+            color: colors.secondary.main,
+          },
+          '& label': {
+            color: 'white'
+          }
         }
       }
     },
@@ -164,15 +189,14 @@ const theme = createTheme({
         root: {
           width: '100%',
           '& label': {
-            color: 'white'
+            color: colors.primary.main
           },
           '& input': {
-            color: 'white',
             borderBottom: ' 2px solid white'
           }
         },
         standard: {
-          color: colors.primary,
+          color: colors.secondary.main,
           fontSize: 18
         }
       }

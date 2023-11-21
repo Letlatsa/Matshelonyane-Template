@@ -12,6 +12,10 @@ import Box from '@mui/material/Box';
 import EllipsisV from '../../../assets/ellipsisVIcon.svg';
 import { RetrieveSurnameEndpoint, DownloadUmageEndPoint } from '../../../services/EndPoints';
 
+import theme from '../../../theme/theme';
+import HeaderSkeleton from '../../skeletons/HeaderSkeleton';
+
+
 const TruckerHomeAppBar = () => {
   const navigate = useNavigate();
   const [isOverlay, setIsOverlay] = useState(false);
@@ -22,6 +26,17 @@ const TruckerHomeAppBar = () => {
 
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
+
+  const [isLoadingData, setIsLoadingData] = useState(true);
+
+  //skeleton timeout
+  useEffect(() => {
+    // Simulate data loading
+    const timeout = setTimeout(() => {
+      setIsLoadingData(false);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     RetrieveSurnameEndpoint(accessToken).then((userData) => {
@@ -95,7 +110,7 @@ const TruckerHomeAppBar = () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#EBDBD5',
+    backgroundColor: theme.palette.primary.variant,
     padding: 0,
     borderradius: '50px',
     marginLeft: 1,
@@ -118,31 +133,40 @@ const TruckerHomeAppBar = () => {
         >
           <img src={EllipsisV} alt="MenuIcon" width="10" height="30" sx={{ marginRight: '30px' }} />
         </IconButton>
-        <Typography
-          variant="h6"
-          sx={{
-            flexGrow: 1,
-            textAlign: 'end',
-            height: '50px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            marginRight: '10px',
-            paddingTop: '7px',
-            color: '#58362A'
-          }}
-        >
-          Hi, {lastName}
-        </Typography>
-        <Button onClick={handleButtonClicked}>
-          <Box sx={styledProfileBox}>
-            <img
-              src={profilePic}
-              alt=""
-              style={{ width: '44px', height: '44px', borderRadius: 50 }}
-            />
+        {/* Check if data is loading */}
+        {isLoadingData ? (
+          // Render skeleton while data is loading
+          <HeaderSkeleton />
+        ) : (
+          // Render actual content when data is loaded
+          <>
+            <Typography
+            variant="h6"
+            sx={{
+              flexGrow: 1,
+              textAlign: 'end',
+              height: '50px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              color: theme.palette.secondary.main,
+              marginRight: '10px',
+              paddingTop: '7px',
+            }}
+          >
+            Hi, {lastName}
+          </Typography>
+          <Box onClick={handleButtonClicked}>
+            <Box sx={styledProfileBox}>
+              <img
+                src={profilePic}
+                alt=""
+                style={{ width: '44px', height: '44px', borderRadius: 50 }}
+              />
+            </Box>
           </Box>
-        </Button>
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );

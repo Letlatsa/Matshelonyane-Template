@@ -22,6 +22,7 @@ import { Container, FormControl, InputLabel, Select, MenuItem, Card, Stack } fro
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import { useNavigate } from 'react-router-dom';
+import theme from '../../theme/theme';
 
 const ClientHome = () => {
   // Styles
@@ -36,7 +37,7 @@ const ClientHome = () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#EBDBD5',
+    backgroundColor: theme.palette.primary.variant,
     padding: 0,
     borderradius: '50px',
     marginLeft: 1,
@@ -247,7 +248,31 @@ const ClientHome = () => {
                 sx={{ marginRight: '30px' }}
               />
             </IconButton>
-
+            <Typography
+              variant="h6"
+              sx={{
+                flexGrow: 1,
+                textAlign: 'end',
+                height: '50px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                marginRight: '10px',
+                paddingTop: '7px',
+                color: theme.palette.secondary.main
+              }}
+            >
+              Hi, {lastName}
+            </Typography>
+            <Box onClick={handleButtonClicked}>
+              <Box sx={styledProfileBox}>
+                <img
+                  src={profilePic}
+                  alt=""
+                  style={{ width: '44px', height: '44px', borderRadius: 50 }}
+                />
+              </Box>
+            </Box>
             {/* Check if data is loading */}
             {isLoadingData ? (
               // Render skeleton while data is loading
@@ -256,31 +281,30 @@ const ClientHome = () => {
               // Render actual content when data is loaded
               <>
                 <Typography
-                  variant="h6"
-                  sx={{
-                    flexGrow: 1,
-                    textAlign: 'end',
-                    height: '50px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    marginRight: '10px',
-                    paddingTop: '7px',
-                    color: '#58362A'
-                  }}
-                >
-                  Hi, {lastName}
-                </Typography>
-
-                <Button onClick={handleButtonClicked}>
-                  <Box sx={styledProfileBox}>
-                    <img
-                      src={profilePic}
-                      alt=""
-                      style={{ width: '44px', height: '44px', borderRadius: 50 }}
-                    />
-                  </Box>
-                </Button>
+                variant="h6"
+                sx={{
+                  flexGrow: 1,
+                  textAlign: 'end',
+                  height: '50px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  marginRight: '10px',
+                  paddingTop: '7px',
+                  color: theme.palette.secondary.main
+                }}
+              >
+                Hi, {lastName}
+              </Typography>
+              <Box onClick={handleButtonClicked}>
+                <Box sx={styledProfileBox}>
+                  <img
+                    src={profilePic}
+                    alt=""
+                    style={{ width: '44px', height: '44px', borderRadius: 50 }}
+                  />
+                </Box>
+              </Box>
               </>
             )}
           </Toolbar>
@@ -289,13 +313,9 @@ const ClientHome = () => {
       <Box>
         <Container sx={{ marginTop: '90px' }}>
           <Typography
+            variant="h2"
             sx={{
-              fontFamily: 'lato',
-              fontSize: '24px',
-              color: '#58362A',
-              fontWeight: 400,
-              marginBottom: '30px',
-              textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+              color: theme.palette.secondary.main
             }}
           >
             Lets find your hauler
@@ -303,8 +323,7 @@ const ClientHome = () => {
           <FormControl
             sx={{
               width: '100%',
-              height: '50px',
-              marginBottom: '50px'
+              height: '50px'
             }}
           >
             {/* <Container
@@ -341,9 +360,13 @@ const ClientHome = () => {
         <Container>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box>
-              <Typography sx={{ fontSize: '20px', color: '#58362A' }}>Truckers</Typography>
+              <Typography variant="h3" sx={{ color: theme.palette.secondary.main }}>
+                Truckers
+              </Typography>
             </Box>
-            <Box sx={{ backgroundColor: '#58362A', height: '.2px', width: '65vw' }}></Box>
+            <Box
+              sx={{ backgroundColor: theme.palette.secondary.main, height: '.2px', width: '65vw' }}
+            ></Box>
           </Box>
           <Box
             sx={{
@@ -351,13 +374,22 @@ const ClientHome = () => {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
+              alignContent: 'center',
               marginBottom: '30px'
             }}
           >
-            <Typography sx={{ fontSize: '16px', marginLeft: '10px', color: '#58362A' }}>
+            <Typography
+              variant="h4"
+              sx={{
+                marginLeft: '10px',
+                marginTop: '12px',
+                color: theme.palette.secondary.main,
+                width: '100px'
+              }}
+            >
               Sort by:
             </Typography>
-            <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
+            <FormControl sx={{ m: 0, minWidth: 120, display: 'flex' }}>
               <InputLabel sx={{ fontSize: '14px' }} id="rating-simple-select-label">
                 Location
               </InputLabel>
@@ -405,83 +437,75 @@ const ClientHome = () => {
                         />
                       </Box>
                     </Box>
-                  </Box>
-                  <Stack spacing={2} sx={{ paddingRight: '15px' }}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        width: '280px',
-                        justifyContent: 'space-between',
-                        color: 'white'
-                      }}
-                    >
-                      <Box>
-                        <Typography sx={{ fontSize: '15px' }}>
-                          {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
-                        </Typography>
-                      </Box>
-                      <Box sx={{ textAlign: 'right' }}>
-                        <Typography
-                          sx={{
-                            fontSize: '16px',
-                            filter: 'blur(3px)',
-                            display: 'flex',
-                            alignItems: 'center'
-                          }}
-                        >
-                          <img
-                            src={PhoneIcon}
-                            alt="Phone"
-                            width="30"
-                            height="20"
-                            sx={{ marginRight: '30px' }}
-                          />
-                          78322342
-                        </Typography>
-                      </Box>
-                    </Box>
-                    </Stack>
+                    <Stack spacing={2} sx={{ paddingRight: '15px' }}>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          width: '280px',
+                          justifyContent: 'space-between',
+                          color: 'white'
+                        }}
+                      >
+                          <Box>
+                            <Typography variant="h4" sx={{ fontSize: '15px' }}>
+                              {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
+                            </Typography>
+                          </Box>
+                          <Box sx={{ textAlign: 'right' }}>
+                            <Typography
+                              sx={{
+                                fontSize: '16px',
+                                filter: 'blur(3px)',
+                                display: 'flex',
+                                alignItems: 'center'
+                              }}
+                            >
+                              <img
+                                src={PhoneIcon}
+                                alt="Phone"
+                                width="30"
+                                height="20"
+                                sx={{ marginRight: '30px' }}
+                              />
+                              78322342
+                            </Typography>
+                          </Box>
+                        </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                         <Button
-                          variant="text"
+                          variant="contained"
                           sx={{
-                            backgroundColor: '#EBDBD5',
-                            textColor: '#58362A',
+                            fontSize: '14px',
                             width: '280px',
                             borderRadius: '5px',
                             height: '25px',
-                            color: '#58362A',
-                            fontWeight: '300',
-                            fontSize: '14px',
-                            textTransform: 'none',
-                            boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                            color: theme.palette.secondary.main,
                             '&:hover': {
-                              backgroundColor: '#58362A',
-                              color: 'white',
-                              transition: 'ease-in .3s'
-                            }
+                              color: theme.palette.primary.main
+                            },
+                            textTransform: 'none'
                           }}
                           onClick={async () => {
                             const {
                               profile: { account: driverId }
                             } = truckersData;
-
+  
                             const userData = sessionStorage.getItem('user');
-
+  
                             const { account } = JSON.parse(userData);
-
+  
                             const data = {
                               locationID: selectedLocation,
                               driverID: driverId,
                               clientID: account
                             };
                             console.log('data', data);
-
+  
                             try {
                               // Call PostProfileVisits
                               const response = await PostProfileVisits(accessToken, data);
                               console.log('Profile visit response:', response);
-
+  
                               // Navigate to the trucker's profile
                               navigate(`/clienttruckerprofile/${truckersData.profile.account}`);
                             } catch (error) {
@@ -492,6 +516,8 @@ const ClientHome = () => {
                           View Profile
                         </Button>
                       </Box>
+                    </Stack>
+                  </Box>
                 </Card>
               ))
             )}
