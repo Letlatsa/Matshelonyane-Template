@@ -53,7 +53,7 @@ function ClientHomeProfile() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const validateForm = () => {
+  const validateForm = async () => {
     const { firstName, lastName } = formData;
     const errors = {};
 
@@ -80,11 +80,11 @@ function ClientHomeProfile() {
         }
       };
 
-      const propicWait = PropicApiRequest(formData, accessToken);
-      const profileWait = ProfileApiRequest(profileFrom, accessToken);
+      const profileWait = await ProfileApiRequest(profileFrom, accessToken);
 
       if (avatarImage) {
-        if (propicWait === 200 && profileWait === 200) {
+        const propicWait = await PropicApiRequest(formData, accessToken);
+        if (propicWait === 200 || profileWait === 200) {
           refreshSession(accessToken);
         } else {
           refreshSession(accessToken);
@@ -96,12 +96,12 @@ function ClientHomeProfile() {
     }
   };
 
-  const PropicApiRequest = (formData, accessToken) => {
-    updateProfilePictureEndpoint(formData, accessToken)
+  const PropicApiRequest = async (formData, accessToken) => {
+    await updateProfilePictureEndpoint(formData, accessToken)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          return 200;
+          return response.status;
         } else return 400;
       })
       .catch((error) => {
@@ -109,11 +109,11 @@ function ClientHomeProfile() {
       });
   };
 
-  const ProfileApiRequest = (formData, accessToken) => {
-    EditProfileEndPoint(formData, accessToken)
+  const ProfileApiRequest = async (formData, accessToken) => {
+    await EditProfileEndPoint(formData, accessToken)
       .then((response) => {
         if (response.status === 200) {
-          return 200;
+          return response.status;
         } else return 400;
       })
       .catch((error) => {
@@ -148,7 +148,13 @@ function ClientHomeProfile() {
 
       sessionStorage.setItem('user', JSON.stringify(user));
 
-      navigate('/clientprofile');
+      const isUpdate = sessionStorage.getItem('user') === JSON.stringify(user);
+
+      if (isUpdate) {
+        navigate('/clientprofile');
+      } else {
+        console.log('Error updating session');
+      }
     });
   };
 
