@@ -65,6 +65,10 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
     setIsOverlay(false);
   };
 
+  const handleEditProfile = () => {
+    navigate('/truckereditprofile');
+  };
+
   const styledAppBar = {
     background: 'transparent',
     boxShadow: 'none'
@@ -167,7 +171,7 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
             <Typography sx={settingSectionText}>Account</Typography>
           </Box>
           <Stack spacing={2}>
-            <Box sx={styleListItemBox}>
+            <Box sx={styleListItemBox} onClick={handleEditProfile}>
               <Typography sx={styledStackTypography}>Edit profile</Typography>
               <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
             </Box>

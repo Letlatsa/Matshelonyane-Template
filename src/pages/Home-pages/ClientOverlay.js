@@ -29,6 +29,11 @@ const ClientOverlay = () => {
   const handleButtonBackArrowClicked = () => {
     navigate('/clienthome');
   };
+
+  const handleEditProfile = () => {
+    navigate('/clienteditprofile');
+  };
+
   const styledAppBar = {
     background: 'transparent',
     boxShadow: 'none'
@@ -52,7 +57,7 @@ const ClientOverlay = () => {
     alignContent: 'center',
     justifyContent: 'space-between',
     color: '#FFF',
-    alignItems: 'center'
+    alignItems: 'center',
   };
 
   const settingSectionText = {
@@ -106,7 +111,7 @@ const ClientOverlay = () => {
             <Typography sx={settingSectionText}>Account</Typography>
           </Box>
           <Stack spacing={2}>
-            <Box sx={styleListItemBox}>
+            <Box sx={styleListItemBox} onClick={handleEditProfile}>
               <Typography sx={styledStackTypography}>Edit profile</Typography>
               <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
             </Box>
