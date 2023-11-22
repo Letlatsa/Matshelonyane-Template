@@ -24,6 +24,10 @@ const ClientMenuOverlay = ({ isOverlay, setIsOverlay }) => {
     setIsOverlay(false);
   };
 
+  const handleEditProfile = () => {
+    navigate('/clienteditprofile');
+  };
+
   const styledAppBar = {
     background: 'transparent',
     boxShadow: 'none'
@@ -126,7 +130,7 @@ const ClientMenuOverlay = ({ isOverlay, setIsOverlay }) => {
             <Typography sx={settingSectionText}>Account</Typography>
           </Box>
           <Stack spacing={2}>
-            <Box sx={styleListItemBox}>
+            <Box sx={styleListItemBox} onClick={handleEditProfile}>
               <Typography sx={styledStackTypography}>Edit profile</Typography>
               <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
             </Box>
