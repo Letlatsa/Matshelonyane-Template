@@ -29,6 +29,11 @@ const ClientOverlay = () => {
   const handleButtonBackArrowClicked = () => {
     navigate('/clienthome');
   };
+
+  const handleEditProfile = () => {
+    navigate('/clienteditprofile');
+  };
+
   const styledAppBar = {
     background: 'transparent',
     boxShadow: 'none'
