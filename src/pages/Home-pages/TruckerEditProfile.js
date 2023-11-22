@@ -69,7 +69,7 @@ function TruckerHomeProfile() {
     getProfilePic(propic);
 
     fetchLocationData();
-  }, [accessToken]);
+  }, [accessToken, propic]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -187,7 +187,13 @@ function TruckerHomeProfile() {
 
       sessionStorage.setItem('user', JSON.stringify(user));
 
-      navigate('/truckerprofileview');
+      const isUpdate = sessionStorage.getItem('user') === JSON.stringify(user);
+
+      if (isUpdate) {
+        navigate('/truckerprofileview');
+      } else {
+        console.log('Error updating session');
+      }
     });
   };
 
