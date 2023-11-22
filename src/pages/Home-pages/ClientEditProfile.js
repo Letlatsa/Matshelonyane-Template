@@ -123,6 +123,7 @@ function ClientHomeProfile() {
   };
 
   const refreshSession = (accessToken) => {
+
     RetrieveSurnameEndpoint(accessToken).then((userData) => {
       const {
         _id,
@@ -148,7 +149,13 @@ function ClientHomeProfile() {
 
       sessionStorage.setItem('user', JSON.stringify(user));
 
-      navigate('/clientprofile');
+      const isUpdate = sessionStorage.getItem('user') === JSON.stringify(user);
+
+      if (isUpdate) {
+        navigate('/clientprofile');
+      } else {
+        console.log('Error updating session');
+      }
     });
   };
 
