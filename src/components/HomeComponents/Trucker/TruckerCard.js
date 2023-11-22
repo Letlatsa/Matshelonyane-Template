@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { Card, Stack, Box } from '@mui/material';
 import PhoneIcon from '../../../assets/phone.svg';
 import LocationIcon from '../../../assets/location.svg';
-import { GetProfileVisits } from '../../../services/EndPoints';
+import { GetProfileVisits, DownloadUmageEndPoint } from '../../../services/EndPoints';
 import { useToken } from '../../../Hooks/TokenContext';
 import { useState, useEffect } from 'react';
 
@@ -18,9 +18,7 @@ const TruckerCard = () => {
   useEffect(() => {
     const fetchClientData = async () => {
       try {
-        const profileVisits = await GetProfileVisits(accessToken);
-        const uniqueClients = getUniqueClients(profileVisits);
-        setClientsData(uniqueClients);
+        getProfileVisits(accessToken);
       } catch (error) {
         console.error('Error fetching client data: ', error);
       }
@@ -39,6 +37,37 @@ const TruckerCard = () => {
 
   const handleButtonClickedProposalPage = () => {
     navigate('/truckerhome');
+  };
+
+  const getProfileVisits = (accessToken) => {
+    GetProfileVisits(accessToken)
+      .then((profileVisits) => {
+        const updatedVisits = profileVisits.map(async (visit) => {
+          try {
+            const response = await DownloadUmageEndPoint(visit.client.propic);
+            if (response.status === 200) {
+              const byteImage = response.data;
+              const imageUrl = `data:image/png;base64,${byteImage}`;
+
+              // Modify the existing object directly
+              Object.assign(visit.client, { propic: imageUrl });
+            }
+            return visit;
+          } catch (error) {
+            console.error('Error fetching client data: ', error);
+            return visit; // Return the original visit object on error
+          }
+        });
+
+        Promise.all(updatedVisits).then((updatedVisits) => {
+          const uniqueClients = getUniqueClients(updatedVisits);
+          console.log('Unique Clients:', uniqueClients);
+          setClientsData(uniqueClients);
+        });
+      })
+      .catch((error) => {
+        console.log(error, 'Error Fetching Data');
+      });
   };
 
   const styledProfileBox = {
@@ -72,7 +101,7 @@ const TruckerCard = () => {
             <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
               <Box sx={styledProfileBox}>
                 <img
-                  src="https://picsum.photos/200/300"
+                  src={client.client.propic}
                   alt=""
                   style={{ width: '44px', height: '44px', borderRadius: 50 }}
                 />
@@ -89,7 +118,7 @@ const TruckerCard = () => {
               >
                 <Box>
                   <Typography sx={{ fontSize: '15px', paddingTop: '15px' }}>
-                    {client.client.firstName}
+                    {client.client.firstName} {client.client.lastName}  
                   </Typography>
                 </Box>
                 <Box
