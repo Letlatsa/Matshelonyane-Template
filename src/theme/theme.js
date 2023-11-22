@@ -141,13 +141,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           width: '100%',
-          color: 'white',
           borderBottom: ' 2px solid white',
           '& label': {
             color: 'white'
           },
           '& input': {
-            color: 'white',
             borderBottom: ' 2px solid white'
           }
         },
@@ -176,7 +174,7 @@ const theme = createTheme({
           marginBottom: '10px',
           width: '100%',
           '& input': {
-            color: colors.secondary.main,
+            color: colors.secondary.main
           },
           '& label': {
             color: 'white'
