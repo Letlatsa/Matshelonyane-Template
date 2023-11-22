@@ -108,11 +108,11 @@ function TruckerHomeProfile() {
         }
       };
 
-      const propicWait = await PropicApiRequest(formData, accessToken);
       const profileWait = await ProfileApiRequest(profileFrom, accessToken);
 
       if (avatarImage) {
-        if (propicWait === 200 && profileWait === 200) {
+        const propicWait = await PropicApiRequest(formData, accessToken);
+        if (propicWait === 200 || profileWait === 200) {
           refreshSession(accessToken);
         } else {
           console.log('Error updating profile');
