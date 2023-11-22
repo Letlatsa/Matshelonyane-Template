@@ -19,7 +19,6 @@ const TruckerCard = () => {
     const fetchClientData = async () => {
       try {
         getProfileVisits(accessToken);
-      
       } catch (error) {
         console.error('Error fetching client data: ', error);
       }
@@ -49,15 +48,20 @@ const TruckerCard = () => {
             if (response.status === 200) {
               const byteImage = response.data;
               const imageUrl = `data:image/png;base64,${byteImage}`;
-              return { ...visit.client, propic: imageUrl };
+
+              // Modify the existing object directly
+              Object.assign(visit.client, { propic: imageUrl });
             }
             return visit;
           } catch (error) {
             console.error('Error fetching client data: ', error);
+            return visit; // Return the original visit object on error
           }
         });
+
         Promise.all(updatedVisits).then((updatedVisits) => {
           const uniqueClients = getUniqueClients(updatedVisits);
+          console.log('Unique Clients:', uniqueClients);
           setClientsData(uniqueClients);
         });
       })
@@ -97,7 +101,7 @@ const TruckerCard = () => {
             <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
               <Box sx={styledProfileBox}>
                 <img
-                  src={client.propic}
+                  src={client.client.propic}
                   alt=""
                   style={{ width: '44px', height: '44px', borderRadius: 50 }}
                 />
@@ -114,7 +118,7 @@ const TruckerCard = () => {
               >
                 <Box>
                   <Typography sx={{ fontSize: '15px', paddingTop: '15px' }}>
-                    {client.firstName}
+                    {client.client.firstName} {client.client.lastName}  
                   </Typography>
                 </Box>
                 <Box
@@ -141,7 +145,7 @@ const TruckerCard = () => {
                       height="20"
                       sx={{ marginRight: '15px' }}
                     />
-                    {} {/* Render client location */}
+                    {client.location.name} {/* Render client location */}
                   </Typography>
                 </Box>
               </Box>
