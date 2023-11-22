@@ -18,12 +18,8 @@ const TruckerCard = () => {
   useEffect(() => {
     const fetchClientData = async () => {
       try {
-        const profileVisits = getProfileVisits(accessToken);
-        const uniqueClients = getUniqueClients(profileVisits);
-        
-        setClientsData(uniqueClients);
-        
-        console.log('Unique Clients:', uniqueClients);
+        getProfileVisits(accessToken);
+      
       } catch (error) {
         console.error('Error fetching client data: ', error);
       }
