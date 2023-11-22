@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import MenuOverlay from '../Client/ClientMenuOverlay';
+import MenuOverlay from '../Trucker/TurckerMenuOverlay';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
