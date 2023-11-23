@@ -413,27 +413,35 @@ const ClientHome = () => {
                         />
                       </Box>
                     </Box>
-                    <Stack spacing={2} sx={{ paddingRight: '15px' }}>
+                    <Stack spacing={2} sx={{ paddingRight: '15px', width: '100%' }}>
                       <Box
                         sx={{
                           display: 'flex',
-                          width: '280px',
+                          flexDirection: 'row',
                           justifyContent: 'space-between',
                           color: 'white'
                         }}
                       >
                         <Box>
-                          <Typography variant="h4" sx={{ fontSize: '15px' }}>
+                          <Typography variant="h4" sx={{ fontSize: '15px', paddingTop: '15px' }}>
                             {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
                           </Typography>
                         </Box>
-                        <Box sx={{ textAlign: 'right' }}>
+                        <Box
+                          sx={{
+                            textAlign: 'right',
+                            display: 'flex',
+                            justifyContent: 'end'
+                          }}
+                        >
                           <Typography
                             sx={{
                               fontSize: '16px',
                               filter: 'blur(3px)',
                               display: 'flex',
-                              alignItems: 'center'
+                              alignItems: 'center',
+                              paddingTop: '15px',
+                              marginRight: '15px'
                             }}
                           >
                             <img
@@ -452,7 +460,7 @@ const ClientHome = () => {
                           variant="contained"
                           sx={{
                             fontSize: '14px',
-                            width: '280px',
+                            width: '100%',
                             borderRadius: '5px',
                             height: '25px',
                             color: theme.palette.secondary.main,
