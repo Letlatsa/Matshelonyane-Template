@@ -97,8 +97,21 @@ const TruckerCard = () => {
             marginBottom: '15px' // Adjust spacing between cards
           }}
         >
-          <Box sx={{ display: 'flex', width: '100%' }}>
-            <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' }, // Stack on small screens, row on medium and larger screens
+              width: '100%'
+            }}
+          >
+            <Box
+              sx={{
+                width: { xs: '100%', md: '78px' },
+                display: 'flex',
+                paddingRight: { xs: '0', md: '15px' }, // No right padding on small screens
+                marginBottom: { xs: '15px', md: '0' } // Adjust spacing between items on small screens
+              }}
+            >
               <Box sx={styledProfileBox}>
                 <img
                   src={client.client.propic}
@@ -107,18 +120,19 @@ const TruckerCard = () => {
                 />
               </Box>
             </Box>
-            <Stack spacing={2} sx={{ paddingRight: '15px' }}>
+            <Stack spacing={2} sx={{ width: '100%', paddingRight: '15px' }}>
               <Box
                 sx={{
                   display: 'flex',
-                  width: '70vw',
+                  flexDirection: 'row',
                   justifyContent: 'space-between',
-                  color: 'white'
+                  color: 'white',
+                  paddingLeft: '15px',
                 }}
               >
                 <Box>
                   <Typography sx={{ fontSize: '15px', paddingTop: '15px' }}>
-                    {client.client.firstName} {client.client.lastName}  
+                    {client.client.firstName} {client.client.lastName}
                   </Typography>
                 </Box>
                 <Box
@@ -145,12 +159,9 @@ const TruckerCard = () => {
                       height="20"
                       sx={{ marginRight: '15px' }}
                     />
-                    {client.location.name} {/* Render client location */}
+                    {client.location.name}
                   </Typography>
                 </Box>
-              </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                {/* Additional content for the card, if needed */}
               </Box>
             </Stack>
           </Box>
