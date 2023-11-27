@@ -7,14 +7,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import ClientMenuOverlay from './ClientMenuOverlay';
-import ClientBottomNav from './ClientBottomNav';
 
 import { RetrieveSurnameEndpoint, DownloadUmageEndPoint } from '../../../services/EndPoints';
 
-import { Container, FormControl, InputLabel, Select, MenuItem, Card, Stack } from '@mui/material';
-//import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import EllipsisV from '../../../assets/ellipsisVIcon.svg';
 import { useNavigate } from 'react-router-dom';
+import theme from '../../../theme/theme';
 
 function ClientAppBarComponent() {
   const navigate = useNavigate();
@@ -108,7 +106,7 @@ function ClientAppBarComponent() {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#EBDBD5',
+    backgroundColor: theme.palette.primary.variant,
     padding: 0,
     borderradius: '50px',
     marginLeft: 1,
@@ -147,9 +145,11 @@ function ClientAppBarComponent() {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                marginRight: '10px',
+                marginRight: '20px',
                 paddingTop: '7px',
-                color: '#58362A'
+                whiteSpace: 'nowrap',
+                marginLeft: '40px',
+                color: theme.palette.secondary.main
               }}
             >
               Hi, {lastName}
