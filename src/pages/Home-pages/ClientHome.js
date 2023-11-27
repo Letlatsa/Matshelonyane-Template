@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import ClientMenuOverlay from '../../components/HomeComponents/Client/ClientMenuOverlay';
 import HeaderSkeleton from '../../components/skeletons/HeaderSkeleton';
 import HomepageSkeleton from '../../components/skeletons/HomepageSkeleton';
+import ClientBottomNav from '../../components/HomeComponents/Client/ClientBottomNav';
 
 import {
   RetrieveSurnameEndpoint,
@@ -506,6 +507,7 @@ const ClientHome = () => {
               ))
             )}
           </Stack>
+          <ClientBottomNav />
         </Container>
       </Box>
     </div>
