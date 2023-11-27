@@ -25,6 +25,7 @@ import ClientOverlay from './pages/Home-pages/ClientOverlay';
 import ClientHomeProfile from './pages/Home-pages/ClientEditProfile';
 import TruckerHomeProfile from './pages/Home-pages/TruckerEditProfile';
 import TruckerProfile from './pages/Home-pages/TruckerProfileView';
+import ClientJobPosting from './components/HomeComponents/Client/ClientJobPosting';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Route path="/truckerproposalpage" element={<TruckerProposalPage />}></Route>
         <Route path="/clienteditprofile" element={<ClientHomeProfile />}></Route>
         <Route path="/truckereditprofile" element={<TruckerHomeProfile />}></Route>
+        <Route path="/jobposting" element={<ClientJobPosting />}></Route>
       </Routes>
     </div>
   );

@@ -5,12 +5,21 @@ import homeIcon from '../../../assets/homeVector.svg';
 import messageIcon from '../../../assets/evaMessage.svg';
 import clipBoardIcon from '../../../assets/Group1.svg';
 import requestIcon from '../../../assets/requestIcon.svg';
+import { useNavigate } from 'react-router-dom';
 
 const ClientBottomNav = () => {
+  const navigate = useNavigate();
+
   const [value, setValue] = useState('Home');
 
   const handleNavigation = (event, newValue) => {
     setValue(newValue);
+  };
+  const handlePosting = () => {
+    navigate('/jobposting');
+  };
+  const ClientHomePage = () => {
+    navigate('/clienthome');
   };
 
   const styledNavAction = {
@@ -21,7 +30,7 @@ const ClientBottomNav = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   };
 
   const styledNavActiveAction = {
@@ -32,7 +41,7 @@ const ClientBottomNav = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   };
 
   const styledBottomNav = {
@@ -40,7 +49,7 @@ const ClientBottomNav = () => {
     bottom: 0,
     width: '100%',
     height: '80px',
-    backgroundColor: "#fff"
+    backgroundColor: '#fff'
   };
 
   return (
@@ -49,7 +58,14 @@ const ClientBottomNav = () => {
         value="Home"
         icon={
           <Box sx={value === 'Home' ? styledNavActiveAction : styledNavAction}>
-            <img src={homeIcon} alt="Phone" width="30" height="20" sx={{ marginRight: '30px' }} />
+            <img
+              src={homeIcon}
+              alt="Phone"
+              width="30"
+              height="20"
+              sx={{ marginRight: '30px' }}
+              onClick={ClientHomePage}
+            />
           </Box>
         }
       />
@@ -91,6 +107,7 @@ const ClientBottomNav = () => {
               width="30"
               height="20"
               sx={{ marginRight: '30px' }}
+              onClick={handlePosting}
             />
           </Box>
         }
