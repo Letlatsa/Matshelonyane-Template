@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate } from 'react-router-dom';
 
 import Typography from '@mui/material/Typography';
@@ -8,12 +9,27 @@ import LocationIcon from '../../../assets/location.svg';
 import { GetProfileVisits, DownloadUmageEndPoint } from '../../../services/EndPoints';
 import { useToken } from '../../../Hooks/TokenContext';
 import { useState, useEffect } from 'react';
+import TruckerHomeSkeleton from '../../skeletons/TruckerHomeSkeleton';
 
 const TruckerCard = () => {
   const navigate = useNavigate();
+
+  const [isLoadingClients, setIsLoadingClients] = useState(true);
+  const [isLoadingData, setIsLoadingData] = useState(true);
+
   const [clientsData, setClientsData] = useState([]);
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
+
+  //skeleton timeout
+  useEffect(() => {
+    // Simulate data loading
+    const timeout = setTimeout(() => {
+      setIsLoadingData(false);
+      setIsLoadingClients(false);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     const fetchClientData = async () => {
@@ -86,87 +102,85 @@ const TruckerCard = () => {
 
   return (
     <>
-      {clientsData.map((client) => (
-        <Card
-          key={client.id}
-          sx={{
-            width: '100%',
-            backgroundColor: '#C69585',
-            paddingTop: '15px',
-            paddingBottom: '15px',
-            marginBottom: '15px' // Adjust spacing between cards
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' }, // Stack on small screens, row on medium and larger screens
-              width: '100%'
-            }}
-          >
-            <Box
+      {/* Check if data is loading */}
+      {isLoadingData ? (
+        // Render skeleton while data is loading
+        <TruckerHomeSkeleton />
+      ) : (
+        // Render actual content when data is loaded
+        <>
+          {clientsData.map((client) => (
+            <Card
+              key={client.id}
               sx={{
-                width: { xs: '100%', md: '78px' },
-                display: 'flex',
-                paddingRight: { xs: '0', md: '15px' }, // No right padding on small screens
-                marginBottom: { xs: '15px', md: '0' } // Adjust spacing between items on small screens
+                width: '100%',
+                backgroundColor: '#C69585',
+                paddingTop: '15px',
+                paddingBottom: '15px',
+                marginBottom: '15px' // Adjust spacing between cards
               }}
             >
-              <Box sx={styledProfileBox}>
-                <img
-                  src={client.client.propic}
-                  alt=""
-                  style={{ width: '44px', height: '44px', borderRadius: 50 }}
-                />
-              </Box>
-            </Box>
-            <Stack spacing={2} sx={{ width: '100%', paddingRight: '15px' }}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  color: 'white',
-                  paddingLeft: '15px',
-                }}
-              >
-                <Box>
-                  <Typography sx={{ fontSize: '15px', paddingTop: '15px' }}>
-                    {client.client.firstName} {client.client.lastName}
-                  </Typography>
+              <Box sx={{ display: 'flex', width: '100%' }}>
+                <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
+                  <Box sx={styledProfileBox}>
+                    <img
+                      src={client.client.propic}
+                      alt=""
+                      style={{ width: '44px', height: '44px', borderRadius: 50 }}
+                    />
+                  </Box>
                 </Box>
-                <Box
-                  sx={{
-                    textAlign: 'right',
-                    display: 'flex',
-                    justifyContent: 'end'
-                  }}
-                >
-                  <Typography
+                <Stack spacing={2} sx={{ paddingRight: '15px' }}>
+                  <Box
                     sx={{
-                      fontSize: '16px',
-                      filter: 'blur(10deg)',
                       display: 'flex',
-                      alignItems: 'center',
-                      paddingTop: '15px',
-                      marginRight: '15px'
+                      width: '70vw',
+                      justifyContent: 'space-between',
+                      color: 'white'
                     }}
                   >
-                    <img
-                      src={LocationIcon}
-                      alt="Location"
-                      width="30"
-                      height="20"
-                      sx={{ marginRight: '15px' }}
-                    />
-                    {client.location.name}
-                  </Typography>
-                </Box>
+                    <Box>
+                      <Typography sx={{ fontSize: '15px', paddingTop: '15px' }}>
+                        {client.client.firstName} {client.client.lastName}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        textAlign: 'right',
+                        display: 'flex',
+                        justifyContent: 'end'
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: '16px',
+                          filter: 'blur(10deg)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          paddingTop: '15px',
+                          marginRight: '15px'
+                        }}
+                      >
+                        <img
+                          src={LocationIcon}
+                          alt="Location"
+                          width="30"
+                          height="20"
+                          sx={{ marginRight: '15px' }}
+                        />
+                        {client.location.name} {/* Render client location */}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                    {/* Additional content for the card, if needed */}
+                  </Box>
+                </Stack>
               </Box>
-            </Stack>
-          </Box>
-        </Card>
-      ))}
+            </Card>
+          ))}
+        </>
+      )}
     </>
   );
 };
