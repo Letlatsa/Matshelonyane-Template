@@ -12,6 +12,14 @@ import {
   Button
 } from '@mui/material';
 import PhoneIcon from '../../../assets/phone.svg';
+import DescIcon from '../../../assets/desc.svg';
+import TruckIcon from '../../../assets/truck.svg';
+import LoadIcon from '../../../assets/load.svg';
+import LocationIcon from '../../../assets/location.svg';
+import TimeIcon from '../../../assets/time.svg';
+import InstructionIcon from '../../../assets/Vector (1).svg';
+import PriceIcon from '../../../assets/Vector (2).svg';
+import LoadingIcon from '../../../assets/loading.svg';
 import theme from '../../../theme/theme';
 
 function ClientJobPostingForm() {
@@ -95,7 +103,7 @@ function ClientJobPostingForm() {
                     label={
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <img
-                          src={PhoneIcon}
+                          src={DescIcon}
                           alt="cargo"
                           width="30"
                           height="20"
@@ -115,11 +123,11 @@ function ClientJobPostingForm() {
                   <InputLabel id="Account-type" sx={{ color: 'white' }}>
                     <Box sx={accountLabelContainer}>
                       <img
-                        src={PhoneIcon}
+                        src={TruckIcon}
                         alt="trucktype"
                         width="30"
                         height="20"
-                        sx={{ marginRight: '30px' }}
+                        sx={{ marginRight: '25px' }}
                       />
                       <Box>required truck type</Box>
                     </Box>
@@ -142,7 +150,7 @@ function ClientJobPostingForm() {
                     label={
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <img
-                          src={PhoneIcon}
+                          src={LoadIcon}
                           alt="weight"
                           width="30"
                           height="20"
@@ -164,7 +172,7 @@ function ClientJobPostingForm() {
                     label={
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <img
-                          src={PhoneIcon}
+                          src={LocationIcon}
                           alt="location"
                           width="30"
                           height="20"
@@ -186,7 +194,7 @@ function ClientJobPostingForm() {
                     label={
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <img
-                          src={PhoneIcon}
+                          src={LocationIcon}
                           alt="dropoff"
                           width="30"
                           height="20"
@@ -208,7 +216,7 @@ function ClientJobPostingForm() {
                     label={
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <img
-                          src={PhoneIcon}
+                          src={TimeIcon}
                           alt="time"
                           width="30"
                           height="20"
@@ -230,7 +238,7 @@ function ClientJobPostingForm() {
                     label={
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <img
-                          src={PhoneIcon}
+                          src={InstructionIcon}
                           alt="instructions"
                           width="30"
                           height="20"
@@ -250,7 +258,7 @@ function ClientJobPostingForm() {
                   <InputLabel id="loading" sx={{ color: 'white' }}>
                     <Box sx={accountLabelContainer}>
                       <img
-                        src={PhoneIcon}
+                        src={LoadingIcon}
                         alt="loading"
                         width="30"
                         height="20"
@@ -272,7 +280,7 @@ function ClientJobPostingForm() {
                     label={
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <img
-                          src={PhoneIcon}
+                          src={PriceIcon}
                           alt="Price"
                           width="30"
                           height="20"
