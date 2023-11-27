@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   Card,
@@ -11,7 +10,8 @@ import {
   MenuItem,
   Button
 } from '@mui/material';
-import PhoneIcon from '../../../assets/phone.svg';
+import { TruckRetrieveEndpoint } from '../../../services/EndPoints';
+
 import DescIcon from '../../../assets/desc.svg';
 import TruckIcon from '../../../assets/truck.svg';
 import LoadIcon from '../../../assets/load.svg';
@@ -22,7 +22,42 @@ import PriceIcon from '../../../assets/Vector (2).svg';
 import LoadingIcon from '../../../assets/loading.svg';
 import theme from '../../../theme/theme';
 
+import { useEffect, useState } from 'react';
+
 function ClientJobPostingForm() {
+  const [truckType, setTruckType] = useState([]);
+  const [selectedTruckType, setSelectedTruckType] = useState([]);
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
+
+  useEffect(() => {
+    const fetchTruckData = async () => {
+      try {
+        getTruckTypes(accessToken);
+      } catch (error) {
+        console.error('Error fetching truck types: ', error);
+      }
+    };
+
+    fetchTruckData();
+  }, [accessToken]);
+
+  const getTruckTypes = (accessToken) => {
+    TruckRetrieveEndpoint(accessToken)
+      .then((truckData) => {
+        setTruckType(truckData.data);
+      })
+      .catch((error) => {
+        console.log(error, 'Error Fetching Data');
+      });
+  };
+
+  const handleTrucktypeChange = async (event) => {
+    const selectedTruckType = event.target.value;
+    setSelectedTruckType(selectedTruckType);
+    console.log('Selected Truck Type:', selectedTruckType);
+  };
+
   const styledCard = {
     width: 'calc(100% - 50px)',
     maxWidth: '380px',
@@ -134,12 +169,17 @@ function ClientJobPostingForm() {
                   </InputLabel>
                   <Select
                     variant="standard"
-                    labelId="truck-type"
-                    id="account-type"
+                    labelId="truckType"
+                    id="truckType"
+                    onChange={handleTrucktypeChange}
+                    value={selectedTruckType}
                     sx={styledSelect}
                   >
-                    <MenuItem value="small">Small</MenuItem>
-                    <MenuItem value="medium">medium</MenuItem>
+                    {truckType.map((truckData) => (
+                      <MenuItem key={truckData._id} value={truckData._id}>
+                        {truckData.name}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Stack>
@@ -225,7 +265,7 @@ function ClientJobPostingForm() {
                         pick-up time
                       </div>
                     }
-                    type="time"
+                    type="times"
                     name="time"
                     placeholder="Enter time"
                   />
