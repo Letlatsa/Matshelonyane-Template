@@ -107,6 +107,7 @@ const ClientHome = () => {
         _id,
         firstName,
         lastName,
+        number,
         propic,
         profileType,
         deliveryArea,
@@ -115,6 +116,7 @@ const ClientHome = () => {
       } = userData.data;
 
       console.log(_id);
+      console.log(number, 'i am account');
 
       let accountID; // store the account._id
 
@@ -128,11 +130,15 @@ const ClientHome = () => {
         _id: _id,
         firstName: firstName,
         lastName: lastName,
+        number: number,
         propic: propic,
         profileType: profileType,
         deliveryArea: deliveryArea,
         driversLicense: driversLicense,
-        account: accountID
+        account: {
+          _id: accountID,
+          number: account.number
+        }
       };
 
       setLastName(lastName);
@@ -181,7 +187,7 @@ const ClientHome = () => {
             if (response.status === 200) {
               const bybeImage = response.data;
               const imageUrl = `data:image/png;base64,${bybeImage}`;
-              console.log('Image URL: ', imageUrl);
+              //console.log('Image URL: ', imageUrl);
               return { ...trucker, propic: imageUrl };
             }
           } catch (error) {
