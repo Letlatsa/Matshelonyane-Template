@@ -75,7 +75,7 @@ function ClientJobPostingForm() {
   };
 
   const inputContainer = {
-    width: '100%',
+    width: '90%',
     marginBottom: '15px',
     padding: '0 20px',
     alignItems: 'center'
