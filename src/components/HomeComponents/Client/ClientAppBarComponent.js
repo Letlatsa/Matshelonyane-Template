@@ -148,13 +148,13 @@ function ClientAppBarComponent() {
                 marginRight: '20px',
                 paddingTop: '7px',
                 whiteSpace: 'nowrap',
-                marginLeft: '40px',
+                marginLeft: '130px',
                 color: theme.palette.secondary.main
               }}
             >
               Hi, {lastName}
             </Typography>
-            <Button onClick={handleButtonClicked}>
+            <Button onClick={handleButtonClicked} sx={{ p: 0, ml: -2 }}>
               <Box sx={styledProfileBox}>
                 <img
                   src={profilePic}

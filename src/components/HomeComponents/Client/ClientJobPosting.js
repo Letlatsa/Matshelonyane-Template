@@ -4,6 +4,7 @@ import React from 'react';
 import ClientAppBarComponent from './ClientAppBarComponent';
 import ClientBottomNav from './ClientBottomNav';
 import ClientJobPostingForm from './ClientJobPostingForm';
+import { Box } from '@mui/material';
 
 function ClientJobPosting() {
   return (

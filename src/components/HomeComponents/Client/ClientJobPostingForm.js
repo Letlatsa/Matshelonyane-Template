@@ -75,7 +75,7 @@ function ClientJobPostingForm() {
   };
 
   const inputContainer = {
-    width: '90%',
+    width: '100%',
     marginBottom: '15px',
     padding: '0 20px',
     alignItems: 'center'
@@ -88,6 +88,7 @@ function ClientJobPostingForm() {
     marginTop: '15px'
   };
   const containerStyle = {
+    width: '100%',
     marginTop: '25px',
     display: 'flex',
     justifyContent: 'center',
@@ -113,7 +114,7 @@ function ClientJobPostingForm() {
     color: 'white'
   };
   return (
-    <div>
+    <Box sx={{ flexGrow: 1 }}>
       <Typography
         variant="h5"
         sx={{
@@ -345,7 +346,7 @@ function ClientJobPostingForm() {
           </div>
         </Card>
       </Box>
-    </div>
+    </Box>
   );
 }
 
