@@ -115,19 +115,6 @@ function ClientJobPostingForm() {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Typography
-        variant="h5"
-        sx={{
-          ...styledTypography,
-          position: 'absolute',
-          top: '120px',
-          left: '25%',
-          fontSize: '24px',
-          transform: 'translateX(-50%)'
-        }}
-      >
-        Request pickup
-      </Typography>
       <Box sx={containerStyle}>
         <Card sx={styledCard}>
           <div>
