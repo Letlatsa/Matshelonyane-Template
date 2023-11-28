@@ -386,127 +386,129 @@ const ClientHome = () => {
               </Select>
             </FormControl>
           </Box>
-          <Stack spacing={2}>
-            {isLoadingTruckers ? (
-              // Display the skeleton when data is loading
-              <HomepageSkeleton />
-            ) : (
-              // Map
-              truckersData?.map((truckersData) => (
-                <Card
-                  key={truckersData._id}
-                  sx={{
-                    width: '100%',
-                    backgroundColor: '#C69585',
-                    paddingTop: '15px',
-                    paddingBottom: '15px',
-                    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                    borderRadius: '10px'
-                  }}
-                >
-                  <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                    <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
-                      <Box sx={styledProfileBox}>
-                        <img
-                          src={truckersData.propic}
-                          alt=""
-                          style={{ width: '44px', height: '44px', borderRadius: 50 }}
-                        />
-                      </Box>
-                    </Box>
-                    <Stack spacing={2} sx={{ paddingRight: '15px', width: '100%' }}>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          color: 'white'
-                        }}
-                      >
-                        <Box>
-                          <Typography variant="h4" sx={{ fontSize: '15px', paddingTop: '15px' }}>
-                            {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
-                          </Typography>
+          <Box sx={{ maxHeight: 'calc(100vh - 170px)', overflowY: 'auto', paddingBottom: '100px' }}>
+            <Stack spacing={2}>
+              {isLoadingTruckers ? (
+                // Display the skeleton when data is loading
+                <HomepageSkeleton />
+              ) : (
+                // Map
+                truckersData?.map((truckersData) => (
+                  <Card
+                    key={truckersData._id}
+                    sx={{
+                      width: '100%',
+                      backgroundColor: '#C69585',
+                      paddingTop: '15px',
+                      paddingBottom: '15px',
+                      boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                      borderRadius: '10px'
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                      <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
+                        <Box sx={styledProfileBox}>
+                          <img
+                            src={truckersData.propic}
+                            alt=""
+                            style={{ width: '44px', height: '44px', borderRadius: 50 }}
+                          />
                         </Box>
+                      </Box>
+                      <Stack spacing={2} sx={{ paddingRight: '15px', width: '100%' }}>
                         <Box
                           sx={{
-                            textAlign: 'right',
                             display: 'flex',
-                            justifyContent: 'end'
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            color: 'white'
                           }}
                         >
-                          <Typography
+                          <Box>
+                            <Typography variant="h4" sx={{ fontSize: '15px', paddingTop: '15px' }}>
+                              {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
+                            </Typography>
+                          </Box>
+                          <Box
                             sx={{
-                              fontSize: '16px',
-                              filter: 'blur(3px)',
+                              textAlign: 'right',
                               display: 'flex',
-                              alignItems: 'center',
-                              paddingTop: '15px',
-                              marginRight: '15px'
+                              justifyContent: 'end'
                             }}
                           >
-                            <img
-                              src={PhoneIcon}
-                              alt="Phone"
-                              width="30"
-                              height="20"
-                              sx={{ marginRight: '30px' }}
-                            />
-                            78322342
-                          </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: '16px',
+                                filter: 'blur(3px)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                paddingTop: '15px',
+                                marginRight: '15px'
+                              }}
+                            >
+                              <img
+                                src={PhoneIcon}
+                                alt="Phone"
+                                width="30"
+                                height="20"
+                                sx={{ marginRight: '30px' }}
+                              />
+                              78322342
+                            </Typography>
+                          </Box>
                         </Box>
-                      </Box>
-                      <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                        <Button
-                          variant="contained"
-                          sx={{
-                            fontSize: '14px',
-                            width: '100%',
-                            borderRadius: '5px',
-                            height: '25px',
-                            color: theme.palette.secondary.main,
-                            '&:hover': {
-                              color: theme.palette.primary.main
-                            },
-                            textTransform: 'none'
-                          }}
-                          onClick={async () => {
-                            const {
-                              profile: { account: driverId }
-                            } = truckersData;
+                        <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: '14px',
+                              width: '100%',
+                              borderRadius: '5px',
+                              height: '25px',
+                              color: theme.palette.secondary.main,
+                              '&:hover': {
+                                color: theme.palette.primary.main
+                              },
+                              textTransform: 'none'
+                            }}
+                            onClick={async () => {
+                              const {
+                                profile: { account: driverId }
+                              } = truckersData;
 
-                            const userData = sessionStorage.getItem('user');
+                              const userData = sessionStorage.getItem('user');
 
-                            const { account } = JSON.parse(userData);
+                              const { account } = JSON.parse(userData);
 
-                            const data = {
-                              locationID: selectedLocation,
-                              driverID: driverId,
-                              clientID: account
-                            };
-                            console.log('data', data);
+                              const data = {
+                                locationID: selectedLocation,
+                                driverID: driverId,
+                                clientID: account
+                              };
+                              console.log('data', data);
 
-                            try {
-                              // Call PostProfileVisits
-                              const response = await PostProfileVisits(accessToken, data);
-                              console.log('Profile visit response:', response);
+                              try {
+                                // Call PostProfileVisits
+                                const response = await PostProfileVisits(accessToken, data);
+                                console.log('Profile visit response:', response);
 
-                              // Navigate to the trucker's profile
-                              navigate(`/clienttruckerprofile/${truckersData.profile.account}`);
-                            } catch (error) {
-                              console.error('Error handling profile visit:', error);
-                            }
-                          }}
-                        >
-                          View Profile
-                        </Button>
-                      </Box>
-                    </Stack>
-                  </Box>
-                </Card>
-              ))
-            )}
-          </Stack>
+                                // Navigate to the trucker's profile
+                                navigate(`/clienttruckerprofile/${truckersData.profile.account}`);
+                              } catch (error) {
+                                console.error('Error handling profile visit:', error);
+                              }
+                            }}
+                          >
+                            View Profile
+                          </Button>
+                        </Box>
+                      </Stack>
+                    </Box>
+                  </Card>
+                ))
+              )}
+            </Stack>
+          </Box>
           <ClientBottomNav />
         </Container>
       </Box>
