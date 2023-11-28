@@ -116,12 +116,30 @@ const TruckerCard = () => {
                 width: '100%',
                 backgroundColor: '#C69585',
                 paddingTop: '15px',
-                paddingBottom: '15px',
-                marginBottom: '15px' // Adjust spacing between cards
+                marginBottom: '15px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
               }}
             >
-              <Box sx={{ display: 'flex', width: '100%' }}>
-                <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
+              <Box
+                sx={{
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: '15px'
+                }}
+              >
+                <Box
+                  sx={{
+                    width: '78px',
+                    display: 'flex',
+                    paddingRight: '15px',
+                    marginBottom: '0'
+                  }}
+                >
                   <Box sx={styledProfileBox}>
                     <img
                       src={client.client.propic}
@@ -130,17 +148,26 @@ const TruckerCard = () => {
                     />
                   </Box>
                 </Box>
-                <Stack spacing={2} sx={{ paddingRight: '15px' }}>
+                <Stack
+                  spacing={2}
+                  sx={{
+                    flex: 1, // Take remaining space
+                    paddingRight: '15px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
-                      width: '70vw',
                       justifyContent: 'space-between',
-                      color: 'white'
+                      color: 'white',
+                      alignItems: 'center'
                     }}
                   >
                     <Box>
-                      <Typography sx={{ fontSize: '15px', paddingTop: '15px' }}>
+                      <Typography sx={{ fontSize: '15px' }}>
                         {client.client.firstName} {client.client.lastName}
                       </Typography>
                     </Box>
@@ -157,7 +184,6 @@ const TruckerCard = () => {
                           filter: 'blur(10deg)',
                           display: 'flex',
                           alignItems: 'center',
-                          paddingTop: '15px',
                           marginRight: '15px'
                         }}
                       >
@@ -168,12 +194,9 @@ const TruckerCard = () => {
                           height="20"
                           sx={{ marginRight: '15px' }}
                         />
-                        {client.location.name} {/* Render client location */}
+                        {client.location.name}
                       </Typography>
                     </Box>
-                  </Box>
-                  <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                    {/* Additional content for the card, if needed */}
                   </Box>
                 </Stack>
               </Box>
