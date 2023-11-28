@@ -44,10 +44,18 @@ const ClientBottomNav = () => {
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   };
 
-  const styledBottomNav = {
+  /*  const styledBottomNav = {
     position: 'fixed',
     bottom: 0,
     width: '100%',
+    height: '80px',
+    backgroundColor: '#fff'
+  }; */
+  const styledBottomNav = {
+    position: 'fixed',
+    bottom: 0,
+    left: '10px', // Adjust the value as needed
+    width: 'calc(100% - 20px)', // Adjusting width considering the left spacing
     height: '80px',
     backgroundColor: '#fff'
   };
@@ -69,7 +77,7 @@ const ClientBottomNav = () => {
           </Box>
         }
       />
-      <BottomNavigationAction
+      {/* <BottomNavigationAction
         value="Chat"
         icon={
           <Box sx={value === 'Chat' ? styledNavActiveAction : styledNavAction}>
@@ -82,8 +90,8 @@ const ClientBottomNav = () => {
             />
           </Box>
         }
-      />
-      <BottomNavigationAction
+      /> */}
+      {/* <BottomNavigationAction
         value="Requests"
         icon={
           <Box sx={value === 'Requests' ? styledNavActiveAction : styledNavAction}>
@@ -96,7 +104,7 @@ const ClientBottomNav = () => {
             />
           </Box>
         }
-      />
+      /> */}
       <BottomNavigationAction
         value="Post"
         icon={
