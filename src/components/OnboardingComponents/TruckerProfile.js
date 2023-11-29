@@ -157,7 +157,7 @@ function TruckerProfile() {
     } else if (currentStep === 3) {
       navigate('/onboardinglicense');
     }
-  };  
+  };
 
   const inputContainerBox = {
     width: '100%',
@@ -176,7 +176,7 @@ function TruckerProfile() {
     '&:hover': {
       color: 'white'
     }
-  }; 
+  };
 
   const accountLabelContainer = {
     display: 'flex',
@@ -188,7 +188,7 @@ function TruckerProfile() {
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative'
-  }
+  };
 
   return (
     <div>
@@ -197,7 +197,7 @@ function TruckerProfile() {
           <ProgressBar currentStep={currentStep} />
         </Box>
         <Typography
-        variant='h1'
+          variant="h1"
           sx={{
             color: 'white',
             textAlign: 'center',
@@ -225,12 +225,12 @@ function TruckerProfile() {
         </label>
 
         <Typography
-        variant='h5'
+          variant="h5"
           sx={{
             color: 'white',
             textAlign: 'center',
             marginBottom: '50px',
-            marginTop: '15px',
+            marginTop: '15px'
           }}
         >
           Upload your profile picture
