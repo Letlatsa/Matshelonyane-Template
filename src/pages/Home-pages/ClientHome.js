@@ -29,7 +29,7 @@ const ClientHome = () => {
   // Styles
 
   const styledAppBar = {
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
     boxShadow: 'none'
   };
 
