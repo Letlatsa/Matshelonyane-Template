@@ -10,7 +10,7 @@ import {
   MenuItem,
   Button
 } from '@mui/material';
-import { TruckRetrieveEndpoint } from '../../../services/EndPoints';
+import { TruckRetrieveEndpoint, PostRequestEndpoint } from '../../../services/EndPoints';
 
 import DescIcon from '../../../assets/desc.svg';
 import TruckIcon from '../../../assets/truck.svg';
@@ -25,10 +25,41 @@ import theme from '../../../theme/theme';
 import { useEffect, useState } from 'react';
 
 function ClientJobPostingForm() {
+  //Post jobs
+  const initialFormState = {
+    cargoDescription: '',
+    truckTypeID: '',
+    deliveryAreaID: '',
+    pickupLocation: '',
+    dropOffLocation: '',
+    pickupTime: '',
+    pickupInstructions: '',
+    requireLoadingService: true,
+    pricePerLoad: ''
+  };
+  const initialErrorState = {
+    cargoDescription: '',
+    truckTypeID: '',
+    deliveryAreaID: '',
+    pickupLocation: '',
+    dropOffLocation: '',
+    pickupTime: '',
+    pickupInstructions: '',
+    requireLoadingService: true,
+    pricePerLoad: ''
+  };
+  const [formData, setFormData] = useState(initialFormState);
+  const [formErrors, setFormErrors] = useState(initialErrorState);
+
   const [truckType, setTruckType] = useState([]);
   const [selectedTruckType, setSelectedTruckType] = useState([]);
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   useEffect(() => {
     const fetchTruckData = async () => {
