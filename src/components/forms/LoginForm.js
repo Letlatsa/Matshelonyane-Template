@@ -184,8 +184,10 @@ const LoginForm = () => {
 
   return (
     <Box>
-      <Box sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px', color: "white" }}>
-        <Typography variant='h1'>Welcome to Matshelonyane!</Typography>
+      <Box
+        sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px', color: 'white' }}
+      >
+        <Typography variant="h1">Welcome to Matshelonyane!</Typography>
       </Box>
       <Stack sx={inputContainerBox} spacing={1}>
         <FormControl variant="standard">
@@ -290,7 +292,7 @@ const LoginForm = () => {
           <Typography
             sx={{
               textAlign: 'center',
-              color: 'white',
+              color: 'white'
             }}
           >
             Don't have an account?
