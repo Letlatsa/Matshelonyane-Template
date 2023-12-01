@@ -216,6 +216,13 @@ const GetProfileVisits = async (Token) => {
   }
 };
 
+const PostRequestEndpoint = async (formData, Token) => {
+  const response = await FleetApiClient.post('/postride', formData, {
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${Token}` }
+  });
+  return response;
+};
+
 export {
   LoginEndPoint,
   RegisterEndPoint,
@@ -236,5 +243,6 @@ export {
   PostProfileVisits,
   DownloadUmageEndPoint,
   GetServiceLocation,
-  GetProfileVisits
+  GetProfileVisits,
+  PostRequestEndpoint
 };
