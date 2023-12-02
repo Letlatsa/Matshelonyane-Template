@@ -15,7 +15,11 @@ import TextButton from '../Buttons/TextButton';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
-import { LoginEndPoint, RetrieveSurnameEndpoint } from '../../services/EndPoints';
+import {
+  LoginEndPoint,
+  RetrieveSurnameEndpoint,
+  UserTrucksEndpoint
+} from '../../services/EndPoints';
 
 import { useToken } from '../../Hooks/TokenContext';
 
@@ -88,18 +92,44 @@ const LoginForm = () => {
 
   const userRedirect = (accountType, accessToken) => {
     RetrieveSurnameEndpoint(accessToken)
-      .then((response) => {
+      .then(async (response) => {
         if (response.status === 200) {
           const { lastName } = response.data;
           if (!lastName || lastName === undefined || lastName === null) {
             onboardingRedirecter(accountType);
           } else {
-            homeRedirecter(accountType);
+            if (accountType === 'driver') {
+              const license = response.data.driversLicense;
+              const truckata = await getTruckProfile(accessToken);
+              if (license === null) {
+                navigate('/truckerOnboardingProfile');
+              }
+
+              if (truckata.length === 0) {
+                navigate('/truckOnboardingProfile');
+              }
+
+              homeRedirecter(accountType);
+            } else if (accountType === 'customer') {
+              homeRedirecter(accountType);
+            }
           }
         }
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+
+  const getTruckProfile = async (accessToken) => {
+    await UserTrucksEndpoint(accessToken)
+      .then((response) => {
+        if (response.status === 200) {
+          return response.data;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -184,8 +214,10 @@ const LoginForm = () => {
 
   return (
     <Box>
-      <Box sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px', color: "white" }}>
-        <Typography variant='h1'>Welcome to Matshelonyane!</Typography>
+      <Box
+        sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px', color: 'white' }}
+      >
+        <Typography variant="h1">Welcome to Matshelonyane!</Typography>
       </Box>
       <Stack sx={inputContainerBox} spacing={1}>
         <FormControl variant="standard">
@@ -290,7 +322,7 @@ const LoginForm = () => {
           <Typography
             sx={{
               textAlign: 'center',
-              color: 'white',
+              color: 'white'
             }}
           >
             Don't have an account?
