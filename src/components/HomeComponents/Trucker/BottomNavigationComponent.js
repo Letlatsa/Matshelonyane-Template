@@ -20,7 +20,7 @@ const BottomNavigationComponent = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   };
 
   const styledNavActiveAction = {
@@ -31,7 +31,7 @@ const BottomNavigationComponent = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   };
 
   const styledBottomNav = {
@@ -51,20 +51,7 @@ const BottomNavigationComponent = () => {
           </Box>
         }
       />
-      <BottomNavigationAction
-        value="Chat"
-        icon={
-          <Box sx={value === 'Chat' ? styledNavActiveAction : styledNavAction}>
-            <img
-              src={messageIcon}
-              alt="Phone"
-              width="30"
-              height="20"
-              sx={{ marginRight: '30px' }}
-            />
-          </Box>
-        }
-      />
+
       <BottomNavigationAction
         value="Group"
         icon={

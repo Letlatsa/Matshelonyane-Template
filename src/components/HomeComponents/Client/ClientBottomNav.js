@@ -91,7 +91,7 @@ const ClientBottomNav = () => {
           </Box>
         }
       /> */}
-      {/* <BottomNavigationAction
+      <BottomNavigationAction
         value="Requests"
         icon={
           <Box sx={value === 'Requests' ? styledNavActiveAction : styledNavAction}>
@@ -104,7 +104,7 @@ const ClientBottomNav = () => {
             />
           </Box>
         }
-      /> */}
+      />
       <BottomNavigationAction
         value="Post"
         icon={

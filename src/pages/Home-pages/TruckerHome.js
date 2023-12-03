@@ -21,6 +21,7 @@ import { LocationRetrieveEndpoint } from '../../services/EndPoints';
 import { useToken } from '../../Hooks/TokenContext';
 import { useState, useEffect } from 'react';
 import theme from '../../theme/theme';
+import BottomNavigationComponent from '../../components/HomeComponents/Trucker/BottomNavigationComponent';
 
 const TruckerHome = () => {
   const { tokens } = useToken();
@@ -80,9 +81,16 @@ const TruckerHome = () => {
             }}
           >
             <Box>
-              <Typography variant='h4' sx={{ fontSize: '15px', color: theme.palette.secondary.main }}>Your Profile views</Typography>
+              <Typography
+                variant="h4"
+                sx={{ fontSize: '15px', color: theme.palette.secondary.main }}
+              >
+                Your Profile views
+              </Typography>
             </Box>
-            <Box sx={{ backgroundColor: theme.palette.secondary.main, height: '.5px', width: '55vw' }}></Box>
+            <Box
+              sx={{ backgroundColor: theme.palette.secondary.main, height: '.5px', width: '55vw' }}
+            ></Box>
           </Box>
           <Box
             sx={{
@@ -116,9 +124,10 @@ const TruckerHome = () => {
             </FormControl> */}
           </Box>
           <Stack spacing={2}>
-            <TruckerCard accessToken={accessToken}/>
+            <TruckerCard accessToken={accessToken} />
           </Stack>
         </Container>
+        <BottomNavigationComponent />
       </Box>
     </div>
   );

@@ -51,7 +51,6 @@ function ClientJobPostingForm() {
   };
   const navigate = useNavigate();
   const { tokens } = useToken();
-  console.log(tokens, 'I am tokens');
 
   const [location, setLocation] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState('');
