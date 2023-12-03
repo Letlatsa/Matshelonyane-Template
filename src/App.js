@@ -27,6 +27,7 @@ import TruckerHomeProfile from './pages/Home-pages/TruckerEditProfile';
 import TruckerProfile from './pages/Home-pages/TruckerProfileView';
 import ClientJobPosting from './components/HomeComponents/Client/ClientJobPosting';
 import ClientJobPostingForm from './components/HomeComponents/Client/ClientJobPostingForm';
+import JobPosting from './components/HomeComponents/Trucker/JobPosting';
 
 function App() {
   return (
@@ -56,7 +57,8 @@ function App() {
         <Route path="/clienteditprofile" element={<ClientHomeProfile />}></Route>
         <Route path="/truckereditprofile" element={<TruckerHomeProfile />}></Route>
         <Route path="/jobposting" element={<ClientJobPosting />}></Route>
-        <Route path="/jobpos" element={<ClientJobPostingForm />}></Route>
+        <Route path="/jobpost" element={<ClientJobPostingForm />}></Route>
+        <Route path="/truckerjobpost" element={<JobPosting />}></Route>
       </Routes>
     </div>
   );

@@ -1,17 +1,25 @@
 import { useState } from 'react';
 import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import homeIcon from '../../../assets/homeVector.svg';
 import messageIcon from '../../../assets/evaMessage.svg';
 import clipBoardIcon from '../../../assets/Group1.svg';
 
 const BottomNavigationComponent = () => {
+  const navigate = useNavigate();
+
   const [value, setValue] = useState('Home');
 
   const handleNavigation = (event, newValue) => {
     setValue(newValue);
   };
-
+  const handlePosting = () => {
+    navigate('/truckerjobpost');
+  };
+  const TruckerHomePage = () => {
+    navigate('/truckerhome');
+  };
   const styledNavAction = {
     backgroundColor: '#C69585',
     width: '40px',
@@ -47,7 +55,14 @@ const BottomNavigationComponent = () => {
         value="Home"
         icon={
           <Box sx={value === 'Home' ? styledNavActiveAction : styledNavAction}>
-            <img src={homeIcon} alt="Phone" width="30" height="20" sx={{ marginRight: '30px' }} />
+            <img
+              src={homeIcon}
+              alt="Phone"
+              width="30"
+              height="20"
+              sx={{ marginRight: '30px' }}
+              onClick={TruckerHomePage}
+            />
           </Box>
         }
       />
@@ -62,6 +77,7 @@ const BottomNavigationComponent = () => {
               width="30"
               height="20"
               sx={{ marginRight: '30px' }}
+              onClick={handlePosting}
             />
           </Box>
         }
