@@ -15,7 +15,11 @@ import TextButton from '../Buttons/TextButton';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
-import { LoginEndPoint, RetrieveSurnameEndpoint } from '../../services/EndPoints';
+import {
+  LoginEndPoint,
+  RetrieveSurnameEndpoint,
+  UserTrucksEndpoint
+} from '../../services/EndPoints';
 
 import { useToken } from '../../Hooks/TokenContext';
 
@@ -94,19 +98,45 @@ const LoginForm = () => {
 
   const userRedirect = (accountType, accessToken) => {
     RetrieveSurnameEndpoint(accessToken)
-      .then((response) => {
+      .then(async (response) => {
         if (response.status === 200) {
           const { lastName } = response.data;
           if (!lastName || lastName === undefined || lastName === null) {
             onboardingRedirecter(accountType);
           } else {
-            homeRedirecter(accountType);
+            if (accountType === 'driver') {
+              const license = response.data.driversLicense;
+              const truckdata = await getTruckProfile(accessToken);
+              console.log('this is truckdata', truckdata);
+              if (license === undefined || license === null) {
+                navigate('/onboardinglicense');
+              } else if (Array.isArray(truckdata) && truckdata.length <= 0) {
+                navigate('/truckOnboardingProfile');
+              } else {
+                homeRedirecter(accountType);
+              }
+            } else if (accountType === 'customer') {
+              homeRedirecter(accountType);
+            }
           }
         }
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const getTruckProfile = async (accessToken) => {
+    try {
+      const response = await UserTrucksEndpoint(accessToken);
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+      // Ensure to return a value in case of an error
+      return [];
+    }
   };
 
   const onboardingRedirecter = (accountType) => {
