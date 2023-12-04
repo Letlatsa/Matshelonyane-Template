@@ -11,6 +11,7 @@ function JobDisplay({ requestData }) {
 
   // Initialize appliedJobs state
   const [appliedJobs, setAppliedJobs] = useState(new Set());
+  const [isAppled, setIsApplied] = useState(false);
 
   // Styling object
   const styledProfileBox = {
@@ -31,6 +32,26 @@ function JobDisplay({ requestData }) {
     fontSize: '16px',
     fontWeight: 500
   };
+  const styledNotAppliedButton = {
+    fontSize: '14px',
+    width: '180px',
+    borderRadius: '5px',
+    height: '25px',
+    color: '#FFF5EF',
+    backgroundColor: '#C08288',
+    textTransform: 'none'
+  };
+
+  const styledIsAppliedButton = {
+    fontSize: '14px',
+    width: '180px',
+    borderRadius: '5px',
+    height: '25px',
+    color: '#FFF5EF',
+    backgroundColor: '#C08288',
+    textTransform: 'none'
+  };
+
   return (
     <div style={{ height: 'calc(100vh - 50px)', overflowY: 'auto', backgroundColor: '#EEEFF3' }}>
       <Box flexGrow={1} marginTop={2} marginLeft={2} marginRight={2}>
@@ -141,18 +162,7 @@ function JobDisplay({ requestData }) {
                 </Stack>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'end', marginTop: '10px' }}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    fontSize: '14px',
-                    width: '180px',
-                    borderRadius: '5px',
-                    height: '25px',
-                    color: '#FFF5EF',
-                    backgroundColor: '#C08288',
-                    textTransform: 'none'
-                  }}
-                >
+                <Button variant="contained" sx={styledNotAppliedButton}>
                   Apply
                 </Button>
               </Box>
