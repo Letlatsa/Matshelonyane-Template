@@ -18,7 +18,6 @@ import InstructionIcon from '../../assets/Vector (1).svg';
 import PriceIcon from '../../assets/Vector (2).svg';
 import LoadingIcon from '../../assets/loading.svg';
 import BackArrow from '../../assets/backVector.svg';
-import ProposalPageForm from '../../components/HomeComponents/Trucker/ProposalPageForm';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -124,66 +123,80 @@ const TruckerProposalPage = () => {
     alignItems: 'center'
   };
 
-  /* const renderTypography = (label, icon, placeholder) => (
-    <Box sx={inputContainer}>
-      <FormControl variant="standard">
-        <Typography
-          component="div"
-          variant="subtitle1"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            color: 'white',
-            textDecoration: 'underline',
-            textDecorationColor: 'white'
-          }}
-        >
-          <img src={icon} alt={label} width="30" height="20" sx={{ marginRight: '30px' }} />
-          {label}
-        </Typography>
-        <Typography component="div" variant="body1" sx={{ color: 'white', marginTop: '5px' }}>
-          {placeholder}
-        </Typography>
-      </FormControl>
-    </Box>
-  ); */
-  const renderTypography = (label, icon, value) => (
-    <Box sx={inputContainer} key={label}>
-      <FormControl variant="standard">
-        <Typography
-          component="div"
-          variant="subtitle1"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            color: 'white',
-            textDecoration: 'underline',
-            textDecorationColor: 'white'
-          }}
-        >
-          <img src={icon} alt={label} width="30" height="20" sx={{ marginRight: '30px' }} />
-          {label}
-        </Typography>
-        <Typography component="div" variant="body1" sx={{ color: 'white', marginTop: '5px' }}>
-          {value || 'Not available'}
-        </Typography>
-      </FormControl>
-    </Box>
-  );
-  //Inside your component, use the map function to render multiple typographies
   const renderDetails = () => {
     if (!selectedJob) {
       return <div>No data available</div>;
     }
-    const detailsData = [
-      { label: 'cargo description', icon: DescIcon, value: selectedJob?.cargoDescription },
-      { label: 'Trucktype', icon: TruckIcon, value: selectedJob?.truckType?.name }
-      // Add other data items in a similar format
-    ];
-    console.log(detailsData);
 
-    return detailsData.map((item) => renderTypography(item.label, item.icon, item.value));
+    const detailsData = [
+      { label: 'Cargo Description', icon: DescIcon, value: selectedJob?.cargoDescription },
+      { label: 'Truck Type', icon: TruckIcon, value: selectedJob?.truckType?.name },
+      { label: 'Pickup Location', icon: LocationIcon, value: selectedJob?.pickupLocation },
+      { label: 'Drop-off Location', icon: LocationIcon, value: selectedJob?.dropOffLocation },
+      { label: 'Pickup Time', icon: TimeIcon, value: selectedJob?.pickupTime },
+      {
+        label: 'Pickup Instructions',
+        icon: InstructionIcon,
+        value: selectedJob?.pickupInstructions
+      },
+      {
+        label: 'Loading Service Required',
+        icon: LoadingIcon,
+        value: selectedJob?.requireLoadingService ? 'Yes' : 'No'
+      },
+      { label: 'Price per Load', icon: PriceIcon, value: selectedJob?.pricePerLoad }
+
+      // Include other data items here
+    ];
+
+    return (
+      <Box
+        sx={{
+          width: '100%',
+          marginTop: '-150px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Box
+          sx={{
+            width: 'calc(100% - 10px)',
+            maxWidth: '380px',
+            height: '380px',
+            backgroundColor: '#C69585',
+            borderRadius: '10px',
+            marginBottom: '50px',
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: '150px',
+            color: 'white',
+            gap: '15px',
+            flexShrink: 0,
+            overflowY: 'auto'
+          }}
+        >
+          {detailsData.map((item, index) => (
+            <div
+              key={index}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginLeft: '20px',
+                marginTop: '10px',
+                borderBottom: '1px solid white',
+                width: '90%' // Set the width of the underline to 80% of the card
+              }}
+            >
+              <img src={item.icon} alt={item.label} style={{ marginRight: '10px' }} />
+              <div>{item.value || 'Not available'}</div>
+            </div>
+          ))}
+        </Box>
+      </Box>
+    );
   };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -280,7 +293,7 @@ const TruckerProposalPage = () => {
           </Box>
           <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
         </Box>
-        <Box> {renderDetails()}</Box>
+        {renderDetails()}
       </Container>
     </div>
   );

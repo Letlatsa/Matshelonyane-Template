@@ -32,7 +32,7 @@ function JobDisplay({ requestData }) {
     fontWeight: 500
   };
   return (
-    <div style={{ height: 'calc(100vh - 50px)', overflowY: 'auto', backgroundColor: '#EEEFF3' }}>
+    <div style={{ height: 'calc(100vh - 100px)', overflowY: 'auto', backgroundColor: '#EEEFF3' }}>
       <Box flexGrow={1} marginTop={2} marginLeft={2} marginRight={2}>
         {requestData && requestData.length > 0 ? (
           requestData.map((job, index) => (

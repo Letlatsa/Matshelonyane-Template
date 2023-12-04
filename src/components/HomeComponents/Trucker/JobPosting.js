@@ -37,7 +37,14 @@ function JobPosting() {
   };
 
   return (
-    <div style={{ backgroundColor: '#EEEFF3', minHeight: '100vh' }}>
+    <div
+      style={{
+        backgroundColor: '#EEEFF3',
+        minHeight: '130vh',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
       <Box>
         <TruckerHomeAppBarComponents />
         <SearchComponent />
