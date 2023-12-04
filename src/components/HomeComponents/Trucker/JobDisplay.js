@@ -1,10 +1,45 @@
 import React from 'react';
 import { Box, Card, Stack, Typography, Button } from '@mui/material';
-
+import { GetPostRequestEndpoint } from '../../../services/EndPoints';
+import { useEffect, useState } from 'react';
 import PlaceHolder from '../../../assets/Avatar.svg';
 import theme from '../../../theme/theme';
+import { useNavigate } from 'react-router-dom';
 
 function JobDisplay() {
+  const navigate = useNavigate();
+
+  const [requestData, SetRequestData] = useState([]);
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
+
+  useEffect(() => {
+    const fetchPostRequest = async () => {
+      try {
+        getRequest(accessToken);
+      } catch (error) {
+        console.error('Error fetching request: ', error);
+      }
+    };
+
+    fetchPostRequest();
+  }, [accessToken]);
+
+  const getRequest = (accessToken) => {
+    GetPostRequestEndpoint(accessToken)
+      .then((requestData) => {
+        SetRequestData(requestData.data);
+        console.log(requestData, 'i am here');
+      })
+      .catch((error) => {
+        console.log(error, 'Error Fetching Data');
+      });
+  };
+
+  const handleViewJob = () => {
+    navigate('/truckerproposalpage');
+  };
+
   const styledProfileBox = {
     borderRadius: '30px',
     display: 'flex',
@@ -52,7 +87,7 @@ function JobDisplay() {
                 marginBottom: '0'
               }}
             >
-              <Box sx={{ ...styledProfileBox, marginTop: '-40px' }}>
+              <Box sx={{ ...styledProfileBox, marginTop: '-40px' }} onClick={handleViewJob}>
                 <img
                   src={PlaceHolder}
                   alt=""
@@ -86,7 +121,7 @@ function JobDisplay() {
                     marginRight: '50px'
                   }}
                 >
-                  <Typography sx={{ fontSize: '15px' }}>Client: John</Typography>
+                  <Typography sx={{ fontSize: '15px' }}>Client:</Typography>
                   <Typography sx={{ fontSize: '15px' }}>Pickup:</Typography>
                   <Typography sx={{ fontSize: '15px' }}>Destination: </Typography>
                   <Typography sx={{ fontSize: '15px' }}>Price: </Typography>

@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 
 import BackArrow from '../../assets/backVector.svg';
+import ProposalPageForm from '../../components/HomeComponents/Trucker/ProposalPageForm';
 import { useNavigate } from 'react-router-dom';
 
 const TruckerProposalPage = () => {
@@ -75,7 +76,7 @@ const TruckerProposalPage = () => {
   };
 
   const handleButtonClicked = () => {
-    navigate('/truckerhome');
+    navigate('/truckerjobpost');
     console.log('Button clicked');
   };
   return (
@@ -171,9 +172,10 @@ const TruckerProposalPage = () => {
           <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
         </Box>
 
-        <Card sx={styledCard}>
+        {/*  <Card sx={styledCard}>
           <Typography>Job details</Typography>
-        </Card>
+        </Card> */}
+        <ProposalPageForm />
       </Container>
     </div>
   );

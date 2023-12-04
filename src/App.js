@@ -56,8 +56,9 @@ function App() {
         <Route path="/truckerproposalpage" element={<TruckerProposalPage />}></Route>
         <Route path="/clienteditprofile" element={<ClientHomeProfile />}></Route>
         <Route path="/truckereditprofile" element={<TruckerHomeProfile />}></Route>
-        <Route path="/jobposting" element={<ClientJobPosting />}></Route>
+        <Route path="/jobposting/:truckerId" element={<ClientJobPosting />}></Route>
         <Route path="/jobpost" element={<ClientJobPostingForm />}></Route>
+        <Route path="/truckerjobpost" element={<JobPosting />}></Route>
         <Route path="/truckerjobpost" element={<JobPosting />}></Route>
       </Routes>
     </div>

@@ -215,12 +215,33 @@ const GetProfileVisits = async (Token) => {
     console.error('Error retrieving visits', error);
   }
 };
-
 const PostRequestEndpoint = async (formData, Token) => {
   const response = await FleetApiClient.post('/postride', formData, {
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${Token}` }
   });
   return response;
+};
+const GetPostRequestEndpoint = async (Token) => {
+  try {
+    const response = await FleetApiClient.get('/ride/driver', {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    console.log('Responses', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving', error);
+  }
+};
+const GetPostRequestCustomerEndpoint = async (Token) => {
+  try {
+    const response = await FleetApiClient.get('/ride/customer', {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    console.log('Responses', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving', error);
+  }
 };
 
 export {
@@ -244,5 +265,7 @@ export {
   DownloadUmageEndPoint,
   GetServiceLocation,
   GetProfileVisits,
-  PostRequestEndpoint
+  PostRequestEndpoint,
+  GetPostRequestEndpoint,
+  GetPostRequestCustomerEndpoint
 };
