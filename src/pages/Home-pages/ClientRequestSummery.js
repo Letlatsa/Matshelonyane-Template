@@ -58,7 +58,7 @@ const ClientRequestSummery = () => {
     width: '100%',
     backgroundColor: '#C69585',
     borderRadius: '10px',
-    marginBottom: '50px',
+    marginBottom: '25px',
     display: 'flex',
     justifyContent: 'center',
     paddingTop: '16px',

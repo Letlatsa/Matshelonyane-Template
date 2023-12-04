@@ -21,6 +21,9 @@ const ClientBottomNav = () => {
   const ClientHomePage = () => {
     navigate('/clienthome');
   };
+  const ClientProfilePage = () => {
+    navigate('/clientrequestsummery');
+  };
 
   const styledNavAction = {
     backgroundColor: '#C69585',
@@ -101,6 +104,7 @@ const ClientBottomNav = () => {
               width="30"
               height="20"
               sx={{ marginRight: '30px' }}
+              onClick={ClientProfilePage}
             />
           </Box>
         }
