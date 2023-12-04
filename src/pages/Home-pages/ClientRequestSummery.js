@@ -82,6 +82,12 @@ const ClientRequestSummery = () => {
     navigate('/clienthome');
   };
 
+  const styledListing = {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between'
+  };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -158,34 +164,16 @@ const ClientRequestSummery = () => {
         {/*TODO: Add map function to display all requests*/}
         {requests.map((request) => (
           <Card key={request._id} sx={styledCard}>
-            <Stack spacing={2} sx={styledStack}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'space-between'
-                }}
-              >
+            <Stack spacing={1} sx={styledStack}>
+              <Box sx={styledListing}>
                 <Typography sx={styledStackTypography}>Cargo Description:</Typography>
                 <Typography sx={styledStackTypography}>{request.cargoDescription}</Typography>
               </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'space-between'
-                }}
-              >
+              <Box sx={styledListing}>
                 <Typography sx={styledStackTypography}>Pick up Location:</Typography>
                 <Typography sx={styledStackTypography}>{request.pickupLocation}</Typography>
               </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'space-between'
-                }}
-              >
+              <Box sx={styledListing}>
                 <Typography sx={styledStackTypography}>Drop Off Location:</Typography>
                 <Typography sx={styledStackTypography}>{request.dropOffLocation}</Typography>
               </Box>
