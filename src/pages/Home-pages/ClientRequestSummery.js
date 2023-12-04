@@ -177,6 +177,18 @@ const ClientRequestSummery = () => {
                 <Typography sx={styledStackTypography}>Drop Off Location:</Typography>
                 <Typography sx={styledStackTypography}>{request.dropOffLocation}</Typography>
               </Box>
+              <Box sx={styledListing}>
+                <Typography sx={styledStackTypography}>Truck Type:</Typography>
+                <Typography sx={styledStackTypography}>{request.truckType.name}</Typography>
+              </Box>
+              <Box sx={styledListing}>
+                <Typography sx={styledStackTypography}>Price:</Typography>
+                <Typography sx={styledStackTypography}>{request.pricePerLoad}</Typography>
+              </Box>
+              <Box sx={styledListing}>
+                <Typography sx={styledStackTypography}>Status:</Typography>
+                <Typography sx={styledStackTypography}>{request.status}</Typography>
+              </Box>
             </Stack>
           </Card>
         ))}
