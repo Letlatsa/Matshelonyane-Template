@@ -162,6 +162,17 @@ const ViewTruckerInfo = async (Token, account) => {
     console.error('Error retrieving profiles:', error);
   }
 };
+const ViewClientInfo = async (Token, account) => {
+  try {
+    const response = await IAMApiClient.get(`/acc?accID=${account}`, {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    console.log('Response customers', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving profiles:', error);
+  }
+};
 
 const PostProfileVisits = async (Token, data) => {
   try {
@@ -267,5 +278,6 @@ export {
   GetProfileVisits,
   PostRequestEndpoint,
   GetPostRequestEndpoint,
-  GetPostRequestCustomerEndpoint
+  GetPostRequestCustomerEndpoint,
+  ViewClientInfo
 };

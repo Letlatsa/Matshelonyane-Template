@@ -1,17 +1,18 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { Container, FormControl, TextField, colors } from '@mui/material';
+import { Container, FormControl, TextField } from '@mui/material';
 import SearchIcon from '../../../assets/searchIcon.svg';
 import theme from '../../../theme/theme';
 
 const SearchComponent = () => {
   return (
-    <Container sx={{ marginTop: '90px', marginBottom: '20px' }}>
+    <Container sx={{ marginTop: '68px', marginBottom: '20px', backgroundColor: 'EEEFF3' }}>
       <Typography
         variant="h2"
         sx={{
           marginBottom: '30px',
+          marginTop: '-0px',
           color: theme.palette.secondary.main
         }}
       >
@@ -26,7 +27,7 @@ const SearchComponent = () => {
           boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
           borderRadius: '5px',
           padding: 0,
-          alignItems: 'center',
+          alignItems: 'center'
         }}
       >
         <FormControl variant="standard" sx={{ padding: 0, height: '50px' }}>

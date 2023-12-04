@@ -97,7 +97,7 @@ function TruckerHomeAppBarComponent() {
   // Styles
 
   const styledAppBar = {
-    backgroundColor: 'transparent',
+    backgroundColor: '#EEEFF3',
     boxShadow: 'none'
   };
 
@@ -115,7 +115,7 @@ function TruckerHomeAppBarComponent() {
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   };
   return (
-    <div>
+    <div style={{ backgroundColor: '#EEEFF3', minHeight: '3vh' }}>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={styledAppBar}>
           <TurckerMenuOverlay isOverlay={isOverlay} setIsOverlay={setIsOverlay} />

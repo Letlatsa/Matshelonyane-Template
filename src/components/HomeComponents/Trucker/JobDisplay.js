@@ -6,40 +6,13 @@ import PlaceHolder from '../../../assets/Avatar.svg';
 import theme from '../../../theme/theme';
 import { useNavigate } from 'react-router-dom';
 
-function JobDisplay() {
+function JobDisplay({ requestData }) {
   const navigate = useNavigate();
 
-  const [requestData, SetRequestData] = useState([]);
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
+  // Initialize appliedJobs state
+  const [appliedJobs, setAppliedJobs] = useState(new Set());
 
-  useEffect(() => {
-    const fetchPostRequest = async () => {
-      try {
-        getRequest(accessToken);
-      } catch (error) {
-        console.error('Error fetching request: ', error);
-      }
-    };
-
-    fetchPostRequest();
-  }, [accessToken]);
-
-  const getRequest = (accessToken) => {
-    GetPostRequestEndpoint(accessToken)
-      .then((requestData) => {
-        SetRequestData(requestData.data);
-        console.log(requestData, 'i am here');
-      })
-      .catch((error) => {
-        console.log(error, 'Error Fetching Data');
-      });
-  };
-
-  const handleViewJob = () => {
-    navigate('/truckerproposalpage');
-  };
-
+  // Styling object
   const styledProfileBox = {
     borderRadius: '30px',
     display: 'flex',
@@ -53,115 +26,142 @@ function JobDisplay() {
     width: '40px',
     boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
   };
-
+  const styledStackTypography = {
+    color: 'F8F8F8',
+    fontSize: '16px',
+    fontWeight: 500
+  };
   return (
-    <div>
-      <Box flexGrow={1} marginTop={5} marginLeft={2} marginRight={2}>
-        <Card
-          sx={{
-            //width: '100%',
-            width: 'calc(100% - 10px)',
-            backgroundColor: '#C69585',
-            paddingTop: '15px',
-            marginBottom: '15px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          <Box
-            sx={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: '15px'
-            }}
-          >
-            <Box
+    <div style={{ height: 'calc(100vh - 50px)', overflowY: 'auto', backgroundColor: '#EEEFF3' }}>
+      <Box flexGrow={1} marginTop={2} marginLeft={2} marginRight={2}>
+        {requestData && requestData.length > 0 ? (
+          requestData.map((job, index) => (
+            <Card
+              key={index}
               sx={{
-                width: '78px',
-                display: 'flex',
-                paddingRight: '15px',
-                marginBottom: '0'
-              }}
-            >
-              <Box sx={{ ...styledProfileBox, marginTop: '-40px' }} onClick={handleViewJob}>
-                <img
-                  src={PlaceHolder}
-                  alt=""
-                  style={{ width: '44px', height: '44px', borderRadius: 20 }}
-                />
-              </Box>
-            </Box>
-            <Stack
-              spacing={2}
-              sx={{
-                flex: 1, // Take remaining space
-                paddingRight: '15px',
+                width: 'calc(100% - 0px)',
+                backgroundColor: '#FFF',
+                paddingTop: '15px',
+                marginBottom: '15px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                alignItems: 'center'
               }}
             >
               <Box
                 sx={{
+                  width: '100%',
                   display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
                   justifyContent: 'space-between',
-                  color: 'white',
-                  alignItems: 'center'
+                  marginBottom: '15px'
                 }}
               >
                 <Box
                   sx={{
+                    width: '78px',
                     display: 'flex',
-                    flexDirection: 'column',
-                    width: '100%',
-                    marginRight: '50px'
+                    paddingRight: '15px',
+                    marginBottom: '0'
                   }}
                 >
-                  <Typography sx={{ fontSize: '15px' }}>Client:</Typography>
-                  <Typography sx={{ fontSize: '15px' }}>Pickup:</Typography>
-                  <Typography sx={{ fontSize: '15px' }}>Destination: </Typography>
-                  <Typography sx={{ fontSize: '15px' }}>Price: </Typography>
+                  <Box
+                    sx={{ ...styledProfileBox, marginTop: '-40px' }}
+                    onClick={async () => {
+                      try {
+                        // Navigate to the trucker's profile
+                        navigate(`/truckerproposalpage/${job._id}`, { state: { requestData } });
+                        console.log(job._id);
+                      } catch (error) {
+                        console.error('Error', error);
+                      }
+                    }}
+                  >
+                    <img
+                      src={PlaceHolder}
+                      alt=""
+                      style={{ width: '44px', height: '44px', borderRadius: 20 }}
+                    />
+                  </Box>
                 </Box>
-                <Box
+                <Stack
+                  spacing={2}
                   sx={{
+                    flex: 1,
+                    paddingRight: '15px',
                     display: 'flex',
                     flexDirection: 'column',
-                    width: '100%',
-                    marginLeft: '30px'
+                    justifyContent: 'space-between'
                   }}
                 >
-                  <Typography sx={{ fontSize: '15px' }}>Pickup</Typography>
-                  <Typography sx={{ fontSize: '15px' }}>Pickup: </Typography>
-                  <Typography sx={{ fontSize: '15px' }}>Destination: </Typography>
-                  <Typography sx={{ fontSize: '15px' }}>Price:</Typography>
-                </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      color: 'white',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        marginRight: '50px'
+                      }}
+                    >
+                      <Typography sx={{ fontSize: '15px', color: '#000' }}>Client:</Typography>
+                      <Typography sx={{ fontSize: '15px', color: '#000' }}>Pickup:</Typography>
+                      <Typography sx={{ fontSize: '15px', color: '#000' }}>
+                        Destination:{' '}
+                      </Typography>
+                      <Typography sx={{ fontSize: '15px', color: '#000' }}>Price: </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        marginLeft: '-80px'
+                      }}
+                    >
+                      <Typography sx={{ fontSize: '15px', color: '#000' }}>Pickup</Typography>
+                      <Typography
+                        sx={{ fontSize: '15px', color: '#000' }}
+                      >{`${job.cargoDescription}`}</Typography>
+                      <Typography
+                        sx={{ fontSize: '15px', color: '#000' }}
+                      >{`${job.dropOffLocation}`}</Typography>
+                      <Typography
+                        sx={{ fontSize: '15px', color: '#000' }}
+                      >{`${job.pricePerLoad}`}</Typography>
+                    </Box>
+                  </Box>
+                </Stack>
               </Box>
-            </Stack>
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'end', marginTop: '10px' }}>
-            <Button
-              variant="contained"
-              sx={{
-                fontSize: '14px',
-                width: '180px',
-                borderRadius: '5px',
-                height: '25px',
-                color: theme.palette.secondary.main,
-                '&:hover': {
-                  color: theme.palette.primary.main
-                },
-                textTransform: 'none'
-              }}
-            >
-              Apply
-            </Button>
-          </Box>
-          <Box sx={{ height: '20px' }} />
-        </Card>
+              <Box sx={{ display: 'flex', justifyContent: 'end', marginTop: '10px' }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    fontSize: '14px',
+                    width: '180px',
+                    borderRadius: '5px',
+                    height: '25px',
+                    color: '#FFF5EF',
+                    backgroundColor: '#C08288',
+                    textTransform: 'none'
+                  }}
+                >
+                  Apply
+                </Button>
+              </Box>
+              <Box sx={{ height: '20px' }} />
+            </Card>
+          ))
+        ) : (
+          <Typography>No job requests available</Typography>
+        )}
       </Box>
     </div>
   );

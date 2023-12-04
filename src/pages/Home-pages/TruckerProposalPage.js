@@ -7,15 +7,53 @@ import {
   IconButton,
   Stack,
   Toolbar,
-  Typography
+  Typography,
+  FormControl
 } from '@mui/material';
-
+import DescIcon from '../../assets/desc.svg';
+import TruckIcon from '../../assets/truck.svg';
+import LocationIcon from '../../assets/location.svg';
+import TimeIcon from '../../assets/time.svg';
+import InstructionIcon from '../../assets/Vector (1).svg';
+import PriceIcon from '../../assets/Vector (2).svg';
+import LoadingIcon from '../../assets/loading.svg';
 import BackArrow from '../../assets/backVector.svg';
 import ProposalPageForm from '../../components/HomeComponents/Trucker/ProposalPageForm';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const TruckerProposalPage = () => {
+  const location = useLocation();
+  const { state = {} } = location || {};
+  const requestData = state ? state.requestData : null;
+
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [selectedJob, setSelectedJob] = useState(null);
+  console.log(id);
+
+  console.log(requestData, 'i am requesteddddd');
+
+  useEffect(() => {
+    console.log('Request Data:', requestData);
+    console.log('Job ID:', id);
+
+    const selectedJob = requestData.find((job) => job._id === id);
+
+    if (selectedJob) {
+      // Handle the case where the job is found
+      console.log('Selected Job:', selectedJob);
+      setSelectedJob(selectedJob);
+      console.log(selectedJob.pricePerLoad, 'price per load');
+      console.log(selectedJob.pickupTime, 'price per load');
+    } else {
+      // Handle the case where the job is not found
+      console.log('Job not found!');
+    }
+  }, [id, requestData]);
+
   const styledProfileBox = {
     borderRadius: '100px',
     display: 'flex',
@@ -78,6 +116,73 @@ const TruckerProposalPage = () => {
   const handleButtonClicked = () => {
     navigate('/truckerjobpost');
     console.log('Button clicked');
+  };
+
+  const inputContainer = {
+    marginBottom: '15px',
+    padding: '0 20px',
+    alignItems: 'center'
+  };
+
+  /* const renderTypography = (label, icon, placeholder) => (
+    <Box sx={inputContainer}>
+      <FormControl variant="standard">
+        <Typography
+          component="div"
+          variant="subtitle1"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            color: 'white',
+            textDecoration: 'underline',
+            textDecorationColor: 'white'
+          }}
+        >
+          <img src={icon} alt={label} width="30" height="20" sx={{ marginRight: '30px' }} />
+          {label}
+        </Typography>
+        <Typography component="div" variant="body1" sx={{ color: 'white', marginTop: '5px' }}>
+          {placeholder}
+        </Typography>
+      </FormControl>
+    </Box>
+  ); */
+  const renderTypography = (label, icon, value) => (
+    <Box sx={inputContainer} key={label}>
+      <FormControl variant="standard">
+        <Typography
+          component="div"
+          variant="subtitle1"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            color: 'white',
+            textDecoration: 'underline',
+            textDecorationColor: 'white'
+          }}
+        >
+          <img src={icon} alt={label} width="30" height="20" sx={{ marginRight: '30px' }} />
+          {label}
+        </Typography>
+        <Typography component="div" variant="body1" sx={{ color: 'white', marginTop: '5px' }}>
+          {value || 'Not available'}
+        </Typography>
+      </FormControl>
+    </Box>
+  );
+  //Inside your component, use the map function to render multiple typographies
+  const renderDetails = () => {
+    if (!selectedJob) {
+      return <div>No data available</div>;
+    }
+    const detailsData = [
+      { label: 'cargo description', icon: DescIcon, value: selectedJob?.cargoDescription },
+      { label: 'Trucktype', icon: TruckIcon, value: selectedJob?.truckType?.name }
+      // Add other data items in a similar format
+    ];
+    console.log(detailsData);
+
+    return detailsData.map((item) => renderTypography(item.label, item.icon, item.value));
   };
   return (
     <div>
@@ -154,28 +259,28 @@ const TruckerProposalPage = () => {
             Client Doe
           </Typography>
         </Box>
-        <Card sx={styledCard}>
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>1 hour ago</Typography>
-            <Typography sx={styledBriefSmallText}>Posted</Typography>
-          </Box>
-          <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>P 500</Typography>
-            <Typography sx={styledBriefSmallText}>Price per load</Typography>
-          </Box>
-        </Card>
+        {selectedJob ? (
+          <Card sx={styledCard}>
+            <Box sx={styleBriefInfo}>
+              <Typography sx={styledBriefBigText}>{selectedJob.pickupTime}</Typography>
+              <Typography sx={styledBriefSmallText}>Posted</Typography>
+            </Box>
+            <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
+            <Box sx={styleBriefInfo}>
+              <Typography sx={styledBriefBigText}>{selectedJob.pricePerLoad}</Typography>
+              <Typography sx={styledBriefSmallText}>Price per load</Typography>
+            </Box>
+          </Card>
+        ) : (
+          <div>No data available</div>
+        )}
         <Box sx={styledDeviderBox}>
           <Box>
             <Typography sx={{ fontSize: '20px' }}>Details</Typography>
           </Box>
           <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
         </Box>
-
-        {/*  <Card sx={styledCard}>
-          <Typography>Job details</Typography>
-        </Card> */}
-        <ProposalPageForm />
+        <Box> {renderDetails()}</Box>
       </Container>
     </div>
   );

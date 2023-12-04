@@ -54,7 +54,7 @@ function App() {
         <Route path="/truckerhome" element={<Truckerhome />}></Route>
         <Route path="/truckerprofileview" element={<TruckerProfileView />}></Route>
         <Route path="/clientoverlay" element={<ClientOverlay />}></Route>
-        <Route path="/truckerproposalpage" element={<TruckerProposalPage />}></Route>
+        <Route path="/truckerproposalpage/:id" element={<TruckerProposalPage />}></Route>
         <Route path="/clienteditprofile" element={<ClientHomeProfile />}></Route>
         <Route path="/truckereditprofile" element={<TruckerHomeProfile />}></Route>
         <Route path="/jobposting/:truckerId" element={<ClientJobPosting />}></Route>
