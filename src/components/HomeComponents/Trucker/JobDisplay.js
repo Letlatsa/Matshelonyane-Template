@@ -11,7 +11,6 @@ function JobDisplay({ requestData }) {
 
   // Initialize appliedJobs state
   const [appliedJobs, setAppliedJobs] = useState(new Set());
-  const [isAppled, setIsApplied] = useState(false);
 
   // Styling object
   const styledProfileBox = {
