@@ -19,6 +19,7 @@ import { RegisterEndPoint } from '../../services/EndPoints';
 function CreateAccountForm() {
   const navigate = useNavigate();
   const [accountType, setAccountType] = useState('');
+  const [registrationStatus, setRegistrationStatus] = useState(null);
 
   //initial form state and error state
   const initialFormState = {
@@ -90,11 +91,19 @@ function CreateAccountForm() {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          navigate('/');
+          setRegistrationStatus('success');
+          setTimeout(() => {
+            navigate('/');
+          }, 1500);
         }
       })
       .catch((error) => {
         console.log(error);
+        if (error.response && error.response.status === 403) {
+          setRegistrationStatus('existing');
+        } else {
+          setRegistrationStatus('failed');
+        }
       });
   };
 
@@ -135,7 +144,33 @@ function CreateAccountForm() {
     <div>
       <Box sx={{ marginTop: '20px', color: 'white' }}>
         <Box sx={{ right: '10px !important', marginBottom: '50px' }}>
-          <Typography variant='h1'>Create an Account</Typography>
+          <Typography variant="h1">Create an Account</Typography>
+        </Box>
+        <Box>
+          {registrationStatus === 'success' && (
+            <Typography
+              variant="subtitle1"
+              sx={{ color: 'green', textAlign: 'center', marginBottom: '10px' }}
+            >
+              Account created successfully!
+            </Typography>
+          )}
+          {registrationStatus === 'existing' && (
+            <Typography
+              variant="subtitle1"
+              sx={{ color: 'red', textAlign: 'center', marginBottom: '10px' }}
+            >
+              This number is already linked to an existing account.
+            </Typography>
+          )}
+          {registrationStatus === 'failed' && (
+            <Typography
+              variant="subtitle1"
+              sx={{ color: 'red', textAlign: 'center', marginBottom: '10px' }}
+            >
+              Registration failed. Please try again.
+            </Typography>
+          )}
         </Box>
         <Stack spacing={1} sx={inputContainer}>
           <FormControl variant="standard">
