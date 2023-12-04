@@ -100,16 +100,15 @@ const LoginForm = () => {
           } else {
             if (accountType === 'driver') {
               const license = response.data.driversLicense;
-              const truckata = await getTruckProfile(accessToken);
-              if (license === null) {
-                navigate('/truckerOnboardingProfile');
-              }
-
-              if (truckata.length === 0) {
+              const truckdata = await getTruckProfile(accessToken);
+              console.log('this is truckdata', truckdata);
+              if (license === undefined || license === null) {
+                navigate('/onboardinglicense');
+              } else if (Array.isArray(truckdata) && truckdata.length <= 0) {
                 navigate('/truckOnboardingProfile');
+              } else {
+                homeRedirecter(accountType);
               }
-
-              homeRedirecter(accountType);
             } else if (accountType === 'customer') {
               homeRedirecter(accountType);
             }
@@ -122,15 +121,16 @@ const LoginForm = () => {
   };
 
   const getTruckProfile = async (accessToken) => {
-    await UserTrucksEndpoint(accessToken)
-      .then((response) => {
-        if (response.status === 200) {
-          return response.data;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await UserTrucksEndpoint(accessToken);
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+      // Ensure to return a value in case of an error
+      return [];
+    }
   };
 
   const onboardingRedirecter = (accountType) => {
