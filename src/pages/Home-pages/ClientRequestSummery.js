@@ -20,7 +20,8 @@ const ClientRequestSummery = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
-  
+  const [requests, setRequests] = useState([]);
+
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
 
@@ -32,23 +33,19 @@ const ClientRequestSummery = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  const getRequests = async () => {
-    GetPostRequestCustomerEndpoint(accessToken)
-      .then((response) => {})
-      .catch((error) => {});
-  };
+  useEffect(() => {
+    getRequests(accessToken);
+  }, [accessToken]);
 
-  const styledProfileBox = {
-    borderRadius: '100px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#EBDBD5',
-    padding: 0,
-    height: '100px',
-    width: '100px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)',
-    marginBottom: '15px'
+  const getRequests = async (accessToken) => {
+    GetPostRequestCustomerEndpoint(accessToken)
+      .then((response) => {
+        console.log('The requests', response);
+        setRequests(response);
+      })
+      .catch((error) => {
+        console.log('Error getting client requests', error);
+      });
   };
 
   const styledAppBar = {
@@ -67,14 +64,6 @@ const ClientRequestSummery = () => {
     paddingTop: '16px',
     paddingBottom: '16px',
     color: 'white'
-  };
-
-  const styledDeviderBox = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 0,
-    height: '15px'
   };
 
   const styledStack = {
@@ -166,20 +155,43 @@ const ClientRequestSummery = () => {
             height: '1px'
           }}
         ></Box>
-        <Card sx={styledCard}>
-          <Stack spacing={2} sx={styledStack}>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Typography sx={styledStackTypography}>Phone number:</Typography>
-              <Typography sx={styledStackTypography}></Typography>
-            </Box>
-          </Stack>
-        </Card>
+        {/*TODO: Add map function to display all requests*/}
+        {requests.map((request) => (
+          <Card key={request._id} sx={styledCard}>
+            <Stack spacing={2} sx={styledStack}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography sx={styledStackTypography}>Cargo Description:</Typography>
+                <Typography sx={styledStackTypography}>{request.cargoDescription}</Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography sx={styledStackTypography}>Pick up Location:</Typography>
+                <Typography sx={styledStackTypography}>{request.pickupLocation}</Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography sx={styledStackTypography}>Drop Off Location:</Typography>
+                <Typography sx={styledStackTypography}>{request.dropOffLocation}</Typography>
+              </Box>
+            </Stack>
+          </Card>
+        ))}
       </Container>
     </div>
   );
