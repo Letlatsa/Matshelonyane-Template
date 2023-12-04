@@ -28,6 +28,7 @@ import TruckerProfile from './pages/Home-pages/TruckerProfileView';
 import ClientJobPosting from './components/HomeComponents/Client/ClientJobPosting';
 import ClientJobPostingForm from './components/HomeComponents/Client/ClientJobPostingForm';
 import JobPosting from './components/HomeComponents/Trucker/JobPosting';
+import ClientRequestSummery from './pages/Home-pages/ClientRequestSummery';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
         <Route path="/jobpost" element={<ClientJobPostingForm />}></Route>
         <Route path="/truckerjobpost" element={<JobPosting />}></Route>
         <Route path="/truckerjobpost" element={<JobPosting />}></Route>
+        <Route path="/clientrequestsummery" element={<ClientRequestSummery />}></Route>
       </Routes>
     </div>
   );
