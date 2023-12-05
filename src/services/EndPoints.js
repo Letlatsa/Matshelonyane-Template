@@ -162,6 +162,17 @@ const ViewTruckerInfo = async (Token, account) => {
     console.error('Error retrieving profiles:', error);
   }
 };
+const ViewClientInfo = async (Token, account) => {
+  try {
+    const response = await IAMApiClient.get(`/acc?accID=${account}`, {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    console.log('Response customers', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving profiles:', error);
+  }
+};
 
 const PostProfileVisits = async (Token, data) => {
   try {
@@ -215,6 +226,68 @@ const GetProfileVisits = async (Token) => {
     console.error('Error retrieving visits', error);
   }
 };
+const PostRequestEndpoint = async (formData, Token) => {
+  const response = await FleetApiClient.post('/postride', formData, {
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${Token}` }
+  });
+  return response;
+};
+const GetPostRequestEndpoint = async (Token) => {
+  try {
+    const response = await FleetApiClient.get('/ride/driver', {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    console.log('Responses', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving', error);
+  }
+};
+const GetPostRequestCustomerEndpoint = async (Token) => {
+  try {
+    const response = await FleetApiClient.get('/ride/customer', {
+      headers: { Authorization: `Bearer ${Token}` }
+    });
+    console.log('Responses', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error retrieving', error);
+  }
+};
+
+const accceptProposalEndpoint = async (Token, data) => {
+  try {
+    const response = await FleetApiClient.put('/ride/accept', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Token}`
+      }
+    });
+
+    console.log('Response:', response);
+    return response;
+  } catch (error) {
+    console.error('Error accepting proposal', error);
+    throw error;
+  }
+};
+
+const cancelProposalEndpoint = async (Token, data) => {
+  try {
+    const response = await FleetApiClient.put('/ride/cancel', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Token}`
+      }
+    });
+
+    console.log('Response:', response);
+    return response;
+  } catch (error) {
+    console.error('Error canceling proposal', error);
+    throw error;
+  }
+};
 
 export {
   LoginEndPoint,
@@ -236,5 +309,11 @@ export {
   PostProfileVisits,
   DownloadUmageEndPoint,
   GetServiceLocation,
-  GetProfileVisits
+  GetProfileVisits,
+  PostRequestEndpoint,
+  GetPostRequestEndpoint,
+  GetPostRequestCustomerEndpoint,
+  ViewClientInfo,
+  accceptProposalEndpoint,
+  cancelProposalEndpoint
 };

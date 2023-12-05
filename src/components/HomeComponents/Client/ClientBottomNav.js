@@ -21,6 +21,9 @@ const ClientBottomNav = () => {
   const ClientHomePage = () => {
     navigate('/clienthome');
   };
+  const ClientProfilePage = () => {
+    navigate('/clientrequestsummery');
+  };
 
   const styledNavAction = {
     backgroundColor: '#C69585',
@@ -91,7 +94,7 @@ const ClientBottomNav = () => {
           </Box>
         }
       /> */}
-      {/* <BottomNavigationAction
+      <BottomNavigationAction
         value="Requests"
         icon={
           <Box sx={value === 'Requests' ? styledNavActiveAction : styledNavAction}>
@@ -101,11 +104,12 @@ const ClientBottomNav = () => {
               width="30"
               height="20"
               sx={{ marginRight: '30px' }}
+              onClick={ClientProfilePage}
             />
           </Box>
         }
-      /> */}
-      <BottomNavigationAction
+      />
+      {/* <BottomNavigationAction
         value="Post"
         icon={
           <Box sx={value === 'Post' ? styledNavActiveAction : styledNavAction}>
@@ -119,7 +123,7 @@ const ClientBottomNav = () => {
             />
           </Box>
         }
-      />
+      /> */}
     </BottomNavigation>
   );
 };

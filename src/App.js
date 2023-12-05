@@ -27,6 +27,8 @@ import TruckerHomeProfile from './pages/Home-pages/TruckerEditProfile';
 import TruckerProfile from './pages/Home-pages/TruckerProfileView';
 import ClientJobPosting from './components/HomeComponents/Client/ClientJobPosting';
 import ClientJobPostingForm from './components/HomeComponents/Client/ClientJobPostingForm';
+import JobPosting from './components/HomeComponents/Trucker/JobPosting';
+import ClientRequestSummery from './pages/Home-pages/ClientRequestSummery';
 
 function App() {
   return (
@@ -52,11 +54,14 @@ function App() {
         <Route path="/truckerhome" element={<Truckerhome />}></Route>
         <Route path="/truckerprofileview" element={<TruckerProfileView />}></Route>
         <Route path="/clientoverlay" element={<ClientOverlay />}></Route>
-        <Route path="/truckerproposalpage" element={<TruckerProposalPage />}></Route>
+        <Route path="/truckerproposalpage/:id" element={<TruckerProposalPage />}></Route>
         <Route path="/clienteditprofile" element={<ClientHomeProfile />}></Route>
         <Route path="/truckereditprofile" element={<TruckerHomeProfile />}></Route>
-        <Route path="/jobposting" element={<ClientJobPosting />}></Route>
-        <Route path="/jobpos" element={<ClientJobPostingForm />}></Route>
+        <Route path="/jobposting/:truckerId" element={<ClientJobPosting />}></Route>
+        <Route path="/jobpost" element={<ClientJobPostingForm />}></Route>
+        <Route path="/truckerjobpost" element={<JobPosting />}></Route>
+        <Route path="/truckerjobpost" element={<JobPosting />}></Route>
+        <Route path="/clientrequestsummery" element={<ClientRequestSummery />}></Route>
       </Routes>
     </div>
   );

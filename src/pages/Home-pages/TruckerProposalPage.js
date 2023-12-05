@@ -7,14 +7,81 @@ import {
   IconButton,
   Stack,
   Toolbar,
-  Typography
+  Typography,
+  FormControl
 } from '@mui/material';
-
+import DescIcon from '../../assets/desc.svg';
+import TruckIcon from '../../assets/truck.svg';
+import LocationIcon from '../../assets/location.svg';
+import TimeIcon from '../../assets/time.svg';
+import InstructionIcon from '../../assets/Vector (1).svg';
+import PriceIcon from '../../assets/Vector (2).svg';
+import LoadingIcon from '../../assets/loading.svg';
 import BackArrow from '../../assets/backVector.svg';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { ViewClientInfo, DownloadUmageEndPoint } from '../../services/EndPoints';
 
 const TruckerProposalPage = () => {
+  const location = useLocation();
+  const { state = {} } = location || {};
+  const requestData = state ? state.requestData : null;
+  //const customerData = state ? state.customerData : null;
+  const customerData = location.state.customerData;
+  //const imageData = location.state.imageData;
+
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [imageData, setImageData] = useState(null);
+
+  console.log(id);
+  console.log(customerData, 'i am customer data');
+
+  useEffect(() => {
+    if (selectedJob && selectedJob.customer && customerData[selectedJob.customer]) {
+      const fetchTruckerData = async () => {
+        try {
+          // Download the image
+          const imageResponse = await DownloadUmageEndPoint(
+            customerData[selectedJob.customer].propic
+          );
+          const imageData = imageResponse.data;
+          setImageData(imageData);
+          console.log('' + imageData);
+        } catch (error) {
+          console.error('Error fetching trucker profile or image:', error);
+        }
+      };
+
+      fetchTruckerData();
+    }
+  }, [selectedJob]);
+
+  useEffect(() => {
+    console.log('Request Data:', requestData);
+    console.log('Job ID:', id);
+
+    const selectedJob = requestData.find((job) => job._id === id);
+
+    if (selectedJob) {
+      // Handle the case where the job is found
+      console.log('Selected Job:', selectedJob);
+      setSelectedJob(selectedJob);
+    } else {
+      // Handle the case where the job is not found
+      console.log('Job not found!');
+    }
+  }, [id, requestData]);
+
+  const styledStackTypography = {
+    color: 'F8F8F8',
+    fontSize: '16px',
+    fontWeight: 500
+  };
+
   const styledProfileBox = {
     borderRadius: '100px',
     display: 'flex',
@@ -75,9 +142,97 @@ const TruckerProposalPage = () => {
   };
 
   const handleButtonClicked = () => {
-    navigate('/truckerhome');
+    navigate('/truckerjobpost');
     console.log('Button clicked');
   };
+
+  const inputContainer = {
+    marginBottom: '15px',
+    padding: '0 20px',
+    alignItems: 'center'
+  };
+
+  const renderDetails = () => {
+    if (!selectedJob) {
+      return <div>No data available</div>;
+    }
+
+    const detailsData = [
+      { label: 'Cargo Description', icon: DescIcon, value: selectedJob?.cargoDescription },
+      { label: 'Truck Type', icon: TruckIcon, value: selectedJob?.truckType?.name },
+      { label: 'Pickup Location', icon: LocationIcon, value: selectedJob?.pickupLocation },
+      { label: 'Drop-off Location', icon: LocationIcon, value: selectedJob?.dropOffLocation },
+      { label: 'Pickup Time', icon: TimeIcon, value: selectedJob?.pickupTime },
+      {
+        label: 'Pickup Instructions',
+        icon: InstructionIcon,
+        value: selectedJob?.pickupInstructions
+      },
+      {
+        label: 'Loading Service Required',
+        icon: LoadingIcon,
+        value: selectedJob?.requireLoadingService ? 'Yes' : 'No'
+      },
+      { label: 'Price per Load', icon: PriceIcon, value: selectedJob?.pricePerLoad }
+
+      // Include other data items here
+    ];
+
+    return (
+      <Box
+        sx={{
+          width: '100%',
+          marginTop: '-150px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Box
+          sx={{
+            width: 'calc(100% - 10px)',
+            maxWidth: '380px',
+            height: '380px',
+            backgroundColor: '#C69585',
+            borderRadius: '10px',
+            marginBottom: '50px',
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: '150px',
+            color: 'white',
+            gap: '15px',
+            flexShrink: 0,
+            overflowY: 'auto'
+          }}
+        >
+          {detailsData.map((item, index) => (
+            <div
+              key={index}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginLeft: '20px',
+                marginTop: '10px',
+                borderBottom: '1px solid white',
+                width: '90%' // Set the width of the underline to 80% of the card
+              }}
+            >
+              <img src={item.icon} alt={item.label} style={{ marginRight: '10px' }} />
+              <div>{item.value || 'Not available'}</div>
+            </div>
+          ))}
+        </Box>
+      </Box>
+    );
+  };
+
+  const formatTime = (timestamp) => {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+  };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -134,46 +289,60 @@ const TruckerProposalPage = () => {
         >
           <Box sx={styledProfileBox}>
             <img
-              src="https://picsum.photos/200/300"
+              src={imageData ? `data:image/jpeg;base64,${imageData}` : ''}
               alt=""
-              style={{ width: '95px', height: '95px', borderRadius: 100, backgroundColor: 'grey' }}
+              style={{
+                width: '95px',
+                height: '95px',
+                borderRadius: 100,
+                backgroundColor: 'grey'
+              }}
             />
           </Box>
-          <Typography
-            sx={{
-              color: ' #58362A',
-              fontFamily: 'Lato',
-              fontSize: '24px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: 'normal',
-              letterSpacing: '-0.17px'
-            }}
-          >
-            Client Doe
-          </Typography>
+
+          {selectedJob && customerData && customerData[selectedJob.customer] ? (
+            <Typography
+              sx={{
+                color: ' #58362A',
+                fontFamily: 'Lato',
+                fontSize: '24px',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                lineHeight: 'normal',
+                letterSpacing: '-0.17px'
+              }}
+            >
+              {customerData[selectedJob.customer].firstName || 'N/A'}
+              {customerData[selectedJob.customer].lastName
+                ? ` ${customerData[selectedJob.customer].lastName}`
+                : ''}
+            </Typography>
+          ) : (
+            <Typography>N/A</Typography>
+          )}
         </Box>
-        <Card sx={styledCard}>
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>1 hour ago</Typography>
-            <Typography sx={styledBriefSmallText}>Posted</Typography>
-          </Box>
-          <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
-          <Box sx={styleBriefInfo}>
-            <Typography sx={styledBriefBigText}>P 500</Typography>
-            <Typography sx={styledBriefSmallText}>Price per load</Typography>
-          </Box>
-        </Card>
+        {selectedJob ? (
+          <Card sx={styledCard}>
+            <Box sx={styleBriefInfo}>
+              <Typography sx={styledBriefBigText}>{formatTime(selectedJob.createdAt)}</Typography>
+              <Typography sx={styledBriefSmallText}>Posted</Typography>
+            </Box>
+            <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />
+            <Box sx={styleBriefInfo}>
+              <Typography sx={styledBriefBigText}>{selectedJob.pricePerLoad}</Typography>
+              <Typography sx={styledBriefSmallText}>Price per load</Typography>
+            </Box>
+          </Card>
+        ) : (
+          <div>No data available</div>
+        )}
         <Box sx={styledDeviderBox}>
           <Box>
             <Typography sx={{ fontSize: '20px' }}>Details</Typography>
           </Box>
           <Box sx={{ backgroundColor: '#58362A', height: '.2px', minWidth: '296px' }}></Box>
         </Box>
-
-        <Card sx={styledCard}>
-          <Typography>Job details</Typography>
-        </Card>
+        {renderDetails()}
       </Container>
     </div>
   );

@@ -44,11 +44,13 @@ const TruckerCard = () => {
   }, [accessToken]);
 
   const getUniqueClients = (visitsData) => {
-    const uniqueClientsMap = new Map();
+    const uniqueClientsMap = {};
     visitsData.forEach((visit) => {
-      uniqueClientsMap.set(visit.clientId, visit);
+      // Using _id as the unique identifier for clients
+      const clientId = visit.client._id;
+      uniqueClientsMap[clientId] = visit;
     });
-    return Array.from(uniqueClientsMap.values());
+    return Object.values(uniqueClientsMap);
   };
 
   const handleButtonClickedProposalPage = () => {
@@ -79,6 +81,7 @@ const TruckerCard = () => {
           const uniqueClients = getUniqueClients(updatedVisits);
           console.log('Unique Clients:', uniqueClients);
           setClientsData(uniqueClients);
+          console.log(uniqueClients, 'am i unique');
         });
       })
       .catch((error) => {
@@ -101,7 +104,7 @@ const TruckerCard = () => {
   };
 
   return (
-    <>
+    <div style={{ overflowY: 'scroll', minHeight: '100px' }}>
       {/* Check if data is loading */}
       {isLoadingData ? (
         // Render skeleton while data is loading
@@ -204,7 +207,7 @@ const TruckerCard = () => {
           ))}
         </>
       )}
-    </>
+    </div>
   );
 };
 

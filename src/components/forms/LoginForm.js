@@ -224,6 +224,8 @@ const LoginForm = () => {
         sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px', color: 'white' }}
       >
         <Typography variant="h1">Welcome to Matshelonyane!</Typography>
+
+
       </Box>
       <Box>
         {loginStatus === 'invalid' && (
@@ -242,6 +244,7 @@ const LoginForm = () => {
             Login failed. Please try again.
           </Typography>
         )}{' '}
+
       </Box>
       <Stack sx={inputContainerBox} spacing={1}>
         <FormControl variant="standard">
