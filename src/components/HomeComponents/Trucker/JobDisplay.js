@@ -8,8 +8,6 @@ import {
 import { useEffect, useState } from 'react';
 import PhoneIcon from '../../../assets/phoness.svg';
 import { useNavigate } from 'react-router-dom';
-const TokenSession = sessionStorage.getItem('Tokens');
-const accessToken = JSON.parse(TokenSession).accessToken;
 
 function JobDisplay({ requestData }) {
   const navigate = useNavigate();
@@ -17,6 +15,8 @@ function JobDisplay({ requestData }) {
   const [customerData, setCustomerData] = useState(null);
   const [imageData, setImageData] = useState(null);
   const [customerImages, setCustomerImages] = useState({}); // Initialize as an empty object
+const TokenSession = sessionStorage.getItem('Tokens');
+const accessToken = JSON.parse(TokenSession).accessToken;
 
   const updateCustomerImage = (customerId, imageData) => {
     setCustomerImages((prevImages) => ({
@@ -55,9 +55,6 @@ function JobDisplay({ requestData }) {
 
     fetchCustomerDetails();
   }, [requestData]);
-
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
 
   const acceptPost = async (id) => {
     const data = {
