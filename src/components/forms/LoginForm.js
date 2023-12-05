@@ -15,7 +15,11 @@ import TextButton from '../Buttons/TextButton';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
-import { LoginEndPoint, RetrieveSurnameEndpoint } from '../../services/EndPoints';
+import {
+  LoginEndPoint,
+  RetrieveSurnameEndpoint,
+  UserTrucksEndpoint
+} from '../../services/EndPoints';
 
 import { useToken } from '../../Hooks/TokenContext';
 
@@ -24,6 +28,7 @@ import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {
   const [accountType, setAccountType] = useState('');
   const [formData, setFormData] = useState({ phone: '', password: '', accountType: '' });
+  const [loginStatus, SetLoginStatus] = useState(null);
 
   const { setTokenData } = useToken();
   const navigate = useNavigate();
@@ -83,24 +88,55 @@ const LoginForm = () => {
       })
       .catch((error) => {
         console.log(error);
+        if (error.response && error.response.status === 403) {
+          SetLoginStatus('invalid');
+        } else {
+          SetLoginStatus('nonexistent');
+        }
       });
   };
 
   const userRedirect = (accountType, accessToken) => {
     RetrieveSurnameEndpoint(accessToken)
-      .then((response) => {
+      .then(async (response) => {
         if (response.status === 200) {
           const { lastName } = response.data;
           if (!lastName || lastName === undefined || lastName === null) {
             onboardingRedirecter(accountType);
           } else {
-            homeRedirecter(accountType);
+            if (accountType === 'driver') {
+              const license = response.data.driversLicense;
+              const truckdata = await getTruckProfile(accessToken);
+              console.log('this is truckdata', truckdata);
+              if (license === undefined || license === null) {
+                navigate('/onboardinglicense');
+              } else if (Array.isArray(truckdata) && truckdata.length <= 0) {
+                navigate('/truckOnboardingProfile');
+              } else {
+                homeRedirecter(accountType);
+              }
+            } else if (accountType === 'customer') {
+              homeRedirecter(accountType);
+            }
           }
         }
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const getTruckProfile = async (accessToken) => {
+    try {
+      const response = await UserTrucksEndpoint(accessToken);
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+      // Ensure to return a value in case of an error
+      return [];
+    }
   };
 
   const onboardingRedirecter = (accountType) => {
@@ -188,6 +224,27 @@ const LoginForm = () => {
         sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px', color: 'white' }}
       >
         <Typography variant="h1">Welcome to Matshelonyane!</Typography>
+
+
+      </Box>
+      <Box>
+        {loginStatus === 'invalid' && (
+          <Typography
+            variant="subtitle1"
+            sx={{ color: 'red', textAlign: 'center', marginBottom: '10px' }}
+          >
+            Invalid Credentials
+          </Typography>
+        )}
+        {loginStatus === 'failed' && (
+          <Typography
+            variant="subtitle1"
+            sx={{ color: 'red', textAlign: 'center', marginBottom: '10px' }}
+          >
+            Login failed. Please try again.
+          </Typography>
+        )}{' '}
+
       </Box>
       <Stack sx={inputContainerBox} spacing={1}>
         <FormControl variant="standard">
