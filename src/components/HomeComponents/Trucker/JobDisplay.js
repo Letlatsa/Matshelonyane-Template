@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Card, Stack, Typography, Button } from '@mui/material';
-import { ViewClientInfo, DownloadUmageEndPoint } from '../../../services/EndPoints';
+import { accceptProposalEndpoint, ViewClientInfo, DownloadUmageEndPoint } from '../../../services/EndPoints';
 import { useEffect, useState } from 'react';
 import PlaceHolder from '../../../assets/Avatar.svg';
 import theme from '../../../theme/theme';
@@ -38,6 +38,28 @@ function JobDisplay({ requestData }) {
     fetchCustomerDetails();
   }, [requestData]);
 
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
+
+  const acceptPost = async (id) => {
+    const data = {
+      deliveryRequestID: id
+    };
+    await accceptProposalEndpoint(accessToken, data)
+      .then((result) => {
+        if (result) {
+          handleRelaod();
+        } else {
+          console.log('cannot accept');
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const handleRelaod = () => {
+    navigate('/truckerjobpost');
+  };
+
   // Styling object
   const styledProfileBox = {
     borderRadius: '30px',
@@ -57,6 +79,26 @@ function JobDisplay({ requestData }) {
     fontSize: '16px',
     fontWeight: 500
   };
+  const styledNotAppliedButton = {
+    fontSize: '14px',
+    width: '180px',
+    borderRadius: '5px',
+    height: '25px',
+    color: '#FFF5EF',
+    backgroundColor: '#C08288',
+    textTransform: 'none'
+  };
+
+  const styledIsAppliedButton = {
+    fontSize: '14px',
+    width: '180px',
+    borderRadius: '5px',
+    height: '25px',
+    color: '#FFF5EF',
+    backgroundColor: 'gray',
+    textTransform: 'none'
+  };
+
   return (
     <div style={{ height: 'calc(100vh - 100px)', overflowY: 'auto', backgroundColor: '#EEEFF3' }}>
       <Box flexGrow={1} marginTop={2} marginLeft={2} marginRight={2}>
@@ -175,17 +217,18 @@ function JobDisplay({ requestData }) {
               <Box sx={{ display: 'flex', justifyContent: 'end', marginTop: '10px' }}>
                 <Button
                   variant="contained"
-                  sx={{
-                    fontSize: '14px',
-                    width: '180px',
-                    borderRadius: '5px',
-                    height: '25px',
-                    color: '#FFF5EF',
-                    backgroundColor: '#C08288',
-                    textTransform: 'none'
+                  sx={job.status === 'posted' ? styledNotAppliedButton : styledIsAppliedButton}
+                  onClick={() => {
+                    if (job.status === 'posted') {
+                      acceptPost(job._id);
+                    }
                   }}
                 >
-                  Apply
+                  {job.status === 'posted' ? (
+                    <Typography>Apply</Typography>
+                  ) : (
+                    <Typography>Accepted</Typography>
+                  )}
                 </Button>
               </Box>
               <Box sx={{ height: '20px' }} />

@@ -255,6 +255,40 @@ const GetPostRequestCustomerEndpoint = async (Token) => {
   }
 };
 
+const accceptProposalEndpoint = async (Token, data) => {
+  try {
+    const response = await FleetApiClient.put('/ride/accept', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Token}`
+      }
+    });
+
+    console.log('Response:', response);
+    return response;
+  } catch (error) {
+    console.error('Error accepting proposal', error);
+    throw error;
+  }
+};
+
+const cancelProposalEndpoint = async (Token, data) => {
+  try {
+    const response = await FleetApiClient.put('/ride/cancel', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Token}`
+      }
+    });
+
+    console.log('Response:', response);
+    return response;
+  } catch (error) {
+    console.error('Error canceling proposal', error);
+    throw error;
+  }
+};
+
 export {
   LoginEndPoint,
   RegisterEndPoint,
@@ -279,5 +313,7 @@ export {
   PostRequestEndpoint,
   GetPostRequestEndpoint,
   GetPostRequestCustomerEndpoint,
-  ViewClientInfo
+  ViewClientInfo,
+  accceptProposalEndpoint,
+  cancelProposalEndpoint
 };
