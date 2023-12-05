@@ -161,7 +161,26 @@ function JobDisplay({ requestData }) {
                 </Stack>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'end', marginTop: '10px' }}>
-                <Button variant="contained" sx={styledNotAppliedButton}>
+                <Button
+                  variant="contained"
+                  sx={
+                    job.status === 'posted'
+                      ? styledNotAppliedButton
+                      : {
+                          // Define styles for other statuses or use a default style
+                          // You can adjust this part based on your specific styling needs
+                          backgroundColor: 'gray',
+                          color: 'white',
+                          cursor: 'not-allowed'
+                        }
+                  }
+                  onClick={() => {
+                    // Only allow clicking the button if the status is "posted"
+                    if (job.status === 'posted') {
+                      // Your onClick logic here
+                    }
+                  }}
+                >
                   Apply
                 </Button>
               </Box>
