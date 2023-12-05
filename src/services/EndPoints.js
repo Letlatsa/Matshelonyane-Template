@@ -257,7 +257,7 @@ const GetPostRequestCustomerEndpoint = async (Token) => {
 
 const accceptProposalEndpoint = async (Token, data) => {
   try {
-    const response = await FleetApiClient.post('/ride/accept', data, {
+    const response = await FleetApiClient.put('/ride/accept', data, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Token}`
@@ -274,7 +274,7 @@ const accceptProposalEndpoint = async (Token, data) => {
 
 const cancelProposalEndpoint = async (Token, data) => {
   try {
-    const response = await FleetApiClient.post('/ride/cancel', data, {
+    const response = await FleetApiClient.put('/ride/cancel', data, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Token}`

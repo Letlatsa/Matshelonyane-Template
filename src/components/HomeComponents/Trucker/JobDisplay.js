@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Card, Stack, Typography, Button } from '@mui/material';
-import { GetPostRequestEndpoint } from '../../../services/EndPoints';
+import { accceptProposalEndpoint } from '../../../services/EndPoints';
 import { useEffect, useState } from 'react';
 import PlaceHolder from '../../../assets/Avatar.svg';
 import theme from '../../../theme/theme';
@@ -11,6 +11,28 @@ function JobDisplay({ requestData }) {
 
   // Initialize appliedJobs state
   const [appliedJobs, setAppliedJobs] = useState(new Set());
+
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
+
+  const acceptPost = async (id) => {
+    const data = {
+      deliveryRequestID: id
+    };
+    await accceptProposalEndpoint(accessToken, data)
+      .then((result) => {
+        if (result) {
+          handleRelaod();
+        } else {
+          console.log('cannot accept');
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const handleRelaod = () => {
+    navigate('/truckerjobpost');
+  };
 
   // Styling object
   const styledProfileBox = {
@@ -47,7 +69,7 @@ function JobDisplay({ requestData }) {
     borderRadius: '5px',
     height: '25px',
     color: '#FFF5EF',
-    backgroundColor: '#C08288',
+    backgroundColor: 'gray',
     textTransform: 'none'
   };
 
@@ -163,25 +185,18 @@ function JobDisplay({ requestData }) {
               <Box sx={{ display: 'flex', justifyContent: 'end', marginTop: '10px' }}>
                 <Button
                   variant="contained"
-                  sx={
-                    job.status === 'posted'
-                      ? styledNotAppliedButton
-                      : {
-                          // Define styles for other statuses or use a default style
-                          // You can adjust this part based on your specific styling needs
-                          backgroundColor: 'gray',
-                          color: 'white',
-                          cursor: 'not-allowed'
-                        }
-                  }
+                  sx={job.status === 'posted' ? styledNotAppliedButton : styledIsAppliedButton}
                   onClick={() => {
-                    // Only allow clicking the button if the status is "posted"
                     if (job.status === 'posted') {
-                      // Your onClick logic here
+                      acceptPost(job._id);
                     }
                   }}
                 >
-                  Apply
+                  {job.status === 'posted' ? (
+                    <Typography>Apply</Typography>
+                  ) : (
+                    <Typography>Accepted</Typography>
+                  )}
                 </Button>
               </Box>
               <Box sx={{ height: '20px' }} />
