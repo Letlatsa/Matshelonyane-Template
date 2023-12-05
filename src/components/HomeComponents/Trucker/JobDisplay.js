@@ -1,9 +1,12 @@
 import React from 'react';
 import { Box, Card, Stack, Typography, Button } from '@mui/material';
-import { accceptProposalEndpoint, ViewClientInfo, DownloadUmageEndPoint } from '../../../services/EndPoints';
+import {
+  accceptProposalEndpoint,
+  ViewClientInfo,
+  DownloadUmageEndPoint
+} from '../../../services/EndPoints';
 import { useEffect, useState } from 'react';
-import PlaceHolder from '../../../assets/Avatar.svg';
-import theme from '../../../theme/theme';
+import PhoneIcon from '../../../assets/phoness.svg';
 import { useNavigate } from 'react-router-dom';
 const TokenSession = sessionStorage.getItem('Tokens');
 const accessToken = JSON.parse(TokenSession).accessToken;
@@ -22,65 +25,31 @@ function JobDisplay({ requestData }) {
     }));
   };
 
-  /* useEffect(() => {
-    const fetchCustomerDetails = async () => {
-      if (requestData && requestData.length > 0) {
-        const customerId = requestData[2].customer; // Assuming the customer ID is stored in the first job request
-        console.log(customerId, 'hiii');
-        try {
-          const customerInfo = await ViewClientInfo(accessToken, customerId); // Fetch customer data from API
-          setCustomerData(customerInfo);
-          console.log(customerInfo, 'customer info'); // Update state with customer data
-
-          // Download the image
-          const imageResponse = await DownloadUmageEndPoint(customerInfo.propic);
-          const imageData = imageResponse.data;
-          setImageData(imageData);
-          console.log('' + imageData);
-        } catch (error) {
-          console.error('Error fetching customer data:', error);
-        }
-      }
-    };
-
-    fetchCustomerDetails();
-  }, [requestData]); */
-
   useEffect(() => {
     const fetchCustomerDetails = async () => {
       if (requestData && requestData.length > 0) {
-        // Extract unique customer IDs from the job requests
-        const uniqueCustomerIds = new Set();
-        requestData.forEach((job) => {
-          uniqueCustomerIds.add(job.customer);
-        });
+        const uniqueCustomerIds = [...new Set(requestData.map((job) => job.customer))];
 
-        // Fetch details for each unique customer ID
-        const customerDetailsPromises = Array.from(uniqueCustomerIds).map(async (customerId) => {
+        const customerDataPromises = uniqueCustomerIds.map(async (customerId) => {
           try {
             const customerInfo = await ViewClientInfo(accessToken, customerId);
-            // Update state with customer data (you might want to structure this differently based on your needs)
             setCustomerData((prevData) => ({
               ...prevData,
-              [customerId]: customerInfo // Using customerId as a key for each customer's info
+              [customerId]: customerInfo
             }));
-            console.log(customerInfo, 'i am hereeee');
-            // Download the image
+
             const imageResponse = await DownloadUmageEndPoint(customerInfo.propic);
             const imageData = imageResponse.data;
-            // Update image data for the specific customer separately
+
             if (imageData) {
               updateCustomerImage(customerId, imageData);
             }
-            setImageData(imageData);
-            console.log('' + imageData);
           } catch (error) {
             console.error(`Error fetching customer data for ID ${customerId}:`, error);
           }
         });
 
-        // Wait for all customer details to be fetched before proceeding
-        await Promise.all(customerDetailsPromises);
+        await Promise.all(customerDataPromises);
       }
     };
 
@@ -156,7 +125,7 @@ function JobDisplay({ requestData }) {
             <Card
               key={index}
               sx={{
-                width: 'calc(100% - 0px)',
+                width: '103%',
                 backgroundColor: '#FFF',
                 paddingTop: '15px',
                 marginBottom: '15px',
@@ -252,23 +221,43 @@ function JobDisplay({ requestData }) {
                         display: 'flex',
                         flexDirection: 'column',
                         width: '100%',
-                        marginLeft: '-80px'
+                        marginLeft: '-30px',
+                        marginTop: '5px',
+                        marginRight: '5px'
                       }}
                     >
-                      <Typography sx={{ fontSize: '15px', color: '#000' }}>
-                        {/*  {customerData && customerData.account.number
-                          ? customerData.account.number
-                          : 'N/A'} */}
+                      <Typography
+                        sx={{ fontSize: '15px', color: '#000', marginTop: '-8px !important' }}
+                      >
+                        <>
+                          <img
+                            src={PhoneIcon}
+                            alt="Account Icon"
+                            width="20"
+                            height="20"
+                            style={{
+                              verticalAlign: 'middle',
+                              marginRight: '5px',
+                              marginLeft: '-23px'
+                            }}
+                          />
+                        </>
+                        {customerData &&
+                        customerData[job.customer] &&
+                        customerData[job.customer].account &&
+                        customerData[job.customer].account.number
+                          ? customerData[job.customer].account.number
+                          : 'N/A'}
                       </Typography>
                       <Box></Box>
                       <Typography
-                        sx={{ fontSize: '15px', color: '#000' }}
+                        sx={{ fontSize: '15px', color: '#000', whiteSpace: 'nowrap' }}
                       >{`${job.cargoDescription}`}</Typography>
                       <Typography
-                        sx={{ fontSize: '15px', color: '#000' }}
+                        sx={{ fontSize: '15px', color: '#000', whiteSpace: 'nowrap' }}
                       >{`${job.dropOffLocation}`}</Typography>
                       <Typography
-                        sx={{ fontSize: '15px', color: '#000' }}
+                        sx={{ fontSize: '15px', color: '#000', whiteSpace: 'nowrap' }}
                       >{`${job.pricePerLoad}`}</Typography>
                     </Box>
                   </Box>

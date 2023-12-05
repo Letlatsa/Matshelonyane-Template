@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { ViewClientInfo, DownloadUmageEndPoint } from '../../services/EndPoints';
 
 const TruckerProposalPage = () => {
   const location = useLocation();
@@ -29,16 +30,35 @@ const TruckerProposalPage = () => {
   const requestData = state ? state.requestData : null;
   //const customerData = state ? state.customerData : null;
   const customerData = location.state.customerData;
-  const imageData = location.state.imageData;
+  //const imageData = location.state.imageData;
 
   const navigate = useNavigate();
   const { id } = useParams();
   const [selectedJob, setSelectedJob] = useState(null);
-  console.log(id);
+  const [imageData, setImageData] = useState(null);
 
-  console.log(requestData, 'i am requesteddddd');
+  console.log(id);
   console.log(customerData, 'i am customer data');
-  console.log(imageData, 'i am customer data,the images');
+
+  useEffect(() => {
+    if (selectedJob && selectedJob.customer && customerData[selectedJob.customer]) {
+      const fetchTruckerData = async () => {
+        try {
+          // Download the image
+          const imageResponse = await DownloadUmageEndPoint(
+            customerData[selectedJob.customer].propic
+          );
+          const imageData = imageResponse.data;
+          setImageData(imageData);
+          console.log('' + imageData);
+        } catch (error) {
+          console.error('Error fetching trucker profile or image:', error);
+        }
+      };
+
+      fetchTruckerData();
+    }
+  }, [selectedJob]);
 
   useEffect(() => {
     console.log('Request Data:', requestData);
@@ -50,13 +70,17 @@ const TruckerProposalPage = () => {
       // Handle the case where the job is found
       console.log('Selected Job:', selectedJob);
       setSelectedJob(selectedJob);
-      console.log(selectedJob.pricePerLoad, 'price per load');
-      console.log(selectedJob.pickupTime, 'price per load');
     } else {
       // Handle the case where the job is not found
       console.log('Job not found!');
     }
   }, [id, requestData]);
+
+  const styledStackTypography = {
+    color: 'F8F8F8',
+    fontSize: '16px',
+    fontWeight: 500
+  };
 
   const styledProfileBox = {
     borderRadius: '100px',
@@ -202,6 +226,13 @@ const TruckerProposalPage = () => {
     );
   };
 
+  const formatTime = (timestamp) => {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+  };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -257,21 +288,18 @@ const TruckerProposalPage = () => {
           }}
         >
           <Box sx={styledProfileBox}>
-            {imageData && selectedJob && selectedJob.customer && imageData[selectedJob.customer] ? (
-              <img
-                src={`data:image/jpeg;base64,${imageData[selectedJob.customer]}`}
-                alt=""
-                style={{
-                  width: '95px',
-                  height: '95px',
-                  borderRadius: 100,
-                  backgroundColor: 'grey'
-                }}
-              />
-            ) : (
-              <div>No Image</div>
-            )}
+            <img
+              src={imageData ? `data:image/jpeg;base64,${imageData}` : ''}
+              alt=""
+              style={{
+                width: '95px',
+                height: '95px',
+                borderRadius: 100,
+                backgroundColor: 'grey'
+              }}
+            />
           </Box>
+
           {selectedJob && customerData && customerData[selectedJob.customer] ? (
             <Typography
               sx={{
@@ -296,7 +324,7 @@ const TruckerProposalPage = () => {
         {selectedJob ? (
           <Card sx={styledCard}>
             <Box sx={styleBriefInfo}>
-              <Typography sx={styledBriefBigText}>{selectedJob.pickupTime}</Typography>
+              <Typography sx={styledBriefBigText}>{formatTime(selectedJob.createdAt)}</Typography>
               <Typography sx={styledBriefSmallText}>Posted</Typography>
             </Box>
             <Box sx={{ height: '53px', width: '1px', backgroundColor: 'white' }} />

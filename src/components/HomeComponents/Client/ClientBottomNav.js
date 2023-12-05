@@ -109,7 +109,7 @@ const ClientBottomNav = () => {
           </Box>
         }
       />
-      <BottomNavigationAction
+      {/* <BottomNavigationAction
         value="Post"
         icon={
           <Box sx={value === 'Post' ? styledNavActiveAction : styledNavAction}>
@@ -123,7 +123,7 @@ const ClientBottomNav = () => {
             />
           </Box>
         }
-      />
+      /> */}
     </BottomNavigation>
   );
 };
