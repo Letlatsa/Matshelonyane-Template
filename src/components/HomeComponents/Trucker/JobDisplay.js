@@ -1,16 +1,42 @@
 import React from 'react';
 import { Box, Card, Stack, Typography, Button } from '@mui/material';
-import { GetPostRequestEndpoint } from '../../../services/EndPoints';
+import { ViewClientInfo, DownloadUmageEndPoint } from '../../../services/EndPoints';
 import { useEffect, useState } from 'react';
 import PlaceHolder from '../../../assets/Avatar.svg';
 import theme from '../../../theme/theme';
 import { useNavigate } from 'react-router-dom';
+const TokenSession = sessionStorage.getItem('Tokens');
+const accessToken = JSON.parse(TokenSession).accessToken;
 
 function JobDisplay({ requestData }) {
   const navigate = useNavigate();
 
-  // Initialize appliedJobs state
-  const [appliedJobs, setAppliedJobs] = useState(new Set());
+  const [customerData, setCustomerData] = useState(null);
+  const [imageData, setImageData] = useState(null);
+
+  useEffect(() => {
+    const fetchCustomerDetails = async () => {
+      if (requestData && requestData.length > 0) {
+        const customerId = requestData[2].customer; // Assuming the customer ID is stored in the first job request
+        console.log(customerId, 'hiii');
+        try {
+          const customerInfo = await ViewClientInfo(accessToken, customerId); // Fetch customer data from API
+          setCustomerData(customerInfo);
+          console.log(customerInfo, 'customer info'); // Update state with customer data
+
+          // Download the image
+          const imageResponse = await DownloadUmageEndPoint(customerInfo.propic);
+          const imageData = imageResponse.data;
+          setImageData(imageData);
+          console.log('' + imageData);
+        } catch (error) {
+          console.error('Error fetching customer data:', error);
+        }
+      }
+    };
+
+    fetchCustomerDetails();
+  }, [requestData]);
 
   // Styling object
   const styledProfileBox = {
@@ -79,7 +105,7 @@ function JobDisplay({ requestData }) {
                     }}
                   >
                     <img
-                      src={PlaceHolder}
+                      src={imageData ? `data:image/jpeg;base64,${imageData}` : ''}
                       alt=""
                       style={{ width: '44px', height: '44px', borderRadius: 20 }}
                     />
@@ -111,7 +137,9 @@ function JobDisplay({ requestData }) {
                         marginRight: '50px'
                       }}
                     >
-                      <Typography sx={{ fontSize: '15px', color: '#000' }}>Client:</Typography>
+                      <Typography sx={{ fontSize: '15px', color: '#000' }}>
+                        {customerData && customerData.firstName ? customerData.firstName : 'N/A'}
+                      </Typography>
                       <Typography sx={{ fontSize: '15px', color: '#000' }}>Pickup:</Typography>
                       <Typography sx={{ fontSize: '15px', color: '#000' }}>
                         Destination:{' '}
@@ -126,7 +154,11 @@ function JobDisplay({ requestData }) {
                         marginLeft: '-80px'
                       }}
                     >
-                      <Typography sx={{ fontSize: '15px', color: '#000' }}>Pickup</Typography>
+                      <Typography sx={{ fontSize: '15px', color: '#000' }}>
+                        {customerData && customerData.account.number
+                          ? customerData.account.number
+                          : 'N/A'}
+                      </Typography>
                       <Typography
                         sx={{ fontSize: '15px', color: '#000' }}
                       >{`${job.cargoDescription}`}</Typography>
