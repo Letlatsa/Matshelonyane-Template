@@ -13,8 +13,16 @@ function JobDisplay({ requestData }) {
 
   const [customerData, setCustomerData] = useState(null);
   const [imageData, setImageData] = useState(null);
+  const [customerImages, setCustomerImages] = useState({}); // Initialize as an empty object
 
-  useEffect(() => {
+  const updateCustomerImage = (customerId, imageData) => {
+    setCustomerImages((prevImages) => ({
+      ...prevImages,
+      [customerId]: imageData // Store image data using customer ID as the key
+    }));
+  };
+
+  /* useEffect(() => {
     const fetchCustomerDetails = async () => {
       if (requestData && requestData.length > 0) {
         const customerId = requestData[2].customer; // Assuming the customer ID is stored in the first job request
@@ -32,6 +40,47 @@ function JobDisplay({ requestData }) {
         } catch (error) {
           console.error('Error fetching customer data:', error);
         }
+      }
+    };
+
+    fetchCustomerDetails();
+  }, [requestData]); */
+
+  useEffect(() => {
+    const fetchCustomerDetails = async () => {
+      if (requestData && requestData.length > 0) {
+        // Extract unique customer IDs from the job requests
+        const uniqueCustomerIds = new Set();
+        requestData.forEach((job) => {
+          uniqueCustomerIds.add(job.customer);
+        });
+
+        // Fetch details for each unique customer ID
+        const customerDetailsPromises = Array.from(uniqueCustomerIds).map(async (customerId) => {
+          try {
+            const customerInfo = await ViewClientInfo(accessToken, customerId);
+            // Update state with customer data (you might want to structure this differently based on your needs)
+            setCustomerData((prevData) => ({
+              ...prevData,
+              [customerId]: customerInfo // Using customerId as a key for each customer's info
+            }));
+            console.log(customerInfo, 'i am hereeee');
+            // Download the image
+            const imageResponse = await DownloadUmageEndPoint(customerInfo.propic);
+            const imageData = imageResponse.data;
+            // Update image data for the specific customer separately
+            if (imageData) {
+              updateCustomerImage(customerId, imageData);
+            }
+            setImageData(imageData);
+            console.log('' + imageData);
+          } catch (error) {
+            console.error(`Error fetching customer data for ID ${customerId}:`, error);
+          }
+        });
+
+        // Wait for all customer details to be fetched before proceeding
+        await Promise.all(customerDetailsPromises);
       }
     };
 
@@ -139,7 +188,9 @@ function JobDisplay({ requestData }) {
                     onClick={async () => {
                       try {
                         // Navigate to the trucker's profile
-                        navigate(`/truckerproposalpage/${job._id}`, { state: { requestData } });
+                        navigate(`/truckerproposalpage/${job._id}`, {
+                          state: { requestData, customerData, imageData }
+                        });
                         console.log(job._id);
                       } catch (error) {
                         console.error('Error', error);
@@ -147,7 +198,11 @@ function JobDisplay({ requestData }) {
                     }}
                   >
                     <img
-                      src={imageData ? `data:image/jpeg;base64,${imageData}` : ''}
+                      src={
+                        customerImages[job.customer]
+                          ? `data:image/jpeg;base64,${customerImages[job.customer]}`
+                          : ''
+                      }
                       alt=""
                       style={{ width: '44px', height: '44px', borderRadius: 20 }}
                     />
@@ -180,7 +235,11 @@ function JobDisplay({ requestData }) {
                       }}
                     >
                       <Typography sx={{ fontSize: '15px', color: '#000' }}>
-                        {customerData && customerData.firstName ? customerData.firstName : 'N/A'}
+                        {customerData &&
+                        customerData[job.customer] &&
+                        customerData[job.customer].firstName
+                          ? customerData[job.customer].firstName
+                          : 'N/A'}{' '}
                       </Typography>
                       <Typography sx={{ fontSize: '15px', color: '#000' }}>Pickup:</Typography>
                       <Typography sx={{ fontSize: '15px', color: '#000' }}>
@@ -197,10 +256,11 @@ function JobDisplay({ requestData }) {
                       }}
                     >
                       <Typography sx={{ fontSize: '15px', color: '#000' }}>
-                        {customerData && customerData.account.number
+                        {/*  {customerData && customerData.account.number
                           ? customerData.account.number
-                          : 'N/A'}
+                          : 'N/A'} */}
                       </Typography>
+                      <Box></Box>
                       <Typography
                         sx={{ fontSize: '15px', color: '#000' }}
                       >{`${job.cargoDescription}`}</Typography>

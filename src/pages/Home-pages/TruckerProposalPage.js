@@ -27,6 +27,9 @@ const TruckerProposalPage = () => {
   const location = useLocation();
   const { state = {} } = location || {};
   const requestData = state ? state.requestData : null;
+  //const customerData = state ? state.customerData : null;
+  const customerData = location.state.customerData;
+  const imageData = location.state.imageData;
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -34,6 +37,8 @@ const TruckerProposalPage = () => {
   console.log(id);
 
   console.log(requestData, 'i am requesteddddd');
+  console.log(customerData, 'i am customer data');
+  console.log(imageData, 'i am customer data,the images');
 
   useEffect(() => {
     console.log('Request Data:', requestData);
@@ -252,25 +257,41 @@ const TruckerProposalPage = () => {
           }}
         >
           <Box sx={styledProfileBox}>
-            <img
-              src="https://picsum.photos/200/300"
-              alt=""
-              style={{ width: '95px', height: '95px', borderRadius: 100, backgroundColor: 'grey' }}
-            />
+            {imageData && selectedJob && selectedJob.customer && imageData[selectedJob.customer] ? (
+              <img
+                src={`data:image/jpeg;base64,${imageData[selectedJob.customer]}`}
+                alt=""
+                style={{
+                  width: '95px',
+                  height: '95px',
+                  borderRadius: 100,
+                  backgroundColor: 'grey'
+                }}
+              />
+            ) : (
+              <div>No Image</div>
+            )}
           </Box>
-          <Typography
-            sx={{
-              color: ' #58362A',
-              fontFamily: 'Lato',
-              fontSize: '24px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: 'normal',
-              letterSpacing: '-0.17px'
-            }}
-          >
-            Client Doe
-          </Typography>
+          {selectedJob && customerData && customerData[selectedJob.customer] ? (
+            <Typography
+              sx={{
+                color: ' #58362A',
+                fontFamily: 'Lato',
+                fontSize: '24px',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                lineHeight: 'normal',
+                letterSpacing: '-0.17px'
+              }}
+            >
+              {customerData[selectedJob.customer].firstName || 'N/A'}
+              {customerData[selectedJob.customer].lastName
+                ? ` ${customerData[selectedJob.customer].lastName}`
+                : ''}
+            </Typography>
+          ) : (
+            <Typography>N/A</Typography>
+          )}
         </Box>
         {selectedJob ? (
           <Card sx={styledCard}>
