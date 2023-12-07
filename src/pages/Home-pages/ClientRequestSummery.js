@@ -119,7 +119,7 @@ const ClientRequestSummery = () => {
                 paddingTop: '5px'
               }}
             >
-              Summery
+              Summary
             </Typography>
             <Box
               size="large"
