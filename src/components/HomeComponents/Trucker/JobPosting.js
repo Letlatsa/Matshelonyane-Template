@@ -1,40 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import BottomNavigationComponent from './BottomNavigationComponent';
 import TruckerHomeAppBarComponents from './TruckerHomeAppBarComponent';
 import SearchComponent from './SearchComponent';
 import JobDisplay from './JobDisplay';
-import { GetPostRequestEndpoint } from '../../../services/EndPoints';
-import { useState, useEffect } from 'react';
 
 function JobPosting() {
-  const [requestData, setRequestData] = useState([]);
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
+  // Dummy data for job postings
+  const dummyRequestData = [
+    {
+      id: '1',
+      title: 'Transport Electronics',
+      description: 'Pick up from Warehouse 1 and drop off at Retail Store 5.',
+      location: 'City A to City B',
+      price: '$500',
+      status: 'Pending'
+    },
+    {
+      id: '2',
+      title: 'Move Furniture',
+      description: 'Pick up from Warehouse 2 and deliver to Retail Store 7.',
+      location: 'City C to City D',
+      price: '$300',
+      status: 'In Transit'
+    },
+    // Add more dummy job postings here if needed
+  ];
+
+  const [requestData, setRequestData] = useState(dummyRequestData);
 
   useEffect(() => {
-    const fetchPostRequest = async () => {
-      try {
-        const data = await getRequest(accessToken);
-        setRequestData(data);
-        console.log('Request', data);
-      } catch (error) {
-        console.error('Error fetching request: ', error);
-      }
-    };
-
-    fetchPostRequest();
-  }, [accessToken]);
-
-  const getRequest = async (accessToken) => {
-    try {
-      const requestData = await GetPostRequestEndpoint(accessToken);
-      return requestData;
-    } catch (error) {
-      console.log(error, 'Error Fetching Data');
-      return []; // Or handle the error accordingly
-    }
-  };
+    // Simulate data fetching or processing
+    const timeout = setTimeout(() => {
+      setRequestData(dummyRequestData); // Use the dummy data
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <div

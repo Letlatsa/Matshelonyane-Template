@@ -13,7 +13,7 @@ function JobDisplay({ requestData }) {
   const navigate = useNavigate();
 
   const [customerData, setCustomerData] = useState(null);
-  const [imageData, setImageData] = useState(null);
+  const [imageData] = useState(null);
   const [customerImages, setCustomerImages] = useState({}); // Initialize as an empty object
 const TokenSession = sessionStorage.getItem('Tokens');
 const accessToken = JSON.parse(TokenSession).accessToken;
@@ -54,6 +54,7 @@ const accessToken = JSON.parse(TokenSession).accessToken;
     };
 
     fetchCustomerDetails();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestData]);
 
   const acceptPost = async (id) => {
@@ -88,11 +89,6 @@ const accessToken = JSON.parse(TokenSession).accessToken;
     height: '40px',
     width: '40px',
     boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
-  };
-  const styledStackTypography = {
-    color: 'F8F8F8',
-    fontSize: '16px',
-    fontWeight: 500
   };
   const styledNotAppliedButton = {
     fontSize: '14px',

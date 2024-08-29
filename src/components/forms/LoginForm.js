@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   FormControl,
@@ -15,148 +14,84 @@ import TextButton from '../Buttons/TextButton';
 import AccountIcon from '../../assets/account.svg';
 import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
-import {
-  LoginEndPoint,
-  RetrieveSurnameEndpoint,
-  UserTrucksEndpoint
-} from '../../services/EndPoints';
-
 import { useToken } from '../../Hooks/TokenContext';
-
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [accountType, setAccountType] = useState('');
   const [formData, setFormData] = useState({ phone: '', password: '', accountType: '' });
-  const [loginStatus, SetLoginStatus] = useState(null);
+  const [loginStatus, setLoginStatus] = useState(null);
 
   const { setTokenData } = useToken();
   const navigate = useNavigate();
 
   const [formErrors, setFormErrors] = useState({
     phoneError: '',
-    passwordError: ''
+    passwordError: '',
+    accountTypeError: ''
   });
 
-  const handleButtonClick = async () => {
-    console.log('Button Clicked');
-    const { phone, password } = formData;
+  const handleButtonClick = () => {
+    const { phone, password, accountType } = formData;
     const errors = {};
-
+  
+    // Phone validation
     if (!phone) {
       errors.phoneError = 'Phone number is required';
     } else if (!/^[2]\d{10}$/.test(phone)) {
-      errors.phoneError = 'Phone number must start with 2 and be 11 digits long'; // Updated regex
+      errors.phoneError = 'Phone number must start with 2 and be 11 digits long';
     } else if (!/^\d+$/.test(phone)) {
       errors.phoneError = 'Phone number can only contain digits';
     }
+  
+    // Password validation
     if (!password) {
       errors.passwordError = 'Password is required';
     }
-
+  
+    // Account type validation
     if (!accountType) {
       errors.accountTypeError = 'Account type is required';
     } else if (!['driver', 'customer'].includes(accountType.toLowerCase())) {
       errors.accountTypeError = 'Invalid account type';
     }
-
+  
+    // Set form errors state
     setFormErrors(errors);
-
+  
+    // If there are no validation errors
     if (Object.keys(errors).length === 0) {
-      const dataToSend = {
-        number: phone,
-        password: password,
-        accountType: accountType
-      };
-
-      ApiRequest(dataToSend);
-    }
-  };
-
-  const ApiRequest = (formData) => {
-    LoginEndPoint(formData)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          const { accessToken, refreshToken } = response.data;
-          setTokenData(accessToken, refreshToken);
-
-          TokenSession(accessToken, refreshToken);
-
-          userRedirect(accountType, accessToken);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response && error.response.status === 403) {
-          SetLoginStatus('invalid');
-        } else {
-          SetLoginStatus('nonexistent');
-        }
-      });
-  };
-
-  const userRedirect = (accountType, accessToken) => {
-    RetrieveSurnameEndpoint(accessToken)
-      .then(async (response) => {
-        if (response.status === 200) {
-          const { lastName } = response.data;
-          if (!lastName || lastName === undefined || lastName === null) {
-            onboardingRedirecter(accountType);
-          } else {
-            if (accountType === 'driver') {
-              const license = response.data.driversLicense;
-              const truckdata = await getTruckProfile(accessToken);
-              console.log('this is truckdata', truckdata);
-              if (license === undefined || license === null) {
-                navigate('/onboardinglicense');
-              } else if (Array.isArray(truckdata) && truckdata.length <= 0) {
-                navigate('/truckOnboardingProfile');
-              } else {
-                homeRedirecter(accountType);
-              }
-            } else if (accountType === 'customer') {
-              homeRedirecter(accountType);
-            }
-          }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const getTruckProfile = async (accessToken) => {
-    try {
-      const response = await UserTrucksEndpoint(accessToken);
-      if (response.status === 200) {
-        return response.data;
+      // Mock successful login
+      const accessToken = 'mock_access_token';
+      const refreshToken = 'mock_refresh_token';
+      const lastName = 'Doe'; // Mock data
+      const driversLicense = '123456'; // Mock data
+  
+      // Update token data
+      setTokenData(accessToken, refreshToken);
+  
+      // Handle token session
+      TokenSession(accessToken, refreshToken, lastName, driversLicense, accountType);
+  
+      // Redirect based on account type
+      if (accountType.toLowerCase() === 'driver') {
+        navigate('/truckeronboardingprofile'); 
+        // navigate('/truckerhome'); // Redirect drivers to /truckerhome
+      } else {
+        navigate('/clientonboardingprofile');
+        //navigate('/clienthome'); // Redirect others (e.g., customers) to /clienthome
       }
-    } catch (error) {
-      console.log(error);
-      // Ensure to return a value in case of an error
-      return [];
-    }
-  };
-
-  const onboardingRedirecter = (accountType) => {
-    if (accountType === 'driver') {
-      navigate('/truckerOnboardingProfile');
     } else {
-      navigate('/clientonboardingprofile');
+      // Set login status to failed if there are validation errors
+      setLoginStatus('failed');
     }
   };
-
-  const homeRedirecter = (accountType) => {
-    if (accountType === 'driver') {
-      navigate('/truckerhome');
-    } else {
-      navigate('/clienthome');
-    }
-  };
+  
 
   const handleChange = (event) => {
-    setAccountType(event.target.value);
+    const value = event.target.value;
+    setAccountType(value);
+    setFormData({ ...formData, accountType: value });
   };
 
   const handleButtonClicked = () => {
@@ -167,13 +102,20 @@ const LoginForm = () => {
     navigate('/forgotpassword');
   };
 
-  const TokenSession = (accessToken, refreshToken) => {
+  const TokenSession = (accessToken, refreshToken, lastName, driversLicense, accountType) => {
     const Tokens = {
       accessToken: accessToken,
       refreshToken: refreshToken
     };
 
+    const userInfo = {
+      lastName: lastName,
+      driversLicense: driversLicense,
+      accountType: accountType
+    };
+
     sessionStorage.setItem('Tokens', JSON.stringify(Tokens));
+    sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
   };
 
   const styledInputLabel = {
@@ -186,7 +128,7 @@ const LoginForm = () => {
   const styledSelect = {
     width: '100%',
     color: 'white',
-    borderBottom: ' 2px solid white'
+    borderBottom: '2px solid white'
   };
 
   const styledBox = {
@@ -224,18 +166,8 @@ const LoginForm = () => {
         sx={{ right: '10px !important', marginBottom: '50px', marginTop: '25px', color: 'white' }}
       >
         <Typography variant="h1">Welcome to Matshelonyane!</Typography>
-
-
       </Box>
       <Box>
-        {loginStatus === 'invalid' && (
-          <Typography
-            variant="subtitle1"
-            sx={{ color: 'red', textAlign: 'center', marginBottom: '10px' }}
-          >
-            Invalid Credentials
-          </Typography>
-        )}
         {loginStatus === 'failed' && (
           <Typography
             variant="subtitle1"
@@ -243,8 +175,7 @@ const LoginForm = () => {
           >
             Login failed. Please try again.
           </Typography>
-        )}{' '}
-
+        )}
       </Box>
       <Stack sx={inputContainerBox} spacing={1}>
         <FormControl variant="standard">
@@ -252,7 +183,7 @@ const LoginForm = () => {
             <Box sx={accountLabelContainer}>
               <img
                 src={AccountIcon}
-                alt="Phone"
+                alt="Account Type"
                 width="30"
                 height="20"
                 sx={{ marginRight: '30px' }}
@@ -260,7 +191,6 @@ const LoginForm = () => {
               <Box>Account type</Box>
             </Box>
           </InputLabel>
-
           <Select
             variant="standard"
             labelId="Account-type"
@@ -309,7 +239,7 @@ const LoginForm = () => {
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <img
                   src={PasswordIcon}
-                  alt="Phone"
+                  alt="Password"
                   width="30"
                   height="20"
                   sx={{ marginRight: '30px' }}
@@ -333,7 +263,7 @@ const LoginForm = () => {
       <Box>
         <Box sx={styledBox}>
           <Button variant="text" sx={forgotPasswordButton} onClick={handleButtonClicked}>
-            Forgot Password ?
+            Forgot Password?
           </Button>
         </Box>
         <Button

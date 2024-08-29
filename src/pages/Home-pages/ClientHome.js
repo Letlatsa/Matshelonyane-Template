@@ -10,24 +10,14 @@ import ClientMenuOverlay from '../../components/HomeComponents/Client/ClientMenu
 import HeaderSkeleton from '../../components/skeletons/HeaderSkeleton';
 import HomepageSkeleton from '../../components/skeletons/HomepageSkeleton';
 import ClientBottomNav from '../../components/HomeComponents/Client/ClientBottomNav';
-
-import {
-  RetrieveSurnameEndpoint,
-  TrucksInDeliveryArea,
-  LocationRetrieveEndpoint,
-  PostProfileVisits,
-  DownloadUmageEndPoint
-} from '../../services/EndPoints';
-
 import { Container, FormControl, InputLabel, Select, MenuItem, Card, Stack } from '@mui/material';
 import EllipsisV from '../../assets/ellipsisVIcon.svg';
 import PhoneIcon from '../../assets/phone.svg';
-import { useNavigate } from 'react-router-dom';
 import theme from '../../theme/theme';
+import { useNavigate } from 'react-router-dom';
 
 const ClientHome = () => {
   // Styles
-
   const styledAppBar = {
     backgroundColor: 'white',
     boxShadow: 'none'
@@ -40,31 +30,25 @@ const ClientHome = () => {
     alignItems: 'center',
     backgroundColor: theme.palette.primary.variant,
     padding: 0,
-    borderradius: '50px',
     marginLeft: 1,
     height: '50px',
     width: '50px',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   };
+
   const navigate = useNavigate();
   const [isOverlay, setIsOverlay] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [isLoadingTruckers, setIsLoadingTruckers] = useState(true);
-
-  const storedLastName = 'Doe';
-  const [lastName, setLastName] = useState(storedLastName || '');
+  const [lastName, setLastName] = useState('Doe');
   const [truckersData, setTruckersData] = useState([]);
   const [deliveryAreaId, setDeliveryAreaId] = useState('65434e0376d09d13951a4314');
-  const [location, setLocation] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState([]);
+  const [location, setLocation] = useState([{ _id: '65434e0376d09d13951a4314', name: 'Downtown' }]);
+  const [selectedLocation, setSelectedLocation] = useState('65434e0376d09d13951a4314');
   const [profilePic, setProfilePic] = useState('');
 
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
-
-  //skeleton timeout
+  // Simulate data loading
   useEffect(() => {
-    // Simulate data loading
     const timeout = setTimeout(() => {
       setIsLoadingData(false);
       setIsLoadingTruckers(false);
@@ -72,153 +56,35 @@ const ClientHome = () => {
     return () => clearTimeout(timeout);
   }, []);
 
+  // Simulate profile pic and truckers data
   useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        getLocations(accessToken);
-      } catch (error) {
-        console.error('Error fetching locations: ', error);
+    setProfilePic('path_to_placeholder_image'); // Replace with actual image path
+    setTruckersData([
+      {
+        _id: 'trucker1',
+        propic: 'path_to_placeholder_image',
+        profile: {
+          firstName: 'John',
+          lastName: 'Doe',
+          account: 'driver1'
+        }
+      },
+      {
+        _id: 'trucker2',
+        propic: 'path_to_placeholder_image',
+        profile: {
+          firstName: 'Jane',
+          lastName: 'Smith',
+          account: 'driver2'
+        }
       }
-    };
-
-    fetchLocationData();
-  }, [accessToken]);
-
-  const getLocations = (accessToken) => {
-    LocationRetrieveEndpoint(accessToken)
-      .then((locationData) => {
-        setLocation(locationData.data);
-      })
-      .catch((error) => {
-        console.log(error, 'Error Fetching Data');
-      });
-  };
+    ]);
+  }, []);
 
   const handleLocationChange = (event) => {
     const selectedLocation = event.target.value;
     setSelectedLocation(selectedLocation);
     setDeliveryAreaId(selectedLocation);
-    console.log('Selected Locatiion:', selectedLocation);
-  };
-
-  useEffect(() => {
-    RetrieveSurnameEndpoint(accessToken).then((userData) => {
-      const {
-        _id,
-        firstName,
-        lastName,
-        number,
-        propic,
-        profileType,
-        deliveryArea,
-        driversLicense,
-        account
-      } = userData.data;
-
-      console.log(_id);
-      console.log(number, 'i am account');
-
-      let accountID; // store the account._id
-
-      if (account && account._id) {
-        accountID = account._id;
-      } else {
-        console.error('account or account._id is undefined');
-      }
-
-      const user = {
-        _id: _id,
-        firstName: firstName,
-        lastName: lastName,
-        number: number,
-        propic: propic,
-        profileType: profileType,
-        deliveryArea: deliveryArea,
-        driversLicense: driversLicense,
-        account: {
-          _id: accountID,
-          number: account.number
-        }
-      };
-
-      setLastName(lastName);
-      getProfilePic(propic);
-
-      sessionStorage.setItem('user', JSON.stringify(user));
-      console.log('this is the lastname', lastName);
-      console.log(userData);
-    });
-  }, [accessToken]);
-
-  useEffect(() => {
-    console.log('Current Delivery Area ID:', deliveryAreaId);
-    const fetchTruckerData = async () => {
-      try {
-        // Fetch location data to get the deliveryAreaId
-        const locationResponse = await LocationRetrieveEndpoint(accessToken);
-        const selectedLocation = locationResponse.data.find(
-          (location) => location._id === deliveryAreaId
-        );
-
-        if (selectedLocation) {
-          // Update the state with the selected location
-          setSelectedLocation(selectedLocation._id);
-          setDeliveryAreaId(selectedLocation._id);
-
-          // Get truckers data for the selected location
-          getTrucksersInArea(accessToken, selectedLocation._id);
-        } else {
-          console.error('Selected location not found.');
-        }
-      } catch (error) {
-        console.error('Error fetching truckers data: ', error);
-      }
-    };
-
-    fetchTruckerData();
-  }, [accessToken, deliveryAreaId]);
-
-  const getTrucksersInArea = (accessToken, deliveryAreaId) => {
-    TrucksInDeliveryArea(accessToken, deliveryAreaId)
-      .then((truckersData) => {
-        const updatedTruckersData = truckersData.map(async (trucker) => {
-          try {
-            const response = await DownloadUmageEndPoint(trucker.profile.propic);
-            if (response.status === 200) {
-              const bybeImage = response.data;
-              const imageUrl = `data:image/png;base64,${bybeImage}`;
-              //console.log('Image URL: ', imageUrl);
-              return { ...trucker, propic: imageUrl };
-            }
-          } catch (error) {
-            console.error('Error fetching profile picture:', error);
-          }
-          return trucker;
-        });
-        Promise.all(updatedTruckersData).then((data) => {
-          setTruckersData(data);
-        });
-      })
-      .catch((error) => {
-        console.error('Error fetching truckers', error);
-      });
-  };
-
-  const getProfilePic = async (key) => {
-    DownloadUmageEndPoint(key)
-      .then((response) => {
-        if (response.status === 200) {
-          const bybeImage = response.data;
-
-          const imageUrl = `data:image/png;base64,${bybeImage}`;
-          setProfilePic(imageUrl);
-          console.log('Profile picture', imageUrl);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      });
   };
 
   const handleButtonClicked = () => {
@@ -226,13 +92,9 @@ const ClientHome = () => {
   };
 
   const handleButtonOverlayClicked = () => {
-    if (isOverlay === false) {
-      setIsOverlay(true);
-    } else {
-      setIsOverlay(false);
-    }
+    setIsOverlay(!isOverlay);
   };
-  //profile visits
+
   return (
     <div className="homeContainer">
       <Box sx={{ flexGrow: 1 }}>
@@ -255,13 +117,9 @@ const ClientHome = () => {
                 sx={{ marginRight: '30px' }}
               />
             </IconButton>
-
-            {/* Check if data is loading */}
             {isLoadingData ? (
-              // Render skeleton while data is loading
               <HeaderSkeleton />
             ) : (
-              // Render actual content when data is loaded
               <>
                 <Typography
                   variant="h6"
@@ -283,7 +141,7 @@ const ClientHome = () => {
                   <Box sx={styledProfileBox}>
                     <img
                       src={profilePic}
-                      alt=""
+                      alt="Profile"
                       style={{ width: '44px', height: '44px', borderRadius: 50 }}
                     />
                   </Box>
@@ -309,35 +167,7 @@ const ClientHome = () => {
               height: '50px'
             }}
           >
-            {/* <Container
-              sx={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'space-between',
-                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                borderRadius: '5px',
-                padding: 0,
-                alignItems: 'center'
-              }}
-            >
-              <TextField
-                label="Search..."
-                color=""
-                autoWidth
-                sx={{ width: '100%', paddingLeft: '5px' }}
-                size="small"
-              />
-              <IconButton sx={{ width: '40px' }}>
-                <img
-                  src={SearchIcon}
-                  alt="Search"
-                  width="30"
-                  height="20"
-                  sx={{ marginRight: '30px' }}
-                />
-              </IconButton>
-            </Container> */}
+            {/* Placeholder for search functionality */}
           </FormControl>
         </Container>
         <Container>
@@ -357,7 +187,6 @@ const ClientHome = () => {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              alignContent: 'center',
               marginBottom: '30px'
             }}
           >
@@ -395,13 +224,11 @@ const ClientHome = () => {
           <Box sx={{ maxHeight: 'calc(100vh - 170px)', overflowY: 'auto', paddingBottom: '100px' }}>
             <Stack spacing={2}>
               {isLoadingTruckers ? (
-                // Display the skeleton when data is loading
                 <HomepageSkeleton />
               ) : (
-                // Map
-                truckersData?.map((truckersData) => (
+                truckersData.map((trucker) => (
                   <Card
-                    key={truckersData._id}
+                    key={trucker._id}
                     sx={{
                       width: '100%',
                       backgroundColor: '#C69585',
@@ -415,36 +242,10 @@ const ClientHome = () => {
                       <Box sx={{ width: '78px', display: 'flex', paddingRight: '15px' }}>
                         <Box sx={styledProfileBox}>
                           <img
-                            src={truckersData.propic}
-                            alt=""
+                            src={trucker.propic}
+                            alt="Trucker"
                             style={{ width: '44px', height: '44px', borderRadius: 50 }}
-                            onClick={async () => {
-                              const {
-                                profile: { account: driverId }
-                              } = truckersData;
-
-                              const userData = sessionStorage.getItem('user');
-
-                              const { account } = JSON.parse(userData);
-
-                              const data = {
-                                locationID: selectedLocation,
-                                driverID: driverId,
-                                clientID: account
-                              };
-                              console.log('data', data);
-
-                              try {
-                                // Call PostProfileVisits
-                                const response = await PostProfileVisits(accessToken, data);
-                                console.log('Profile visit response:', response);
-
-                                // Navigate to the trucker's profile
-                                navigate(`/clienttruckerprofile/${truckersData.profile.account}`);
-                              } catch (error) {
-                                console.error('Error handling profile visit:', error);
-                              }
-                            }}
+                            onClick={() => navigate(`/clienttruckerprofile/${trucker.profile.account}`)}
                           />
                         </Box>
                       </Box>
@@ -459,7 +260,7 @@ const ClientHome = () => {
                         >
                           <Box>
                             <Typography variant="h4" sx={{ fontSize: '15px', paddingTop: '15px' }}>
-                              {`${truckersData.profile.firstName} ${truckersData.profile.lastName}`}
+                              {`${trucker.profile.firstName} ${trucker.profile.lastName}`}
                             </Typography>
                           </Box>
                           <Box
@@ -504,29 +305,7 @@ const ClientHome = () => {
                               },
                               textTransform: 'none'
                             }}
-                            onClick={async () => {
-                              const {
-                                profile: { account: driverId }
-                              } = truckersData;
-
-                              const userData = sessionStorage.getItem('user');
-
-                              const { account } = JSON.parse(userData);
-
-                              const data = {
-                                locationID: selectedLocation,
-                                driverID: driverId,
-                                clientID: account
-                              };
-                              console.log('data', data);
-
-                              try {
-                                // Navigate to the trucker's profile
-                                navigate(`/jobposting/${truckersData.profile.account}`);
-                              } catch (error) {
-                                console.error('Error :', error);
-                              }
-                            }}
+                            onClick={() => navigate(`/jobposting/${trucker.profile.account}`)}
                           >
                             Request Pickup
                           </Button>

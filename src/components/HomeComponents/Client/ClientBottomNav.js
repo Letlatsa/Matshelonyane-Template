@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
 
 import homeIcon from '../../../assets/homeVector.svg';
-import messageIcon from '../../../assets/evaMessage.svg';
+//import messageIcon from '../../../assets/evaMessage.svg';
 import clipBoardIcon from '../../../assets/Group1.svg';
-import requestIcon from '../../../assets/requestIcon.svg';
+//import requestIcon from '../../../assets/requestIcon.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ClientBottomNav = () => {
@@ -15,9 +15,9 @@ const ClientBottomNav = () => {
   const handleNavigation = (event, newValue) => {
     setValue(newValue);
   };
-  const handlePosting = () => {
-    navigate('/jobposting');
-  };
+  //const handlePosting = () => {
+  //  navigate('/jobposting');
+  //};
   const ClientHomePage = () => {
     navigate('/clienthome');
   };

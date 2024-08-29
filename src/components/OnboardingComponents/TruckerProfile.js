@@ -13,15 +13,14 @@ import {
 import AccountIcon from '../../assets/account.svg';
 import LocationIcon from '../../assets/location.svg';
 import ProgressBar from './ProgressBar';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { TruckerProfileEndpoint, LocationRetrieveEndpoint } from '../../services/EndPoints';
 import { useToken } from '../../Hooks/TokenContext';
 
 function TruckerProfile() {
   const { tokens } = useToken();
-
-  console.log(tokens);
+  const navigate = useNavigate();
 
   const initialFormState = {
     firstName: '',
@@ -36,47 +35,22 @@ function TruckerProfile() {
     phoneError: '',
     locationError: ''
   };
+
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState(initialErrorState);
   const [avatarImage, setAvatarImage] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
-
   const [file, setFile] = useState(null);
-  const navigate = useNavigate();
-
   const [location, setLocation] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState([]);
+
   const TokenSession = sessionStorage.getItem('Tokens');
   const accessToken = JSON.parse(TokenSession).accessToken;
-
-  //const locationOptions = ['Gaborone', 'Francistown', 'Molepolole'];
-
-  useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        getLocations(accessToken);
-      } catch (error) {
-        console.error('Error fetching locations: ', error);
-      }
-    };
-
-    fetchLocationData();
-  }, [accessToken]);
-
-  const getLocations = (accessToken) => {
-    LocationRetrieveEndpoint(accessToken)
-      .then((locationData) => {
-        setLocation(locationData.data);
-      })
-      .catch((error) => {
-        console.log(error, 'Error Fetching Data');
-      });
-  };
 
   const handleLocationChange = (event) => {
     const selectedLocation = event.target.value;
     setSelectedLocation(selectedLocation);
-    console.log('Selected Locatiion:', selectedLocation);
+    console.log('Selected Location:', selectedLocation);
   };
 
   const handleInputChange = (e) => {
@@ -86,7 +60,6 @@ function TruckerProfile() {
 
   const validateForm = () => {
     const { firstName, lastName } = formData;
-    // const accessToken = tokens.accessToken;
     const errors = {};
 
     if (!firstName) {
@@ -96,28 +69,40 @@ function TruckerProfile() {
       errors.lastNameError = 'Lastname is required';
     }
 
-    if (!selectedLocation) {
-      console.log(selectedLocation);
+    // Check for selected location if needed
+    /*if (!selectedLocation) {
       errors.locationError = 'Location is required';
-    }
+    }*/
+
     setFormErrors(errors);
     console.log(formErrors);
 
-    if (Object.keys(errors).length === 0) {
+   /* if (Object.keys(errors).length === 0) {
       const formData = new FormData();
 
       if (avatarImage) {
         formData.append('firstName', firstName);
         formData.append('lastName', lastName);
-        formData.append('deliveryArea', selectedLocation);
+        // formData.append('deliveryArea', selectedLocation);
         formData.append('file', file);
 
-        ApiRequest(formData, accessToken);
+        // Call API or perform necessary actions here
+        // ApiRequest(formData, accessToken);
+
+        // Navigate to the next page upon successful form submission
+       
       }
+      
+     
+    }*/
+    if(firstName && lastName){
+      //handleButtonClick();
+      setCurrentStep(2);
+      navigate('/onboardinglicense');
     }
   };
 
-  const ApiRequest = (formData, accessToken) => {
+  /*const ApiRequest = (formData, accessToken) => {
     TruckerProfileEndpoint(formData, accessToken)
       .then((response) => {
         console.log(response);
@@ -130,14 +115,13 @@ function TruckerProfile() {
       .catch((error) => {
         console.log(error);
       });
-  };
+  };*/
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
     if (file) {
       const reader = new FileReader();
-
       setFile(file);
 
       reader.onload = (e) => {
@@ -148,14 +132,16 @@ function TruckerProfile() {
       console.log(file);
     }
   };
-  // eslint-disable-next-line no-unused-vars
+
   const handleButtonClick = () => {
     if (currentStep === 1) {
-      setCurrentStep(2);
+      validateForm();
+      
     } else if (currentStep === 2) {
+     
       setCurrentStep(3);
     } else if (currentStep === 3) {
-      navigate('/onboardinglicense');
+      navigate('/truckonboardingprofile');
     }
   };
 
@@ -171,6 +157,7 @@ function TruckerProfile() {
     marginTop: '20px',
     marginBottom: '30px'
   };
+
   const styledInputLabel = {
     color: 'white',
     '&:hover': {
@@ -205,7 +192,7 @@ function TruckerProfile() {
             marginTop: '50px'
           }}
         >
-          Let’s us get to know you
+          Let’s get to know you
         </Typography>
         <input
           type="file"
@@ -317,9 +304,9 @@ function TruckerProfile() {
             <Button
               variant="contained"
               color="primary"
-              type="submit"
+              type="button"
               sx={styledSubmitButton}
-              onClick={validateForm}
+              onClick={handleButtonClick}
             >
               Proceed
             </Button>

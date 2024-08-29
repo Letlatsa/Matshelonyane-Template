@@ -3,7 +3,7 @@ import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import homeIcon from '../../../assets/homeVector.svg';
-import messageIcon from '../../../assets/evaMessage.svg';
+//import messageIcon from '../../../assets/evaMessage.svg';
 import clipBoardIcon from '../../../assets/Group1.svg';
 
 const BottomNavigationComponent = () => {

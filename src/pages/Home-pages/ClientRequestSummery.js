@@ -10,20 +10,37 @@ import {
   Toolbar,
   Typography
 } from '@mui/material';
-
-import BackArrow from '../../assets/backVector.svg';
 import { useNavigate } from 'react-router-dom';
-
-import { GetPostRequestCustomerEndpoint } from '../../services/EndPoints';
+import BackArrow from '../../assets/backVector.svg';
 
 const ClientRequestSummery = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
-  const [requests, setRequests] = useState([]);
+  // Dummy data for requests
+  const dummyRequests = [
+    {
+      _id: '1',
+      cargoDescription: 'Electronics',
+      pickupLocation: 'Warehouse 1',
+      dropOffLocation: 'Retail Store 5',
+      truckType: { name: 'Flatbed' },
+      pricePerLoad: '$500',
+      status: 'Pending'
+    },
+    {
+      _id: '2',
+      cargoDescription: 'Furniture',
+      pickupLocation: 'Warehouse 2',
+      dropOffLocation: 'Retail Store 7',
+      truckType: { name: 'Box Truck' },
+      pricePerLoad: '$300',
+      status: 'In Transit'
+    },
+    // Add more dummy requests here if needed
+  ];
 
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
+  const [requests, setRequests] = useState(dummyRequests);
 
   useEffect(() => {
     // Simulate data loading
@@ -32,21 +49,6 @@ const ClientRequestSummery = () => {
     }, 1000);
     return () => clearTimeout(timeout);
   }, []);
-
-  useEffect(() => {
-    getRequests(accessToken);
-  }, [accessToken]);
-
-  const getRequests = async (accessToken) => {
-    GetPostRequestCustomerEndpoint(accessToken)
-      .then((response) => {
-        console.log('The requests', response);
-        setRequests(response);
-      })
-      .catch((error) => {
-        console.log('Error getting client requests', error);
-      });
-  };
 
   const styledAppBar = {
     backgroundColor: '#ffffff',
@@ -161,7 +163,7 @@ const ClientRequestSummery = () => {
             height: '1px'
           }}
         ></Box>
-        {/*TODO: Add map function to display all requests*/}
+        {/* Display dummy requests */}
         {requests.map((request) => (
           <Card key={request._id} sx={styledCard}>
             <Stack spacing={1} sx={styledStack}>

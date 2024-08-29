@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   AppBar,
   Box,
@@ -9,41 +10,35 @@ import {
   Toolbar,
   Typography
 } from '@mui/material';
-
 import BackArrow from '../../assets/backVector.svg';
-import EditIcon from '../../assets/EditVector.svg';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
 import TruckerProfileSkeleton from '../../components/skeletons/TruckerProfileViewSkeleton';
 
-import {
-  UserTrucksEndpoint,
-  DownloadUmageEndPoint,
-  GetServiceLocation
-} from '../../services/EndPoints';
+// Placeholder data for static display
+const placeholderTrucks = [
+  { _id: '1', model: 'Truck Model 1', details: 'Details about Truck 1' },
+  { _id: '2', model: 'Truck Model 2', details: 'Details about Truck 2' }
+];
+
+const placeholderProfilePic = 'https://via.placeholder.com/95';
+const placeholderUserData = {
+  firstName: 'John',
+  lastName: 'Doe',
+  propic: placeholderProfilePic,
+  deliveryArea: 'New York',
+  account: {
+    _id: '123',
+    number: '555-1234'
+  }
+};
 
 const TruckerProfileView = () => {
-  const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = useState(true);
+  const [trucks, setTrucks] = useState(placeholderTrucks);
+  const [profilePic, setProfilePic] = useState(placeholderProfilePic);
+  const [location, setLocation] = useState(placeholderUserData.deliveryArea);
 
-  const [trucks, setTrucks] = useState([]);
-  const [profilePic, setProfilePic] = useState('');
-
-  const userData = sessionStorage.getItem('user');
-
-  const [location, setLocation] = useState('');
-
-  const { firstName, lastName, propic, deliveryArea, account } = JSON.parse(userData);
-
-  const accountData = {
-    _id: account._id,
-    number: account.number
-  };
-
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
+  const { firstName, lastName, propic, account } = placeholderUserData;
 
   useEffect(() => {
     // Simulate data loading
@@ -53,50 +48,14 @@ const TruckerProfileView = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  useEffect(() => {
-    getProfilePic(propic);
-
-    UserTrucksEndpoint(accessToken)
-      .then((response) => {
-        if (response.status === 200) {
-          setTrucks(response.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    getLocation(deliveryArea);
-  }, [accessToken, deliveryArea]);
-
-  const getLocation = (locationId) => {
-    GetServiceLocation(locationId)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(response.data);
-          const { name } = response.data;
-          setLocation(name);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleButtonClicked = () => {
+    console.log('Back button clicked');
+    // Handle navigation if necessary
   };
 
-  const getProfilePic = async (key) => {
-    DownloadUmageEndPoint(key)
-      .then((response) => {
-        if (response.status === 200) {
-          const bybeImage = response.data;
-
-          const imageUrl = `data:image/png;base64,${bybeImage}`;
-          setProfilePic(imageUrl);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      });
+  const handleEditButtonClicked = () => {
+    console.log('Edit button clicked');
+    // Handle navigation if necessary
   };
 
   const styledProfileBox = {
@@ -148,13 +107,6 @@ const TruckerProfileView = () => {
     color: 'F8F8F8',
     fontSize: '16px',
     fontWeight: 500
-  };
-  const handleButtonClicked = () => {
-    navigate('/truckerhome');
-  };
-
-  const handleEditButtonClicked = () => {
-    navigate('/truckereditprofile');
   };
 
   return (
@@ -295,7 +247,7 @@ const TruckerProfileView = () => {
                   }}
                 >
                   <Typography sx={styledStackTypography}>Phone number:</Typography>
-                  <Typography sx={styledStackTypography}> {accountData.number}</Typography>
+                  <Typography sx={styledStackTypography}> {account.number}</Typography>
                 </Box>
                 <Box
                   sx={{
