@@ -1,4 +1,5 @@
-import { React, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   FormControl,
@@ -14,68 +15,37 @@ import {
   InputLabel
 } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
-
-import { useNavigate } from 'react-router-dom';
-import {
-  updateProfilePictureEndpoint,
-  RetrieveSurnameEndpoint,
-  EditProfileEndPoint,
-  LocationRetrieveEndpoint,
-  DownloadUmageEndPoint
-} from '../../services/EndPoints';
-
 import BackArrow from '../../assets/backVectorWhite.svg';
 import LocationIcon from '../../assets/location.svg';
 
 function TruckerHomeProfile() {
-  const [location, setLocation] = useState([]);
+  const navigate = useNavigate();
+
+  const [location, setLocation] = useState([
+    { _id: '1', name: 'New York' },
+    { _id: '2', name: 'Los Angeles' },
+    { _id: '3', name: 'Chicago' }
+  ]);
   const [selectedLocation, setSelectedLocation] = useState([]);
-
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
-
-  const userData = sessionStorage.getItem('user');
-
-  const [profilePic, setProfilePic] = useState('');
-
-  const { _id, firstName, lastName, propic, deliveryArea } = JSON.parse(userData);
-
-  const initialFormState = {
-    firstName: firstName,
-    lastName: lastName
-  };
-
-  const initialErrorState = {
+  const [avatarImage, setAvatarImage] = useState(null);
+  const [file, setFile] = useState(null);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: ''
+  });
+  const [formErrors, setFormErrors] = useState({
     firstNameError: '',
     lastNameError: '',
     locationError: ''
-  };
-
-  const [formData, setFormData] = useState(initialFormState);
-  const [formErrors, setFormErrors] = useState(initialErrorState);
-  const [avatarImage, setAvatarImage] = useState(null);
-  const [file, setFile] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        getLocations(accessToken);
-      } catch (error) {
-        console.error('Error fetching locations: ', error);
-      }
-    };
-
-    getProfilePic(propic);
-
-    fetchLocationData();
-  }, [accessToken, propic]);
+  });
+  const [profilePic, setProfilePic] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const validateForm = async () => {
+
+  const validateForm = () => {
     const { firstName, lastName } = formData;
     const errors = {};
 
@@ -87,122 +57,21 @@ function TruckerHomeProfile() {
     }
 
     if (!selectedLocation) {
-      console.log(selectedLocation);
       errors.locationError = 'Location is required';
     }
 
     setFormErrors(errors);
-    console.log(formErrors);
 
     if (Object.keys(errors).length === 0) {
-      const formData = new FormData();
-      formData.append('profileId', JSON.parse(userData)._id);
-      formData.append('file', file);
-
-      const profileFrom = {
-        profileId: _id,
-        updatedInfo: {
-          firstName: firstName,
-          lastName: lastName,
-          deliveryArea: selectedLocation ? selectedLocation : deliveryArea
-        }
-      };
-
-      const profileWait = await ProfileApiRequest(profileFrom, accessToken);
-
-      if (avatarImage) {
-        const propicWait = await PropicApiRequest(formData, accessToken);
-        if (propicWait === 200 || profileWait === 200) {
-          refreshSession(accessToken);
-        } else {
-          console.log('Error updating profile');
-          refreshSession(accessToken);
-        }
-      } else {
-        console.log('Error updating profile');
-        refreshSession(accessToken);
-      }
+      console.log('Form is valid, perform the desired actions.');
+      navigate('/truckerhome');
     }
-  };
-
-  const PropicApiRequest = async (formData, accessToken) => {
-    await updateProfilePictureEndpoint(formData, accessToken)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          return 200;
-        } else return 400;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const ProfileApiRequest = async (formData, accessToken) => {
-    await EditProfileEndPoint(formData, accessToken)
-      .then((response) => {
-        if (response.status === 200) {
-          return 200;
-        } else return 400;
-      })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      });
-  };
-
-  const getLocations = (accessToken) => {
-    LocationRetrieveEndpoint(accessToken)
-      .then((locationData) => {
-        setLocation(locationData.data);
-      })
-      .catch((error) => {
-        console.log(error, 'Error Fetching Data');
-      });
-  };
-
-  const refreshSession = (accessToken) => {
-    RetrieveSurnameEndpoint(accessToken).then((userData) => {
-      const {
-        _id,
-        firstName,
-        lastName,
-        propic,
-        profileType,
-        deliveryArea,
-        driversLicense,
-        account
-      } = userData.data;
-
-      const user = {
-        _id: _id,
-        firstName: firstName,
-        lastName: lastName,
-        propic: propic,
-        profileType: profileType,
-        deliveryArea: deliveryArea,
-        driversLicense: driversLicense,
-        account: account
-      };
-
-      sessionStorage.setItem('user', JSON.stringify(user));
-
-      const isUpdate = sessionStorage.getItem('user') === JSON.stringify(user);
-
-      if (isUpdate) {
-        navigate('/truckerprofileview');
-      } else {
-        console.log('Error updating session');
-      }
-    });
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-
     if (file) {
       const reader = new FileReader();
-
       setFile(file);
 
       reader.onload = (e) => {
@@ -213,30 +82,14 @@ function TruckerHomeProfile() {
     }
   };
 
-  const getProfilePic = async (key) => {
-    DownloadUmageEndPoint(key)
-      .then((response) => {
-        if (response.status === 200) {
-          const bybeImage = response.data;
-
-          const imageUrl = `data:image/png;base64,${bybeImage}`;
-          setProfilePic(imageUrl);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      });
-  };
-
   const handleLocationChange = (event) => {
     const selectedLocation = event.target.value;
     setSelectedLocation(selectedLocation);
-    console.log('Selected Locatiion:', selectedLocation);
   };
 
   const handleButtonBackArrowClicked = () => {
-    navigate('/truckerprofileview');
+    console.log('Back button clicked');
+    navigate('/truckerhome'); // Navigate to /truckerhome
   };
 
   const styledFormControl = {
@@ -286,6 +139,7 @@ function TruckerHomeProfile() {
     alignItems: 'center',
     position: 'relative'
   };
+
   const styledAppBar = {
     background: 'transparent',
     boxShadow: 'none'
@@ -309,6 +163,7 @@ function TruckerHomeProfile() {
       color: 'white'
     }
   };
+
   return (
     <div
       style={{

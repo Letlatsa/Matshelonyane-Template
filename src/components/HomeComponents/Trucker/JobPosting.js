@@ -4,37 +4,17 @@ import BottomNavigationComponent from './BottomNavigationComponent';
 import TruckerHomeAppBarComponents from './TruckerHomeAppBarComponent';
 import SearchComponent from './SearchComponent';
 import JobDisplay from './JobDisplay';
-import { GetPostRequestEndpoint } from '../../../services/EndPoints';
-import { useState, useEffect } from 'react';
+
+// Dummy data for job postings
+const dummyRequestData = [
+  { id: 1, title: 'Job Posting 1', description: 'Description for job posting 1' },
+  { id: 2, title: 'Job Posting 2', description: 'Description for job posting 2' },
+  { id: 3, title: 'Job Posting 3', description: 'Description for job posting 3' }
+];
 
 function JobPosting() {
-  const [requestData, setRequestData] = useState([]);
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
-
-  useEffect(() => {
-    const fetchPostRequest = async () => {
-      try {
-        const data = await getRequest(accessToken);
-        setRequestData(data);
-        console.log('Request', data);
-      } catch (error) {
-        console.error('Error fetching request: ', error);
-      }
-    };
-
-    fetchPostRequest();
-  }, [accessToken]);
-
-  const getRequest = async (accessToken) => {
-    try {
-      const requestData = await GetPostRequestEndpoint(accessToken);
-      return requestData;
-    } catch (error) {
-      console.log(error, 'Error Fetching Data');
-      return []; // Or handle the error accordingly
-    }
-  };
+  // Use dummy data instead of fetching from API
+  const requestData = dummyRequestData;
 
   return (
     <div

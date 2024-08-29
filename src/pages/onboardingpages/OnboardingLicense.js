@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import CardComponent from '../../components/OnboardingComponents/CardComponent';
 import { Box, Typography, Button } from '@mui/material';
 import LicenceFrame from '../../assets/License Frame1.svg';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import '../../styles/login.css';
 import ProgressBar from '../../components/OnboardingComponents/ProgressBar';
 import { useToken } from '../../Hooks/TokenContext';
@@ -11,7 +11,7 @@ import theme from '../../theme/theme';
 
 const OnboardingLicense = () => {
   const { tokens } = useToken();
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep] = useState(2);
   const [imageSrc, setImageSrc] = useState(null);
   const [file, setFile] = useState(null);
 
@@ -37,20 +37,21 @@ const OnboardingLicense = () => {
   };
 
   const handleButtonClick = () => {
-    const formData = new FormData();
-    const accessToken = tokens.accessToken;
-    const user = sessionStorage.getItem('user');
-    const profileId = JSON.parse(user)._id;
+    //const formData = new FormData();
+    //const accessToken = tokens.accessToken;
+    //const user = sessionStorage.getItem('user');
+   // const profileId = JSON.parse(user)._id;
 
-    if (imageSrc) {
+   /* if (imageSrc) {
       formData.append('profileId', profileId);
       formData.append('file', file);
 
-      ApiRequest(formData, accessToken);
-    }
+      //ApiRequest(formData, accessToken);
+    }*/
+    navigate('/truckonboardingprofile');
   };
 
-  const ApiRequest = (formData, accessToken) => {
+ /* const ApiRequest = (formData, accessToken) => {
     UpdateDriverLicenseEndPoint(formData, accessToken)
       .then((response) => {
         console.log(response);
@@ -61,7 +62,7 @@ const OnboardingLicense = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
+  };*/
 
   const styledButton = {
     height: '50px',
@@ -139,7 +140,7 @@ const OnboardingLicense = () => {
               accept="image/*"
               id="license-upload"
               style={{ display: 'none' }}
-              onChange={handleImageChange}
+             onChange={handleImageChange}
             />
             <Button variant="contained" sx={styledButton}>
               Upload Picture

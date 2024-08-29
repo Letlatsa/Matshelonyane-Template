@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+ import { React, useState } from 'react';
 import {
   Box,
   FormControl,
@@ -14,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 import PhoneIcon from '../../assets/phone.svg';
 import PasswordIcon from '../../assets/password.svg';
 import AccountIcon from '../../assets/account.svg';
-import { RegisterEndPoint } from '../../services/EndPoints';
 
 function CreateAccountForm() {
   const navigate = useNavigate();
@@ -69,43 +68,50 @@ function CreateAccountForm() {
     }
 
     if (!accountType) {
-      errors.accountError = 'Enter ccount types';
+      errors.accountError = 'Enter account types';
     }
 
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      // Ensure that formData matches the expected payload format
-      const dataToSend = {
-        number: phone,
-        password: password,
-        accountType: accountType
-      };
 
-      ApiRequest(dataToSend);
-    }
-  };
+      setTimeout(() => {
 
-  const ApiRequest = (formData) => {
-    RegisterEndPoint(formData)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
+        const mockResponse = { status: 200 };
+
+        if (mockResponse.status === 200) {
           setRegistrationStatus('success');
           setTimeout(() => {
             navigate('/');
           }, 1500);
         }
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response && error.response.status === 403) {
-          setRegistrationStatus('existing');
-        } else {
-          setRegistrationStatus('failed');
-        }
-      });
+      }, 1000);
+
+
+      // ApiRequest(dataToSend);
+    }
   };
+
+  // const ApiRequest = (formData) => { 
+  //   RegisterEndPoint(formData)
+  //     .then((response) => {
+  //       console.log(response);
+  //       if (response.status === 200) {
+  //         setRegistrationStatus('success');
+  //         setTimeout(() => {
+  //           navigate('/');
+  //         }, 1500);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       if (error.response && error.response.status === 403) {
+  //         setRegistrationStatus('existing');
+  //       } else {
+  //         setRegistrationStatus('failed');
+  //       }
+  //     });
+  // };
 
   const handleButtonClicked = () => {
     navigate('/');

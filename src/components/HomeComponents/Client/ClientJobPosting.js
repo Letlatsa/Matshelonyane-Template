@@ -1,10 +1,10 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 import React from 'react';
 
 import ClientAppBarComponent from './ClientAppBarComponent';
 import ClientBottomNav from './ClientBottomNav';
 import ClientJobPostingForm from './ClientJobPostingForm';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import theme from '../../../theme/theme';
 
 function ClientJobPosting() {

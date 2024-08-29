@@ -2,7 +2,6 @@ import {
   Box,
   Card,
   Stack,
-  Typography,
   FormControl,
   TextField,
   InputLabel,
@@ -10,28 +9,19 @@ import {
   MenuItem,
   Button
 } from '@mui/material';
-import {
-  TruckRetrieveEndpoint,
-  PostRequestEndpoint,
-  LocationRetrieveEndpoint
-} from '../../../services/EndPoints';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
+// Import icons (keep these since they are local assets)
 import DescIcon from '../../../assets/desc.svg';
 import TruckIcon from '../../../assets/truck.svg';
-import LoadIcon from '../../../assets/load.svg';
 import LocationIcon from '../../../assets/location.svg';
 import TimeIcon from '../../../assets/time.svg';
 import InstructionIcon from '../../../assets/Vector (1).svg';
 import PriceIcon from '../../../assets/Vector (2).svg';
 import LoadingIcon from '../../../assets/loading.svg';
-import theme from '../../../theme/theme';
-import { useNavigate } from 'react-router-dom';
-import { useToken } from '../../../Hooks/TokenContext';
-import { useEffect, useState } from 'react';
 
 function ClientJobPostingForm() {
-  //Post jobs
   const initialFormState = {
     cargoDescription: '',
     pickupLocation: '',
@@ -41,160 +31,38 @@ function ClientJobPostingForm() {
     requireLoadingService: true,
     pricePerLoad: ''
   };
-  const initialErrorState = {
-    cargoDescriptionError: '',
-    pickupLocationError: '',
-    dropOffLocationError: '',
-    pickupTimeError: '',
-    pickupInstructionsError: '',
-    requireLoadingServiceError: true,
-    pricePerLoadError: ''
-  };
-  const navigate = useNavigate();
-  const { tokens } = useToken();
-  console.log('Access Token:', tokens.accessToken);
 
-  const [location, setLocation] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState('');
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState(initialFormState);
-  const [formErrors, setFormErrors] = useState(initialErrorState);
-
-  const [truckType, setTruckType] = useState([]);
   const [selectedTruckType, setSelectedTruckType] = useState('');
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
-
-  const { truckerId } = useParams();
-
-  useEffect(() => {
-    if (truckerId) {
-      setFormData({ ...formData, truckerID: truckerId });
-    }
-  }, [truckerId, setFormData, formData]);
-
-  //locations
-  useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        getLocations(accessToken);
-      } catch (error) {
-        console.error('Error fetching locations: ', error);
-      }
-    };
-
-    fetchLocationData();
-  }, [accessToken]);
-
-  const getLocations = (accessToken) => {
-    LocationRetrieveEndpoint(accessToken)
-      .then((locationData) => {
-        setLocation(locationData.data);
-      })
-      .catch((error) => {
-        console.log(error, 'Error Fetching Data');
-      });
-  };
-
-  const handleLocationChange = (event) => {
-    const selectedLocation = event.target.value;
-    setSelectedLocation(selectedLocation);
-    setFormData({ ...formData, deliveryAreaID: selectedLocation });
-    console.log('Selected Locatiion:', selectedLocation);
-  };
+  const [selectedLocation, setSelectedLocation] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleButtonClick = async () => {
-    const accessToken = tokens.accessToken;
-    const errors = {};
-
-    const {
-      truckerID,
-      cargoDescription,
-      truckTypeID: selectedTruckType,
-      deliveryAreaID: selectedLocation,
-      pickupLocation,
-      dropOffLocation,
-      pickupTime,
-      pickupInstructions,
-      requireLoadingService,
-      pricePerLoad
-    } = formData;
-
-    if (!cargoDescription) {
-      errors.cargoDescriptionError = 'CargoDescription is required';
-    }
-
-    // Set the formErrors state with the errors found
-    setFormErrors(errors);
-
-    // If there are no errors, proceed with the API request
-    if (Object.keys(errors).length === 0) {
-      const dataToSend = {
-        truckerID,
-        cargoDescription,
-        truckTypeID: selectedTruckType,
-        deliveryAreaID: selectedLocation,
-        pickupLocation,
-        dropOffLocation,
-        pickupTime,
-        pickupInstructions,
-        requireLoadingService,
-        pricePerLoad
-      };
-      console.log('formData before API request:', dataToSend);
-
-      // Perform the API request
-      ApiRequest(dataToSend, accessToken);
-      console.log('API request', dataToSend);
-    }
-  };
-  const ApiRequest = (formData, accessToken) => {
-    PostRequestEndpoint(formData, accessToken)
-      .then((response) => {
-        if (response && response.status === 200) {
-          console.log(response);
-          navigate('/clienthome');
-        }
-      })
-      .catch((error) => {
-        console.error('Error posting', error);
-      });
+  const handleButtonClick = () => {
+    // Just log the formData in the console for now
+    console.log('formData before submission:', formData);
+    // Navigate to another route after submission (optional)
+    navigate('/clienthome');
   };
 
-  useEffect(() => {
-    const fetchTruckData = async () => {
-      try {
-        getTruckTypes(accessToken);
-      } catch (error) {
-        console.error('Error fetching truck types: ', error);
-      }
-    };
-
-    fetchTruckData();
-  }, [accessToken]);
-
-  const getTruckTypes = (accessToken) => {
-    TruckRetrieveEndpoint(accessToken)
-      .then((truckData) => {
-        setTruckType(truckData.data);
-      })
-      .catch((error) => {
-        console.log(error, 'Error Fetching Data');
-      });
-  };
-
-  const handleTrucktypeChange = async (event) => {
+  const handleTrucktypeChange = (event) => {
     const selectedTruckType = event.target.value;
     setSelectedTruckType(selectedTruckType);
     setFormData({ ...formData, truckTypeID: selectedTruckType });
-    console.log('Selected Truck Type:', selectedTruckType);
   };
 
+  const handleLocationChange = (event) => {
+    const selectedLocation = event.target.value;
+    setSelectedLocation(selectedLocation);
+    setFormData({ ...formData, deliveryAreaID: selectedLocation });
+  };
+
+  // Styling
   const styledCard = {
     width: 'calc(100% - 50px)',
     maxWidth: '380px',
@@ -237,19 +105,17 @@ function ClientJobPostingForm() {
     width: '100%'
   };
 
-  const styledTypography = {
-    alignItems: 'center',
-    color: theme.palette.secondary.main
-  };
   const accountLabelContainer = {
     display: 'flex',
     alignItems: 'center'
   };
+
   const styledSelect = {
     width: '100%',
     borderBottom: ' 1px solid white',
     color: 'white'
   };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Box sx={containerStyle}>
@@ -301,11 +167,9 @@ function ClientJobPostingForm() {
                     value={selectedTruckType}
                     sx={styledSelect}
                   >
-                    {truckType.map((truckData) => (
-                      <MenuItem key={truckData._id} value={truckData._id}>
-                        {truckData.name}
-                      </MenuItem>
-                    ))}
+                    {/* Placeholder truck types for demonstration */}
+                    <MenuItem value="truckType1">Truck Type 1</MenuItem>
+                    <MenuItem value="truckType2">Truck Type 2</MenuItem>
                   </Select>
                 </FormControl>
               </Stack>
@@ -331,11 +195,9 @@ function ClientJobPostingForm() {
                     onChange={handleLocationChange}
                     variant="standard"
                   >
-                    {location.map((locationData) => (
-                      <MenuItem key={locationData._id} value={locationData._id}>
-                        {locationData.name}
-                      </MenuItem>
-                    ))}
+                    {/* Placeholder locations for demonstration */}
+                    <MenuItem value="location1">Location 1</MenuItem>
+                    <MenuItem value="location2">Location 2</MenuItem>
                   </Select>
                 </FormControl>
               </Stack>
@@ -443,19 +305,19 @@ function ClientJobPostingForm() {
                         height="20"
                         sx={{ marginRight: '30px' }}
                       />
-                      <Box>loading & offloading service</Box>
+                      <Box>Require Loading Service</Box>
                     </Box>
                   </InputLabel>
                   <Select
                     variant="standard"
                     labelId="loading"
                     id="loading"
-                    type="requireLoadingService"
-                    onChange={(e) =>
-                      setFormData({ ...formData, requireLoadingService: e.target.value === 'true' })
-                    }
+                    name="requireLoadingService"
+                    value={formData.requireLoadingService}
+                    onChange={handleInputChange}
                     sx={styledSelect}
                   >
+                    {/* Placeholder options for demonstration */}
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                   </Select>
@@ -469,7 +331,7 @@ function ClientJobPostingForm() {
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <img
                           src={PriceIcon}
-                          alt="Price"
+                          alt="price"
                           width="30"
                           height="20"
                           sx={{ marginRight: '30px' }}
@@ -484,19 +346,17 @@ function ClientJobPostingForm() {
                   />
                 </FormControl>
               </Stack>
-
-              <Box sx={buttonContainer}>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  sx={styledSubmitButton}
-                  onClick={handleButtonClick}
-                >
-                  Post Request
-                </Button>
-              </Box>
             </Box>
           </div>
+          <Box sx={buttonContainer}>
+            <Button
+              onClick={handleButtonClick}
+              variant="contained"
+              sx={styledSubmitButton}
+            >
+              submit request
+            </Button>
+          </Box>
         </Card>
       </Box>
     </Box>

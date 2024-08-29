@@ -53,7 +53,7 @@ const RetrieveSurnameEndpoint = async (Token) => {
     sessionStorage.setItem('user', JSON.stringify(response.data));
     return response;
   } catch (error) {
-    console.error('Error occurred while making the request:', error);
+  //  console.error('Error occurred while making the request:', error);
     throw error;
   }
 };

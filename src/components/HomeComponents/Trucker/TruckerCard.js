@@ -41,6 +41,7 @@ const TruckerCard = () => {
     };
 
     fetchClientData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   const getUniqueClients = (visitsData) => {

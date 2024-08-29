@@ -13,21 +13,28 @@ import {
 
 import BackArrow from '../../assets/backVector.svg';
 import { useNavigate } from 'react-router-dom';
-import { DownloadUmageEndPoint } from '../../services/EndPoints';
 import ClientProfileSkeleton from '../../components/skeletons/ClientProfileSkeleton';
 
 const ClientProfile = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
-  const userData = sessionStorage.getItem('user');
-  const [profilePic, setProfilePic] = useState('');
+  // Mock data to simulate user session data
+  const userData = {
+    firstName: 'John',
+    lastName: 'Doe',
+    propic: 'path/to/placeholder-image.jpg', // Placeholder image path
+    account: {
+      _id: '12345',
+      number: '0123456789'
+    }
+  };
 
-  const { firstName, lastName, propic, account } = JSON.parse(userData);
+  const [profilePic, setProfilePic] = useState(userData.propic);
 
   const accountData = {
-    _id: account._id,
-    number: account.number
+    _id: userData.account._id,
+    number: userData.account.number
   };
 
   useEffect(() => {
@@ -37,26 +44,6 @@ const ClientProfile = () => {
     }, 1000);
     return () => clearTimeout(timeout);
   }, []);
-
-  useEffect(() => {
-    getProfilePic(propic);
-  }, [propic]);
-
-  const getProfilePic = async (key) => {
-    DownloadUmageEndPoint(key)
-      .then((response) => {
-        if (response.status === 200) {
-          const bybeImage = response.data;
-
-          const imageUrl = `data:image/png;base64,${bybeImage}`;
-          setProfilePic(imageUrl);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      });
-  };
 
   const styledProfileBox = {
     borderRadius: '100px',
@@ -104,7 +91,7 @@ const ClientProfile = () => {
   };
 
   const styledStackTypography = {
-    color: 'F8F8F8',
+    color: '#F8F8F8',
     fontSize: '16px',
     fontWeight: 500
   };
@@ -179,7 +166,7 @@ const ClientProfile = () => {
               <Box sx={styledProfileBox}>
                 <img
                   src={profilePic}
-                  alt=""
+                  alt="Profile"
                   style={{
                     width: '95px',
                     height: '95px',
@@ -199,7 +186,7 @@ const ClientProfile = () => {
                   letterSpacing: '-0.17px'
                 }}
               >
-                {firstName} {lastName}
+                {userData.firstName} {userData.lastName}
               </Typography>
               <Typography
                 sx={{

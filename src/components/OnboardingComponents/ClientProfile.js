@@ -39,6 +39,9 @@ function ClientProfile() {
     if (!lastName) {
       errors.lastNameError = 'Lastname is required';
     }
+    if(firstName && lastName){
+      navigate('/clienthome');
+    } 
 
     setFormErrors(errors);
     console.log(formErrors);
@@ -51,11 +54,11 @@ function ClientProfile() {
         formData.append('lastName', lastName);
         formData.append('file', file);
 
-        ApiRequest(formData, accessToken);
+        //ApiRequest(formData, accessToken);
       }
     }
   };
-  const ApiRequest = (formData, accessToken) => {
+  /*const ApiRequest = (formData, accessToken) => {
     ClientProfileEndpoint(formData, accessToken)
       .then((response) => {
         console.log(response);
@@ -66,7 +69,7 @@ function ClientProfile() {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }; */
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 

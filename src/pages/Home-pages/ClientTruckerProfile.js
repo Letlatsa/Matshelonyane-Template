@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
+import React, { useEffect, useState } from 'react';
 import {
   AppBar,
   Box,
-  //Button,
   Card,
   Container,
   IconButton,
@@ -11,34 +11,31 @@ import {
   Toolbar,
   Typography
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+// import TruckerProfileSkeleton from '../../components/skeletons/TruckerProfileSkeleton'; // If you want to add skeleton loading
 
 import BackArrow from '../../assets/backVector.svg';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-//import TruckCard from '../../components/HomeComponents/Trucker/TruckCard';
-
-import {
-  UserTrucksEndpoint,
-  ViewTruckerInfo,
-  DownloadUmageEndPoint,
-  GetServiceLocation
-} from '../../services/EndPoints';
-import { useParams } from 'react-router-dom';
-import TruckerProfileSkeleton from '../../components/skeletons/TruckerProfileSkeleton';
 
 const ClientTruckerProfile = () => {
   const { truckerId } = useParams();
-
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
-  const [truckersData, setTruckersData] = useState([]);
+  // Dummy data to replace API calls
+  const dummyTruckersData = {
+    firstName: 'John',
+    lastName: 'Doe',
+    account: {
+      number: '+1234567890'
+    }
+  };
+
+  const dummyLocation = 'City A';
+
+  const [truckersData, setTruckersData] = useState(dummyTruckersData);
+  const [location, setLocation] = useState(dummyLocation);
   const [imageData, setImageData] = useState(null);
-
-  const [location, setLocation] = useState('');
-
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
 
   useEffect(() => {
     // Simulate data loading
@@ -47,55 +44,6 @@ const ClientTruckerProfile = () => {
     }, 1000);
     return () => clearTimeout(timeout);
   }, []);
-
-  useEffect(() => {
-    console.log('Current truckerId:', truckerId);
-    const fetchTruckerData = async () => {
-      try {
-        const truckerInfo = await ViewTruckerInfo(accessToken, truckerId);
-        setTruckersData(truckerInfo);
-        console.log('profile Data:', truckerInfo);
-
-        // Download the image
-        const imageResponse = await DownloadUmageEndPoint(truckerInfo.propic);
-        const imageData = imageResponse.data;
-        setImageData(imageData);
-        console.log('' + imageData);
-      } catch (error) {
-        console.error('Error fetching trucker profile or image:', error);
-      }
-    };
-
-    fetchTruckerData();
-    getLocation(truckersData.deliveryArea);
-  }, [accessToken, truckerId, truckersData.deliveryArea]);
-
-  const getTruckersInArea = (accessToken, truckerId) => {
-    ViewTruckerInfo(accessToken, truckerId)
-      .then((truckersData) => {
-        setTruckersData(truckersData);
-
-        console.log('profile Data:', truckersData);
-        return truckersData.data;
-      })
-      .catch((error) => {
-        console.error('Error fetching profiles of truckers', error);
-      });
-  };
-
-  const getLocation = (locationId) => {
-    GetServiceLocation(locationId)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(response.data);
-          const { name } = response.data;
-          setLocation(name);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   const styledProfileBox = {
     borderRadius: '100px',
@@ -143,10 +91,11 @@ const ClientTruckerProfile = () => {
   };
 
   const styledStackTypography = {
-    color: 'F8F8F8',
+    color: '#F8F8F8', // Fixed color code
     fontSize: '16px',
     fontWeight: 500
   };
+
   const handleButtonClicked = () => {
     navigate('/clienthome');
   };
@@ -196,8 +145,10 @@ const ClientTruckerProfile = () => {
         </AppBar>
       </Box>
       <Container sx={{ marginTop: '90px' }}>
-        {isLoading ? ( // Check if data is loading, if true, show the skeleton
-          <TruckerProfileSkeleton />
+        {isLoading ? (
+          // Uncomment below and import TruckerProfileSkeleton to use skeleton loading
+          //<TruckerProfileSkeleton />
+          <Typography>Loading...</Typography>
         ) : (
           <>
             <Box
@@ -234,18 +185,6 @@ const ClientTruckerProfile = () => {
               >
                 {truckersData.firstName} {truckersData.lastName}
               </Typography>
-              <Typography
-                sx={{
-                  color: '#C69585',
-                  fontFamily: 'Lato',
-                  fontSize: '16px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  letterSpacing: '-0.17px',
-                  marginBottom: '15px'
-                }}
-              ></Typography>
             </Box>
 
             <Box sx={styledDeviderBox}>
@@ -265,7 +204,7 @@ const ClientTruckerProfile = () => {
                 >
                   <Typography sx={styledStackTypography}>Phone number:</Typography>
                   <Typography sx={styledStackTypography}>
-                    {truckersData.account && truckersData.account.number}
+                    {truckersData.account.number}
                   </Typography>
                 </Box>
                 <Box

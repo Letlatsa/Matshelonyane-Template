@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   FormControl,
@@ -11,40 +11,17 @@ import {
   IconButton
 } from '@mui/material';
 import AccountIcon from '../../assets/account.svg';
-
 import { useNavigate } from 'react-router-dom';
-import {
-  updateProfilePictureEndpoint,
-  RetrieveSurnameEndpoint,
-  DownloadUmageEndPoint,
-  EditProfileEndPoint
-} from '../../services/EndPoints';
-
 import BackArrow from '../../assets/backVectorWhite.svg';
 
 function ClientHomeProfile() {
-  const userData = sessionStorage.getItem('user');
-
+  // Placeholder user data
+  const userData = '{"_id":"user123","firstName":"John","lastName":"Doe","propic":""}';
   const { _id, firstName, lastName, propic } = JSON.parse(userData);
 
   const [profilePic, setProfilePic] = useState('');
-
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
-
-  const initialFormState = {
-    firstName: firstName,
-    lastName: lastName
-  };
-
-  const initialErrorState = {
-    firstNameError: '',
-    lastNameError: '',
-    locationError: ''
-  };
-
-  const [formData, setFormData] = useState(initialFormState);
-  const [formErrors, setFormErrors] = useState(initialErrorState);
+  const [formData, setFormData] = useState({ firstName, lastName });
+  const [formErrors, setFormErrors] = useState({ firstNameError: '', lastNameError: '' });
   const [avatarImage, setAvatarImage] = useState(null);
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
@@ -53,7 +30,8 @@ function ClientHomeProfile() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const validateForm = async () => {
+
+  const validateForm = () => {
     const { firstName, lastName } = formData;
     const errors = {};
 
@@ -65,134 +43,30 @@ function ClientHomeProfile() {
     }
 
     setFormErrors(errors);
-    console.log(formErrors);
+    console.log(errors);
 
     if (Object.keys(errors).length === 0) {
-      const formData = new FormData();
-      formData.append('profileId', JSON.parse(userData)._id);
-      formData.append('file', file);
-
-      const profileFrom = {
-        profileId: _id,
-        updatedInfo: {
-          firstName: firstName,
-          lastName: lastName
-        }
-      };
-
-      const profileWait = await ProfileApiRequest(profileFrom, accessToken);
-
-      if (avatarImage) {
-        const propicWait = await PropicApiRequest(formData, accessToken);
-        if (propicWait === 200 || profileWait === 200) {
-          refreshSession(accessToken);
-        } else {
-          refreshSession(accessToken);
-        }
-      } else {
-        console.log('Error updating profile');
-        refreshSession(accessToken);
-      }
+      // Placeholder for form submission
+      console.log('Form is valid, perform submission logic here');
     }
-  };
-
-  const PropicApiRequest = async (formData, accessToken) => {
-    await updateProfilePictureEndpoint(formData, accessToken)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          return response.status;
-        } else return 400;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const ProfileApiRequest = async (formData, accessToken) => {
-    await EditProfileEndPoint(formData, accessToken)
-      .then((response) => {
-        if (response.status === 200) {
-          return response.status;
-        } else return 400;
-      })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      });
-  };
-
-  const refreshSession = (accessToken) => {
-    RetrieveSurnameEndpoint(accessToken).then((userData) => {
-      const {
-        _id,
-        firstName,
-        lastName,
-        propic,
-        profileType,
-        deliveryArea,
-        driversLicense,
-        account
-      } = userData.data;
-
-      const user = {
-        _id: _id,
-        firstName: firstName,
-        lastName: lastName,
-        propic: propic,
-        profileType: profileType,
-        deliveryArea: deliveryArea,
-        driversLicense: driversLicense,
-        account: account
-      };
-
-      sessionStorage.setItem('user', JSON.stringify(user));
-
-      const isUpdate = sessionStorage.getItem('user') === JSON.stringify(user);
-
-      if (isUpdate) {
-        navigate('/clientprofile');
-      } else {
-        console.log('Error updating session');
-      }
-    });
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-
     if (file) {
       const reader = new FileReader();
-
       setFile(file);
-
       reader.onload = (e) => {
         setAvatarImage(e.target.result);
       };
-
       reader.readAsDataURL(file);
     }
   };
 
   useEffect(() => {
-    getProfilePic(propic);
+    // Placeholder for fetching profile picture logic
+    console.log('Fetch profile picture using the key:', propic);
   }, [propic]);
-
-  const getProfilePic = async (key) => {
-    DownloadUmageEndPoint(key)
-      .then((response) => {
-        if (response.status === 200) {
-          const bybeImage = response.data;
-
-          const imageUrl = `data:image/png;base64,${bybeImage}`;
-          setProfilePic(imageUrl);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      });
-  };
 
   const handleButtonBackArrowClicked = () => {
     navigate('/clientprofile');
@@ -207,7 +81,7 @@ function ClientHomeProfile() {
     width: '100%',
     '& input': {
       color: 'white',
-      borderBottom: ' 3px solid white'
+      borderBottom: '3px solid white'
     },
     '& label': {
       color: 'white'
@@ -245,6 +119,7 @@ function ClientHomeProfile() {
     alignItems: 'center',
     position: 'relative'
   };
+
   const styledAppBar = {
     background: 'transparent',
     boxShadow: 'none'
