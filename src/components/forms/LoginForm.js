@@ -34,7 +34,7 @@ const LoginForm = () => {
   const handleButtonClick = () => {
     const { phone, password, accountType } = formData;
     const errors = {};
-  
+
     // Phone validation
     if (!phone) {
       errors.phoneError = 'Phone number is required';
@@ -43,22 +43,22 @@ const LoginForm = () => {
     } else if (!/^\d+$/.test(phone)) {
       errors.phoneError = 'Phone number can only contain digits';
     }
-  
+
     // Password validation
     if (!password) {
       errors.passwordError = 'Password is required';
     }
-  
+
     // Account type validation
     if (!accountType) {
       errors.accountTypeError = 'Account type is required';
     } else if (!['driver', 'customer'].includes(accountType.toLowerCase())) {
       errors.accountTypeError = 'Invalid account type';
     }
-  
+
     // Set form errors state
     setFormErrors(errors);
-  
+
     // If there are no validation errors
     if (Object.keys(errors).length === 0) {
       // Mock successful login
@@ -66,27 +66,24 @@ const LoginForm = () => {
       const refreshToken = 'mock_refresh_token';
       const lastName = 'Doe'; // Mock data
       const driversLicense = '123456'; // Mock data
-  
+
       // Update token data
       setTokenData(accessToken, refreshToken);
-  
+
       // Handle token session
       TokenSession(accessToken, refreshToken, lastName, driversLicense, accountType);
-  
+
       // Redirect based on account type
       if (accountType.toLowerCase() === 'driver') {
-        navigate('/truckeronboardingprofile'); 
-        // navigate('/truckerhome'); // Redirect drivers to /truckerhome
+        navigate('/truckeronboardingprofile');
       } else {
         navigate('/clientonboardingprofile');
-        //navigate('/clienthome'); // Redirect others (e.g., customers) to /clienthome
       }
     } else {
       // Set login status to failed if there are validation errors
       setLoginStatus('failed');
     }
   };
-  
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -179,7 +176,7 @@ const LoginForm = () => {
       </Box>
       <Stack sx={inputContainerBox} spacing={1}>
         <FormControl variant="standard">
-          <InputLabel id="Account-type" sx={styledInputLabel}>
+          <InputLabel id="account-type-label" sx={styledInputLabel}>
             <Box sx={accountLabelContainer}>
               <img
                 src={AccountIcon}
@@ -193,8 +190,9 @@ const LoginForm = () => {
           </InputLabel>
           <Select
             variant="standard"
-            labelId="Account-type"
+            labelId="account-type-label"
             id="account-type"
+            name="accountType"
             value={accountType}
             onChange={handleChange}
             sx={styledSelect}
@@ -221,6 +219,7 @@ const LoginForm = () => {
               </div>
             }
             type="phone"
+            id="phone"
             name="phone"
             placeholder="Enter your phone number"
             value={formData.phone}
@@ -248,6 +247,7 @@ const LoginForm = () => {
               </div>
             }
             type="password"
+            id="password"
             name="password"
             placeholder="Enter your password"
             value={formData.password}

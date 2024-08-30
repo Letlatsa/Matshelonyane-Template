@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   AppBar,
   Box,
@@ -17,44 +18,23 @@ import AccountIcon from '../../../assets/account.svg';
 import RightArrow from '../../../assets/rightVectorArrow.svg';
 import LocationPin from '../../../assets/circum_location-on1.svg';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { LocationRetrieveEndpoint } from '../../../services/EndPoints';
 
 const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
   const navigate = useNavigate();
 
-  const [location, setLocation] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState([]);
+  // Static data for locations
+  const staticLocationData = [
+    { _id: '1', name: 'Location A' },
+    { _id: '2', name: 'Location B' },
+    { _id: '3', name: 'Location C' }
+  ];
 
-  const TokenSession = sessionStorage.getItem('Tokens');
-  const accessToken = JSON.parse(TokenSession).accessToken;
-
-  useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        getLocations(accessToken);
-      } catch (error) {
-        console.error('Error fetching locations: ', error);
-      }
-    };
-
-    fetchLocationData();
-  }, [accessToken]);
-
-  const getLocations = (accessToken) => {
-    LocationRetrieveEndpoint(accessToken)
-      .then((locationData) => {
-        setLocation(locationData.data);
-      })
-      .catch((error) => {
-        console.log(error, 'Error Fetching Data');
-      });
-  };
+  const [location] = useState(staticLocationData);
+  const [selectedLocation, setSelectedLocation] = useState('');
 
   const handleLocationChange = (event) => {
-    const selectedLocation = event.target.value;
-    setSelectedLocation(selectedLocation);
-    console.log('Selected Locatiion:', selectedLocation);
+    setSelectedLocation(event.target.value);
+    console.log('Selected Location:', event.target.value);
   };
 
   const handleLogout = () => {
@@ -92,7 +72,7 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
 
   const openOverlayStyles = {
     background: 'rgba(198, 149, 133, 0.70)',
-    backdropFilter: "blur('40px')",
+    backdropFilter: 'blur(40px)',
     height: '100vh',
     position: 'absolute',
     width: '100%',
@@ -132,7 +112,7 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
               sx={{ mr: 2 }}
               onClick={handleButtonBackArrowClicked}
             >
-              <img src={BackArrow} alt="MenuIcon" width="13" height="30" />
+              <img src={BackArrow} alt="Back Arrow" width="13" height="30" />
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -164,20 +144,18 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
               alt="Account Icon"
               width="20"
               height="20"
-              style={{
-                marginRight: '20px'
-              }}
+              style={{ marginRight: '20px' }}
             />
             <Typography sx={settingSectionText}>Account</Typography>
           </Box>
           <Stack spacing={2}>
             <Box sx={styleListItemBox} onClick={handleEditProfile}>
               <Typography sx={styledStackTypography}>Edit profile</Typography>
-              <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
+              <img src={RightArrow} alt="Right Arrow" width="15" height="30" />
             </Box>
             <Box sx={styleListItemBox}>
               <Typography sx={styledStackTypography}>Change password</Typography>
-              <img src={RightArrow} alt="MenuIcon" width="15" height="30" />
+              <img src={RightArrow} alt="Right Arrow" width="15" height="30" />
             </Box>
           </Stack>
         </Box>
@@ -197,9 +175,7 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
               alt="Location Icon"
               width="20"
               height="20"
-              style={{
-                marginRight: '20px'
-              }}
+              style={{ marginRight: '20px' }}
             />
             <Typography sx={settingSectionText}>Current Location</Typography>
           </Box>
@@ -208,12 +184,12 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
               <FormControl sx={{ m: 0, minWidth: 120, width: '100%' }} size="small">
                 <InputLabel
                   sx={{ fontSize: '14px', color: 'white' }}
-                  id="rating-simple-select-label"
+                  id="location-simple-select-label"
                 >
                   Location
                 </InputLabel>
                 <Select
-                  labelId="location-label"
+                  labelId="location-simple-select-label"
                   id="deliveryArea"
                   name="deliveryArea"
                   value={selectedLocation}
@@ -223,9 +199,7 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
                     color: 'white',
                     fontSize: '14px',
                     width: '100%',
-                    '&:border': {
-                      color: 'white'
-                    }
+                    '&:border': { color: 'white' }
                   }}
                 >
                   {location.map((locationData) => (
@@ -244,11 +218,10 @@ const MenuOverlay = ({ isOverlay, setIsOverlay }) => {
             onClick={handleLogout}
             sx={{
               backgroundColor: '#EBDBD5',
-              textColor: '#58362A',
+              color: '#58362A',
               width: '196px',
               borderRadius: '15px',
               height: '50px',
-              color: '#58362A',
               fontWeight: '300',
               fontSize: '14px',
               textTransform: 'none',

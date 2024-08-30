@@ -1,41 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
 import BottomNavigationComponent from './BottomNavigationComponent';
 import TruckerHomeAppBarComponents from './TruckerHomeAppBarComponent';
 import SearchComponent from './SearchComponent';
 import JobDisplay from './JobDisplay';
 
+// Dummy data for job postings
+const dummyRequestData = [
+  { id: 1, title: 'Job Posting 1', description: 'Description for job posting 1' },
+  { id: 2, title: 'Job Posting 2', description: 'Description for job posting 2' },
+  { id: 3, title: 'Job Posting 3', description: 'Description for job posting 3' }
+];
+
 function JobPosting() {
-  // Dummy data for job postings
-  const dummyRequestData = [
-    {
-      id: '1',
-      title: 'Transport Electronics',
-      description: 'Pick up from Warehouse 1 and drop off at Retail Store 5.',
-      location: 'City A to City B',
-      price: '$500',
-      status: 'Pending'
-    },
-    {
-      id: '2',
-      title: 'Move Furniture',
-      description: 'Pick up from Warehouse 2 and deliver to Retail Store 7.',
-      location: 'City C to City D',
-      price: '$300',
-      status: 'In Transit'
-    },
-    // Add more dummy job postings here if needed
-  ];
-
-  const [requestData, setRequestData] = useState(dummyRequestData);
-
-  useEffect(() => {
-    // Simulate data fetching or processing
-    const timeout = setTimeout(() => {
-      setRequestData(dummyRequestData); // Use the dummy data
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, []);
+  // Use dummy data instead of fetching from API
+  const requestData = dummyRequestData;
 
   return (
     <div
