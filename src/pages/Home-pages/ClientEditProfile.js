@@ -13,6 +13,7 @@ import {
 import AccountIcon from '../../assets/account.svg';
 import { useNavigate } from 'react-router-dom';
 import BackArrow from '../../assets/backVectorWhite.svg';
+import styles from '../../styles/ClientHomeProfile.module.css';
 
 function ClientHomeProfile() {
   // Placeholder user data
@@ -72,71 +73,9 @@ function ClientHomeProfile() {
     navigate('/clientprofile');
   };
 
-  const styledFormControl = {
-    width: '100%',
-    color: 'white'
-  };
-
-  const styledTextField = {
-    width: '100%',
-    '& input': {
-      color: 'white',
-      borderBottom: '3px solid white'
-    },
-    '& label': {
-      color: 'white'
-    },
-    marginBottom: '10px'
-  };
-
-  const inputContainerBox = {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  };
-
-  const styledSubmitButton = {
-    fontSize: 18,
-    backgroundColor: '#EBDBD5',
-    width: '100%',
-    borderRadius: '15px',
-    height: '50px',
-    color: '#58362A',
-    fontWeight: '400',
-    textTransform: 'none',
-    marginBottom: '30px',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.3)',
-    '&:hover': {
-      backgroundColor: '#58362A',
-      color: 'white'
-    }
-  };
-
-  const styledAvatarBox = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative'
-  };
-
-  const styledAppBar = {
-    background: 'transparent',
-    boxShadow: 'none'
-  };
-
   return (
-    <div
-      style={{
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'rgba(196, 149, 133, .7)',
-        display: 'flex',
-        justifyContent: 'center',
-        overflowY: 'scroll'
-      }}
-    >
-      <AppBar position="fixed" sx={styledAppBar}>
+    <div className={styles.container}>
+      <AppBar position="fixed" className={styles.appBar}>
         <Toolbar sx={{ height: '70px' }}>
           <IconButton
             size="large"
@@ -151,19 +90,7 @@ function ClientHomeProfile() {
         </Toolbar>
       </AppBar>
       <Box sx={{ width: '85vw', overflowY: 'scroll', paddingTop: '60px' }}>
-        <Typography
-          sx={{
-            fontSize: 24,
-            color: '#ffffff',
-            textAlign: 'center',
-            marginBottom: '30px',
-            marginLeft: '15px',
-            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-            fontWeight: 'bold'
-          }}
-        >
-          Edit your profile
-        </Typography>
+        <Typography className={styles.typographyTitle}>Edit your profile</Typography>
         <input
           type="file"
           accept="image/*"
@@ -173,7 +100,7 @@ function ClientHomeProfile() {
           onChange={handleImageChange}
         />
         <label htmlFor="propic">
-          <Box sx={styledAvatarBox}>
+          <Box className={styles.avatarBox}>
             {avatarImage ? (
               <Avatar alt="User Avatar" src={avatarImage} sx={{ width: 130, height: 130 }} />
             ) : (
@@ -182,22 +109,10 @@ function ClientHomeProfile() {
           </Box>
         </label>
 
-        <Typography
-          sx={{
-            fontSize: 14,
-            color: '#ffffff',
-            textAlign: 'center',
-            marginBottom: '50px',
-            marginTop: '15px',
-            fontWeight: '700',
-            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
-          }}
-        >
-          Upload your profile picture
-        </Typography>
+        <Typography className={styles.uploadText}>Upload your profile picture</Typography>
         <Box>
-          <FormControl sx={styledFormControl}>
-            <Box sx={inputContainerBox}>
+          <FormControl className={styles.formControl}>
+            <Box className={styles.inputContainerBox}>
               <TextField
                 variant="standard"
                 label={
@@ -215,7 +130,7 @@ function ClientHomeProfile() {
                 type="firstName"
                 name="firstName"
                 placeholder="Enter your First Name"
-                sx={styledTextField}
+                className={styles.textField}
                 value={formData.firstName}
                 onChange={handleInputChange}
                 error={!!formErrors.firstNameError}
@@ -238,7 +153,7 @@ function ClientHomeProfile() {
                 type="lastName"
                 name="lastName"
                 placeholder="Enter your Last name"
-                sx={styledTextField}
+                className={styles.textField}
                 value={formData.lastName}
                 onChange={handleInputChange}
                 error={!!formErrors.lastNameError}
@@ -251,7 +166,7 @@ function ClientHomeProfile() {
               variant="text"
               color="primary"
               type="submit"
-              sx={styledSubmitButton}
+              className={styles.submitButton}
               onClick={validateForm}
             >
               Save
