@@ -1,0 +1,158 @@
+/* Container for the Job Display */
+.job-display-container {
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    background-color: #EEEFF3;
+  }
+  
+  /* Box containing the job data */
+  .job-display-box {
+    flex-grow: 1;
+    margin-top: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  
+  /* Card that wraps each job */
+  .job-display-card {
+    width: 103%;
+    background-color: #FFF;
+    padding-top: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Top section containing profile and job details */
+  .job-display-top-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  
+  /* Box wrapping the profile picture */
+  .job-display-profile-box {
+    width: 78px;
+    display: flex;
+    padding-right: 15px;
+    margin-bottom: 0;
+  }
+  
+  /* Style for the profile picture container */
+  .job-display-profile-container {
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EBDBD5;
+    padding: 0;
+    border-radius: 50px;
+    margin-left: 1px;
+    height: 40px;
+    width: 40px;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
+    margin-top: -40px;
+  }
+  
+  /* Profile picture styling */
+  .job-display-profile-picture {
+    width: 44px;
+    height: 44px;
+    border-radius: 20px;
+  }
+  
+  /* Stack for the job details */
+  .job-display-job-details {
+    flex: 1;
+    padding-right: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Box containing job details and phone icon */
+  .job-display-job-info {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    align-items: center;
+  }
+  
+  /* Styling for each detail */
+  .job-display-detail {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-right: 50px;
+  }
+  
+  /* Styling for the customer's name */
+  .job-display-customer-name {
+    font-size: 15px;
+    color: #000;
+  }
+  
+  /* Styling for the job detail labels (Pickup, Destination, etc.) */
+  .job-display-label {
+    font-size: 15px;
+    color: #000;
+  }
+  
+  /* Styling for the job detail values */
+  .job-display-value {
+    font-size: 15px;
+    color: #000;
+    white-space: nowrap;
+  }
+  
+  /* Styling for the phone icon and phone number */
+  .job-display-phone {
+    font-size: 15px;
+    color: #000;
+    margin-top: -8px !important;
+  }
+  
+  .job-display-phone-icon {
+    vertical-align: middle;
+    margin-right: 5px;
+    margin-left: -23px;
+  }
+  
+  /* Box containing the apply/accepted button */
+  .job-display-button-box {
+    display: flex;
+    justify-content: end;
+    margin-top: 10px;
+  }
+  
+  /* Styling for the "Apply" button */
+  .job-display-apply-button {
+    font-size: 14px;
+    width: 180px;
+    border-radius: 5px;
+    height: 25px;
+    color: #FFF5EF;
+    background-color: #C08288;
+    text-transform: none;
+  }
+  
+  /* Styling for the "Accepted" button */
+  .job-display-accepted-button {
+    font-size: 14px;
+    width: 180px;
+    border-radius: 5px;
+    height: 25px;
+    color: #FFF5EF;
+    background-color: gray;
+    text-transform: none;
+  }
+  
+  /* Spacing box below the card */
+  .job-display-spacing-box {
+    height: 20px;
+  }
+  

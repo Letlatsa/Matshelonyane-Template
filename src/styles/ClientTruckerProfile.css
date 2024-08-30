@@ -1,0 +1,74 @@
+/* AppBar styles */
+.appBar {
+    background-color: #ffffff;
+    color: #000000;
+    box-shadow: none;
+  }
+  
+  /* Profile Box styles */
+  .profileBox {
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ebdbd5;
+    padding: 0;
+    height: 100px;
+    width: 100px;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
+    margin-bottom: 15px;
+  }
+  
+  /* Card styles */
+  .card {
+    width: 100%;
+    background-color: #c69585;
+    border-radius: 10px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    color: white;
+  }
+  
+  /* Devider Box styles */
+  .deviderBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    height: 15px;
+  }
+  
+  /* Stack styles */
+  .stack {
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  /* Stack Typography styles */
+  .stackTypography {
+    color: #f8f8f8;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  /* Profile Typography styles */
+  .profileTypography {
+    color: #58362a;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.17px;
+  }
+  
+  /* Loading Text styles */
+  .loadingText {
+    text-align: center;
+    margin-top: 20px;
+  }
+  

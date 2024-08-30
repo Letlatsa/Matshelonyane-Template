@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import { AppBar, Toolbar, Box } from '@mui/material';
 import EllipsisV from '../../../assets/ellipsisVIcon.svg'; // Ensure this path is correct
 import MenuOverlay from '../Trucker/TurckerMenuOverlay'; // Ensure this path is correct
-import './TruckerHomeAppBar.css'; // Ensure this path is correct
+import '../../../styles/TruckerHomeAppBar.css'; // Ensure this path is correct
 
 const TruckerHomeAppBar = () => {
   const [isOverlay, setIsOverlay] = React.useState(false);

@@ -1,0 +1,86 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(196, 149, 133, 0.7);
+    display: flex;
+    justify-content: center;
+    overflow-y: scroll;
+  }
+  
+  .appBar {
+    background: transparent;
+    box-shadow: none;
+  }
+  
+  .typographyTitle {
+    font-size: 24px;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-left: 15px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: bold;
+  }
+  
+  .avatarBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .uploadText {
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 15px;
+    font-weight: 700;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+  .formControl {
+    width: 100%;
+    color: white;
+  }
+  
+  .inputContainerBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .textField {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .textField input {
+    color: white;
+    border-bottom: 3px solid white;
+  }
+  
+  .textField label {
+    color: white;
+  }
+  
+  .submitButton {
+    font-size: 18px;
+    background-color: #ebdbd5;
+    width: 100%;
+    border-radius: 15px;
+    height: 50px;
+    color: #58362a;
+    font-weight: 400;
+    text-transform: none;
+    margin-bottom: 30px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease-in, color 0.3s ease-in;
+  }
+  
+  .submitButton:hover {
+    background-color: #58362a;
+    color: white;
+  }
+  

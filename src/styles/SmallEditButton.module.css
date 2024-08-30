@@ -1,0 +1,34 @@
+.buttonContainer {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    margin-bottom: 20px;
+  }
+  
+  .editButton {
+    background-color: #ffffff;
+    color: #58362a;
+    width: 66px;
+    border-radius: 5px;
+    height: 25px;
+    font-weight: 300;
+    font-size: 14px;
+    margin-top: -20px;
+    text-transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
+    transition: ease-in 0.3s;
+  }
+  
+  .editButton:hover {
+    background-color: #58362a;
+    color: white;
+  }
+  
+  .editText {
+    height: 20px;
+    display: flex;
+  }
+  

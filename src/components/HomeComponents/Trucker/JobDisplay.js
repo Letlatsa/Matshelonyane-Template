@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Card, Stack, Typography, Button } from '@mui/material';
 import {
   accceptProposalEndpoint,
   ViewClientInfo,
   DownloadUmageEndPoint
 } from '../../../services/EndPoints';
-import { useEffect, useState } from 'react';
 import PhoneIcon from '../../../assets/phoness.svg';
 import { useNavigate } from 'react-router-dom';
+import '../../../styles/JobDisplay.css'; // Import the CSS file
 
 function JobDisplay({ requestData }) {
   const navigate = useNavigate();
-
   const [customerData, setCustomerData] = useState(null);
   const [imageData] = useState(null);
   const [customerImages, setCustomerImages] = useState({}); // Initialize as an empty object
-const TokenSession = sessionStorage.getItem('Tokens');
-const accessToken = JSON.parse(TokenSession).accessToken;
+
+  const TokenSession = sessionStorage.getItem('Tokens');
+  const accessToken = JSON.parse(TokenSession).accessToken;
 
   const updateCustomerImage = (customerId, imageData) => {
     setCustomerImages((prevImages) => ({
@@ -54,7 +54,7 @@ const accessToken = JSON.parse(TokenSession).accessToken;
     };
 
     fetchCustomerDetails();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestData]);
 
   const acceptPost = async (id) => {
@@ -76,77 +76,16 @@ const accessToken = JSON.parse(TokenSession).accessToken;
     navigate('/truckerjobpost');
   };
 
-  // Styling object
-  const styledProfileBox = {
-    borderRadius: '30px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#EBDBD5',
-    padding: 0,
-    borderradius: '50px',
-    marginLeft: 1,
-    height: '40px',
-    width: '40px',
-    boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.3)'
-  };
-  const styledNotAppliedButton = {
-    fontSize: '14px',
-    width: '180px',
-    borderRadius: '5px',
-    height: '25px',
-    color: '#FFF5EF',
-    backgroundColor: '#C08288',
-    textTransform: 'none'
-  };
-
-  const styledIsAppliedButton = {
-    fontSize: '14px',
-    width: '180px',
-    borderRadius: '5px',
-    height: '25px',
-    color: '#FFF5EF',
-    backgroundColor: 'gray',
-    textTransform: 'none'
-  };
-
   return (
-    <div style={{ height: 'calc(100vh - 100px)', overflowY: 'auto', backgroundColor: '#EEEFF3' }}>
-      <Box flexGrow={1} marginTop={2} marginLeft={2} marginRight={2}>
+    <div className="job-display-container">
+      <Box className="job-display-box">
         {requestData && requestData.length > 0 ? (
           requestData.map((job, index) => (
-            <Card
-              key={index}
-              sx={{
-                width: '103%',
-                backgroundColor: '#FFF',
-                paddingTop: '15px',
-                marginBottom: '15px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-              }}
-            >
-              <Box
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginBottom: '15px'
-                }}
-              >
-                <Box
-                  sx={{
-                    width: '78px',
-                    display: 'flex',
-                    paddingRight: '15px',
-                    marginBottom: '0'
-                  }}
-                >
+            <Card key={index} className="job-display-card">
+              <Box className="job-display-top-section">
+                <Box className="job-display-profile-box">
                   <Box
-                    sx={{ ...styledProfileBox, marginTop: '-40px' }}
+                    className="job-display-profile-container"
                     onClick={async () => {
                       try {
                         // Navigate to the trucker's profile
@@ -165,74 +104,34 @@ const accessToken = JSON.parse(TokenSession).accessToken;
                           ? `data:image/jpeg;base64,${customerImages[job.customer]}`
                           : ''
                       }
-                      alt=""
-                      style={{ width: '44px', height: '44px', borderRadius: 20 }}
+                      alt="Profile"
+                      className="job-display-profile-picture"
                     />
                   </Box>
                 </Box>
-                <Stack
-                  spacing={2}
-                  sx={{
-                    flex: 1,
-                    paddingRight: '15px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      color: 'white',
-                      alignItems: 'center'
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '100%',
-                        marginRight: '50px'
-                      }}
-                    >
-                      <Typography sx={{ fontSize: '15px', color: '#000' }}>
+                <Stack spacing={2} className="job-display-job-details">
+                  <Box className="job-display-job-info">
+                    <Box className="job-display-detail">
+                      <Typography className="job-display-customer-name">
                         {customerData &&
                         customerData[job.customer] &&
                         customerData[job.customer].firstName
                           ? customerData[job.customer].firstName
-                          : 'N/A'}{' '}
+                          : 'N/A'}
                       </Typography>
-                      <Typography sx={{ fontSize: '15px', color: '#000' }}>Pickup:</Typography>
-                      <Typography sx={{ fontSize: '15px', color: '#000' }}>
-                        Destination:{' '}
-                      </Typography>
-                      <Typography sx={{ fontSize: '15px', color: '#000' }}>Price: </Typography>
+                      <Typography className="job-display-label">Pickup:</Typography>
+                      <Typography className="job-display-label">Destination:</Typography>
+                      <Typography className="job-display-label">Price:</Typography>
                     </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '100%',
-                        marginLeft: '-30px',
-                        marginTop: '5px',
-                        marginRight: '5px'
-                      }}
-                    >
-                      <Typography
-                        sx={{ fontSize: '15px', color: '#000', marginTop: '-8px !important' }}
-                      >
+                    <Box className="job-display-detail">
+                      <Typography className="job-display-phone">
                         <>
                           <img
                             src={PhoneIcon}
                             alt="Account Icon"
                             width="20"
                             height="20"
-                            style={{
-                              verticalAlign: 'middle',
-                              marginRight: '5px',
-                              marginLeft: '-23px'
-                            }}
+                            className="job-display-phone-icon"
                           />
                         </>
                         {customerData &&
@@ -242,24 +141,21 @@ const accessToken = JSON.parse(TokenSession).accessToken;
                           ? customerData[job.customer].account.number
                           : 'N/A'}
                       </Typography>
-                      <Box></Box>
-                      <Typography
-                        sx={{ fontSize: '15px', color: '#000', whiteSpace: 'nowrap' }}
-                      >{`${job.cargoDescription}`}</Typography>
-                      <Typography
-                        sx={{ fontSize: '15px', color: '#000', whiteSpace: 'nowrap' }}
-                      >{`${job.dropOffLocation}`}</Typography>
-                      <Typography
-                        sx={{ fontSize: '15px', color: '#000', whiteSpace: 'nowrap' }}
-                      >{`${job.pricePerLoad}`}</Typography>
+                      <Typography className="job-display-value">{`${job.cargoDescription}`}</Typography>
+                      <Typography className="job-display-value">{`${job.dropOffLocation}`}</Typography>
+                      <Typography className="job-display-value">{`${job.pricePerLoad}`}</Typography>
                     </Box>
                   </Box>
                 </Stack>
               </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'end', marginTop: '10px' }}>
+              <Box className="job-display-button-box">
                 <Button
                   variant="contained"
-                  sx={job.status === 'posted' ? styledNotAppliedButton : styledIsAppliedButton}
+                  className={
+                    job.status === 'posted'
+                      ? 'job-display-apply-button'
+                      : 'job-display-accepted-button'
+                  }
                   onClick={() => {
                     if (job.status === 'posted') {
                       acceptPost(job._id);
@@ -273,7 +169,7 @@ const accessToken = JSON.parse(TokenSession).accessToken;
                   )}
                 </Button>
               </Box>
-              <Box sx={{ height: '20px' }} />
+              <Box className="job-display-spacing-box" />
             </Card>
           ))
         ) : (
